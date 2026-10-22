@@ -6,6 +6,8 @@ GregTech 6 Community Edition 的化工向附属。打算在 SuSy 的一些内容
 
 模组 id 是 `sstte`，依赖的 GT6CE 模组 id 是 `gt6ce`。两边加载器共用 `common/` 里的代码。`com.lombinaxmasson.sstte.chemistry.ChemistryRecipes` 是加配方的入口。新材料用 `AddonMaterialContributor`，新机器用 `AddonMachineContributor`，类要 public、带 public 无参构造，并写进对应加载器的 `META-INF/services`。GT6CE 的类只在编译期使用，不会打进这个 jar。
 
+本模组使用 GNU Lesser General Public License 第 3 版或（由你选择）任何更新版本。`LICENSE` 是 LGPL-3.0 原文，`COPYING` 是它引用的 GPL-3.0 原文。两份原文也放在 jar 的 `META-INF/licenses/` 下。模组列表里的 SPDX 标识是 `LGPL-3.0-or-later`。
+
 ## 环境
 
 Gradle 8.8 要用 JDK 17 启动。NeoForge 编译再用 JDK 21。本机如果默认 `java` 是 25，直接跑 `gradlew.bat` 会起不来。Windows 用仓库里的脚本，它会自己找这两个 JDK：
