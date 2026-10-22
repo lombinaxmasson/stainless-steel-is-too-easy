@@ -29,7 +29,7 @@
 - [x] **SPI 服务文件挂载 (`META-INF/services/`)**
   - [x] `com.gregtech.gregtech.api.addon.AddonMaterialContributor`（注册新材料、形态、坩埚反应与禁用规则）
   - [x] `com.gregtech.gregtech.api.addon.AddonMachineContributor`（注册新配方表、单方块/多方块机器、管道、气罐）
-- [ ] **资源与语言文件结构**
+- [x] **资源与语言文件结构**
   - [x] `assets/gt6ce/lang/en_us.json` 与 `zh_cn.json`（存放新增材料的 `material.gt6ce.<小写材料名>` 译名）
   - [x] `assets/ssite/lang/en_us.json` 与 `zh_cn.json`（存放自定义方块、机器、唱片物品译名）
   - [x] 数据包覆盖目录：`data/ssite/recipes/`（1.20.1）或 `data/ssite/recipe/`（1.21.1），用于放 `gt6ce:machine_removal`。
@@ -56,9 +56,15 @@
 - [x] `AodSlag`（AOD 精炼炉渣，`dust()`，可离心回收氧化铬/钙渣）
 - [x] `stainless_steel_316l` 耐酸流体管（`FluidPipeDeclaration`，用于后续卤水吹溴与强酸石化管线）
 
-### 1.3 专属机器：AOD 精炼转炉 (`ssite:aod_converter`)
-- [x] 注册配方表 `ssite.recipe.aod`（4 物品输入、2 物品输出、2 流体输入、1 流体输出）
-- [x] 注册机器 `ssite:aod_converter`（接入 HU 热能或 EU 驱动，配齐方块状态、模型、GUI 与合成表）
+### 1.3 专属设备：坩埚式 AOD 精炼转炉（见 [`AOD转炉坩埚化详细计划.md`](card-plans/AOD转炉坩埚化详细计划.md)）
+- [x] 初版单方块配方机 `ssite:aod_converter` 与 `ssite.recipe.aod`（已在 M1 前四卡跑通验证；坩埚化重做时已删除）
+- [x] **坩埚化重做（\(1\times 1\times 2\) 结构）**：下方为行为机器本体（四面进气口贴图，任意侧面可接氩气管、浇铸口 `Faucet`、温度计 `Thermometer`，底/侧接 `HU` 与 `KU`），上方为 `ssite:aod_lid` 结构零件炉盖（右键开关；开盖从顶部投料，关盖密闭锁气）。`CU`/`Ignis` 暂不接。
+- [x] **六档炉体材质与熔点门槛（\(\text{熔毁温度} = \lfloor \text{熔点} \times 1.25 \rfloor\)）**：
+  - [x] 钢（`Steel`，上限 \(2557\text{ K}\)）：破局炉体，炼制第一批 304 不锈钢。
+  - [x] 不锈钢（`StainlessSteel`，上限 \(2428\text{ K}\)，耐酸）：常规耐酸炉体。
+  - [x] 铌钛（`NiobiumTitanium`，上限 \(2931\text{ K}\)）：跨越纯钼熔点（\(2896\text{ K}\)），解锁 316L 钼不锈钢。
+  - [x] 钨钢（`TungstenSteel`，上限 \(3587\text{ K}\)）、钨（`Tungsten`，上限 \(4618\text{ K}\)，耐酸）、碳化钽铪（`TantalumHafniumCarbide`，上限 \(5328\text{ K}\)）：高阶宽温区炉体。
+- [ ] **远期记账**：对标 GT6 大坩埚（`MultiBlockCrucible`）的**大型多方块 AOD 转炉（Large AOD Converter）**。
 
 ### 1.4 产线配方清单
 - [x] **铬线分流（冶金级 vs 高纯级）**
@@ -68,35 +74,34 @@
   - [x] 二氧化硅（石英粉）+ 铁粉 + 焦炭/碳 $\rightarrow$ **硅铁 (`Ferrosilicon`)** + 一氧化碳。
 - [x] **第一步：初炼高碳不锈钢粗钢 (`CarburizedStainlessSteel`)**
   - [x] 铁源（铁 / 熟铁 / 生铁 / 陨铁）+ 镍（或殷钢）+ **铬铁 (`Ferrochromium`)** + 锰 $\xrightarrow{\text{坩埚合金反应}}$ **高碳不锈钢 (`CarburizedStainlessSteel`)**。
-- [x] **第二步：AOD 转炉三档吹炼（产出 304 标准不锈钢 `StainlessSteel`）**
-  - [x] **早期破局档（空气硬吹，免深冷塔）**：高碳不锈钢 + 硅铁 (`Ferrosilicon`) + 生石灰 (`Quicklime`) + **空气 (`Air`)** $\xrightarrow{\text{AOD 转炉}}$ **低收率 `StainlessSteel`（约 50% 收率）** + `AodSlag` 炉渣（攒出第一座深冷蒸馏塔）。
-  - [x] **中期氮氧档（$\text{O}_2 + \text{N}_2$）**：高碳不锈钢 + 硅铁 + 生石灰 + 萤石 (`Fluorite`) + **氧气 (`Oxygen`) + 氮气 (`Nitrogen`)** $\xrightarrow{\text{AOD 转炉}}$ **标准收率 `StainlessSteel`（约 75% 收率）** + 少量炉渣。
-  - [x] **成熟氩氧档（$\text{O}_2 + \text{Ar}$）**：高碳不锈钢 + 硅铁 + 生石灰 + 萤石 + **氧气 (`Oxygen`) + 氩气 (`Argon`)** $\xrightarrow{\text{AOD 转炉}}$ **100% 满收率 `StainlessSteel`**，耗时减半。
-- [x] **第三步：纯氩深度精炼 316L 钼不锈钢 (`StainlessSteel316L`)**
-  - [x] 高碳不锈钢 + **钼粉 (`Molybdenum`)** + 硅铁 + 萤石 + **氧气 (`Oxygen`) + 氩气 (`Argon`)** $\xrightarrow{\text{AOD 转炉}}$ **316L 钼不锈钢 (`StainlessSteel316L`)**。成品 `StainlessSteel` 不再另开一条进料。
+- [x] **第二步：坩埚式 AOD 吹炼标准不锈钢 (`StainlessSteel` / 304)**
+  - [x] **早期破局档（仅 `KU` 空气硬吹，免深冷塔）**：熔池内高碳不锈钢 + 硅铁 (`Ferrosilicon`) + 生石灰 (`Quicklime`) + **`KU` 鼓入空气 (`Air`)** $\xrightarrow{\ge 1943\text{ K}}$ **低收率 `StainlessSteel`（5/9 收率）** + `AodSlag` 炉渣。
+  - [x] **成熟氩氧档（侧面通 `Argon` + `KU` + 关盖）**：熔池内高碳不锈钢 + 硅铁 + 生石灰 + 萤石 (`Fluorite`) + **`Argon`（驻留不消失）** $\xrightarrow{\ge 1943\text{ K}}$ **100% 满收率 `StainlessSteel`**。
+- [x] **第三步：铌钛及以上 AOD 精炼 316L 钼不锈钢 (`StainlessSteel316L`)**
+  - [x] 熔池内高碳不锈钢 + **纯钼 (`Molybdenum`，熔点 \(2896\text{ K}\))** + 硅铁 + 萤石 + **`Argon`（侧面管道 + `KU` + 关盖）** $\xrightarrow{\ge 2896\text{ K}}$ **316L 钼不锈钢 (`StainlessSteel316L`)**（钢/不锈钢炉体在此温度前熔毁，硬性要求铌钛及以上 AOD 炉体）。
 
 ---
 
 ## M2 · 公用工程：水净化与卤水综合利用
 
-> **设计目标**：利用 GT6 原版已有的 `Ocean`、`Saltwater`、`Brine`、`DistW`、`Sewage`、`Sludge` 和现成机器（`coagulator`、`bath`、`sifter`、`distillationtower`、`dryer`），做一条层层递进的水处理链。
+> **设计目标**：利用 GT6 原版已有的 `Ocean`、`Saltwater`、`Brine`、`DistW`、`Sewage`、`Sludge` 和现成机器（`bath`、`mixer`、`autoclave`、`distillery`、`distillationtower`、`drying`、`centrifuge`、`electrolyzer`），做一条层层递进的水处理链与苦卤综合利用网。详细计划卡见 [`docs/card-plans/总览.md`](card-plans/总览.md)。
 
 ### 2.1 水净化阶梯清单
 - [ ] **1 级 · 絮凝澄清水 (`ClarifiedWater`)**
-  - [ ] 河水/污水 + 明矾/硫酸铝（`Alum`） $\xrightarrow{\text{凝结槽 } \texttt{coagulator}}$ 澄清水 + **污泥 (`Sludge`)**（进干燥机回收粘土与生物质）。
-- [ ] **2 级 · 软化/中和水 (`DemineralizedWater`)**
-  - [ ] 澄清水经酸碱调节与砂滤（`sifter` + 石英砂），去除钙镁结垢离子（供中压锅炉不结垢运行）。
+  - [ ] 河水/原水/污水 + 明矾/硫酸铝（`Alum` / `VitriolOfClay`） $\xrightarrow{\text{化学浴槽 } \texttt{bath}}$ 澄清水 + **污泥 (`Sludge`)**（进干燥机/离心机回收粘土、生物质与痕量稀土）。
+- [ ] **2 级 · 软化/脱矿水 (`DemineralizedWater`)**
+  - [ ] 澄清水经纯碱软化与石英砂床过滤（`bath` + `QuartzSand` 催化保留），沉淀方解石/菱镁矿水垢并支持快速无垢蒸馏。
 - [ ] **3 级 · 去离子水 (`DeionizedWater`)**
-  - [ ] 通过**阴阳离子交换树脂**（与 M4 交联聚苯乙烯联动，早期可用沸石分子筛过渡）洗脱痕量金属离子，供湿法冶金与聚合反应使用。
+  - [ ] 通过**沸石分子筛 (`Zeolite`)**（未来与 M4 交联聚苯乙烯阴阳离子交换树脂联动）洗脱痕量金属离子，供湿法冶金与聚合反应使用。
 - [ ] **4 级 · 反渗透纯水 (`FilteredWater`)**
-  - [ ] 去离子水通过**醋酸纤维素 RO 膜**高压过滤（耗材循环）。
+  - [ ] 去离子水通过**醋酸纤维素 RO 膜 (`foil CelluloseAcetate`)** 在高压釜（`autoclave`）中高压反渗透过滤（膜组件循环使用）。
 - [ ] **5 级 · 电子级超纯水 (`UltrapureWater`)**
-  - [ ] 臭氧氧化脱除有机碳（TOC）+ 紫外线（`laserengraver` / UV 灯）杀菌脱气，预留给未来的晶圆清洗与光刻线。
+  - [ ] 臭氧（`Ozone`）氧化脱除有机碳（TOC）+ 蓝宝石/钻石紫外透光灯窗（`mixer` + `lens` 催化保留）杀菌脱气，预留给未来的晶圆清洗与光刻线。
 
 ### 2.2 海水淡化与卤水（Brine）副产网
-- [ ] **海水浓缩成苦卤**：海水蒸馏/蒸发产出淡水 + 浓缩卤水（`Brine`）+ 石膏（$\text{CaSO}_4$）。
-- [ ] **卤水除镁除钙**：卤水 + 熟石灰 $\rightarrow$ **氢氧化镁沉淀**（镁线原料）；再加纯碱除钙。
-- [ ] **卤水吹溴与提锂**：含溴卤水通入氯气（$\text{Cl}_2$ 置换 $\text{Br}_2$）吹出**粗溴蒸汽** $\rightarrow$ 精馏得**液溴 (`Bromine`)**（做四溴双酚 A 阻燃环氧必需！）；母液碳酸盐沉淀提**碳酸锂 (`LithiumCarbonate`)**。
+- [ ] **海水浓缩成苦卤**：海水/盐水经蒸馏塔（或蒸馏室）浓缩产出蒸馏水 + 浓缩卤水（`Brine`）+ 食盐 + 石膏（`Gypsum`）。
+- [ ] **卤水除镁除钙**：生石灰消化制熟石灰（`CalciumHydroxide`），与苦卤和纯碱反应沉淀**氢氧化镁 (`MagnesiumHydroxide`)**（盐酸中和得 `MagnesiumChloride` 接通电解镁线）与方解石，得除杂卤水（`DecalcifiedBrine`）。
+- [ ] **卤水吹溴与提锂**：除杂卤水酸化后通入氯气（$\text{Cl}_2$ 置换 $\text{Br}_2$）吹出**粗溴蒸汽 (`CrudeBromine`)** + **富锂母液 (`LithiumRichBrine`)**；粗溴精馏得**液溴 (`Bromine`)** 与**碘 (`Iodine`)**（做四溴双酚 A 阻燃环氧必需！）；富锂母液加纯碱沉出**碳酸锂 (`LithiumCarbonate`)**，再经盐酸转化与熔盐电解得金属锂并回收氯气。
 
 ---
 

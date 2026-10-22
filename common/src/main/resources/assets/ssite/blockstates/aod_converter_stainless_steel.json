@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "facing=north,lit=false,running=false": {
+      "model": "ssite:block/machine/basic/aod_converter_stainless_steel"
+    },
+    "facing=north,lit=false,running=true": {
+      "model": "ssite:block/machine/basic/aod_converter_stainless_steel_running"
+    },
+    "facing=north,lit=true,running=false": {
+      "model": "ssite:block/machine/basic/aod_converter_stainless_steel_active"
+    },
+    "facing=north,lit=true,running=true": {
+      "model": "ssite:block/machine/basic/aod_converter_stainless_steel_active"
+    },
+    "facing=east,lit=false,running=false": {
+      "model": "ssite:block/machine/basic/aod_converter_stainless_steel",
+      "y": 90
+    },
+    "facing=east,lit=false,running=true": {
+      "model": "ssite:block/machine/basic/aod_converter_stainless_steel_running",
+      "y": 90
+    },
+    "facing=east,lit=true,running=false": {
+      "model": "ssite:block/machine/basic/aod_converter_stainless_steel_active",
+      "y": 90
+    },
+    "facing=east,lit=true,running=true": {
+      "model": "ssite:block/machine/basic/aod_converter_stainless_steel_active",
+      "y": 90
+    },
+    "facing=south,lit=false,running=false": {
+      "model": "ssite:block/machine/basic/aod_converter_stainless_steel",
+      "y": 180
+    },
+    "facing=south,lit=false,running=true": {
+      "model": "ssite:block/machine/basic/aod_converter_stainless_steel_running",
+      "y": 180
+    },
+    "facing=south,lit=true,running=false": {
+      "model": "ssite:block/machine/basic/aod_converter_stainless_steel_active",
+      "y": 180
+    },
+    "facing=south,lit=true,running=true": {
+      "model": "ssite:block/machine/basic/aod_converter_stainless_steel_active",
+      "y": 180
+    },
+    "facing=west,lit=false,running=false": {
+      "model": "ssite:block/machine/basic/aod_converter_stainless_steel",
+      "y": 270
+    },
+    "facing=west,lit=false,running=true": {
+      "model": "ssite:block/machine/basic/aod_converter_stainless_steel_running",
+      "y": 270
+    },
+    "facing=west,lit=true,running=false": {
+      "model": "ssite:block/machine/basic/aod_converter_stainless_steel_active",
+      "y": 270
+    },
+    "facing=west,lit=true,running=true": {
+      "model": "ssite:block/machine/basic/aod_converter_stainless_steel_active",
+      "y": 270
+    }
+  }
+}

@@ -3,7 +3,6 @@ package com.lombinaxmasson.ssite.chemistry;
 import com.gregtech.gregtech.api.addon.GregTechAddon;
 import com.gregtech.gregtech.api.addon.platform.AddonItems;
 import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
-import com.lombinaxmasson.ssite.machine.SsiteMachines;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -20,7 +19,6 @@ public final class ChemistryRecipes {
         ferrochromium();
         chromium();
         ferrosilicon();
-        aod();
         slag();
     }
 
@@ -70,36 +68,6 @@ public final class ChemistryRecipes {
                     fields("GenGas_CarbonMonoxide"), amounts(1000),
                     200, 48);
         }
-    }
-
-    private static void aod() {
-        recipe(SsiteMachines.AOD_MAP, "air",
-                items(dust("CarburizedStainlessSteel", 9), dust("Ferrosilicon", 1), dust("Quicklime", 2)),
-                items(dust("StainlessSteel", 5), dust("AodSlag", 4)),
-                fields("Air"), amounts(4000),
-                fields("GenGas_CarbonMonoxide"), amounts(1000),
-                400, 32);
-        recipe(SsiteMachines.AOD_MAP, "nitrogen",
-                items(dust("CarburizedStainlessSteel", 9), dust("Ferrosilicon", 1),
-                        dust("Quicklime", 1), dust("Fluorite", 1)),
-                items(dust("StainlessSteel", 7), dust("AodSlag", 2)),
-                fields("Oxygen", "Nitrogen"), amounts(2000, 2000),
-                fields("GenGas_CarbonMonoxide"), amounts(1000),
-                240, 64);
-        recipe(SsiteMachines.AOD_MAP, "argon",
-                items(dust("CarburizedStainlessSteel", 9), dust("Ferrosilicon", 1),
-                        dust("Quicklime", 1), dust("Fluorite", 1)),
-                items(dust("StainlessSteel", 9), dust("AodSlag", 1)),
-                fields("Oxygen", "Argon"), amounts(1500, 500),
-                fields("GenGas_CarbonMonoxide"), amounts(1000),
-                120, 64);
-        recipe(SsiteMachines.AOD_MAP, "316l",
-                items(dust("CarburizedStainlessSteel", 8), dust("Molybdenum", 1),
-                        dust("Ferrosilicon", 1), dust("Fluorite", 1)),
-                items(dust("StainlessSteel316L", 9), dust("AodSlag", 1)),
-                fields("Oxygen", "Argon"), amounts(1500, 1000),
-                fields("GenGas_CarbonMonoxide"), amounts(1000),
-                160, 64);
     }
 
     private static void slag() {

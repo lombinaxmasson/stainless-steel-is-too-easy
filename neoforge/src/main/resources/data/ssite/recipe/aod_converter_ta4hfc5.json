@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FCF",
+    "KMK",
+    "PSP"
+  ],
+  "key": {
+    "F": {
+      "item": "gt6ce:fire_bricks"
+    },
+    "C": {
+      "item": "gt6ce:pipe_small_copper"
+    },
+    "K": {
+      "item": "gt6ce:smelting_crucible_ta4hfc5"
+    },
+    "M": {
+      "item": "gt6ce:casing_machine_tantalumhafniumcarbide"
+    },
+    "P": {
+      "item": "gt6ce:plate_double_tantalumhafniumcarbide"
+    },
+    "S": {
+      "item": "gt6ce:pipe_small_steel"
+    }
+  },
+  "result": {
+    "id": "ssite:aod_converter_ta4hfc5",
+    "count": 1
+  }
+}
