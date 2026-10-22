@@ -1,0 +1,12 @@
+// Resolves GregTech 6 Community Edition jars. A copy in libs/ wins over the sibling checkout.
+def gt6ceDirectory = rootProject.file(rootProject.findProperty('gt6ceDir') ?: '../GregTech6')
+def libsDirectory = rootProject.file('libs')
+
+ext.resolveGt6ce = { String relative ->
+    def name = new File(relative).name
+    def local = new File(libsDirectory, name)
+    if (local.isFile()) {
+        return local
+    }
+    return new File(gt6ceDirectory, relative)
+}

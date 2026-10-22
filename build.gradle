@@ -1,0 +1,19 @@
+plugins {
+    id 'base'
+}
+
+tasks.register('compileBoth') {
+    group = 'build'
+    description = 'Compile the Forge 1.20.1 and NeoForge 1.21.1 projects.'
+    dependsOn ':forge:compileJava', ':neoforge:compileJava'
+}
+
+tasks.named('assemble').configure {
+    dependsOn ':forge:assemble', ':neoforge:assemble'
+}
+tasks.named('build').configure {
+    dependsOn ':forge:build', ':neoforge:build'
+}
+tasks.named('clean').configure {
+    dependsOn ':forge:clean', ':neoforge:clean'
+}
