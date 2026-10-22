@@ -5,5 +5,19 @@
   "material.gt6ce.stainlesssteel316l": "316L Stainless Steel",
   "material.gt6ce.sodiumchromate": "Sodium Chromate",
   "material.gt6ce.sodiumdichromate": "Sodium Dichromate",
-  "material.gt6ce.aodslag": "AOD Refining Slag"
+  "material.gt6ce.aodslag": "AOD Refining Slag",
+  "material.gt6ce.clarifiedwater": "Clarified Water",
+  "material.gt6ce.demineralizedwater": "Demineralized Water",
+  "material.gt6ce.deionizedwater": "Deionized Water",
+  "material.gt6ce.filteredwater": "Filtered Water",
+  "material.gt6ce.ultrapurewater": "Ultrapure Water",
+  "material.gt6ce.alum": "Potassium Alum",
+  "material.gt6ce.celluloseacetate": "Cellulose Acetate",
+  "material.gt6ce.ozone": "Ozone",
+  "material.gt6ce.calciumhydroxide": "Calcium Hydroxide",
+  "material.gt6ce.magnesiumhydroxide": "Magnesium Hydroxide",
+  "material.gt6ce.decalcifiedbrine": "Decalcified Brine",
+  "material.gt6ce.crudebromine": "Crude Bromine Vapor",
+  "material.gt6ce.lithiumrichbrine": "Lithium-Rich Brine",
+  "material.gt6ce.lithiumcarbonate": "Lithium Carbonate"
 }

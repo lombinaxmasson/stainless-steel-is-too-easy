@@ -5,5 +5,19 @@
   "material.gt6ce.stainlesssteel316l": "316L 钼不锈钢",
   "material.gt6ce.sodiumchromate": "铬酸钠",
   "material.gt6ce.sodiumdichromate": "重铬酸钠",
-  "material.gt6ce.aodslag": "AOD 精炼炉渣"
+  "material.gt6ce.aodslag": "AOD 精炼炉渣",
+  "material.gt6ce.clarifiedwater": "絮凝澄清水",
+  "material.gt6ce.demineralizedwater": "软化脱矿水",
+  "material.gt6ce.deionizedwater": "去离子水",
+  "material.gt6ce.filteredwater": "反渗透纯水",
+  "material.gt6ce.ultrapurewater": "电子级超纯水",
+  "material.gt6ce.alum": "明矾",
+  "material.gt6ce.celluloseacetate": "醋酸纤维素",
+  "material.gt6ce.ozone": "臭氧",
+  "material.gt6ce.calciumhydroxide": "熟石灰",
+  "material.gt6ce.magnesiumhydroxide": "氢氧化镁",
+  "material.gt6ce.decalcifiedbrine": "除镁钙净化卤水",
+  "material.gt6ce.crudebromine": "粗溴蒸汽",
+  "material.gt6ce.lithiumrichbrine": "富锂母液",
+  "material.gt6ce.lithiumcarbonate": "碳酸锂"
 }
