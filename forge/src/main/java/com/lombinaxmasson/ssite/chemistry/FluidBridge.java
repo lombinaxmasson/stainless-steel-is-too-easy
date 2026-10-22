@@ -17,6 +17,16 @@ public final class FluidBridge {
                 fluids(inFields, inAmounts), fluids(outFields, outAmounts), duration, perTick, 0);
     }
 
+    public static AddonRecipes.Line line(ItemStack[] itemInputs, ItemStack[] itemOutputs,
+                                         String[] inFields, int[] inAmounts,
+                                         String[] outFields, int[] outAmounts,
+                                         long duration, long perTick,
+                                         int[] outputChances, int[] keptInputs) {
+        return new AddonRecipes.Line(itemInputs, itemOutputs,
+                fluids(inFields, inAmounts), fluids(outFields, outAmounts), duration, perTick, 0,
+                outputChances, keptInputs);
+    }
+
     private static FluidStack[] fluids(String[] fields, int[] amounts) {
         if (fields == null || fields.length == 0) {
             return null;

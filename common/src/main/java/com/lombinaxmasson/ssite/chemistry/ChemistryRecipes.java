@@ -1,5 +1,8 @@
 package com.lombinaxmasson.ssite.chemistry;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.gregtech.gregtech.api.addon.GregTechAddon;
 import com.gregtech.gregtech.api.addon.platform.AddonItems;
 import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
@@ -10,6 +13,8 @@ import net.minecraft.world.item.ItemStack;
  * Fluid stacks differ by loader, so {@link FluidBridge} packs them.
  */
 public final class ChemistryRecipes {
+    private static final List<String> REJECTED = new ArrayList<>();
+
     private ChemistryRecipes() {}
 
     public static void add(GregTechAddon.Context context) {
@@ -20,6 +25,11 @@ public final class ChemistryRecipes {
         chromium();
         ferrosilicon();
         slag();
+        waterTreatment();
+        waterPurification();
+        if (!REJECTED.isEmpty()) {
+            throw new IllegalStateException("ssite recipes rejected: " + REJECTED);
+        }
     }
 
     private static void ferrochromium() {
@@ -78,24 +88,173 @@ public final class ChemistryRecipes {
                 200, 16);
     }
 
+    private static void waterTreatment() {
+        alum();
+        celluloseAcetate();
+        ozone();
+    }
+
+    private static void alum() {
+        // Alunite leaching; the hydroxide + sulphuric-acid route collides with a built-in GT6CE row.
+        recipe("gt.recipe.bath", "alum/alunite",
+                items(dust("Alunite", 2)),
+                items(dust("Alum", 2), dust("SiliconDioxide", 1)),
+                fields("GenLiquid_SulfuricAcid"), amounts(1000),
+                null, null,
+                100, 16);
+    }
+
+    private static void celluloseAcetate() {
+        for (String pulp : new String[]{"Wood", "Paper"}) {
+            recipe("gt.recipe.mixer", "cellulose-acetate/" + pulp,
+                    items(dust(pulp, 2)),
+                    items(dust("CelluloseAcetate", 2)),
+                    fields("Vinegar_Grape", "GenLiquid_SulfuricAcid"), amounts(2000, 250),
+                    fields("Dirty_Water"), amounts(1000),
+                    160, 30);
+        }
+        recipe("gt.recipe.press", "cellulose-acetate/plate",
+                items(dust("CelluloseAcetate", 1), circuit(1)),
+                items(item("plate", "CelluloseAcetate", 1)),
+                null, null, null, null,
+                40, 16, null, new int[]{1});
+        recipe("gt.recipe.rollingmill", "cellulose-acetate/foil",
+                items(item("plate", "CelluloseAcetate", 1)),
+                items(item("foil", "CelluloseAcetate", 4)),
+                null, null, null, null,
+                40, 16);
+    }
+
+    private static void ozone() {
+        recipe("gt.recipe.electrolyzer", "ozone",
+                items(circuit(3)),
+                items(),
+                fields("Oxygen"), amounts(3000),
+                fields("GenGas_Ozone"), amounts(2000),
+                100, 64);
+    }
+
+    private static void waterPurification() {
+        clarifiedWater();
+        sludgeRecovery();
+        demineralizedWater();
+        deionizedWater();
+        filteredWater();
+        ultrapureWater();
+    }
+
+    private static void clarifiedWater() {
+        for (String source : new String[]{"Water", "River_Water", "Dirty_Water", "Stagnant_Water", "Swampwater"}) {
+            for (String flocculant : new String[]{"Alum", "VitriolOfClay"}) {
+                recipe("gt.recipe.bath", "clarified/" + source + "/" + flocculant,
+                        items(dust(flocculant, 1)),
+                        items(),
+                        fields(source), amounts(4000),
+                        fields("GenLiquid_ClarifiedWater", "Sludge"), amounts(3600, 400),
+                        100, 16);
+            }
+        }
+        recipe("gt.recipe.bath", "clarified/sewage",
+                items(dust("Alum", 2)),
+                items(),
+                fields("Sewage"), amounts(4000),
+                fields("GenLiquid_ClarifiedWater", "Sludge"), amounts(3000, 1000),
+                160, 16);
+    }
+
+    private static void sludgeRecovery() {
+        recipe("gt.recipe.drying", "sludge/dry",
+                items(),
+                items(dust("Clay", 1)),
+                fields("Sludge"), amounts(1000),
+                fields("Biomass", "Dirty_Water"), amounts(250, 500),
+                120, 16);
+        recipe("gt.recipe.centrifuge", "sludge/centrifuge",
+                items(),
+                items(dust("Clay", 2), dust("Sand", 1), item("dustTiny", "RareEarth", 1)),
+                fields("Sludge"), amounts(2000),
+                fields("Biomass", "Dirty_Water"), amounts(500, 1000),
+                160, 24, new int[]{10000, 10000, 2500}, null);
+    }
+
+    private static void demineralizedWater() {
+        recipe("gt.recipe.bath", "demineralized/soften",
+                items(dust("QuartzSand", 1), item("dustTiny", "SodiumCarbonate", 1)),
+                items(item("dustSmall", "Calcite", 1), item("dustTiny", "MagnesiumCarbonate", 1)),
+                fields("GenLiquid_ClarifiedWater"), amounts(4000),
+                fields("GenLiquid_DemineralizedWater"), amounts(3800),
+                120, 16, null, new int[]{0});
+        recipe("gt.recipe.distillery", "demineralized/distill",
+                items(circuit(1)),
+                items(),
+                fields("GenLiquid_DemineralizedWater"), amounts(1000),
+                fields("DistW"), amounts(1000),
+                40, 16);
+    }
+
+    private static void deionizedWater() {
+        recipe("gt.recipe.bath", "deionized",
+                items(dust("Zeolite", 1), item("dustTiny", "SodiumHydroxide", 1)),
+                items(),
+                fields("GenLiquid_DemineralizedWater"), amounts(4000),
+                fields("GenLiquid_DeionizedWater", "Saltwater"), amounts(3800, 200),
+                120, 30, null, new int[]{0});
+    }
+
+    private static void filteredWater() {
+        recipe("gt.recipe.autoclave", "filtered/ro",
+                items(item("foil", "CelluloseAcetate", 1), circuit(1)),
+                items(item("dustTiny", "Salt", 1)),
+                fields("GenLiquid_DeionizedWater"), amounts(4000),
+                fields("GenLiquid_FilteredWater"), amounts(3600),
+                160, 64, new int[]{1000}, new int[]{0, 1});
+    }
+
+    private static void ultrapureWater() {
+        for (String lens : new String[]{"Sapphire", "Diamond"}) {
+            recipe("gt.recipe.mixer", "ultrapure/" + lens,
+                    items(item("lens", lens, 1)),
+                    items(),
+                    fields("GenLiquid_FilteredWater", "GenGas_Ozone"), amounts(4000, 250),
+                    fields("GenLiquid_UltrapureWater", "Oxygen"), amounts(4000, 375),
+                    200, 120, null, new int[]{0});
+        }
+    }
+
     private static void recipe(String map, String label, ItemStack[] itemInputs, ItemStack[] itemOutputs,
                                String[] fluidInFields, int[] fluidInAmounts,
                                String[] fluidOutFields, int[] fluidOutAmounts,
                                long duration, long perTick) {
+        recipe(map, label, itemInputs, itemOutputs, fluidInFields, fluidInAmounts, fluidOutFields, fluidOutAmounts,
+                duration, perTick, null, null);
+    }
+
+    private static void recipe(String map, String label, ItemStack[] itemInputs, ItemStack[] itemOutputs,
+                               String[] fluidInFields, int[] fluidInAmounts,
+                               String[] fluidOutFields, int[] fluidOutAmounts,
+                               long duration, long perTick, int[] outputChances, int[] keptInputs) {
         AddonRecipes.Line line = AddonRecipes.map(map).add(FluidBridge.line(
                 itemInputs, itemOutputs, fluidInFields, fluidInAmounts, fluidOutFields, fluidOutAmounts,
-                duration, perTick));
+                duration, perTick, outputChances, keptInputs));
         if (line == null) {
-            throw new IllegalStateException("ssite recipe rejected: " + label);
+            REJECTED.add(label);
         }
     }
 
-    private static ItemStack dust(String material, int count) {
-        ItemStack stack = AddonItems.stack("dust", material, count);
+    private static ItemStack item(String prefix, String material, int count) {
+        ItemStack stack = AddonItems.stack(prefix, material, count);
         if (stack.isEmpty()) {
-            throw new IllegalStateException("ssite missing dust " + material);
+            throw new IllegalStateException("ssite missing " + prefix + " " + material);
         }
         return stack;
+    }
+
+    private static ItemStack dust(String material, int count) {
+        return item("dust", material, count);
+    }
+
+    private static ItemStack circuit(int n) {
+        return AddonItems.selectorTag(n);
     }
 
     private static ItemStack[] items(ItemStack... stacks) {
