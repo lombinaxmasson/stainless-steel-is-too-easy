@@ -1,0 +1,6 @@
+{
+  "_comment": "GT6CE writes the twelve GTAlloyTable stainless rows as molten mixer fluids (gt6ce:molten_stainlesssteel), not dust. Omitted amount matches every volume.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.mixer",
+  "fluid_outputs": [{ "fluid": "gt6ce:molten_stainlesssteel" }]
+}

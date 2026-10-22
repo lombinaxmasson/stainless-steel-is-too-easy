@@ -2,7 +2,7 @@
 # libs/ is preferred over the sibling checkout. Jars in libs/ stay out of git.
 $ErrorActionPreference = 'Stop'
 $repo = Split-Path -Parent $PSScriptRoot
-$gt6 = if ($env:GT6CE_DIR) { $env:GT6CE_DIR } else { Join-Path (Split-Path -Parent $repo) 'GregTech6' }
+$gt6 = if ($env:GT6CE_DIR) { $env:GT6CE_DIR } else { Join-Path (Split-Path -Parent $repo) 'GregTech6CommunityEdition\GregTech6' }
 $dest = Join-Path $repo 'libs'
 New-Item -ItemType Directory -Force -Path $dest | Out-Null
 

@@ -1,14 +1,14 @@
-package com.lombinaxmasson.sstte;
+package com.lombinaxmasson.ssite;
 
 import com.gregtech.gregtech.api.addon.GregTechAddon;
 import com.gregtech.gregtech.api.addon.GregTechAddons;
-import com.lombinaxmasson.sstte.chemistry.ChemistryRecipes;
+import com.lombinaxmasson.ssite.chemistry.ChemistryRecipes;
 
 /** Shared entry for both loaders. Call {@link #register()} from each mod constructor. */
-public final class SstteAddon {
-    public static final String MOD_ID = "sstte";
+public final class SsiteAddon {
+    public static final String MOD_ID = "ssite";
 
-    private SstteAddon() {}
+    private SsiteAddon() {}
 
     public static void register() {
         GregTechAddons.register(new GregTechAddon() {

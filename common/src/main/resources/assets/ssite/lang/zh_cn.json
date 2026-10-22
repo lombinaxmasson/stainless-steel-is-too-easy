@@ -1,0 +1,12 @@
+{
+  "mod.ssite.name": "Stainless Steel is Too Easy",
+  "mod.ssite.description": "以化工为重心的 GregTech 6 Community Edition 附属。",
+  "block.ssite.aod_converter": "AOD 精炼转炉",
+  "block.ssite.pipe_tiny_stainless_steel_316l": "微型316L钼不锈钢流体管道",
+  "block.ssite.pipe_small_stainless_steel_316l": "小型316L钼不锈钢流体管道",
+  "block.ssite.pipe_medium_stainless_steel_316l": "316L钼不锈钢流体管道",
+  "block.ssite.pipe_large_stainless_steel_316l": "大型316L钼不锈钢流体管道",
+  "block.ssite.pipe_huge_stainless_steel_316l": "巨型316L钼不锈钢流体管道",
+  "block.ssite.pipe_quadruple_stainless_steel_316l": "四合一316L钼不锈钢流体管道",
+  "block.ssite.pipe_nonuple_stainless_steel_316l": "九合一316L钼不锈钢流体管道"
+}
