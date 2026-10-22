@@ -87,21 +87,21 @@
 > **设计目标**：利用 GT6 原版已有的 `Ocean`、`Saltwater`、`Brine`、`DistW`、`Sewage`、`Sludge` 和现成机器（`bath`、`mixer`、`autoclave`、`distillery`、`distillationtower`、`drying`、`centrifuge`、`electrolyzer`），做一条层层递进的水处理链与苦卤综合利用网。详细计划卡见 [`docs/card-plans/总览.md`](card-plans/总览.md)。
 
 ### 2.1 水净化阶梯清单
-- [ ] **1 级 · 絮凝澄清水 (`ClarifiedWater`)**
-  - [ ] 河水/原水/污水 + 明矾/硫酸铝（`Alum` / `VitriolOfClay`） $\xrightarrow{\text{化学浴槽 } \texttt{bath}}$ 澄清水 + **污泥 (`Sludge`)**（进干燥机/离心机回收粘土、生物质与痕量稀土）。
-- [ ] **2 级 · 软化/脱矿水 (`DemineralizedWater`)**
-  - [ ] 澄清水经纯碱软化与石英砂床过滤（`bath` + `QuartzSand` 催化保留），沉淀方解石/菱镁矿水垢并支持快速无垢蒸馏。
-- [ ] **3 级 · 去离子水 (`DeionizedWater`)**
-  - [ ] 通过**沸石分子筛 (`Zeolite`)**（未来与 M4 交联聚苯乙烯阴阳离子交换树脂联动）洗脱痕量金属离子，供湿法冶金与聚合反应使用。
-- [ ] **4 级 · 反渗透纯水 (`FilteredWater`)**
-  - [ ] 去离子水通过**醋酸纤维素 RO 膜 (`foil CelluloseAcetate`)** 在高压釜（`autoclave`）中高压反渗透过滤（膜组件循环使用）。
-- [ ] **5 级 · 电子级超纯水 (`UltrapureWater`)**
-  - [ ] 臭氧（`Ozone`）氧化脱除有机碳（TOC）+ 蓝宝石/钻石紫外透光灯窗（`mixer` + `lens` 催化保留）杀菌脱气，预留给未来的晶圆清洗与光刻线。
+- [x] **1 级 · 絮凝澄清水 (`ClarifiedWater`)**
+  - [x] 河水/原水/污水 + 明矾/硫酸铝（`Alum` / `VitriolOfClay`） $\xrightarrow{\text{化学浴槽 } \texttt{bath}}$ 澄清水 + **污泥 (`Sludge`)**（进干燥机/离心机回收粘土、生物质与痕量稀土）。
+- [x] **2 级 · 软化/脱矿水 (`DemineralizedWater`)**
+  - [x] 澄清水经纯碱软化与石英砂床过滤（`bath` + `QuartzSand` 催化保留），沉淀方解石/菱镁矿水垢并支持快速无垢蒸馏。
+- [x] **3 级 · 去离子水 (`DeionizedWater`)**
+  - [x] 通过**沸石分子筛 (`Zeolite`)**（未来与 M4 交联聚苯乙烯阴阳离子交换树脂联动）洗脱痕量金属离子，供湿法冶金与聚合反应使用。
+- [x] **4 级 · 反渗透纯水 (`FilteredWater`)**
+  - [x] 去离子水通过**醋酸纤维素 RO 膜 (`foil CelluloseAcetate`)** 在高压釜（`autoclave`）中高压反渗透过滤（膜组件循环使用）。
+- [x] **5 级 · 电子级超纯水 (`UltrapureWater`)**
+  - [x] 臭氧（`Ozone`）氧化脱除有机碳（TOC）+ 蓝宝石/钻石紫外透光灯窗（`mixer` + `lens` 催化保留）杀菌脱气，预留给未来的晶圆清洗与光刻线。
 
 ### 2.2 海水淡化与卤水（Brine）副产网
-- [ ] **海水浓缩成苦卤**：海水/盐水经蒸馏塔（或蒸馏室）浓缩产出蒸馏水 + 浓缩卤水（`Brine`）+ 食盐 + 石膏（`Gypsum`）。
-- [ ] **卤水除镁除钙**：生石灰消化制熟石灰（`CalciumHydroxide`），与苦卤和纯碱反应沉淀**氢氧化镁 (`MagnesiumHydroxide`)**（盐酸中和得 `MagnesiumChloride` 接通电解镁线）与方解石，得除杂卤水（`DecalcifiedBrine`）。
-- [ ] **卤水吹溴与提锂**：除杂卤水酸化后通入氯气（$\text{Cl}_2$ 置换 $\text{Br}_2$）吹出**粗溴蒸汽 (`CrudeBromine`)** + **富锂母液 (`LithiumRichBrine`)**；粗溴精馏得**液溴 (`Bromine`)** 与**碘 (`Iodine`)**（做四溴双酚 A 阻燃环氧必需！）；富锂母液加纯碱沉出**碳酸锂 (`LithiumCarbonate`)**，再经盐酸转化与熔盐电解得金属锂并回收氯气。
+- [x] **海水浓缩成苦卤**：海水/盐水经蒸馏塔（或蒸馏室）浓缩产出蒸馏水 + 浓缩卤水（`Brine`）+ 食盐 + 石膏（`Gypsum`）。
+- [x] **卤水除镁除钙**：生石灰消化制熟石灰（`CalciumHydroxide`），与苦卤和纯碱反应沉淀**氢氧化镁 (`MagnesiumHydroxide`)**（盐酸中和得 `MagnesiumChloride` 接通电解镁线）与方解石，得除杂卤水（`DecalcifiedBrine`）。
+- [x] **卤水吹溴与提锂**：除杂卤水酸化后通入氯气（$\text{Cl}_2$ 置换 $\text{Br}_2$）吹出**粗溴蒸汽 (`CrudeBromine`)** + **富锂母液 (`LithiumRichBrine`)**；粗溴精馏得**液溴 (`Bromine`)** 与**碘 (`Iodine`)**（做四溴双酚 A 阻燃环氧必需！）；富锂母液加纯碱沉出**碳酸锂 (`LithiumCarbonate`)**，再经盐酸转化与熔盐电解得金属锂并回收氯气。
 
 ---
 
