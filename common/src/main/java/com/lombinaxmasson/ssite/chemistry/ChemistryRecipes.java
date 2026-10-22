@@ -27,6 +27,7 @@ public final class ChemistryRecipes {
         slag();
         waterTreatment();
         waterPurification();
+        brineChain();
         if (!REJECTED.isEmpty()) {
             throw new IllegalStateException("ssite recipes rejected: " + REJECTED);
         }
@@ -219,6 +220,94 @@ public final class ChemistryRecipes {
                     fields("GenLiquid_UltrapureWater", "Oxygen"), amounts(4000, 375),
                     200, 120, null, new int[]{0});
         }
+    }
+
+    private static void brineChain() {
+        concentrateBrine();
+        removeMagnesiumCalcium();
+        blowBromine();
+        precipitateLithium();
+    }
+
+    private static void concentrateBrine() {
+        recipe("gt.recipe.distillationtower", "brine/ocean",
+                items(),
+                items(dust("Salt", 2), dust("Gypsum", 1)),
+                fields("Ocean"), amounts(10000),
+                fields("DistW", "Brine"), amounts(7500, 2000),
+                200, 48);
+        recipe("gt.recipe.distillationtower", "brine/saltwater",
+                items(),
+                items(dust("Salt", 1)),
+                fields("Saltwater"), amounts(5000),
+                fields("DistW", "Brine"), amounts(3500, 1000),
+                120, 32);
+        recipe("gt.recipe.distillery", "brine/ocean-early",
+                items(circuit(2)),
+                items(item("dustSmall", "Gypsum", 1)),
+                fields("Ocean"), amounts(2000),
+                fields("DistW", "Brine"), amounts(1400, 400),
+                100, 16);
+    }
+
+    private static void removeMagnesiumCalcium() {
+        recipe("gt.recipe.bath", "brine/slake-lime",
+                items(dust("Quicklime", 1)),
+                items(dust("CalciumHydroxide", 1)),
+                fields("Water"), amounts(1000),
+                null, null,
+                40, 8);
+        recipe("gt.recipe.bath", "brine/remove-mg-ca",
+                items(dust("CalciumHydroxide", 1), dust("SodiumCarbonate", 1)),
+                items(dust("MagnesiumHydroxide", 1), dust("Calcite", 1)),
+                fields("Brine"), amounts(4000),
+                fields("GenLiquid_DecalcifiedBrine"), amounts(3600),
+                120, 24);
+        recipe("gt.recipe.bath", "brine/magnesium-chloride",
+                items(dust("MagnesiumHydroxide", 1)),
+                items(dust("MagnesiumChloride", 1)),
+                fields("GenGas_HydrochloricAcid"), amounts(2000),
+                fields("DistW"), amounts(2000),
+                80, 16);
+    }
+
+    private static void blowBromine() {
+        recipe("gt.recipe.mixer", "brine/blow-bromine",
+                items(),
+                items(),
+                fields("GenLiquid_DecalcifiedBrine", "GenGas_Chlorine", "GenLiquid_SulfuricAcid"),
+                amounts(4000, 1000, 250),
+                fields("GenGas_CrudeBromine", "GenLiquid_LithiumRichBrine"), amounts(1000, 3000),
+                160, 48);
+        recipe("gt.recipe.distillationtower", "brine/bromine",
+                items(),
+                items(),
+                fields("GenGas_CrudeBromine"), amounts(2000),
+                fields("GenGas_Bromine", "GenGas_Iodine", "GenGas_Chlorine", "GenGas_HydrochloricAcid"),
+                amounts(1500, 200, 200, 100),
+                160, 64);
+        recipe("gt.recipe.distillery", "brine/bromine-early",
+                items(circuit(1)),
+                items(),
+                fields("GenGas_CrudeBromine"), amounts(1000),
+                fields("GenGas_Bromine", "GenGas_HydrochloricAcid"), amounts(700, 200),
+                120, 30);
+    }
+
+    private static void precipitateLithium() {
+        recipe("gt.recipe.bath", "brine/lithium-carbonate",
+                items(dust("SodiumCarbonate", 2)),
+                items(dust("LithiumCarbonate", 1), dust("Salt", 2)),
+                fields("GenLiquid_LithiumRichBrine"), amounts(3000),
+                fields("DistW"), amounts(2000),
+                140, 30);
+        recipe("gt.recipe.bath", "brine/lithium-chloride",
+                items(dust("LithiumCarbonate", 1)),
+                items(dust("LithiumChloride", 2)),
+                fields("GenGas_HydrochloricAcid"), amounts(2000),
+                fields("CarbonDioxide", "DistW"), amounts(1000, 1000),
+                100, 24);
+        // LiCl molten-salt electrolysis already exists in GT6CE; no separate row.
     }
 
     private static void recipe(String map, String label, ItemStack[] itemInputs, ItemStack[] itemOutputs,
