@@ -170,5 +170,17 @@
   "material.gt6ce.rawviton": "氟橡胶生胶",
   "material.gt6ce.viton": "氟橡胶",
   "material.gt6ce.perfluorosulfonylvinylether": "全氟磺酰基乙烯基醚",
-  "material.gt6ce.nafion": "全氟磺酸膜"
+  "material.gt6ce.nafion": "全氟磺酸膜",
+  "material.gt6ce.paradichlorobenzene": "对二氯苯",
+  "material.gt6ce.polyphenylenesulfide": "聚苯硫醚",
+  "material.gt6ce.dichlorodiphenylsulfone": "4,4'-二氯二苯砜",
+  "material.gt6ce.polysulfone": "聚砜",
+  "material.gt6ce.hydroquinone": "对苯二酚",
+  "material.gt6ce.fluorobenzene": "氟苯",
+  "material.gt6ce.difluorobenzophenone": "4,4'-二氟二苯酮",
+  "material.gt6ce.polyetheretherketone": "聚醚醚酮",
+  "material.gt6ce.durene": "均四甲苯",
+  "material.gt6ce.pyromelliticdianhydride": "均苯四甲酸二酐",
+  "material.gt6ce.oxydianiline": "4,4'-二氨基二苯醚",
+  "material.gt6ce.kapton": "聚酰亚胺"
 }

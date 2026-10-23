@@ -346,7 +346,43 @@ public final class PolymerMaterials {
                     .meltingPointKelvin(200).boilingPointKelvin(408).density(1.70F).liquid().build(),
             MaterialDeclaration.builder("Nafion")
                     .displayName("Nafion").color(0xF0F0E8).chemicalFormula("(C2F4)n(C7F13O5S)m")
-                    .meltingPointKelvin(470).density(1.98F).dust().polymer().build());
+                    .meltingPointKelvin(470).density(1.98F).dust().polymer().build(),
+            MaterialDeclaration.builder("ParaDichlorobenzene")
+                    .displayName("p-Dichlorobenzene").color(0xF8F8F0).chemicalFormula("C6H4Cl2")
+                    .meltingPointKelvin(326).boilingPointKelvin(447).density(1.25F).dust().build(),
+            MaterialDeclaration.builder("PolyphenyleneSulfide")
+                    .displayName("PPS").color(0xC8A060).chemicalFormula("(C6H4S)n")
+                    .meltingPointKelvin(553).density(1.35F).dust().polymer().build(),
+            MaterialDeclaration.builder("Dichlorodiphenylsulfone")
+                    .displayName("Dichlorodiphenyl Sulfone").color(0xF0F0F0).chemicalFormula("C12H8Cl2O2S")
+                    .meltingPointKelvin(421).boilingPointKelvin(670).density(1.50F).dust().build(),
+            MaterialDeclaration.builder("Polysulfone")
+                    .displayName("Polysulfone").color(0xE8D8A0).chemicalFormula("(C27H22O4S)n")
+                    .meltingPointKelvin(460).density(1.24F).dust().polymer().build(),
+            MaterialDeclaration.builder("Hydroquinone")
+                    .displayName("Hydroquinone").color(0xF8F8F0).chemicalFormula("C6H6O2")
+                    .meltingPointKelvin(445).boilingPointKelvin(560).density(1.30F).dust().build(),
+            MaterialDeclaration.builder("Fluorobenzene")
+                    .displayName("Fluorobenzene").color(0xE0F0F0).chemicalFormula("C6H5F")
+                    .meltingPointKelvin(229).boilingPointKelvin(358).density(1.02F).liquid().build(),
+            MaterialDeclaration.builder("Difluorobenzophenone")
+                    .displayName("Difluorobenzophenone").color(0xF0F0E0).chemicalFormula("C13H8F2O")
+                    .meltingPointKelvin(380).boilingPointKelvin(590).density(1.25F).dust().build(),
+            MaterialDeclaration.builder("PolyetherEtherKetone")
+                    .displayName("PEEK").color(0xC8B890).chemicalFormula("(C19H12O3)n")
+                    .meltingPointKelvin(616).density(1.32F).dust().polymer().build(),
+            MaterialDeclaration.builder("Durene")
+                    .displayName("Durene").color(0xF0F0E8).chemicalFormula("C10H14")
+                    .meltingPointKelvin(352).boilingPointKelvin(470).density(0.84F).dust().build(),
+            MaterialDeclaration.builder("PyromelliticDianhydride")
+                    .displayName("Pyromellitic Dianhydride").color(0xF8F8F8).chemicalFormula("C10H2O6")
+                    .meltingPointKelvin(559).boilingPointKelvin(670).density(1.68F).dust().build(),
+            MaterialDeclaration.builder("Oxydianiline")
+                    .displayName("Oxydianiline").color(0xE8D8C8).chemicalFormula("C12H12N2O")
+                    .meltingPointKelvin(461).boilingPointKelvin(663).density(1.32F).dust().build(),
+            MaterialDeclaration.builder("Kapton")
+                    .displayName("Kapton").color(0xD08820).chemicalFormula("(C22H10N2O5)n")
+                    .meltingPointKelvin(870).density(1.42F).dust().polymer().build());
 
     public static final List<MaterialFormRequest> FORMS = List.of();
 

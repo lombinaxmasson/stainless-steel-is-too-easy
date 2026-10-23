@@ -25,6 +25,7 @@ public final class PolymerRecipes {
         nylonCarbonFiber();
         aramids();
         fluoropolymers();
+        engineeringPlastics();
     }
 
     // ── Card 1: C1/C2 platform chemicals (methanol, formaldehyde, acetic acid, ethylene oxide/glycol, vinyl chloride/acetate) ──
@@ -1319,5 +1320,108 @@ public final class PolymerRecipes {
                 ChemistryRecipes.items(ChemistryRecipes.item("ingot", "Viton", 1)),
                 null, null, null, null,
                 240, 64, null, new int[]{3});
+    }
+
+    // ── Card 12: special engineering plastics (PPS, polysulfone, PEEK, Kapton) ──
+
+    private static void engineeringPlastics() {
+        pps();
+        polysulfone();
+        peek();
+        kapton();
+        polymerForming("PolyphenyleneSulfide", false);
+        polymerForming("Polysulfone", false);
+        polymerForming("PolyetherEtherKetone", false);
+        polymerForming("Kapton", false);
+    }
+
+    private static void pps() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c12/para-dichlorobenzene",
+                ChemistryRecipes.items(ChemistryRecipes.dust("FerricChloride", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("ParaDichlorobenzene", 1)),
+                ChemistryRecipes.fields("GenLiquid_Chlorobenzene", "GenGas_Chlorine"), ChemistryRecipes.amounts(1000, 1000),
+                ChemistryRecipes.fields("GenGas_HydrochloricAcid"), ChemistryRecipes.amounts(1000),
+                120, 32, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c12/pps",
+                ChemistryRecipes.items(ChemistryRecipes.dust("ParaDichlorobenzene", 1),
+                        ChemistryRecipes.dust("SodiumSulfide", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("PolyphenyleneSulfide", 1)),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("Saltwater"), ChemistryRecipes.amounts(1000),
+                240, 64);
+    }
+
+    private static void polysulfone() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c12/dichlorodiphenylsulfone",
+                ChemistryRecipes.items(),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Dichlorodiphenylsulfone", 1)),
+                ChemistryRecipes.fields("GenLiquid_Chlorobenzene", "GenGas_SulfurTrioxide"),
+                ChemistryRecipes.amounts(2000, 1000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                200, 48);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c12/polysulfone",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Dichlorodiphenylsulfone", 1),
+                        ChemistryRecipes.dust("BisphenolA", 1), ChemistryRecipes.dust("SodiumHydroxide", 2)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Polysulfone", 1)),
+                null, null,
+                ChemistryRecipes.fields("Saltwater"), ChemistryRecipes.amounts(2000),
+                240, 64);
+    }
+
+    private static void peek() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c12/hydroquinone",
+                ChemistryRecipes.items(ChemistryRecipes.dust("ZSM5", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Hydroquinone", 1)),
+                ChemistryRecipes.fields("GenLiquid_Phenol", "GenGas_HydrogenPeroxide"), ChemistryRecipes.amounts(1000, 1000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                200, 48, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c12/fluorobenzene",
+                ChemistryRecipes.items(ChemistryRecipes.dust("PotassiumFluoride", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Chlorobenzene"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("GenLiquid_Fluorobenzene"), ChemistryRecipes.amounts(1000),
+                200, 64);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c12/difluorobenzophenone",
+                ChemistryRecipes.items(ChemistryRecipes.dust("FerricChloride", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Difluorobenzophenone", 1)),
+                ChemistryRecipes.fields("GenLiquid_Fluorobenzene", "GenGas_Phosgene"), ChemistryRecipes.amounts(2000, 1000),
+                ChemistryRecipes.fields("GenGas_HydrochloricAcid"), ChemistryRecipes.amounts(2000),
+                200, 64, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c12/peek",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Difluorobenzophenone", 1),
+                        ChemistryRecipes.dust("Hydroquinone", 1), ChemistryRecipes.dust("PotassiumCarbonate", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("PolyetherEtherKetone", 1)),
+                null, null,
+                ChemistryRecipes.fields("CarbonDioxide", "DistW"), ChemistryRecipes.amounts(1000, 1000),
+                300, 128);
+    }
+
+    private static void kapton() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c12/durene",
+                ChemistryRecipes.items(ChemistryRecipes.dust("ZSM5", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Durene", 1)),
+                ChemistryRecipes.fields("GenLiquid_Xylene", "GenLiquid_Methanol"), ChemistryRecipes.amounts(1000, 2000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(2000),
+                200, 48, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c12/pyromellitic-dianhydride",
+                ChemistryRecipes.items(ChemistryRecipes.dust("VanadiumPentoxide", 1), ChemistryRecipes.dust("Durene", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("PyromelliticDianhydride", 1)),
+                ChemistryRecipes.fields("Oxygen"), ChemistryRecipes.amounts(6000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(6000),
+                300, 96, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c12/oxydianiline",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Nickel", 1),
+                        ChemistryRecipes.dust("ParaNitrochlorobenzene", 2), ChemistryRecipes.dust("SodiumHydroxide", 2)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Oxydianiline", 1)),
+                ChemistryRecipes.fields("Hydrogen"), ChemistryRecipes.amounts(6000),
+                ChemistryRecipes.fields("Saltwater"), ChemistryRecipes.amounts(2000),
+                300, 96, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c12/kapton",
+                ChemistryRecipes.items(ChemistryRecipes.dust("PyromelliticDianhydride", 1),
+                        ChemistryRecipes.dust("Oxydianiline", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Kapton", 1)),
+                null, null,
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(2000),
+                400, 128);
     }
 }

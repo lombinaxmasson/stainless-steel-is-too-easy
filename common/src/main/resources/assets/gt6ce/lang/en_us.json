@@ -170,5 +170,17 @@
   "material.gt6ce.rawviton": "Raw Viton",
   "material.gt6ce.viton": "Viton",
   "material.gt6ce.perfluorosulfonylvinylether": "Perfluorosulfonyl Vinyl Ether",
-  "material.gt6ce.nafion": "Nafion"
+  "material.gt6ce.nafion": "Nafion",
+  "material.gt6ce.paradichlorobenzene": "p-Dichlorobenzene",
+  "material.gt6ce.polyphenylenesulfide": "PPS",
+  "material.gt6ce.dichlorodiphenylsulfone": "Dichlorodiphenyl Sulfone",
+  "material.gt6ce.polysulfone": "Polysulfone",
+  "material.gt6ce.hydroquinone": "Hydroquinone",
+  "material.gt6ce.fluorobenzene": "Fluorobenzene",
+  "material.gt6ce.difluorobenzophenone": "Difluorobenzophenone",
+  "material.gt6ce.polyetheretherketone": "PEEK",
+  "material.gt6ce.durene": "Durene",
+  "material.gt6ce.pyromelliticdianhydride": "Pyromellitic Dianhydride",
+  "material.gt6ce.oxydianiline": "Oxydianiline",
+  "material.gt6ce.kapton": "Kapton"
 }
