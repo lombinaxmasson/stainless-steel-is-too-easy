@@ -15,52 +15,20 @@ public final class PetrochemRecipes {
 
     // ── Card 2: crude atmospheric distillation, naphtha steam cracking, platinum reforming ──
 
-    private static final String[] CRUDE_CUTS = {
-            "Propane", "Butane", "GenLiquid_Naphtha", "Petrol", "Kerosine",
-            "Diesel", "Fuel", "Lubricant", "Tar"};
-
     private static void crudeRefining() {
-        distill("Oil_Light", 50, 80, 300, 200, 150, 120, 50, 30, 20);
-        distill("Oil_Normal", 30, 50, 220, 150, 150, 180, 120, 50, 50);
-        distill("Oil_Medium", 30, 50, 220, 150, 150, 180, 120, 50, 50);
-        distill("Oil_Heavy", 10, 20, 120, 80, 120, 200, 250, 80, 120);
-        distill("Oil_ExtraHeavy", 0, 10, 60, 0, 80, 150, 300, 100, 300);
-        steamCrack("naphtha", "GenLiquid_Naphtha",
+        // GT6CE already distills every crude oil (ChemicalRecipeLoader); reuse its petrol.
+        steamCrack("petrol", "Petrol",
                 ChemistryRecipes.fields("Hydrogen", "Methane", "Ethylene", "Propylene", "GenGas_CFourFraction", "GenLiquid_PyrolysisGasoline"),
                 ChemistryRecipes.amounts(5, 15, 30, 15, 10, 20));
         steamCrack("raffinate", "GenLiquid_Raffinate",
                 ChemistryRecipes.fields("Hydrogen", "Methane", "Ethylene", "Propylene", "GenGas_CFourFraction", "GenLiquid_PyrolysisGasoline"),
                 ChemistryRecipes.amounts(5, 10, 40, 20, 10, 10));
-        ChemistryRecipes.recipe("gt.recipe.catalyticcracking", "reform/naphtha",
+        ChemistryRecipes.recipe("gt.recipe.catalyticcracking", "reform/petrol",
                 ChemistryRecipes.items(ChemistryRecipes.dust("Platinum", 1)),
                 ChemistryRecipes.items(),
-                ChemistryRecipes.fields("GenLiquid_Naphtha"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("Petrol"), ChemistryRecipes.amounts(1000),
                 ChemistryRecipes.fields("GenLiquid_Reformate", "Hydrogen", "LPG"), ChemistryRecipes.amounts(800, 300, 100),
                 160, 48, null, new int[]{0});
-    }
-
-    private static void distill(String oil, int propane, int butane, int naphtha, int petrol,
-                                int kerosine, int diesel, int fuel, int lubricant, int tar) {
-        int[] cuts = {propane, butane, naphtha, petrol, kerosine, diesel, fuel, lubricant, tar};
-        int nonZero = 0;
-        for (int cut : cuts) {
-            if (cut > 0) nonZero++;
-        }
-        String[] outFields = new String[nonZero];
-        int[] outAmounts = new int[nonZero];
-        int j = 0;
-        for (int i = 0; i < cuts.length; i++) {
-            if (cuts[i] > 0) {
-                outFields[j] = CRUDE_CUTS[i];
-                outAmounts[j] = cuts[i];
-                j++;
-            }
-        }
-        ChemistryRecipes.recipe("gt.recipe.distillationtower", "crude/" + oil,
-                ChemistryRecipes.items(), ChemistryRecipes.items(),
-                ChemistryRecipes.fields(oil), ChemistryRecipes.amounts(1000),
-                outFields, outAmounts,
-                200, 64);
     }
 
     private static void steamCrack(String label, String feed, String[] outFields, int[] outAmounts) {
@@ -257,10 +225,10 @@ public final class PetrochemRecipes {
 
     private static void cFiveChain() {
         ChemistryRecipes.recipe("gt.recipe.calciner", "c5/dimerize",
-                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.items(ChemistryRecipes.circuit(1)), ChemistryRecipes.items(),
                 ChemistryRecipes.fields("GenLiquid_CFiveFraction"), ChemistryRecipes.amounts(1000),
                 ChemistryRecipes.fields("GenLiquid_DimerizedCFiveFraction"), ChemistryRecipes.amounts(1000),
-                200, 32);
+                200, 32, null, new int[]{0});
         ChemistryRecipes.recipe("gt.recipe.distillationtower", "c5/distill",
                 ChemistryRecipes.items(), ChemistryRecipes.items(),
                 ChemistryRecipes.fields("GenLiquid_DimerizedCFiveFraction"), ChemistryRecipes.amounts(1000),
@@ -268,10 +236,10 @@ public final class PetrochemRecipes {
                 ChemistryRecipes.amounts(360, 380, 130, 130),
                 160, 64);
         ChemistryRecipes.recipe("gt.recipe.calciner", "c5/dcpd-crack",
-                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.items(ChemistryRecipes.circuit(1)), ChemistryRecipes.items(),
                 ChemistryRecipes.fields("GenLiquid_Dicyclopentadiene"), ChemistryRecipes.amounts(1000),
                 ChemistryRecipes.fields("GenLiquid_Cyclopentadiene"), ChemistryRecipes.amounts(2000),
-                160, 48);
+                160, 48, null, new int[]{0});
         ChemistryRecipes.recipe("gt.recipe.mixer", "c5/norbornene",
                 ChemistryRecipes.items(),
                 ChemistryRecipes.items(ChemistryRecipes.dust("Norbornene", 1)),

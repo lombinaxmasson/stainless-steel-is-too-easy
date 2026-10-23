@@ -3,6 +3,7 @@ package com.lombinaxmasson.ssite.material;
 import com.gregtech.gregtech.api.addon.MaterialDeclaration;
 import com.gregtech.gregtech.api.addon.MaterialFormRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /** M4 polymer materials, registered on top of {@link SsiteMaterials}. Each M4 card appends its own materials here. */
@@ -420,7 +421,30 @@ public final class PolymerMaterials {
                     .displayName("Polyisobutylene").color(0xE8E0C8).chemicalFormula("(C4H8)n")
                     .meltingPointKelvin(210).boilingPointKelvin(600).density(0.92F).liquid().build());
 
-    public static final List<MaterialFormRequest> FORMS = List.of();
+    public static final List<MaterialFormRequest> FORMS = buildForms();
+
+    private static List<MaterialFormRequest> buildForms() {
+        String[] polymers = {
+                "Polypropylene", "UltraHighMolecularWeightPolyethylene", "PolyvinylAlcohol",
+                "PolyvinylButyral", "EthyleneVinylAcetate", "Polystyrene", "PolymethylMethacrylate",
+                "PolyethyleneTerephthalate", "MetallizedPolyester", "Epoxy", "FiberReinforcedEpoxy",
+                "FlameRetardantLaminate", "Polyurethane", "Ebonite", "Polycaprolactam",
+                "Polyacrylonitrile", "CarbonFiber", "Nomex", "Kevlar", "PolyvinylideneFluoride",
+                "Nafion", "PolyphenyleneSulfide", "Polysulfone", "PolyetherEtherKetone", "Kapton"};
+        String[] wires = {
+                "UltraHighMolecularWeightPolyethylene", "PolyethyleneTerephthalate", "Polycaprolactam",
+                "Polyacrylonitrile", "CarbonFiber", "Nomex", "Kevlar", "GlassFiber",
+                "OxidizedPolyacrylonitrile"};
+        var forms = new ArrayList<MaterialFormRequest>();
+        for (String material : polymers) {
+            forms.add(new MaterialFormRequest(material, "plate"));
+            forms.add(new MaterialFormRequest(material, "foil"));
+        }
+        for (String material : wires) {
+            forms.add(new MaterialFormRequest(material, "wireFine"));
+        }
+        return List.copyOf(forms);
+    }
 
     private PolymerMaterials() {}
 }

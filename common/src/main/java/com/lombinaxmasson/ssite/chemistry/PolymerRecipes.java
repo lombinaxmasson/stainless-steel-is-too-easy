@@ -129,11 +129,11 @@ public final class PolymerRecipes {
 
     private static void vinylChloride() {
         ChemistryRecipes.recipe("gt.recipe.calciner", "c1/vinyl-chloride",
-                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.items(ChemistryRecipes.circuit(1)), ChemistryRecipes.items(),
                 ChemistryRecipes.fields("GenLiquid_Dichloroethane"), ChemistryRecipes.amounts(1000),
                 ChemistryRecipes.fields("GenGas_VinylChloride", "GenGas_HydrochloricAcid"),
                 ChemistryRecipes.amounts(1000, 1000),
-                160, 48);
+                160, 48, null, new int[]{0});
     }
 
     private static void vinylAcetate() {
@@ -166,7 +166,7 @@ public final class PolymerRecipes {
                 160, 48);
         ChemistryRecipes.recipe("gt.recipe.mixer", "c3/dichloropropanol-hypo",
                 ChemistryRecipes.items(), ChemistryRecipes.items(),
-                ChemistryRecipes.fields("GenLiquid_AllylChloride", "GenGas_Chlorine", "Water"),
+                ChemistryRecipes.fields("GenLiquid_AllylChloride", "GenGas_Chlorine", "DistW"),
                 ChemistryRecipes.amounts(1000, 1000, 1000),
                 ChemistryRecipes.fields("GenLiquid_Dichloropropanol", "GenGas_HydrochloricAcid"),
                 ChemistryRecipes.amounts(1000, 1000),
@@ -319,13 +319,12 @@ public final class PolymerRecipes {
 
     private static void polypropylene() {
         ChemistryRecipes.recipe("gt.recipe.mixer", "c3/polypropylene",
-                ChemistryRecipes.items(ChemistryRecipes.dust("MagnesiumChloride", 1),
-                        ChemistryRecipes.dust("Aluminium", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Aluminium", 1)),
                 ChemistryRecipes.items(ChemistryRecipes.dust("Polypropylene", 1)),
                 ChemistryRecipes.fields("GenLiquid_TitaniumTetrachloride", "Propylene"),
                 ChemistryRecipes.amounts(10, 1000),
                 null, null,
-                200, 64, null, new int[]{0, 1});
+                200, 64, null, new int[]{0});
     }
 
     private static void pvc() {
@@ -637,7 +636,7 @@ public final class PolymerRecipes {
                 null, null,
                 200, 16);
         ChemistryRecipes.recipe("gt.recipe.bath", "c6/bakelite-paper",
-                ChemistryRecipes.items(ChemistryRecipes.item("plate", "Paper", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("plateTiny", "Paper", 1)),
                 ChemistryRecipes.items(ChemistryRecipes.item("plate", "Bakelite", 1)),
                 ChemistryRecipes.fields("GenLiquid_PhenolicResin"), ChemistryRecipes.amounts(250),
                 null, null,
@@ -859,10 +858,11 @@ public final class PolymerRecipes {
                 ChemistryRecipes.fields("CarbonDioxide"), ChemistryRecipes.amounts(500),
                 160, 48);
         ChemistryRecipes.recipe("gt.recipe.calciner", "c8/carbon-black-thermal",
-                ChemistryRecipes.items(), ChemistryRecipes.items(ChemistryRecipes.dust("CarbonBlack", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.circuit(1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("CarbonBlack", 1)),
                 ChemistryRecipes.fields("Methane"), ChemistryRecipes.amounts(1000),
                 ChemistryRecipes.fields("Hydrogen"), ChemistryRecipes.amounts(2000),
-                160, 48);
+                160, 48, null, new int[]{0});
     }
 
     private static void zincOxide() {
@@ -876,11 +876,11 @@ public final class PolymerRecipes {
 
     private static void magnesiumOxide() {
         ChemistryRecipes.recipe("gt.recipe.calciner", "c8/magnesium-oxide",
-                ChemistryRecipes.items(ChemistryRecipes.dust("MagnesiumHydroxide", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.circuit(1), ChemistryRecipes.dust("MagnesiumHydroxide", 1)),
                 ChemistryRecipes.items(ChemistryRecipes.dust("MagnesiumOxide", 1)),
                 null, null,
                 ChemistryRecipes.fields("Steam"), ChemistryRecipes.amounts(1000),
-                120, 32);
+                120, 32, null, new int[]{0});
     }
 
     private static void rawRubbers() {
@@ -1221,16 +1221,16 @@ public final class PolymerRecipes {
                 ChemistryRecipes.amounts(1000, 2000),
                 200, 64, null, new int[]{0});
         ChemistryRecipes.recipe("gt.recipe.calciner", "c11/tetrafluoroethylene",
-                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.items(ChemistryRecipes.circuit(1)), ChemistryRecipes.items(),
                 ChemistryRecipes.fields("GenGas_Chlorodifluoromethane"), ChemistryRecipes.amounts(2000),
                 ChemistryRecipes.fields("GenGas_Tetrafluoroethylene", "GenGas_HydrochloricAcid"),
                 ChemistryRecipes.amounts(1000, 2000),
-                200, 96);
+                200, 96, null, new int[]{0});
         ChemistryRecipes.recipe("gt.recipe.calciner", "c11/hexafluoropropylene",
-                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.items(ChemistryRecipes.circuit(1)), ChemistryRecipes.items(),
                 ChemistryRecipes.fields("GenGas_Tetrafluoroethylene"), ChemistryRecipes.amounts(3000),
                 ChemistryRecipes.fields("GenGas_Hexafluoropropylene"), ChemistryRecipes.amounts(2000),
-                200, 96);
+                200, 96, null, new int[]{0});
     }
 
     private static void vinylideneFluoride() {
@@ -1251,11 +1251,11 @@ public final class PolymerRecipes {
                 ChemistryRecipes.amounts(1000, 2000),
                 200, 64, null, new int[]{0});
         ChemistryRecipes.recipe("gt.recipe.calciner", "c11/vinylidene-fluoride",
-                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.items(ChemistryRecipes.circuit(1)), ChemistryRecipes.items(),
                 ChemistryRecipes.fields("GenGas_Chlorodifluoroethane"), ChemistryRecipes.amounts(1000),
                 ChemistryRecipes.fields("GenGas_VinylideneFluoride", "GenGas_HydrochloricAcid"),
                 ChemistryRecipes.amounts(1000, 1000),
-                160, 64);
+                160, 64, null, new int[]{0});
     }
 
     private static void perfluorosulfonylVinylEther() {
