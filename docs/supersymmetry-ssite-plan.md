@@ -110,31 +110,33 @@
 > **设计目标**：接在炼油和蒸汽裂解后面，把混合馏分拆成高纯化学单体，并实现**石化内部副产物零浪费闭环**。
 
 ### 3.1 新增核心单体与中间流体清单
-- [ ] **芳烃抽提系**：重整油 (`Reformate`)、裂解汽油 (`PyrolysisGasoline`)、糠醛 (`Furfural`) 或环丁砜 (`Sulfolane`) 萃取剂、BTEX 芳烃混合物 (`BTEX`)、抽余油 (`Raffinate`)。
-- [ ] **BTX 与二甲苯三兄弟**：苯 (`Benzene`)、甲苯 (`Toluene`)、乙苯 (`Ethylbenzene`)、混合二甲苯 (`Xylene`)、**邻二甲苯 (`OrthoXylene`)**、**间二甲苯 (`MetaXylene`)**、**对二甲苯 (`ParaXylene`，流体+晶粉)**。
-- [ ] **C4 烯烃系**：混合丁烯 (`Butene`)、**1-丁烯 (`OneButene`)**、**2-丁烯 (`TwoButene`)**、**异丁烯 (`Isobutylene`)**、**丁二烯 (`Butadiene`)**。
-- [ ] **C5 馏分系**：C5 馏分 (`CFiveFraction`)、二聚 C5 馏分 (`DimerizedCFiveFraction`)、**异戊二烯 (`Isoprene`)**、**环戊二烯 (`Cyclopentadiene`)**、**双环戊二烯 (`Dicyclopentadiene` / DCPD)**、戊烷 (`Pentane`)、**降冰片烯 (`Norbornene` 粉)**。
-- [ ] **基础衍生物单体**：氯乙烯 (`VinylChloride`)、醋酸乙烯 (`VinylAcetate`)、环氧乙烷 (`EthyleneOxide`)、乙二醇 (`EthyleneGlycol`)、环氧氯丙烷 (`Epichlorohydrin`)、异丙苯 (`Cumene`)、苯酚 (`Phenol`)、丙酮 (`Acetone`)、**双酚 A (`BisphenolA` 粉)**、丙烯腈 (`Acrylonitrile`)、丙烯酸 (`AcrylicAcid`)、甲基丙烯酸甲酯 (`MMA`)、**邻苯二甲酸酐 (`PhthalicAnhydride` 粉)**、**对苯二甲酸 (`TerephthalicAcid` 粉)**、**间苯二甲酸 (`IsophthalicAcid` 粉)**、己内酰胺 (`Caprolactam` 粉)、MDI。
+- [x] **芳烃抽提系**：重整油 (`Reformate`)、裂解汽油 (`PyrolysisGasoline`)、糠醛 (`Furfural`) 或环丁砜 (`Sulfolane`) 萃取剂、BTEX 芳烃混合物 (`BTEX`)、抽余油 (`Raffinate`)。
+- [x] **BTX 与二甲苯三兄弟**：苯 (`Benzene`)、甲苯 (`Toluene`)、乙苯 (`Ethylbenzene`)、混合二甲苯 (`Xylene`)、**邻二甲苯 (`OrthoXylene`)**、**间二甲苯 (`MetaXylene`)**、**对二甲苯 (`ParaXylene`，流体+晶粉)**。
+- [x] **C4 烯烃系**：混合丁烯 (`Butene`)、**1-丁烯 (`OneButene`)**、**2-丁烯 (`TwoButene`)**、**异丁烯 (`Isobutylene`)**、**丁二烯 (`Butadiene`)**。
+- [x] **C5 馏分系**：C5 馏分 (`CFiveFraction`)、二聚 C5 馏分 (`DimerizedCFiveFraction`)、**异戊二烯 (`Isoprene`)**、**环戊二烯 (`Cyclopentadiene`)**、**双环戊二烯 (`Dicyclopentadiene` / DCPD)**、戊烷 (`Pentane`)、**降冰片烯 (`Norbornene` 粉)**。
+- [x] **基础衍生物单体（部分）**：异丙苯 (`Cumene`)、苯酚 (`Phenol`)、丙酮 (`Acetone`)、**双酚 A (`BisphenolA` 粉)** 已随 M3 注册；氯乙烯、醋酸乙烯、环氧乙烷、乙二醇、环氧氯丙烷、丙烯腈、丙烯酸、MMA、苯酐、PTA、间苯二甲酸、己内酰胺、MDI 移交 M4。
 
 ### 3.2 核心工艺与内部副产自循环清单
-- [ ] **BTX 溶剂抽提循环**：裂解汽油 / 重整油 + 糠醛 $\xrightarrow{\text{筛板塔/浴槽}}$ 芳烃萃取液 + **抽余油**（回裂解炉）+ **C5 馏分**；萃取液汽提回收糠醛，精馏得 **苯 + 甲苯 + 乙苯 + 混合二甲苯**。
-- [ ] **二甲苯分离与异构化闭环（经典设计！）**
-  - [ ] 混合二甲苯 $\xrightarrow{\text{蒸馏塔}}$ **邻二甲苯 (20%)** + 间/对二甲苯混液 (80%)。
-  - [ ] 间/对二甲苯混液 $\xrightarrow{\text{结晶坩埚 } \texttt{crystallisationcrucible}}$ **对二甲苯晶体 (25%)** + **间二甲苯母液 (75%)**。
-  - [ ] **间二甲苯** $\xrightarrow{\text{ZSM-5 分子筛催化异构化}}$ **100% 转回对二甲苯**（解决间二甲苯爆仓！）。
-- [ ] **甲苯消纳闭环**
-  - [ ] 路线 A（催化歧化）：甲苯 $\xrightarrow{\text{ZSM-5}}$ 苯 + 二甲苯混液。
-  - [ ] 路线 B（加氢脱烷基）：甲苯 + 氢气 $\rightarrow$ 苯 + 甲烷 + 少量**联苯 (`Biphenyl`)**（联苯氯化做多氯联苯变压器油）。
-- [ ] **C4 丁烯精馏与丁二烯**
-  - [ ] 混合丁烯 $\xrightarrow{\text{蒸馏塔}}$ **异丁烯 (50%) + 1-丁烯 (30%) + 2-丁烯 (20%)**。
-  - [ ] *非石油彩蛋路线*：乙醇 + 乙醛 $\xrightarrow{\text{钽催化剂}}$ **丁二烯 + 水**（Lebedev 法）。
-- [ ] **C5 馏分热二聚巧妙分离（免深冷提纯异戊二烯）**
-  - [ ] C5 馏分 $\xrightarrow{\text{加热器}}$ 二聚 C5（里面的环戊二烯自己聚合成高沸点的双环戊二烯 DCPD）。
-  - [ ] 二聚 C5 $\xrightarrow{\text{蒸馏塔}}$ **异戊二烯 (36%)** + **戊烷 (38%)** + **双环戊二烯 DCPD (13%)**。
-  - [ ] DCPD $\xrightarrow{\text{高温热解}}$ 2 份 **环戊二烯**（再与乙烯加成得**降冰片烯**）。
-  - [ ] *合成异戊二烯路线*：异丁烯 + 甲醛 $\rightarrow$ 二甲基二噁烷 $\xrightarrow{\text{固体磷酸催化裂解}}$ **异戊二烯** + 甲醛循环。
-- [ ] **异丙苯法制苯酚与双酚 A**
-  - [ ] 苯 + 丙烯 $\rightarrow$ 异丙苯 $\xrightarrow{+\text{O}_2}$ 过氧化氢异丙苯 $\xrightarrow{\text{酸解}}$ **苯酚 + 丙酮**（两样刚好在阳离子交换树脂催化下缩合成 **双酚 A**！）。
+- [x] **BTX 溶剂抽提循环**：裂解汽油 / 重整油 + 糠醛 $\xrightarrow{\text{筛板塔/浴槽}}$ 芳烃萃取液 + **抽余油**（回裂解炉）+ **C5 馏分**；萃取液汽提回收糠醛，精馏得 **苯 + 甲苯 + 乙苯 + 混合二甲苯**。
+- [x] **二甲苯分离与异构化闭环（经典设计！）**
+  - [x] 混合二甲苯 $\xrightarrow{\text{蒸馏塔}}$ **邻二甲苯 (20%)** + 间/对二甲苯混液 (80%)。
+  - [x] 间/对二甲苯混液 $\xrightarrow{\text{冷冻机 } \texttt{freezer}}$ **对二甲苯晶体 (25%)** + **间二甲苯母液 (75%)**（结晶坩埚无流体输出，改用冷冻机）。
+  - [x] **间二甲苯** $\xrightarrow{\text{ZSM-5 分子筛催化异构化}}$ **100% 转回对二甲苯**（解决间二甲苯爆仓！）。
+- [x] **甲苯消纳闭环**
+  - [x] 路线 A（催化歧化）：甲苯 $\xrightarrow{\text{ZSM-5}}$ 苯 + 二甲苯混液。
+  - [x] 路线 B（加氢脱烷基）：甲苯 + 氢气 $\rightarrow$ 苯 + 甲烷 + 少量**联苯 (`Biphenyl`)**（联苯氯化做多氯联苯变压器油）。
+- [x] **C4 丁烯精馏与丁二烯**
+  - [x] 混合丁烯 $\xrightarrow{\text{蒸馏塔}}$ **异丁烯 (50%) + 1-丁烯 (30%) + 2-丁烯 (20%)**。
+  - [x] *非石油彩蛋路线*：乙醇 + 乙醛 $\xrightarrow{\text{钽催化剂}}$ **丁二烯 + 水**（两步法 Ostromislensky，Lebedev 一步法不做）。
+- [x] **C5 馏分热二聚巧妙分离（免深冷提纯异戊二烯）**
+  - [x] C5 馏分 $\xrightarrow{\text{加热器}}$ 二聚 C5（里面的环戊二烯自己聚合成高沸点的双环戊二烯 DCPD）。
+  - [x] 二聚 C5 $\xrightarrow{\text{蒸馏塔}}$ **异戊二烯 (36%)** + **戊烷 (38%)** + **双环戊二烯 DCPD (13%)**。
+  - [x] DCPD $\xrightarrow{\text{高温热解}}$ 2 份 **环戊二烯**（再与乙烯加成得**降冰片烯**）。
+  - [ ] *合成异戊二烯路线*（Prins 法，移交 M4）：异丁烯 + 甲醛 $\rightarrow$ 二甲基二噁烷 $\xrightarrow{\text{固体磷酸催化裂解}}$ **异戊二烯** + 甲醛循环。
+- [x] **异丙苯法制苯酚与双酚 A**
+  - [x] 苯 + 丙烯 $\rightarrow$ 异丙苯 $\xrightarrow{+\text{O}_2}$ 过氧化氢异丙苯 $\xrightarrow{\text{酸解}}$ **苯酚 + 丙酮**（缩合成 **双酚 A**，M3 用盐酸催化，阳离子交换树脂路线移交 M4）。
+
+> **M3 偏差**：新增炼油前段卡（GT6CE 无原油蒸馏配方）；对二甲苯分离因结晶坩埚无流体输出改用冷冻机 `freezer`；Prins 法合成异戊二烯（缺甲醛/固体磷酸）与「基础衍生物单体」中氯乙烯等 13 种（各自需要整套上游）移交 M4；乙醇法丁二烯按两步法（Ostromislensky）实现。
 
 ---
 

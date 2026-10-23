@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
  * Fluid stacks differ by loader, so {@link FluidBridge} packs them.
  */
 public final class ChemistryRecipes {
-    private static final List<String> REJECTED = new ArrayList<>();
+    static final List<String> REJECTED = new ArrayList<>();
 
     private ChemistryRecipes() {}
 
@@ -28,6 +28,7 @@ public final class ChemistryRecipes {
         waterTreatment();
         waterPurification();
         brineChain();
+        PetrochemRecipes.add();
         if (!REJECTED.isEmpty()) {
             throw new IllegalStateException("ssite recipes rejected: " + REJECTED);
         }
@@ -310,7 +311,7 @@ public final class ChemistryRecipes {
         // LiCl molten-salt electrolysis already exists in GT6CE; no separate row.
     }
 
-    private static void recipe(String map, String label, ItemStack[] itemInputs, ItemStack[] itemOutputs,
+    static void recipe(String map, String label, ItemStack[] itemInputs, ItemStack[] itemOutputs,
                                String[] fluidInFields, int[] fluidInAmounts,
                                String[] fluidOutFields, int[] fluidOutAmounts,
                                long duration, long perTick) {
@@ -318,7 +319,7 @@ public final class ChemistryRecipes {
                 duration, perTick, null, null);
     }
 
-    private static void recipe(String map, String label, ItemStack[] itemInputs, ItemStack[] itemOutputs,
+    static void recipe(String map, String label, ItemStack[] itemInputs, ItemStack[] itemOutputs,
                                String[] fluidInFields, int[] fluidInAmounts,
                                String[] fluidOutFields, int[] fluidOutAmounts,
                                long duration, long perTick, int[] outputChances, int[] keptInputs) {
@@ -330,7 +331,7 @@ public final class ChemistryRecipes {
         }
     }
 
-    private static ItemStack item(String prefix, String material, int count) {
+    static ItemStack item(String prefix, String material, int count) {
         ItemStack stack = AddonItems.stack(prefix, material, count);
         if (stack.isEmpty()) {
             throw new IllegalStateException("ssite missing " + prefix + " " + material);
@@ -338,23 +339,23 @@ public final class ChemistryRecipes {
         return stack;
     }
 
-    private static ItemStack dust(String material, int count) {
+    static ItemStack dust(String material, int count) {
         return item("dust", material, count);
     }
 
-    private static ItemStack circuit(int n) {
+    static ItemStack circuit(int n) {
         return AddonItems.selectorTag(n);
     }
 
-    private static ItemStack[] items(ItemStack... stacks) {
+    static ItemStack[] items(ItemStack... stacks) {
         return stacks;
     }
 
-    private static String[] fields(String... names) {
+    static String[] fields(String... names) {
         return names;
     }
 
-    private static int[] amounts(int... values) {
+    static int[] amounts(int... values) {
         return values;
     }
 }
