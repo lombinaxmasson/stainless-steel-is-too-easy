@@ -95,5 +95,11 @@
   "material.gt6ce.chloromethylatedpolystyrene": "Chloromethylated Polystyrene",
   "material.gt6ce.cationexchangeresin": "Cation Exchange Resin",
   "material.gt6ce.anionexchangeresin": "Anion Exchange Resin",
-  "material.gt6ce.polymethylmethacrylate": "PMMA"
+  "material.gt6ce.polymethylmethacrylate": "PMMA",
+  "material.gt6ce.phthalicanhydride": "Phthalic Anhydride",
+  "material.gt6ce.terephthalicacid": "Purified Terephthalic Acid",
+  "material.gt6ce.isophthalicacid": "Isophthalic Acid",
+  "material.gt6ce.phosgene": "Phosgene",
+  "material.gt6ce.polyethyleneterephthalate": "PET",
+  "material.gt6ce.metallizedpolyester": "Metallized Polyester Film"
 }

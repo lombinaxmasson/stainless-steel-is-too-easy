@@ -95,5 +95,11 @@
   "material.gt6ce.chloromethylatedpolystyrene": "氯甲基化聚苯乙烯",
   "material.gt6ce.cationexchangeresin": "阳离子交换树脂",
   "material.gt6ce.anionexchangeresin": "阴离子交换树脂",
-  "material.gt6ce.polymethylmethacrylate": "有机玻璃"
+  "material.gt6ce.polymethylmethacrylate": "有机玻璃",
+  "material.gt6ce.phthalicanhydride": "邻苯二甲酸酐",
+  "material.gt6ce.terephthalicacid": "精对苯二甲酸",
+  "material.gt6ce.isophthalicacid": "间苯二甲酸",
+  "material.gt6ce.phosgene": "光气",
+  "material.gt6ce.polyethyleneterephthalate": "聚对苯二甲酸乙二醇酯",
+  "material.gt6ce.metallizedpolyester": "镀铝聚酯膜"
 }

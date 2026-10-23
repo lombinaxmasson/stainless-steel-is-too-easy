@@ -15,6 +15,7 @@ public final class PolymerRecipes {
         cThreePlatform();
         polyolefinVinyl();
         styreneIonExchange();
+        aromaticOxidationPolyester();
     }
 
     // ── Card 1: C1/C2 platform chemicals (methanol, formaldehyde, acetic acid, ethylene oxide/glycol, vinyl chloride/acetate) ──
@@ -508,5 +509,84 @@ public final class PolymerRecipes {
                 ChemistryRecipes.amounts(1000, 10),
                 null, null,
                 160, 32);
+    }
+
+    // ── Card 5: aromatic oxidation, phosgene, PET and polycarbonate ──
+
+    private static void aromaticOxidationPolyester() {
+        phthalicAnhydride();
+        terephthalicAcid();
+        isophthalicAcid();
+        phosgene();
+        pet();
+        polycarbonate();
+        metallizedPolyester();
+        polymerForming("PolyethyleneTerephthalate", true);
+    }
+
+    private static void phthalicAnhydride() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c5/phthalic-anhydride",
+                ChemistryRecipes.items(ChemistryRecipes.dust("VanadiumPentoxide", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("PhthalicAnhydride", 1)),
+                ChemistryRecipes.fields("GenLiquid_OrthoXylene", "Oxygen"), ChemistryRecipes.amounts(1000, 3000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(3000),
+                200, 64, null, new int[]{0});
+    }
+
+    private static void terephthalicAcid() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c5/terephthalic-acid",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Cobalt", 1), ChemistryRecipes.dust("Manganese", 1),
+                        ChemistryRecipes.dust("ParaXylene", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("TerephthalicAcid", 1)),
+                ChemistryRecipes.fields("GenLiquid_AceticAcid", "GenGas_Bromine", "Oxygen"),
+                ChemistryRecipes.amounts(100, 10, 3000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(2000),
+                300, 96, null, new int[]{0, 1});
+    }
+
+    private static void isophthalicAcid() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c5/isophthalic-acid",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Cobalt", 1), ChemistryRecipes.dust("Manganese", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("IsophthalicAcid", 1)),
+                ChemistryRecipes.fields("GenLiquid_MetaXylene", "GenLiquid_AceticAcid", "GenGas_Bromine", "Oxygen"),
+                ChemistryRecipes.amounts(1000, 100, 10, 3000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(2000),
+                300, 96, null, new int[]{0, 1});
+    }
+
+    private static void phosgene() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c5/phosgene",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Charcoal", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenGas_CarbonMonoxide", "GenGas_Chlorine"), ChemistryRecipes.amounts(1000, 1000),
+                ChemistryRecipes.fields("GenGas_Phosgene"), ChemistryRecipes.amounts(1000),
+                120, 48, null, new int[]{0});
+    }
+
+    private static void pet() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c5/pet",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Antimony", 1), ChemistryRecipes.dust("TerephthalicAcid", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("PolyethyleneTerephthalate", 1)),
+                ChemistryRecipes.fields("GenLiquid_EthyleneGlycol"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(2000),
+                240, 64, null, new int[]{0});
+    }
+
+    private static void polycarbonate() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c5/polycarbonate",
+                ChemistryRecipes.items(ChemistryRecipes.dust("BisphenolA", 1), ChemistryRecipes.dust("SodiumHydroxide", 2)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Polycarbonate", 1)),
+                ChemistryRecipes.fields("GenGas_Phosgene"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("Saltwater"), ChemistryRecipes.amounts(2000),
+                240, 64);
+    }
+
+    private static void metallizedPolyester() {
+        ChemistryRecipes.recipe("gt.recipe.laminator", "c5/metallized-polyester",
+                ChemistryRecipes.items(ChemistryRecipes.item("foil", "PolyethyleneTerephthalate", 1),
+                        ChemistryRecipes.item("foil", "Aluminium", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("foil", "MetallizedPolyester", 1)),
+                null, null, null, null,
+                100, 32);
     }
 }

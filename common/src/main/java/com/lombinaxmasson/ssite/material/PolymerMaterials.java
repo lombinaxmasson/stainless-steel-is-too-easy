@@ -121,7 +121,25 @@ public final class PolymerMaterials {
                     .meltingPointKelvin(573).density(1.10F).dust().build(),
             MaterialDeclaration.builder("PolymethylMethacrylate")
                     .displayName("PMMA").color(0xE0F0F8).chemicalFormula("(C5H8O2)n")
-                    .meltingPointKelvin(433).density(1.18F).dust().polymer().build());
+                    .meltingPointKelvin(433).density(1.18F).dust().polymer().build(),
+            MaterialDeclaration.builder("PhthalicAnhydride")
+                    .displayName("Phthalic Anhydride").color(0xF8F8F0).chemicalFormula("C8H4O3")
+                    .meltingPointKelvin(404).boilingPointKelvin(568).density(1.53F).dust().build(),
+            MaterialDeclaration.builder("TerephthalicAcid")
+                    .displayName("Purified Terephthalic Acid").color(0xFFFFFF).chemicalFormula("C8H6O4")
+                    .meltingPointKelvin(700).density(1.52F).dust().build(),
+            MaterialDeclaration.builder("IsophthalicAcid")
+                    .displayName("Isophthalic Acid").color(0xF8F8F8).chemicalFormula("C8H6O4")
+                    .meltingPointKelvin(618).density(1.53F).dust().build(),
+            MaterialDeclaration.builder("Phosgene")
+                    .displayName("Phosgene").color(0xE0F0D0).chemicalFormula("COCl2")
+                    .meltingPointKelvin(155).boilingPointKelvin(281).density(0.0043F).gas().build(),
+            MaterialDeclaration.builder("PolyethyleneTerephthalate")
+                    .displayName("PET").color(0xE8F0F0).chemicalFormula("(C10H8O4)n")
+                    .meltingPointKelvin(533).density(1.38F).dust().polymer().wires().build(),
+            MaterialDeclaration.builder("MetallizedPolyester")
+                    .displayName("Metallized Polyester Film").color(0xC8D0D8).chemicalFormula("(C10H8O4)nAl")
+                    .meltingPointKelvin(533).density(1.40F).polymer().build());
 
     public static final List<MaterialFormRequest> FORMS = List.of();
 
