@@ -11,6 +11,7 @@ import com.gregtech.gregtech.api.addon.MachineCasing;
 import com.gregtech.gregtech.api.addon.MachineFace;
 import com.gregtech.gregtech.api.addon.MachineIo;
 import com.gregtech.gregtech.api.addon.PartSlots;
+import com.gregtech.gregtech.api.addon.RecipeTable;
 import com.gregtech.gregtech.api.addon.StructureLayout;
 import com.gregtech.gregtech.api.addon.StructureRole;
 import com.lombinaxmasson.ssite.SsiteAddon;
@@ -20,6 +21,9 @@ import java.util.List;
 
 /** AOD converter machines, their one-block lid layout and the acid-proof 316L pipe. */
 public final class SsiteMachines implements AddonMachineContributor {
+    /** Display-only table: the converter refines in its behavior, not by crafting these rows. */
+    public static final String AOD_MAP = "ssite.recipe.aod";
+
     private static final MachineFace[] HOT_FACES = {
             MachineFace.BOTTOM, MachineFace.FRONT, MachineFace.LEFT, MachineFace.RIGHT, MachineFace.BACK};
     private static final MachineFace[] GAS_FACES = {
@@ -28,6 +32,22 @@ public final class SsiteMachines implements AddonMachineContributor {
     @Override
     public String addonId() {
         return SsiteAddon.MOD_ID;
+    }
+
+    @Override
+    public List<RecipeTable> recipeTables() {
+        return List.of(RecipeTable.machine(AOD_MAP)
+                .title("AOD Refining")
+                .gui("ssite:textures/gui/machines/aod")
+                .inputItems(4)
+                .outputItems(2)
+                .minimalInputItems(1)
+                .inputFluids(2)
+                .outputFluids(1)
+                .minimalInputFluids(1)
+                .minimalInputs(2)
+                .needsOutputs(true)
+                .build());
     }
 
     @Override
@@ -76,6 +96,7 @@ public final class SsiteMachines implements AddonMachineContributor {
                 .auxiliaryEnergy(EnergyInput.builder("KU", 64).anyPacket().capacity(64_000L)
                         .faces(HOT_FACES).build())
                 .gui("ssite:textures/gui/aod_converter.png")
+                .recipeMaps(AOD_MAP)
                 .item(44, 26, BehaviorMachine.SlotRole.INPUT)
                 .item(116, 26, BehaviorMachine.SlotRole.OUTPUT)
                 .fluid(8000, 152, 8, BehaviorMachine.SlotRole.INPUT)
