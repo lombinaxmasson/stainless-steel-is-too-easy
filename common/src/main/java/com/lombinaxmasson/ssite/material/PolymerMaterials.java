@@ -139,7 +139,46 @@ public final class PolymerMaterials {
                     .meltingPointKelvin(533).density(1.38F).dust().polymer().wires().build(),
             MaterialDeclaration.builder("MetallizedPolyester")
                     .displayName("Metallized Polyester Film").color(0xC8D0D8).chemicalFormula("(C10H8O4)nAl")
-                    .meltingPointKelvin(533).density(1.40F).polymer().build());
+                    .meltingPointKelvin(533).density(1.40F).polymer().build(),
+            MaterialDeclaration.builder("PhenolicResin")
+                    .displayName("Phenolic Resin").color(0xA05A28).chemicalFormula("(C7H6O)n")
+                    .meltingPointKelvin(300).boilingPointKelvin(450).density(1.20F).liquid().build(),
+            MaterialDeclaration.builder("GlassFiber")
+                    .displayName("Glass Fiber").color(0xF0F8F8).chemicalFormula("SiO2(B2O3)(CaO)")
+                    .meltingPointKelvin(1400).density(2.55F).dust().wires().build(),
+            MaterialDeclaration.builder("EpoxyResin")
+                    .displayName("DGEBA Epoxy Resin").color(0xE8D890).chemicalFormula("C21H24O4")
+                    .meltingPointKelvin(300).boilingPointKelvin(600).density(1.16F).liquid().build(),
+            MaterialDeclaration.builder("Epoxy")
+                    .displayName("Epoxy").color(0xC8B060).chemicalFormula("(C21H24O4)n")
+                    .meltingPointKelvin(450).density(1.20F).dust().polymer().build(),
+            MaterialDeclaration.builder("FiberReinforcedEpoxy")
+                    .displayName("Fiber-Reinforced Epoxy").color(0xB0B078).chemicalFormula("(C21H24O4)n(SiO2)")
+                    .meltingPointKelvin(450).density(1.90F).polymer().build(),
+            MaterialDeclaration.builder("TetrabromobisphenolA")
+                    .displayName("Tetrabromobisphenol A").color(0xF0E8E0).chemicalFormula("C15H12Br4O2")
+                    .meltingPointKelvin(454).boilingPointKelvin(589).density(2.18F).dust().build(),
+            MaterialDeclaration.builder("FlameRetardantEpoxyResin")
+                    .displayName("Brominated Epoxy Resin").color(0xD8C080).chemicalFormula("C21H20Br4O4")
+                    .meltingPointKelvin(320).boilingPointKelvin(650).density(1.70F).liquid().build(),
+            MaterialDeclaration.builder("FlameRetardantLaminate")
+                    .displayName("Flame-Retardant Epoxy Laminate").color(0x6E8C3A).chemicalFormula("(C21H20Br4O4)n(SiO2)")
+                    .meltingPointKelvin(450).density(1.85F).polymer().build(),
+            MaterialDeclaration.builder("Cresol")
+                    .displayName("Cresol").color(0xC8A878).chemicalFormula("C7H8O")
+                    .meltingPointKelvin(304).boilingPointKelvin(464).density(1.05F).liquid().build(),
+            MaterialDeclaration.builder("EpoxyCresolNovolac")
+                    .displayName("Epoxy Cresol Novolac").color(0xE0C890).chemicalFormula("(C10H12O2)n")
+                    .meltingPointKelvin(350).density(1.20F).dust().build(),
+            MaterialDeclaration.builder("PeraceticAcid")
+                    .displayName("Peracetic Acid").color(0xE8F0E0).chemicalFormula("CH3COOOH")
+                    .meltingPointKelvin(273).boilingPointKelvin(378).density(1.13F).liquid().build(),
+            MaterialDeclaration.builder("Tetrahydrobenzaldehyde")
+                    .displayName("Tetrahydrobenzaldehyde").color(0xF0E8C8).chemicalFormula("C7H10O")
+                    .meltingPointKelvin(177).boilingPointKelvin(437).density(0.94F).liquid().build(),
+            MaterialDeclaration.builder("CycloaliphaticEpoxy")
+                    .displayName("Cycloaliphatic Epoxy").color(0xF0F0E0).chemicalFormula("C14H20O4")
+                    .meltingPointKelvin(250).boilingPointKelvin(630).density(1.17F).liquid().build());
 
     public static final List<MaterialFormRequest> FORMS = List.of();
 

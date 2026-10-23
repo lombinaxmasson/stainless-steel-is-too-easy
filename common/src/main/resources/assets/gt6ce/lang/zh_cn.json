@@ -101,5 +101,18 @@
   "material.gt6ce.isophthalicacid": "间苯二甲酸",
   "material.gt6ce.phosgene": "光气",
   "material.gt6ce.polyethyleneterephthalate": "聚对苯二甲酸乙二醇酯",
-  "material.gt6ce.metallizedpolyester": "镀铝聚酯膜"
+  "material.gt6ce.metallizedpolyester": "镀铝聚酯膜",
+  "material.gt6ce.phenolicresin": "酚醛树脂液",
+  "material.gt6ce.glassfiber": "玻璃纤维",
+  "material.gt6ce.epoxyresin": "双酚 A 环氧树脂液",
+  "material.gt6ce.epoxy": "环氧树脂",
+  "material.gt6ce.fiberreinforcedepoxy": "玻璃纤维增强环氧",
+  "material.gt6ce.tetrabromobisphenola": "四溴双酚 A",
+  "material.gt6ce.flameretardantepoxyresin": "溴化环氧树脂液",
+  "material.gt6ce.flameretardantlaminate": "阻燃环氧层压板",
+  "material.gt6ce.cresol": "甲酚",
+  "material.gt6ce.epoxycresolnovolac": "邻甲酚醛环氧",
+  "material.gt6ce.peraceticacid": "过氧乙酸",
+  "material.gt6ce.tetrahydrobenzaldehyde": "四氢苯甲醛",
+  "material.gt6ce.cycloaliphaticepoxy": "脂环族环氧树脂"
 }

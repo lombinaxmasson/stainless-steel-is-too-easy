@@ -101,5 +101,18 @@
   "material.gt6ce.isophthalicacid": "Isophthalic Acid",
   "material.gt6ce.phosgene": "Phosgene",
   "material.gt6ce.polyethyleneterephthalate": "PET",
-  "material.gt6ce.metallizedpolyester": "Metallized Polyester Film"
+  "material.gt6ce.metallizedpolyester": "Metallized Polyester Film",
+  "material.gt6ce.phenolicresin": "Phenolic Resin",
+  "material.gt6ce.glassfiber": "Glass Fiber",
+  "material.gt6ce.epoxyresin": "DGEBA Epoxy Resin",
+  "material.gt6ce.epoxy": "Epoxy",
+  "material.gt6ce.fiberreinforcedepoxy": "Fiber-Reinforced Epoxy",
+  "material.gt6ce.tetrabromobisphenola": "Tetrabromobisphenol A",
+  "material.gt6ce.flameretardantepoxyresin": "Brominated Epoxy Resin",
+  "material.gt6ce.flameretardantlaminate": "Flame-Retardant Epoxy Laminate",
+  "material.gt6ce.cresol": "Cresol",
+  "material.gt6ce.epoxycresolnovolac": "Epoxy Cresol Novolac",
+  "material.gt6ce.peraceticacid": "Peracetic Acid",
+  "material.gt6ce.tetrahydrobenzaldehyde": "Tetrahydrobenzaldehyde",
+  "material.gt6ce.cycloaliphaticepoxy": "Cycloaliphatic Epoxy"
 }

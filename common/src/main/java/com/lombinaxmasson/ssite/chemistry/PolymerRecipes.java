@@ -16,6 +16,7 @@ public final class PolymerRecipes {
         polyolefinVinyl();
         styreneIonExchange();
         aromaticOxidationPolyester();
+        phenolicEpoxy();
     }
 
     // ── Card 1: C1/C2 platform chemicals (methanol, formaldehyde, acetic acid, ethylene oxide/glycol, vinyl chloride/acetate) ──
@@ -588,5 +589,147 @@ public final class PolymerRecipes {
                 ChemistryRecipes.items(ChemistryRecipes.item("foil", "MetallizedPolyester", 1)),
                 null, null, null, null,
                 100, 32);
+    }
+
+    // ── Card 6: phenolic resin, glass fiber, and the four epoxy resins ──
+
+    private static void phenolicEpoxy() {
+        phenolicResin();
+        glassFiber();
+        dgebaEpoxy();
+        brominatedEpoxy();
+        cresolNovolac();
+        cycloaliphaticEpoxy();
+        polymerForming("Epoxy", false);
+        ChemistryRecipes.recipe("gt.recipe.rollingmill", "forming/fiberreinforcedepoxy/foil",
+                ChemistryRecipes.items(ChemistryRecipes.item("plate", "FiberReinforcedEpoxy", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("foil", "FiberReinforcedEpoxy", 4)),
+                null, null, null, null,
+                100, 16);
+        ChemistryRecipes.recipe("gt.recipe.rollingmill", "forming/flameretardantlaminate/foil",
+                ChemistryRecipes.items(ChemistryRecipes.item("plate", "FlameRetardantLaminate", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("foil", "FlameRetardantLaminate", 4)),
+                null, null, null, null,
+                100, 16);
+    }
+
+    private static void phenolicResin() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c6/phenolic-resin",
+                ChemistryRecipes.items(ChemistryRecipes.item("dustTiny", "SodiumHydroxide", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Phenol", "GenGas_Formaldehyde"), ChemistryRecipes.amounts(1000, 1000),
+                ChemistryRecipes.fields("GenLiquid_PhenolicResin"), ChemistryRecipes.amounts(1000),
+                160, 32);
+        ChemistryRecipes.recipe("gt.recipe.coagulator", "c6/bakelite",
+                ChemistryRecipes.items(),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Bakelite", 1)),
+                ChemistryRecipes.fields("GenLiquid_PhenolicResin"), ChemistryRecipes.amounts(1000),
+                null, null,
+                200, 16);
+        ChemistryRecipes.recipe("gt.recipe.bath", "c6/bakelite-paper",
+                ChemistryRecipes.items(ChemistryRecipes.item("plate", "Paper", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("plate", "Bakelite", 1)),
+                ChemistryRecipes.fields("GenLiquid_PhenolicResin"), ChemistryRecipes.amounts(250),
+                null, null,
+                100, 16);
+    }
+
+    private static void glassFiber() {
+        ChemistryRecipes.recipe("gt.recipe.calciner", "c6/glass-fiber",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Glass", 4), ChemistryRecipes.dust("Borax", 1),
+                        ChemistryRecipes.dust("Quicklime", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("GlassFiber", 6)),
+                null, null, null, null,
+                300, 64);
+        ChemistryRecipes.recipe("gt.recipe.wiremill", "c6/glass-fiber-wire",
+                ChemistryRecipes.items(ChemistryRecipes.dust("GlassFiber", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("wireFine", "GlassFiber", 4)),
+                null, null, null, null,
+                100, 32);
+    }
+
+    private static void dgebaEpoxy() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c6/epoxy-resin",
+                ChemistryRecipes.items(ChemistryRecipes.dust("BisphenolA", 1), ChemistryRecipes.dust("SodiumHydroxide", 2)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Epichlorohydrin"), ChemistryRecipes.amounts(2000),
+                ChemistryRecipes.fields("GenLiquid_EpoxyResin", "Saltwater"), ChemistryRecipes.amounts(1000, 2000),
+                200, 48);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c6/epoxy-cure",
+                ChemistryRecipes.items(ChemistryRecipes.dust("PhthalicAnhydride", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Epoxy", 1)),
+                ChemistryRecipes.fields("GenLiquid_EpoxyResin"), ChemistryRecipes.amounts(1000),
+                null, null,
+                160, 32);
+        ChemistryRecipes.recipe("gt.recipe.bath", "c6/epoxy-glass-fiber",
+                ChemistryRecipes.items(ChemistryRecipes.item("wireFine", "GlassFiber", 8),
+                        ChemistryRecipes.dust("PhthalicAnhydride", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("plate", "FiberReinforcedEpoxy", 2)),
+                ChemistryRecipes.fields("GenLiquid_EpoxyResin"), ChemistryRecipes.amounts(1000),
+                null, null,
+                200, 48);
+    }
+
+    private static void brominatedEpoxy() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c6/tetrabromobisphenol-a",
+                ChemistryRecipes.items(ChemistryRecipes.dust("BisphenolA", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("TetrabromobisphenolA", 1)),
+                ChemistryRecipes.fields("GenGas_Bromine", "GenGas_HydrogenPeroxide"),
+                ChemistryRecipes.amounts(2000, 2000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(4000),
+                200, 48);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c6/flame-retardant-epoxy-resin",
+                ChemistryRecipes.items(ChemistryRecipes.dust("TetrabromobisphenolA", 1),
+                        ChemistryRecipes.dust("SodiumHydroxide", 2)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Epichlorohydrin"), ChemistryRecipes.amounts(2000),
+                ChemistryRecipes.fields("GenLiquid_FlameRetardantEpoxyResin", "Saltwater"),
+                ChemistryRecipes.amounts(1000, 2000),
+                200, 48);
+        ChemistryRecipes.recipe("gt.recipe.bath", "c6/flame-retardant-laminate",
+                ChemistryRecipes.items(ChemistryRecipes.item("wireFine", "GlassFiber", 8),
+                        ChemistryRecipes.dust("PhthalicAnhydride", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("plate", "FlameRetardantLaminate", 2)),
+                ChemistryRecipes.fields("GenLiquid_FlameRetardantEpoxyResin"), ChemistryRecipes.amounts(1000),
+                null, null,
+                200, 64);
+    }
+
+    private static void cresolNovolac() {
+        ChemistryRecipes.recipe("gt.recipe.distillery", "c6/cresol",
+                ChemistryRecipes.items(ChemistryRecipes.circuit(4)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("Oil_Creosote"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("GenLiquid_Cresol", "GenLiquid_Phenol"), ChemistryRecipes.amounts(300, 200),
+                120, 32, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c6/epoxy-cresol-novolac",
+                ChemistryRecipes.items(ChemistryRecipes.dust("SodiumHydroxide", 2)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("EpoxyCresolNovolac", 1)),
+                ChemistryRecipes.fields("GenLiquid_Cresol", "GenGas_Formaldehyde", "GenLiquid_Epichlorohydrin"),
+                ChemistryRecipes.amounts(1000, 1000, 2000),
+                ChemistryRecipes.fields("Saltwater"), ChemistryRecipes.amounts(2000),
+                240, 64);
+    }
+
+    private static void cycloaliphaticEpoxy() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c6/peracetic-acid",
+                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_AceticAcid", "GenGas_HydrogenPeroxide", "GenLiquid_SulfuricAcid"),
+                ChemistryRecipes.amounts(1000, 1000, 10),
+                ChemistryRecipes.fields("GenLiquid_PeraceticAcid", "DistW"), ChemistryRecipes.amounts(1000, 1000),
+                120, 32);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c6/tetrahydrobenzaldehyde",
+                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenGas_Butadiene", "GenLiquid_Acrolein"), ChemistryRecipes.amounts(1000, 1000),
+                ChemistryRecipes.fields("GenLiquid_Tetrahydrobenzaldehyde"), ChemistryRecipes.amounts(1000),
+                160, 32);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c6/cycloaliphatic-epoxy",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Aluminium", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Tetrahydrobenzaldehyde", "GenLiquid_PeraceticAcid"),
+                ChemistryRecipes.amounts(2000, 2000),
+                ChemistryRecipes.fields("GenLiquid_CycloaliphaticEpoxy", "GenLiquid_AceticAcid"),
+                ChemistryRecipes.amounts(1000, 2000),
+                240, 64, null, new int[]{0});
     }
 }
