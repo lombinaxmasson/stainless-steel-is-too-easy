@@ -122,5 +122,22 @@
   "material.gt6ce.polyetherpolyol": "Polyether Polyol",
   "material.gt6ce.polyurethane": "Polyurethane",
   "material.gt6ce.petroleumresin": "Petroleum Resin",
-  "material.gt6ce.hydrogenatedpetroleumresin": "Hydrogenated Petroleum Resin"
+  "material.gt6ce.hydrogenatedpetroleumresin": "Hydrogenated Petroleum Resin",
+  "material.gt6ce.carbonblack": "Carbon Black",
+  "material.gt6ce.zincoxide": "Zinc Oxide",
+  "material.gt6ce.magnesiumoxide": "Magnesium Oxide",
+  "material.gt6ce.rawpolyisoprene": "Raw Polyisoprene",
+  "material.gt6ce.rawstyrenebutadienerubber": "Raw SBR",
+  "material.gt6ce.rawnitrilerubber": "Raw NBR",
+  "material.gt6ce.dichlorobutene": "Dichlorobutene",
+  "material.gt6ce.chloroprene": "Chloroprene",
+  "material.gt6ce.rawneoprene": "Raw Neoprene",
+  "material.gt6ce.chloromethane": "Chloromethane",
+  "material.gt6ce.dimethyldichlorosilane": "Dimethyldichlorosilane",
+  "material.gt6ce.polydimethylsiloxane": "Polydimethylsiloxane",
+  "material.gt6ce.styrenebutadienerubber": "Styrene-Butadiene Rubber",
+  "material.gt6ce.nitrilerubber": "Nitrile Rubber",
+  "material.gt6ce.neoprene": "Neoprene",
+  "material.gt6ce.siliconerubber": "Silicone Rubber",
+  "material.gt6ce.ebonite": "Ebonite"
 }

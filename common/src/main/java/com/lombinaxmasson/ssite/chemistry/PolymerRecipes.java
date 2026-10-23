@@ -21,6 +21,7 @@ public final class PolymerRecipes {
         aromaticOxidationPolyester();
         phenolicEpoxy();
         polyurethaneResin();
+        rubberVulcanization();
     }
 
     // ── Card 1: C1/C2 platform chemicals (methanol, formaldehyde, acetic acid, ethylene oxide/glycol, vinyl chloride/acetate) ──
@@ -316,7 +317,7 @@ public final class PolymerRecipes {
                 ChemistryRecipes.items(ChemistryRecipes.dust("MagnesiumChloride", 1),
                         ChemistryRecipes.dust("Aluminium", 1)),
                 ChemistryRecipes.items(ChemistryRecipes.dust("Polypropylene", 1)),
-                ChemistryRecipes.fields("GenMolten_TitaniumTetrachloride", "Propylene"),
+                ChemistryRecipes.fields("GenLiquid_TitaniumTetrachloride", "Propylene"),
                 ChemistryRecipes.amounts(10, 1000),
                 null, null,
                 200, 64, null, new int[]{0, 1});
@@ -832,5 +833,157 @@ public final class PolymerRecipes {
                 ChemistryRecipes.fields("Hydrogen"), ChemistryRecipes.amounts(1000),
                 null, null,
                 160, 48, null, new int[]{0});
+    }
+
+    // ── Card 8: synthetic rubber, silicone rubber, and vulcanization ──
+
+    private static void rubberVulcanization() {
+        carbonBlack();
+        zincOxide();
+        magnesiumOxide();
+        rawRubbers();
+        silicones();
+        vulcanize();
+        polymerForming("Ebonite", false);
+    }
+
+    private static void carbonBlack() {
+        ChemistryRecipes.recipe("gt.recipe.calciner", "c8/carbon-black-furnace",
+                ChemistryRecipes.items(), ChemistryRecipes.items(ChemistryRecipes.dust("CarbonBlack", 2)),
+                ChemistryRecipes.fields("Fuel", "Oxygen"), ChemistryRecipes.amounts(1000, 500),
+                ChemistryRecipes.fields("CarbonDioxide"), ChemistryRecipes.amounts(500),
+                160, 48);
+        ChemistryRecipes.recipe("gt.recipe.calciner", "c8/carbon-black-thermal",
+                ChemistryRecipes.items(), ChemistryRecipes.items(ChemistryRecipes.dust("CarbonBlack", 1)),
+                ChemistryRecipes.fields("Methane"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("Hydrogen"), ChemistryRecipes.amounts(2000),
+                160, 48);
+    }
+
+    private static void zincOxide() {
+        ChemistryRecipes.recipe("gt.recipe.roaster", "c8/zinc-oxide",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Zinc", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("ZincOxide", 1)),
+                ChemistryRecipes.fields("Oxygen"), ChemistryRecipes.amounts(1000),
+                null, null,
+                120, 32);
+    }
+
+    private static void magnesiumOxide() {
+        ChemistryRecipes.recipe("gt.recipe.calciner", "c8/magnesium-oxide",
+                ChemistryRecipes.items(ChemistryRecipes.dust("MagnesiumHydroxide", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("MagnesiumOxide", 1)),
+                null, null,
+                ChemistryRecipes.fields("Steam"), ChemistryRecipes.amounts(1000),
+                120, 32);
+    }
+
+    private static void rawRubbers() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c8/raw-polyisoprene",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Aluminium", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("RawPolyisoprene", 1)),
+                ChemistryRecipes.fields("GenLiquid_TitaniumTetrachloride", "GenLiquid_Isoprene"),
+                ChemistryRecipes.amounts(10, 1000),
+                null, null,
+                200, 64, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c8/raw-sbr",
+                ChemistryRecipes.items(), ChemistryRecipes.items(ChemistryRecipes.dust("RawStyreneButadieneRubber", 1)),
+                ChemistryRecipes.fields("GenGas_Butadiene", "GenLiquid_Styrene", "GenLiquid_DeionizedWater",
+                        "GenLiquid_CumeneHydroperoxide"),
+                ChemistryRecipes.amounts(750, 250, 1000, 10),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                200, 48);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c8/raw-nbr",
+                ChemistryRecipes.items(), ChemistryRecipes.items(ChemistryRecipes.dust("RawNitrileRubber", 1)),
+                ChemistryRecipes.fields("GenGas_Butadiene", "GenLiquid_Acrylonitrile", "GenLiquid_DeionizedWater",
+                        "GenLiquid_CumeneHydroperoxide"),
+                ChemistryRecipes.amounts(700, 300, 1000, 10),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                200, 48);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c8/dichlorobutene",
+                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenGas_Butadiene", "GenGas_Chlorine"), ChemistryRecipes.amounts(1000, 1000),
+                ChemistryRecipes.fields("GenLiquid_Dichlorobutene"), ChemistryRecipes.amounts(1000),
+                120, 32);
+        ChemistryRecipes.recipe("gt.recipe.bath", "c8/chloroprene",
+                ChemistryRecipes.items(ChemistryRecipes.dust("SodiumHydroxide", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Salt", 1)),
+                ChemistryRecipes.fields("GenLiquid_Dichlorobutene"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("GenLiquid_Chloroprene", "DistW"), ChemistryRecipes.amounts(1000, 1000),
+                120, 32);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c8/raw-neoprene",
+                ChemistryRecipes.items(), ChemistryRecipes.items(ChemistryRecipes.dust("RawNeoprene", 1)),
+                ChemistryRecipes.fields("GenLiquid_Chloroprene", "GenLiquid_DeionizedWater",
+                        "GenLiquid_CumeneHydroperoxide"),
+                ChemistryRecipes.amounts(1000, 1000, 10),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                200, 48);
+    }
+
+    private static void silicones() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c8/chloromethane",
+                ChemistryRecipes.items(ChemistryRecipes.circuit(1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Methanol", "GenGas_HydrochloricAcid"),
+                ChemistryRecipes.amounts(1000, 1000),
+                ChemistryRecipes.fields("GenGas_Chloromethane", "DistW"), ChemistryRecipes.amounts(1000, 1000),
+                120, 32, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c8/dimethyldichlorosilane",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Copper", 1), ChemistryRecipes.dust("Silicon", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenGas_Chloromethane"), ChemistryRecipes.amounts(2000),
+                ChemistryRecipes.fields("GenLiquid_Dimethyldichlorosilane"), ChemistryRecipes.amounts(1000),
+                200, 64, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c8/polydimethylsiloxane",
+                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Dimethyldichlorosilane", "DistW"), ChemistryRecipes.amounts(1000, 1000),
+                ChemistryRecipes.fields("GenLiquid_Polydimethylsiloxane", "GenGas_HydrochloricAcid"),
+                ChemistryRecipes.amounts(1000, 2000),
+                160, 32);
+    }
+
+    private static void vulcanize() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c8/vulcanize-polyisoprene",
+                ChemistryRecipes.items(ChemistryRecipes.dust("RawPolyisoprene", 1),
+                        ChemistryRecipes.item("dustSmall", "CarbonBlack", 1),
+                        ChemistryRecipes.item("dustTiny", "Sulfur", 1),
+                        ChemistryRecipes.dust("ZincOxide", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("ingot", "Rubber", 1)),
+                null, null, null, null,
+                200, 48, null, new int[]{3});
+        vulcanizeStandard("RawStyreneButadieneRubber", "StyreneButadieneRubber");
+        vulcanizeStandard("RawNitrileRubber", "NitrileRubber");
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c8/vulcanize-neoprene",
+                ChemistryRecipes.items(ChemistryRecipes.dust("RawNeoprene", 1),
+                        ChemistryRecipes.item("dustSmall", "CarbonBlack", 1),
+                        ChemistryRecipes.dust("MagnesiumOxide", 1),
+                        ChemistryRecipes.dust("ZincOxide", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("ingot", "Neoprene", 1)),
+                null, null, null, null,
+                200, 48, null, new int[]{2, 3});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c8/vulcanize-silicone",
+                ChemistryRecipes.items(ChemistryRecipes.dust("SiliconDioxide", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("ingot", "SiliconeRubber", 1)),
+                ChemistryRecipes.fields("GenLiquid_Polydimethylsiloxane", "GenLiquid_CumeneHydroperoxide"),
+                ChemistryRecipes.amounts(1000, 10),
+                null, null,
+                200, 48);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c8/ebonite",
+                ChemistryRecipes.items(ChemistryRecipes.circuit(1), ChemistryRecipes.dust("RawPolyisoprene", 1),
+                        ChemistryRecipes.dust("Sulfur", 1), ChemistryRecipes.dust("ZincOxide", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Ebonite", 1)),
+                null, null, null, null,
+                200, 48, null, new int[]{0, 3});
+    }
+
+    private static void vulcanizeStandard(String raw, String cured) {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c8/vulcanize-" + raw.toLowerCase(),
+                ChemistryRecipes.items(ChemistryRecipes.dust(raw, 1),
+                        ChemistryRecipes.item("dustSmall", "CarbonBlack", 1),
+                        ChemistryRecipes.item("dustTiny", "Sulfur", 1),
+                        ChemistryRecipes.dust("ZincOxide", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("ingot", cured, 1)),
+                null, null, null, null,
+                200, 48, null, new int[]{3});
     }
 }

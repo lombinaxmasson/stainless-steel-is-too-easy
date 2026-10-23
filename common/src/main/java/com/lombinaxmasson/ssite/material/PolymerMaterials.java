@@ -202,7 +202,58 @@ public final class PolymerMaterials {
                     .meltingPointKelvin(370).density(1.04F).dust().build(),
             MaterialDeclaration.builder("HydrogenatedPetroleumResin")
                     .displayName("Hydrogenated Petroleum Resin").color(0xF8F0D8).chemicalFormula("(C10H16)n")
-                    .meltingPointKelvin(380).density(1.00F).dust().build());
+                    .meltingPointKelvin(380).density(1.00F).dust().build(),
+            MaterialDeclaration.builder("CarbonBlack")
+                    .displayName("Carbon Black").color(0x141414).chemicalFormula("C")
+                    .meltingPointKelvin(3800).density(1.8F).dust().build(),
+            MaterialDeclaration.builder("ZincOxide")
+                    .displayName("Zinc Oxide").color(0xF8F8F8).chemicalFormula("ZnO")
+                    .meltingPointKelvin(2247).density(5.61F).dust().build(),
+            MaterialDeclaration.builder("MagnesiumOxide")
+                    .displayName("Magnesium Oxide").color(0xF0F0F0).chemicalFormula("MgO")
+                    .meltingPointKelvin(3125).density(3.58F).dust().build(),
+            MaterialDeclaration.builder("RawPolyisoprene")
+                    .displayName("Raw Polyisoprene").color(0xC8B898).chemicalFormula("(C5H8)n")
+                    .meltingPointKelvin(300).density(0.91F).dust().build(),
+            MaterialDeclaration.builder("RawStyreneButadieneRubber")
+                    .displayName("Raw SBR").color(0xB8A890).chemicalFormula("(C8H8)(C4H6)n")
+                    .meltingPointKelvin(300).density(0.94F).dust().build(),
+            MaterialDeclaration.builder("RawNitrileRubber")
+                    .displayName("Raw NBR").color(0xC0A878).chemicalFormula("(C3H3N)(C4H6)n")
+                    .meltingPointKelvin(300).density(1.00F).dust().build(),
+            MaterialDeclaration.builder("Dichlorobutene")
+                    .displayName("Dichlorobutene").color(0xE0E0B8).chemicalFormula("C4H6Cl2")
+                    .meltingPointKelvin(225).boilingPointKelvin(428).density(1.15F).liquid().build(),
+            MaterialDeclaration.builder("Chloroprene")
+                    .displayName("Chloroprene").color(0xE8E8C0).chemicalFormula("C4H5Cl")
+                    .meltingPointKelvin(143).boilingPointKelvin(332).density(0.96F).liquid().build(),
+            MaterialDeclaration.builder("RawNeoprene")
+                    .displayName("Raw Neoprene").color(0xD0C8A0).chemicalFormula("(C4H5Cl)n")
+                    .meltingPointKelvin(320).density(1.23F).dust().build(),
+            MaterialDeclaration.builder("Chloromethane")
+                    .displayName("Chloromethane").color(0xD8F0D8).chemicalFormula("CH3Cl")
+                    .meltingPointKelvin(176).boilingPointKelvin(249).density(0.0023F).gas().build(),
+            MaterialDeclaration.builder("Dimethyldichlorosilane")
+                    .displayName("Dimethyldichlorosilane").color(0xE0E8E8).chemicalFormula("(CH3)2SiCl2")
+                    .meltingPointKelvin(197).boilingPointKelvin(343).density(1.07F).liquid().build(),
+            MaterialDeclaration.builder("Polydimethylsiloxane")
+                    .displayName("Polydimethylsiloxane").color(0xE8F0F8).chemicalFormula("((CH3)2SiO)n")
+                    .meltingPointKelvin(233).boilingPointKelvin(500).density(0.97F).liquid().build(),
+            MaterialDeclaration.builder("StyreneButadieneRubber")
+                    .displayName("Styrene-Butadiene Rubber").color(0x2A2A2A).chemicalFormula("(C8H8)(C4H6)nS")
+                    .meltingPointKelvin(450).density(1.10F).metal().build(),
+            MaterialDeclaration.builder("NitrileRubber")
+                    .displayName("Nitrile Rubber").color(0x2E2A26).chemicalFormula("(C3H3N)(C4H6)nS")
+                    .meltingPointKelvin(450).density(1.15F).metal().build(),
+            MaterialDeclaration.builder("Neoprene")
+                    .displayName("Neoprene").color(0x262626).chemicalFormula("(C4H5Cl)n")
+                    .meltingPointKelvin(450).density(1.35F).metal().build(),
+            MaterialDeclaration.builder("SiliconeRubber")
+                    .displayName("Silicone Rubber").color(0xD8D8D8).chemicalFormula("((CH3)2SiO)n")
+                    .meltingPointKelvin(450).density(1.15F).metal().build(),
+            MaterialDeclaration.builder("Ebonite")
+                    .displayName("Ebonite").color(0x1A1410).chemicalFormula("(C5H8)nS")
+                    .meltingPointKelvin(450).density(1.15F).dust().polymer().build());
 
     public static final List<MaterialFormRequest> FORMS = List.of();
 

@@ -122,5 +122,22 @@
   "material.gt6ce.polyetherpolyol": "聚醚多元醇",
   "material.gt6ce.polyurethane": "聚氨酯",
   "material.gt6ce.petroleumresin": "石油树脂",
-  "material.gt6ce.hydrogenatedpetroleumresin": "氢化石油树脂"
+  "material.gt6ce.hydrogenatedpetroleumresin": "氢化石油树脂",
+  "material.gt6ce.carbonblack": "炭黑",
+  "material.gt6ce.zincoxide": "氧化锌",
+  "material.gt6ce.magnesiumoxide": "氧化镁",
+  "material.gt6ce.rawpolyisoprene": "聚异戊二烯生胶",
+  "material.gt6ce.rawstyrenebutadienerubber": "丁苯生胶",
+  "material.gt6ce.rawnitrilerubber": "丁腈生胶",
+  "material.gt6ce.dichlorobutene": "二氯丁烯",
+  "material.gt6ce.chloroprene": "氯丁二烯",
+  "material.gt6ce.rawneoprene": "氯丁生胶",
+  "material.gt6ce.chloromethane": "一氯甲烷",
+  "material.gt6ce.dimethyldichlorosilane": "二甲基二氯硅烷",
+  "material.gt6ce.polydimethylsiloxane": "二甲基硅油",
+  "material.gt6ce.styrenebutadienerubber": "丁苯橡胶",
+  "material.gt6ce.nitrilerubber": "丁腈橡胶",
+  "material.gt6ce.neoprene": "氯丁橡胶",
+  "material.gt6ce.siliconerubber": "硅橡胶",
+  "material.gt6ce.ebonite": "硬质胶"
 }
