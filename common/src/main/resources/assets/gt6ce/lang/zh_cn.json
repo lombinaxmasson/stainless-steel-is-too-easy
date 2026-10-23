@@ -79,5 +79,12 @@
   "material.gt6ce.butanol": "正丁醇",
   "material.gt6ce.twoethylhexanol": "2-乙基己醇",
   "material.gt6ce.dimethyldioxane": "4,4-二甲基-1,3-二噁烷",
-  "material.gt6ce.solidphosphoricacid": "固体磷酸催化剂"
+  "material.gt6ce.solidphosphoricacid": "固体磷酸催化剂",
+  "material.gt6ce.polypropylene": "聚丙烯",
+  "material.gt6ce.ultrahighmolecularweightpolyethylene": "超高分子量聚乙烯",
+  "material.gt6ce.polyvinylacetate": "聚醋酸乙烯",
+  "material.gt6ce.polyvinylalcohol": "聚乙烯醇",
+  "material.gt6ce.polyvinylbutyral": "聚乙烯醇缩丁醛",
+  "material.gt6ce.ethylenevinylacetate": "EVA 共聚物",
+  "material.gt6ce.ethylacetate": "乙酸乙酯"
 }

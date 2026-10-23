@@ -13,6 +13,7 @@ public final class PolymerRecipes {
     static void add() {
         cOneCTwoPlatform();
         cThreePlatform();
+        polyolefinVinyl();
     }
 
     // ── Card 1: C1/C2 platform chemicals (methanol, formaldehyde, acetic acid, ethylene oxide/glycol, vinyl chloride/acetate) ──
@@ -264,5 +265,131 @@ public final class PolymerRecipes {
                 ChemistryRecipes.fields("GenLiquid_Isoprene", "GenGas_Formaldehyde", "DistW"),
                 ChemistryRecipes.amounts(1000, 1000, 1000),
                 160, 48, null, new int[]{0});
+    }
+
+    // ── Card 3: polyolefins and vinyl polymers (LDPE, UHMWPE, PP, PVC, PVAc/PVA/PVB, EVA) ──
+
+    private static void polyolefinVinyl() {
+        ldpe();
+        uhmwpe();
+        polypropylene();
+        pvc();
+        pvac();
+        eva();
+        pva();
+        pvb();
+        polymerForming("Polypropylene", false);
+        polymerForming("UltraHighMolecularWeightPolyethylene", true);
+        polymerForming("PolyvinylAlcohol", false);
+        polymerForming("PolyvinylButyral", false);
+        polymerForming("EthyleneVinylAcetate", false);
+    }
+
+    private static void ldpe() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c3/ldpe",
+                ChemistryRecipes.items(ChemistryRecipes.circuit(1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Plastic", 1)),
+                ChemistryRecipes.fields("Ethylene", "Oxygen"), ChemistryRecipes.amounts(1000, 5),
+                null, null,
+                200, 64, null, new int[]{0});
+    }
+
+    private static void uhmwpe() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c3/uhmwpe",
+                ChemistryRecipes.items(ChemistryRecipes.circuit(2), ChemistryRecipes.dust("Zirconium", 1),
+                        ChemistryRecipes.dust("Aluminium", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("UltraHighMolecularWeightPolyethylene", 1)),
+                ChemistryRecipes.fields("Ethylene"), ChemistryRecipes.amounts(1000),
+                null, null,
+                300, 96, null, new int[]{0, 1, 2});
+    }
+
+    private static void polypropylene() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c3/polypropylene",
+                ChemistryRecipes.items(ChemistryRecipes.dust("MagnesiumChloride", 1),
+                        ChemistryRecipes.dust("Aluminium", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Polypropylene", 1)),
+                ChemistryRecipes.fields("GenMolten_TitaniumTetrachloride", "Propylene"),
+                ChemistryRecipes.amounts(10, 1000),
+                null, null,
+                200, 64, null, new int[]{0, 1});
+    }
+
+    private static void pvc() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c3/pvc",
+                ChemistryRecipes.items(), ChemistryRecipes.items(ChemistryRecipes.dust("PVC", 1)),
+                ChemistryRecipes.fields("GenGas_VinylChloride", "GenLiquid_DeionizedWater", "GenLiquid_CumeneHydroperoxide"),
+                ChemistryRecipes.amounts(1000, 1000, 10),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                200, 48);
+    }
+
+    private static void pvac() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c3/pvac",
+                ChemistryRecipes.items(ChemistryRecipes.circuit(1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("PolyvinylAcetate", 1)),
+                ChemistryRecipes.fields("GenLiquid_VinylAcetate", "GenLiquid_CumeneHydroperoxide"),
+                ChemistryRecipes.amounts(1000, 10),
+                null, null,
+                160, 32, null, new int[]{0});
+    }
+
+    private static void eva() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c3/eva",
+                ChemistryRecipes.items(ChemistryRecipes.circuit(2)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("EthyleneVinylAcetate", 4)),
+                ChemistryRecipes.fields("Ethylene", "GenLiquid_VinylAcetate", "GenLiquid_CumeneHydroperoxide"),
+                ChemistryRecipes.amounts(3000, 1000, 10),
+                null, null,
+                300, 48, null, new int[]{0});
+    }
+
+    private static void pva() {
+        ChemistryRecipes.recipe("gt.recipe.bath", "c3/pva",
+                ChemistryRecipes.items(ChemistryRecipes.dust("PolyvinylAcetate", 1),
+                        ChemistryRecipes.item("dustTiny", "SodiumHydroxide", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("PolyvinylAlcohol", 1)),
+                ChemistryRecipes.fields("BioEthanol"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("GenLiquid_EthylAcetate"), ChemistryRecipes.amounts(1000),
+                160, 32);
+        if (FluidBridge.distinct("GenLiquid_Ethanol", "BioEthanol")) {
+            ChemistryRecipes.recipe("gt.recipe.bath", "c3/pva-pure",
+                    ChemistryRecipes.items(ChemistryRecipes.dust("PolyvinylAcetate", 1),
+                            ChemistryRecipes.item("dustTiny", "SodiumHydroxide", 1)),
+                    ChemistryRecipes.items(ChemistryRecipes.dust("PolyvinylAlcohol", 1)),
+                    ChemistryRecipes.fields("GenLiquid_Ethanol"), ChemistryRecipes.amounts(1000),
+                    ChemistryRecipes.fields("GenLiquid_EthylAcetate"), ChemistryRecipes.amounts(1000),
+                    160, 32);
+        }
+    }
+
+    private static void pvb() {
+        ChemistryRecipes.recipe("gt.recipe.bath", "c3/pvb",
+                ChemistryRecipes.items(ChemistryRecipes.dust("PolyvinylAlcohol", 2)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("PolyvinylButyral", 2)),
+                ChemistryRecipes.fields("GenLiquid_Butyraldehyde"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                200, 32);
+    }
+
+    /** Press/rollingmill (and wiremill for {@code wires}) shaping shared by every M4 polymer. */
+    private static void polymerForming(String material, boolean wires) {
+        ChemistryRecipes.recipe("gt.recipe.press", "forming/" + material.toLowerCase() + "/plate",
+                ChemistryRecipes.items(ChemistryRecipes.dust(material, 1), ChemistryRecipes.circuit(1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("plate", material, 1)),
+                null, null, null, null,
+                100, 16, null, new int[]{1});
+        ChemistryRecipes.recipe("gt.recipe.rollingmill", "forming/" + material.toLowerCase() + "/foil",
+                ChemistryRecipes.items(ChemistryRecipes.item("plate", material, 1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("foil", material, 4)),
+                null, null, null, null,
+                100, 16);
+        if (wires) {
+            ChemistryRecipes.recipe("gt.recipe.wiremill", "forming/" + material.toLowerCase() + "/wire",
+                    ChemistryRecipes.items(ChemistryRecipes.item("plate", material, 1)),
+                    ChemistryRecipes.items(ChemistryRecipes.item("wireFine", material, 4)),
+                    null, null, null, null,
+                    100, 16);
+        }
     }
 }

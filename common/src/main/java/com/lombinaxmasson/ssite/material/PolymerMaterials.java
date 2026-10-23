@@ -73,7 +73,28 @@ public final class PolymerMaterials {
                     .meltingPointKelvin(185).boilingPointKelvin(406).density(0.95F).liquid().build(),
             MaterialDeclaration.builder("SolidPhosphoricAcid")
                     .displayName("Solid Phosphoric Acid").color(0xD8D0B8).chemicalFormula("H3PO4·SiO2")
-                    .meltingPointKelvin(1000).boilingPointKelvin(2000).density(2.0F).dust().build());
+                    .meltingPointKelvin(1000).boilingPointKelvin(2000).density(2.0F).dust().build(),
+            MaterialDeclaration.builder("Polypropylene")
+                    .displayName("Polypropylene").color(0xF0F0D8).chemicalFormula("(C3H6)n")
+                    .meltingPointKelvin(433).density(0.90F).dust().polymer().build(),
+            MaterialDeclaration.builder("UltraHighMolecularWeightPolyethylene")
+                    .displayName("UHMWPE").color(0xF8F8F8).chemicalFormula("(C2H4)n")
+                    .meltingPointKelvin(415).density(0.94F).dust().polymer().wires().build(),
+            MaterialDeclaration.builder("PolyvinylAcetate")
+                    .displayName("Polyvinyl Acetate").color(0xF0E8D8).chemicalFormula("(C4H6O2)n")
+                    .meltingPointKelvin(333).density(1.19F).dust().build(),
+            MaterialDeclaration.builder("PolyvinylAlcohol")
+                    .displayName("Polyvinyl Alcohol").color(0xF8F0E0).chemicalFormula("(C2H4O)n")
+                    .meltingPointKelvin(473).density(1.19F).dust().polymer().build(),
+            MaterialDeclaration.builder("PolyvinylButyral")
+                    .displayName("Polyvinyl Butyral").color(0xE8F0F0).chemicalFormula("(C8H14O2)n")
+                    .meltingPointKelvin(438).density(1.08F).dust().polymer().build(),
+            MaterialDeclaration.builder("EthyleneVinylAcetate")
+                    .displayName("Ethylene-Vinyl Acetate").color(0xE8E8F0).chemicalFormula("(C2H4)n(C4H6O2)m")
+                    .meltingPointKelvin(363).density(0.93F).dust().polymer().build(),
+            MaterialDeclaration.builder("EthylAcetate")
+                    .displayName("Ethyl Acetate").color(0xE8E0D8).chemicalFormula("C4H8O2")
+                    .meltingPointKelvin(189).boilingPointKelvin(350).density(0.90F).liquid().build());
 
     public static final List<MaterialFormRequest> FORMS = List.of();
 
