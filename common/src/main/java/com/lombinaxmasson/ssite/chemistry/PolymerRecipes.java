@@ -24,6 +24,7 @@ public final class PolymerRecipes {
         rubberVulcanization();
         nylonCarbonFiber();
         aramids();
+        fluoropolymers();
     }
 
     // ── Card 1: C1/C2 platform chemicals (methanol, formaldehyde, acetic acid, ethylene oxide/glycol, vinyl chloride/acetate) ──
@@ -1188,5 +1189,135 @@ public final class PolymerRecipes {
                 null, null,
                 ChemistryRecipes.fields("GenGas_HydrochloricAcid"), ChemistryRecipes.amounts(2000),
                 300, 96, null, new int[]{0});
+    }
+
+    // ── Card 11: fluoropolymers (PTFE, PVDF, Viton, Nafion) ──
+
+    private static void fluoropolymers() {
+        tetrafluoroethylene();
+        vinylideneFluoride();
+        perfluorosulfonylVinylEther();
+        emulsionPolymers();
+        vulcanizeViton();
+        polymerForming("PolyvinylideneFluoride", false);
+        polymerForming("Nafion", false);
+    }
+
+    private static void tetrafluoroethylene() {
+        ChemistryRecipes.recipe("gt.recipe.calciner", "c11/chloroform",
+                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.fields("Methane", "GenGas_Chlorine"), ChemistryRecipes.amounts(1000, 3000),
+                ChemistryRecipes.fields("GenLiquid_Chloroform", "GenGas_HydrochloricAcid"),
+                ChemistryRecipes.amounts(1000, 3000),
+                160, 48);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c11/chlorodifluoromethane",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Antimony", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Chloroform", "GenGas_HydrogenFluoride"),
+                ChemistryRecipes.amounts(1000, 2000),
+                ChemistryRecipes.fields("GenGas_Chlorodifluoromethane", "GenGas_HydrochloricAcid"),
+                ChemistryRecipes.amounts(1000, 2000),
+                200, 64, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.calciner", "c11/tetrafluoroethylene",
+                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenGas_Chlorodifluoromethane"), ChemistryRecipes.amounts(2000),
+                ChemistryRecipes.fields("GenGas_Tetrafluoroethylene", "GenGas_HydrochloricAcid"),
+                ChemistryRecipes.amounts(1000, 2000),
+                200, 96);
+        ChemistryRecipes.recipe("gt.recipe.calciner", "c11/hexafluoropropylene",
+                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenGas_Tetrafluoroethylene"), ChemistryRecipes.amounts(3000),
+                ChemistryRecipes.fields("GenGas_Hexafluoropropylene"), ChemistryRecipes.amounts(2000),
+                200, 96);
+    }
+
+    private static void vinylideneFluoride() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c11/trichloroethane",
+                ChemistryRecipes.items(ChemistryRecipes.dust("FerricChloride", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenGas_VinylChloride", "GenGas_HydrochloricAcid", "GenGas_Chlorine"),
+                ChemistryRecipes.amounts(1000, 1000, 1000),
+                ChemistryRecipes.fields("GenLiquid_Trichloroethane", "GenGas_HydrochloricAcid"),
+                ChemistryRecipes.amounts(1000, 1000),
+                160, 48, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c11/chlorodifluoroethane",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Antimony", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Trichloroethane", "GenGas_HydrogenFluoride"),
+                ChemistryRecipes.amounts(1000, 2000),
+                ChemistryRecipes.fields("GenGas_Chlorodifluoroethane", "GenGas_HydrochloricAcid"),
+                ChemistryRecipes.amounts(1000, 2000),
+                200, 64, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.calciner", "c11/vinylidene-fluoride",
+                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenGas_Chlorodifluoroethane"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("GenGas_VinylideneFluoride", "GenGas_HydrochloricAcid"),
+                ChemistryRecipes.amounts(1000, 1000),
+                160, 64);
+    }
+
+    private static void perfluorosulfonylVinylEther() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c11/perfluorosulfonyl-vinyl-ether",
+                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenGas_Tetrafluoroethylene", "GenGas_Hexafluoropropylene",
+                        "GenGas_SulfurTrioxide"),
+                ChemistryRecipes.amounts(2000, 1000, 1000),
+                ChemistryRecipes.fields("GenLiquid_PerfluorosulfonylVinylEther"), ChemistryRecipes.amounts(1000),
+                300, 96);
+    }
+
+    private static void emulsionPolymers() {
+        emulsionPolymer("c11/ptfe", 1, new String[]{"GenGas_Tetrafluoroethylene"}, new int[]{1000},
+                "Teflon", 200, 64);
+        emulsionPolymer("c11/pvdf", 2, new String[]{"GenGas_VinylideneFluoride"}, new int[]{1000},
+                "PolyvinylideneFluoride", 200, 64);
+        emulsionPolymer("c11/raw-viton", 3,
+                new String[]{"GenGas_VinylideneFluoride", "GenGas_Hexafluoropropylene"}, new int[]{600, 400},
+                "RawViton", 240, 64);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c11/nafion",
+                ChemistryRecipes.items(ChemistryRecipes.circuit(4), ChemistryRecipes.item("dustTiny", "SodiumPersulfate", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Nafion", 1)),
+                ChemistryRecipes.fields("GenGas_Tetrafluoroethylene", "GenLiquid_PerfluorosulfonylVinylEther",
+                        "GenLiquid_DeionizedWater"),
+                ChemistryRecipes.amounts(1000, 1000, 1000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                300, 128, null, new int[]{0});
+    }
+
+    private static void emulsionPolymer(String label, int circuit, String[] monomers, int[] amounts,
+                                        String product, long duration, long perTick) {
+        ChemistryRecipes.recipe("gt.recipe.mixer", label,
+                ChemistryRecipes.items(ChemistryRecipes.circuit(circuit),
+                        ChemistryRecipes.item("dustTiny", "SodiumPersulfate", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust(product, 1)),
+                ChemistryRecipes.fields(appendMonomers(monomers, "GenLiquid_DeionizedWater")),
+                ChemistryRecipes.amounts(appendAmounts(amounts, 1000)),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                duration, perTick, null, new int[]{0});
+    }
+
+    private static String[] appendMonomers(String[] monomers, String water) {
+        String[] out = new String[monomers.length + 1];
+        System.arraycopy(monomers, 0, out, 0, monomers.length);
+        out[monomers.length] = water;
+        return out;
+    }
+
+    private static int[] appendAmounts(int[] amounts, int waterAmount) {
+        int[] out = new int[amounts.length + 1];
+        System.arraycopy(amounts, 0, out, 0, amounts.length);
+        out[amounts.length] = waterAmount;
+        return out;
+    }
+
+    private static void vulcanizeViton() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c11/viton",
+                ChemistryRecipes.items(ChemistryRecipes.dust("RawViton", 1),
+                        ChemistryRecipes.item("dustSmall", "CarbonBlack", 1),
+                        ChemistryRecipes.item("dustTiny", "BisphenolA", 1),
+                        ChemistryRecipes.dust("MagnesiumOxide", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("ingot", "Viton", 1)),
+                null, null, null, null,
+                240, 64, null, new int[]{3});
     }
 }

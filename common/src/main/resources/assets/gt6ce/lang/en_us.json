@@ -158,5 +158,17 @@
   "material.gt6ce.terephthaloylchloride": "Terephthaloyl Chloride",
   "material.gt6ce.isophthaloylchloride": "Isophthaloyl Chloride",
   "material.gt6ce.kevlar": "Kevlar",
-  "material.gt6ce.nomex": "Nomex"
+  "material.gt6ce.nomex": "Nomex",
+  "material.gt6ce.chloroform": "Chloroform",
+  "material.gt6ce.chlorodifluoromethane": "Chlorodifluoromethane",
+  "material.gt6ce.tetrafluoroethylene": "Tetrafluoroethylene",
+  "material.gt6ce.hexafluoropropylene": "Hexafluoropropylene",
+  "material.gt6ce.trichloroethane": "1,1,1-Trichloroethane",
+  "material.gt6ce.chlorodifluoroethane": "Chlorodifluoroethane",
+  "material.gt6ce.vinylidenefluoride": "Vinylidene Fluoride",
+  "material.gt6ce.polyvinylidenefluoride": "PVDF",
+  "material.gt6ce.rawviton": "Raw Viton",
+  "material.gt6ce.viton": "Viton",
+  "material.gt6ce.perfluorosulfonylvinylether": "Perfluorosulfonyl Vinyl Ether",
+  "material.gt6ce.nafion": "Nafion"
 }

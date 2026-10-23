@@ -310,7 +310,43 @@ public final class PolymerMaterials {
                     .meltingPointKelvin(800).density(1.44F).dust().polymer().wires().build(),
             MaterialDeclaration.builder("Nomex")
                     .displayName("Nomex").color(0xE8E0C0).chemicalFormula("(C14H10N2O2)n")
-                    .meltingPointKelvin(640).density(1.38F).dust().polymer().wires().build());
+                    .meltingPointKelvin(640).density(1.38F).dust().polymer().wires().build(),
+            MaterialDeclaration.builder("Chloroform")
+                    .displayName("Chloroform").color(0xE0F0E8).chemicalFormula("CHCl3")
+                    .meltingPointKelvin(210).boilingPointKelvin(334).density(1.49F).liquid().build(),
+            MaterialDeclaration.builder("Chlorodifluoromethane")
+                    .displayName("Chlorodifluoromethane").color(0xD8F0F0).chemicalFormula("CHClF2")
+                    .meltingPointKelvin(98).boilingPointKelvin(232).density(0.0036F).gas().build(),
+            MaterialDeclaration.builder("Tetrafluoroethylene")
+                    .displayName("Tetrafluoroethylene").color(0xE0F8F0).chemicalFormula("C2F4")
+                    .meltingPointKelvin(131).boilingPointKelvin(197).density(0.0041F).gas().build(),
+            MaterialDeclaration.builder("Hexafluoropropylene")
+                    .displayName("Hexafluoropropylene").color(0xD8F0E8).chemicalFormula("C3F6")
+                    .meltingPointKelvin(120).boilingPointKelvin(244).density(0.0061F).gas().build(),
+            MaterialDeclaration.builder("Trichloroethane")
+                    .displayName("1,1,1-Trichloroethane").color(0xD8E8C8).chemicalFormula("C2H3Cl3")
+                    .meltingPointKelvin(240).boilingPointKelvin(347).density(1.32F).liquid().build(),
+            MaterialDeclaration.builder("Chlorodifluoroethane")
+                    .displayName("Chlorodifluoroethane").color(0xD0E8E0).chemicalFormula("C2H3ClF2")
+                    .meltingPointKelvin(142).boilingPointKelvin(263).density(0.0042F).gas().build(),
+            MaterialDeclaration.builder("VinylideneFluoride")
+                    .displayName("Vinylidene Fluoride").color(0xE0F0F8).chemicalFormula("C2H2F2")
+                    .meltingPointKelvin(129).boilingPointKelvin(188).density(0.0026F).gas().build(),
+            MaterialDeclaration.builder("PolyvinylideneFluoride")
+                    .displayName("PVDF").color(0xF0F8F8).chemicalFormula("(C2H2F2)n")
+                    .meltingPointKelvin(450).density(1.78F).dust().polymer().build(),
+            MaterialDeclaration.builder("RawViton")
+                    .displayName("Raw Viton").color(0xC8C0B0).chemicalFormula("(C2H2F2)n(C3F6)m")
+                    .meltingPointKelvin(320).density(1.80F).dust().build(),
+            MaterialDeclaration.builder("Viton")
+                    .displayName("Viton").color(0x3A2E28).chemicalFormula("(C2H2F2)n(C3F6)m")
+                    .meltingPointKelvin(470).density(1.85F).metal().build(),
+            MaterialDeclaration.builder("PerfluorosulfonylVinylEther")
+                    .displayName("Perfluorosulfonyl Vinyl Ether").color(0xE8F0E0).chemicalFormula("C7F14O4S")
+                    .meltingPointKelvin(200).boilingPointKelvin(408).density(1.70F).liquid().build(),
+            MaterialDeclaration.builder("Nafion")
+                    .displayName("Nafion").color(0xF0F0E8).chemicalFormula("(C2F4)n(C7F13O5S)m")
+                    .meltingPointKelvin(470).density(1.98F).dust().polymer().build());
 
     public static final List<MaterialFormRequest> FORMS = List.of();
 

@@ -158,5 +158,17 @@
   "material.gt6ce.terephthaloylchloride": "对苯二甲酰氯",
   "material.gt6ce.isophthaloylchloride": "间苯二甲酰氯",
   "material.gt6ce.kevlar": "对位芳纶",
-  "material.gt6ce.nomex": "间位芳纶"
+  "material.gt6ce.nomex": "间位芳纶",
+  "material.gt6ce.chloroform": "三氯甲烷",
+  "material.gt6ce.chlorodifluoromethane": "二氟一氯甲烷（R22）",
+  "material.gt6ce.tetrafluoroethylene": "四氟乙烯",
+  "material.gt6ce.hexafluoropropylene": "六氟丙烯",
+  "material.gt6ce.trichloroethane": "1,1,1-三氯乙烷",
+  "material.gt6ce.chlorodifluoroethane": "1-氯-1,1-二氟乙烷（R142b）",
+  "material.gt6ce.vinylidenefluoride": "偏氟乙烯",
+  "material.gt6ce.polyvinylidenefluoride": "聚偏氟乙烯",
+  "material.gt6ce.rawviton": "氟橡胶生胶",
+  "material.gt6ce.viton": "氟橡胶",
+  "material.gt6ce.perfluorosulfonylvinylether": "全氟磺酰基乙烯基醚",
+  "material.gt6ce.nafion": "全氟磺酸膜"
 }
