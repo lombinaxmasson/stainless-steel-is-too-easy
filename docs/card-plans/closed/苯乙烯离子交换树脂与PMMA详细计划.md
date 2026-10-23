@@ -1,11 +1,11 @@
 # 苯乙烯、聚苯乙烯、离子交换树脂与有机玻璃详细计划
 
 > 计划 slug：`m4/styrene-acrylic-ion-exchange`
-> 状态：待实现。前置是 [`C3/C4 平台化学品`](C3平台化学品与Prins异戊二烯详细计划.md)（需要 MMA、甲醇、甲醛）。
+> 状态：关闭。本文件位于 `docs/card-plans/closed/`。前置是 [`C3/C4 平台化学品`](C3平台化学品与Prins异戊二烯详细计划.md)（需要 MMA、甲醇、甲醛）。
 > 性质：M4 第 4 张卡，同属第一批。乙苯脱氢出苯乙烯，做聚苯乙烯和离子交换树脂，再反哺 M2 去离子水和 M3 双酚 A，各给一条第二路线。
 
 ```text
-lane            = open
+lane            = closed
 slug            = m4/styrene-acrylic-ion-exchange
 owned_paths     = PolymerMaterials.java、PolymerRecipes.java、gt6ce 中英文语言文件
 depends_on      = m4/c3-platform

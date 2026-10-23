@@ -1,11 +1,11 @@
 # C3/C4 平台化学品：环氧氯丙烷、丙烯腈、丙烯酸、MMA、丁醇辛醇与 Prins 法异戊二烯详细计划
 
 > 计划 slug：`m4/c3-platform`
-> 状态：待实现。前置是 [`C1/C2 平台化学品`](C1C2平台化学品详细计划.md)。
+> 状态：关闭。本文件位于 `docs/card-plans/closed/`。前置是 [`C1/C2 平台化学品`](C1C2平台化学品详细计划.md)。
 > 性质：M4 第二张卡。丙烯下游的单体与醇类，外加 M3 因缺甲醛而移交过来的 Prins 法合成异戊二烯。
 
 ```text
-lane            = open
+lane            = closed
 slug            = m4/c3-platform
 owned_paths     = PolymerMaterials.java、PolymerRecipes.java、gt6ce 中英文语言文件
 depends_on      = m4/c1-c2-platform

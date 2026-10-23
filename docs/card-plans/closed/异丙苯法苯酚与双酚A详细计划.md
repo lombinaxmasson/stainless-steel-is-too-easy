@@ -37,7 +37,7 @@ close_target    = 异丙苯烷基化、两条氧化、酸解、双酚 A 缩合�
   - 输入：`GenLiquid_Phenol (2000)` + `GenLiquid_Acetone (1000)` + `GenGas_HydrochloricAcid (100)`
   - 输出：`1 × dust BisphenolA` + `DistW (1000 mB)`
   - 耗能与时长：48 EU/t，200 ticks
-- **收尾**：同步勾选 [`docs/supersymmetry-ssite-plan.md`](../supersymmetry-ssite-plan.md) M3 章节中本里程碑实际完成的条目，并在该章节注明：结晶坩埚改冷冻机、Prins 法与「基础衍生物单体」移交 M4。
+- **收尾**：同步勾选 [`docs/supersymmetry-ssite-plan.md`](../../supersymmetry-ssite-plan.md) M3 章节中本里程碑实际完成的条目，并在该章节注明：结晶坩埚改冷冻机、Prins 法与「基础衍生物单体」移交 M4。
 
 ## 2. 明确不做
 
