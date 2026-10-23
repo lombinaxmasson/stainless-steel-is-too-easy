@@ -57,5 +57,13 @@
   "material.gt6ce.phenol": "Phenol",
   "material.gt6ce.acetone": "Acetone",
   "material.gt6ce.bisphenola": "Bisphenol A",
-  "material.gt6ce.zsm5": "ZSM-5 Zeolite"
+  "material.gt6ce.zsm5": "ZSM-5 Zeolite",
+  "material.gt6ce.methanol": "Methanol",
+  "material.gt6ce.formaldehyde": "Formaldehyde",
+  "material.gt6ce.aceticacid": "Glacial Acetic Acid",
+  "material.gt6ce.ethyleneoxide": "Ethylene Oxide",
+  "material.gt6ce.ethyleneglycol": "Ethylene Glycol",
+  "material.gt6ce.dichloroethane": "1,2-Dichloroethane",
+  "material.gt6ce.vinylchloride": "Vinyl Chloride",
+  "material.gt6ce.vinylacetate": "Vinyl Acetate"
 }

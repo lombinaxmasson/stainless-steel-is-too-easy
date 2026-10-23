@@ -19,7 +19,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
 
     @Override
     public List<MaterialDeclaration> materials() {
-        return List.of(
+        var materials = new ArrayList<>(List.of(
                 MaterialDeclaration.builder("Ferrochromium")
                         .displayName("Ferrochromium").color(0xB4A8B8).chemicalFormula("FeCr2")
                         .meltingPointKelvin(2160).boilingPointKelvin(3000).density(7.2F).metal().build(),
@@ -193,14 +193,18 @@ public final class SsiteMaterials implements AddonMaterialContributor {
                         .meltingPointKelvin(431).boilingPointKelvin(493).density(1.20F).dust().build(),
                 MaterialDeclaration.builder("ZSM5")
                         .displayName("ZSM-5 Zeolite").color(0xE8ECF0).chemicalFormula("(Na,H)AlSi23O48")
-                        .meltingPointKelvin(1900).boilingPointKelvin(2500).density(1.80F).dust().build());
+                        .meltingPointKelvin(1900).boilingPointKelvin(2500).density(1.80F).dust().build()));
+        materials.addAll(PolymerMaterials.MATERIALS);
+        return List.copyOf(materials);
     }
 
     @Override
     public List<MaterialFormRequest> forms() {
-        return List.of(
+        var forms = new ArrayList<>(List.of(
                 new MaterialFormRequest("CelluloseAcetate", "plate"),
-                new MaterialFormRequest("CelluloseAcetate", "foil"));
+                new MaterialFormRequest("CelluloseAcetate", "foil")));
+        forms.addAll(PolymerMaterials.FORMS);
+        return List.copyOf(forms);
     }
 
     /** An empty input list drops every built-in crucible row that outputs StainlessSteel. */

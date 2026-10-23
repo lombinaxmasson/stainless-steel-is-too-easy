@@ -29,6 +29,7 @@ public final class ChemistryRecipes {
         waterPurification();
         brineChain();
         PetrochemRecipes.add();
+        PolymerRecipes.add();
         if (!REJECTED.isEmpty()) {
             throw new IllegalStateException("ssite recipes rejected: " + REJECTED);
         }

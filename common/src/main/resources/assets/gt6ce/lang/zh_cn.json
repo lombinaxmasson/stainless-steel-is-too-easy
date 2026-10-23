@@ -57,5 +57,13 @@
   "material.gt6ce.phenol": "苯酚",
   "material.gt6ce.acetone": "丙酮",
   "material.gt6ce.bisphenola": "双酚 A",
-  "material.gt6ce.zsm5": "ZSM-5 分子筛"
+  "material.gt6ce.zsm5": "ZSM-5 分子筛",
+  "material.gt6ce.methanol": "甲醇",
+  "material.gt6ce.formaldehyde": "甲醛",
+  "material.gt6ce.aceticacid": "冰醋酸",
+  "material.gt6ce.ethyleneoxide": "环氧乙烷",
+  "material.gt6ce.ethyleneglycol": "乙二醇",
+  "material.gt6ce.dichloroethane": "1,2-二氯乙烷",
+  "material.gt6ce.vinylchloride": "氯乙烯",
+  "material.gt6ce.vinylacetate": "醋酸乙烯"
 }

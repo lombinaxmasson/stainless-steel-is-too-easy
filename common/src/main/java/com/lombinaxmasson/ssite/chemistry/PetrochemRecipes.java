@@ -150,6 +150,22 @@ public final class PetrochemRecipes {
                 ChemistryRecipes.fields("BioEthanol", "GenLiquid_Acetaldehyde"), ChemistryRecipes.amounts(1000, 1000),
                 ChemistryRecipes.fields("GenGas_Butadiene", "DistW"), ChemistryRecipes.amounts(800, 1600),
                 200, 48, null, new int[]{0});
+        // Card 1 backfill: GT6CE also has a distinct industrial ethanol, so offer it as a second feedstock.
+        if (FluidBridge.distinct("GenLiquid_Ethanol", "BioEthanol")) {
+            ChemistryRecipes.recipe("gt.recipe.catalyticcracking", "c4/ethanol-dehydro-pure",
+                    ChemistryRecipes.items(ChemistryRecipes.dust("Copper", 1)),
+                    ChemistryRecipes.items(),
+                    ChemistryRecipes.fields("GenLiquid_Ethanol"), ChemistryRecipes.amounts(1000),
+                    ChemistryRecipes.fields("GenLiquid_Acetaldehyde", "Hydrogen"), ChemistryRecipes.amounts(900, 900),
+                    120, 32, null, new int[]{0});
+            ChemistryRecipes.recipe("gt.recipe.mixer", "c4/ethanol-condense-pure",
+                    ChemistryRecipes.items(ChemistryRecipes.dust("Tantalum", 1)),
+                    ChemistryRecipes.items(),
+                    ChemistryRecipes.fields("GenLiquid_Ethanol", "GenLiquid_Acetaldehyde"),
+                    ChemistryRecipes.amounts(1000, 1000),
+                    ChemistryRecipes.fields("GenGas_Butadiene", "DistW"), ChemistryRecipes.amounts(800, 1600),
+                    200, 48, null, new int[]{0});
+        }
         ChemistryRecipes.recipe("gt.recipe.mixer", "c4/sulfolane",
                 ChemistryRecipes.items(ChemistryRecipes.dust("Nickel", 1)),
                 ChemistryRecipes.items(),

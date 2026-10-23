@@ -27,6 +27,13 @@ public final class FluidBridge {
                 outputChances, keptInputs);
     }
 
+    /** True when both fields resolve to distinct, registered fluids; missing or equal fluids yield false. */
+    public static boolean distinct(String fieldA, String fieldB) {
+        FluidStack a = AddonFluids.still(fieldA, 1);
+        FluidStack b = AddonFluids.still(fieldB, 1);
+        return a != null && !a.isEmpty() && b != null && !b.isEmpty() && a.getFluid() != b.getFluid();
+    }
+
     private static FluidStack[] fluids(String[] fields, int[] amounts) {
         if (fields == null || fields.length == 0) {
             return null;
