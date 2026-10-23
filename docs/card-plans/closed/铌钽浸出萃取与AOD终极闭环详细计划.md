@@ -1,11 +1,11 @@
 # 铌钽矿 HF 浸出、MIBK 萃取拆分与 AOD 终极材料闭环详细计划
 
 > 计划 slug：`m5/niobium-tantalum-mibk`
-> 状态：实现完成（2026-10-23），待游戏内验收。本文件位于 `docs/card-plans/`。前置是 [`砍掉矿石/氧化物直拆捷径与拜耳法铝镓闭环`](拜耳法铝镓与直拆捷径移除详细计划.md)、[`水冷铜电弧重熔炉`](水冷铜电弧重熔炉详细计划.md)、[`锆石氯化、MIBK 锆铪萃取分离与 Kroll 海绵锆/铪`](锆石氯化与锆铪分离详细计划.md) 以及 M4 [`萃取剂与合成润滑油基础油`](closed/萃取剂与润滑油基础油详细计划.md)。
+> 状态：关闭（2026-10-23）。本文件位于 `docs/card-plans/closed/`。前置是 [`砍掉矿石/氧化物直拆捷径与拜耳法铝镓闭环`](拜耳法铝镓与直拆捷径移除详细计划.md)、[`水冷铜电弧重熔炉`](水冷铜电弧重熔炉详细计划.md)、[`锆石氯化、MIBK 锆铪萃取分离与 Kroll 海绵锆/铪`](锆石氯化与锆铪分离详细计划.md) 以及 M4 [`萃取剂与合成润滑油基础油`](萃取剂与润滑油基础油详细计划.md)。
 > 性质：M5 收官卡（第 5 张）。在卡 1 砍掉钶钽铁矿（`Coltan`）、铌铁矿（`Columbite`）、钽铁矿（`Tantalite`）离心与电解直拆捷径的基础上，实装氢氟酸-硫酸混酸浸出 $\rightarrow$ **`MIBK` 萃取与分步反萃拆分铌钽** $\rightarrow$ 铝热还原铌（`Niobium`）与钠热还原钽（`Tantalum`），配合卡 2–4 的钛与铪，在生存模式下彻底闭环 M1 全六档 AOD 转炉（含 `NiobiumTitanium` 与 `TantalumHafniumCarbide` $\text{Ta}_4\text{HfC}_5$）！
 
 ```text
-lane            = open
+lane            = closed
 slug            = m5/niobium-tantalum-mibk
 owned_paths     = common/src/main/java/com/lombinaxmasson/ssite/material/MetallurgyMaterials.java
                   common/src/main/java/com/lombinaxmasson/ssite/chemistry/MetallurgyRecipes.java

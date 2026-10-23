@@ -90,7 +90,7 @@ public final class SsiteMachines implements AddonMachineContributor {
     public List<LayoutPart> layoutParts() {
         return List.of(LayoutPart.builder(AodConverterCore.LID_PART, "Steel")
                 .hardness(6.0F)
-                .texture("aod_lid")
+                .texture("block/aod_lid")
                 .slots(PartSlots.builder(1).insert(MachineFace.TOP).build())
                 .use()
                 .field("open")
