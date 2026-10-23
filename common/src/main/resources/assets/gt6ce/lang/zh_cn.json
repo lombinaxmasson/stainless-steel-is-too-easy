@@ -148,5 +148,15 @@
   "material.gt6ce.polycaprolactam": "尼龙 6",
   "material.gt6ce.polyacrylonitrile": "聚丙烯腈",
   "material.gt6ce.oxidizedpolyacrylonitrile": "预氧化聚丙烯腈",
-  "material.gt6ce.carbonfiber": "碳纤维"
+  "material.gt6ce.carbonfiber": "碳纤维",
+  "material.gt6ce.chlorobenzene": "氯苯",
+  "material.gt6ce.paranitrochlorobenzene": "对硝基氯苯",
+  "material.gt6ce.paranitroaniline": "对硝基苯胺",
+  "material.gt6ce.paraphenylenediamine": "对苯二胺",
+  "material.gt6ce.metadinitrobenzene": "间二硝基苯",
+  "material.gt6ce.metaphenylenediamine": "间苯二胺",
+  "material.gt6ce.terephthaloylchloride": "对苯二甲酰氯",
+  "material.gt6ce.isophthaloylchloride": "间苯二甲酰氯",
+  "material.gt6ce.kevlar": "对位芳纶",
+  "material.gt6ce.nomex": "间位芳纶"
 }

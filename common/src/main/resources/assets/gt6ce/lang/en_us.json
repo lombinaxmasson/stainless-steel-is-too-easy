@@ -148,5 +148,15 @@
   "material.gt6ce.polycaprolactam": "Nylon 6",
   "material.gt6ce.polyacrylonitrile": "Polyacrylonitrile",
   "material.gt6ce.oxidizedpolyacrylonitrile": "Oxidized PAN",
-  "material.gt6ce.carbonfiber": "Carbon Fiber"
+  "material.gt6ce.carbonfiber": "Carbon Fiber",
+  "material.gt6ce.chlorobenzene": "Chlorobenzene",
+  "material.gt6ce.paranitrochlorobenzene": "p-Nitrochlorobenzene",
+  "material.gt6ce.paranitroaniline": "p-Nitroaniline",
+  "material.gt6ce.paraphenylenediamine": "p-Phenylenediamine",
+  "material.gt6ce.metadinitrobenzene": "m-Dinitrobenzene",
+  "material.gt6ce.metaphenylenediamine": "m-Phenylenediamine",
+  "material.gt6ce.terephthaloylchloride": "Terephthaloyl Chloride",
+  "material.gt6ce.isophthaloylchloride": "Isophthaloyl Chloride",
+  "material.gt6ce.kevlar": "Kevlar",
+  "material.gt6ce.nomex": "Nomex"
 }

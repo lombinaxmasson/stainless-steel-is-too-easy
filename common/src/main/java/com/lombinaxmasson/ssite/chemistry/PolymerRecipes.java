@@ -23,6 +23,7 @@ public final class PolymerRecipes {
         polyurethaneResin();
         rubberVulcanization();
         nylonCarbonFiber();
+        aramids();
     }
 
     // ── Card 1: C1/C2 platform chemicals (methanol, formaldehyde, acetic acid, ethylene oxide/glycol, vinyl chloride/acetate) ──
@@ -1078,5 +1079,114 @@ public final class PolymerRecipes {
                 ChemistryRecipes.items(ChemistryRecipes.item("foil", "CarbonFiber", 4)),
                 null, null, null, null,
                 100, 16);
+    }
+
+    // ── Card 10: aramids (Kevlar and Nomex) ──
+
+    private static void aramids() {
+        paraPhenylenediamine();
+        metaPhenylenediamine();
+        diacylChlorides();
+        kevlar();
+        nomex();
+        polymerForming("Nomex", true);
+    }
+
+    private static void paraPhenylenediamine() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c10/chlorobenzene",
+                ChemistryRecipes.items(ChemistryRecipes.dust("FerricChloride", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Benzene", "GenGas_Chlorine"), ChemistryRecipes.amounts(1000, 1000),
+                ChemistryRecipes.fields("GenLiquid_Chlorobenzene", "GenGas_HydrochloricAcid"),
+                ChemistryRecipes.amounts(1000, 1000),
+                120, 32, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c10/para-nitrochlorobenzene",
+                ChemistryRecipes.items(),
+                ChemistryRecipes.items(ChemistryRecipes.dust("ParaNitrochlorobenzene", 1)),
+                ChemistryRecipes.fields("GenLiquid_Chlorobenzene", "GenLiquid_NitricAcid", "GenLiquid_SulfuricAcid"),
+                ChemistryRecipes.amounts(1000, 1000, 100),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                160, 48);
+        ChemistryRecipes.recipe("gt.recipe.autoclave", "c10/para-nitroaniline",
+                ChemistryRecipes.items(ChemistryRecipes.circuit(1), ChemistryRecipes.dust("ParaNitrochlorobenzene", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("ParaNitroaniline", 1)),
+                ChemistryRecipes.fields("GenGas_Ammonia"), ChemistryRecipes.amounts(2000),
+                null, null,
+                200, 48, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c10/para-phenylenediamine",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Nickel", 1), ChemistryRecipes.dust("ParaNitroaniline", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("ParaPhenylenediamine", 1)),
+                ChemistryRecipes.fields("Hydrogen"), ChemistryRecipes.amounts(3000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(2000),
+                160, 48, null, new int[]{0});
+    }
+
+    private static void metaPhenylenediamine() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c10/meta-dinitrobenzene",
+                ChemistryRecipes.items(),
+                ChemistryRecipes.items(ChemistryRecipes.dust("MetaDinitrobenzene", 1)),
+                ChemistryRecipes.fields("GenLiquid_Nitrobenzene", "GenLiquid_NitricAcid", "GenLiquid_SulfuricAcid"),
+                ChemistryRecipes.amounts(1000, 1000, 200),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                200, 48);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c10/meta-phenylenediamine",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Nickel", 1), ChemistryRecipes.dust("MetaDinitrobenzene", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("MetaPhenylenediamine", 1)),
+                ChemistryRecipes.fields("Hydrogen"), ChemistryRecipes.amounts(6000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(4000),
+                200, 48, null, new int[]{0});
+    }
+
+    private static void diacylChlorides() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c10/terephthaloyl-chloride",
+                ChemistryRecipes.items(ChemistryRecipes.dust("TerephthalicAcid", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("TerephthaloylChloride", 1)),
+                ChemistryRecipes.fields("GenGas_Phosgene"), ChemistryRecipes.amounts(2000),
+                ChemistryRecipes.fields("CarbonDioxide", "GenGas_HydrochloricAcid"), ChemistryRecipes.amounts(2000, 2000),
+                160, 48);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c10/isophthaloyl-chloride",
+                ChemistryRecipes.items(ChemistryRecipes.dust("IsophthalicAcid", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("IsophthaloylChloride", 1)),
+                ChemistryRecipes.fields("GenGas_Phosgene"), ChemistryRecipes.amounts(2000),
+                ChemistryRecipes.fields("CarbonDioxide", "GenGas_HydrochloricAcid"), ChemistryRecipes.amounts(2000, 2000),
+                160, 48);
+    }
+
+    private static void kevlar() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c10/kevlar",
+                ChemistryRecipes.items(ChemistryRecipes.dust("CalciumChloride", 1),
+                        ChemistryRecipes.dust("ParaPhenylenediamine", 1),
+                        ChemistryRecipes.dust("TerephthaloylChloride", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Kevlar", 1)),
+                null, null,
+                ChemistryRecipes.fields("GenGas_HydrochloricAcid"), ChemistryRecipes.amounts(2000),
+                300, 96, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.bath", "c10/kevlar-spin",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Kevlar", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("wireFine", "Kevlar", 4)),
+                ChemistryRecipes.fields("GenLiquid_SulfuricAcid"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("GenLiquid_SulfuricAcid"), ChemistryRecipes.amounts(950),
+                200, 64);
+        ChemistryRecipes.recipe("gt.recipe.loom", "c10/kevlar-cloth",
+                ChemistryRecipes.items(ChemistryRecipes.item("wireFine", "Kevlar", 8)),
+                ChemistryRecipes.items(ChemistryRecipes.item("plate", "Kevlar", 1)),
+                null, null, null, null,
+                200, 32);
+        ChemistryRecipes.recipe("gt.recipe.rollingmill", "c10/kevlar-foil",
+                ChemistryRecipes.items(ChemistryRecipes.item("plate", "Kevlar", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("foil", "Kevlar", 4)),
+                null, null, null, null,
+                100, 16);
+    }
+
+    private static void nomex() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c10/nomex",
+                ChemistryRecipes.items(ChemistryRecipes.dust("CalciumChloride", 1),
+                        ChemistryRecipes.dust("MetaPhenylenediamine", 1),
+                        ChemistryRecipes.dust("IsophthaloylChloride", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Nomex", 1)),
+                null, null,
+                ChemistryRecipes.fields("GenGas_HydrochloricAcid"), ChemistryRecipes.amounts(2000),
+                300, 96, null, new int[]{0});
     }
 }

@@ -280,7 +280,37 @@ public final class PolymerMaterials {
                     .meltingPointKelvin(900).density(1.38F).dust().wires().build(),
             MaterialDeclaration.builder("CarbonFiber")
                     .displayName("Carbon Fiber").color(0x1C1C20).chemicalFormula("C")
-                    .meltingPointKelvin(3800).density(1.80F).polymer().wires().build());
+                    .meltingPointKelvin(3800).density(1.80F).polymer().wires().build(),
+            MaterialDeclaration.builder("Chlorobenzene")
+                    .displayName("Chlorobenzene").color(0xE0E8D0).chemicalFormula("C6H5Cl")
+                    .meltingPointKelvin(228).boilingPointKelvin(405).density(1.11F).liquid().build(),
+            MaterialDeclaration.builder("ParaNitrochlorobenzene")
+                    .displayName("p-Nitrochlorobenzene").color(0xF0E890).chemicalFormula("C6H4ClNO2")
+                    .meltingPointKelvin(356).boilingPointKelvin(515).density(1.52F).dust().build(),
+            MaterialDeclaration.builder("ParaNitroaniline")
+                    .displayName("p-Nitroaniline").color(0xF0C838).chemicalFormula("C6H6N2O2")
+                    .meltingPointKelvin(420).boilingPointKelvin(605).density(1.44F).dust().build(),
+            MaterialDeclaration.builder("ParaPhenylenediamine")
+                    .displayName("p-Phenylenediamine").color(0xD8C8B0).chemicalFormula("C6H8N2")
+                    .meltingPointKelvin(413).boilingPointKelvin(540).density(1.14F).dust().build(),
+            MaterialDeclaration.builder("MetaDinitrobenzene")
+                    .displayName("m-Dinitrobenzene").color(0xF0E8C0).chemicalFormula("C6H4N2O4")
+                    .meltingPointKelvin(363).boilingPointKelvin(570).density(1.58F).dust().build(),
+            MaterialDeclaration.builder("MetaPhenylenediamine")
+                    .displayName("m-Phenylenediamine").color(0xE0D0B8).chemicalFormula("C6H8N2")
+                    .meltingPointKelvin(337).boilingPointKelvin(555).density(1.14F).dust().build(),
+            MaterialDeclaration.builder("TerephthaloylChloride")
+                    .displayName("Terephthaloyl Chloride").color(0xF8F8F0).chemicalFormula("C8H4Cl2O2")
+                    .meltingPointKelvin(356).boilingPointKelvin(538).density(1.34F).dust().build(),
+            MaterialDeclaration.builder("IsophthaloylChloride")
+                    .displayName("Isophthaloyl Chloride").color(0xF8F8E8).chemicalFormula("C8H4Cl2O2")
+                    .meltingPointKelvin(317).boilingPointKelvin(549).density(1.39F).dust().build(),
+            MaterialDeclaration.builder("Kevlar")
+                    .displayName("Kevlar").color(0xE8C840).chemicalFormula("(C14H10N2O2)n")
+                    .meltingPointKelvin(800).density(1.44F).dust().polymer().wires().build(),
+            MaterialDeclaration.builder("Nomex")
+                    .displayName("Nomex").color(0xE8E0C0).chemicalFormula("(C14H10N2O2)n")
+                    .meltingPointKelvin(640).density(1.38F).dust().polymer().wires().build());
 
     public static final List<MaterialFormRequest> FORMS = List.of();
 
