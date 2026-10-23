@@ -94,7 +94,34 @@ public final class PolymerMaterials {
                     .meltingPointKelvin(363).density(0.93F).dust().polymer().build(),
             MaterialDeclaration.builder("EthylAcetate")
                     .displayName("Ethyl Acetate").color(0xE8E0D8).chemicalFormula("C4H8O2")
-                    .meltingPointKelvin(189).boilingPointKelvin(350).density(0.90F).liquid().build());
+                    .meltingPointKelvin(189).boilingPointKelvin(350).density(0.90F).liquid().build(),
+            MaterialDeclaration.builder("Styrene")
+                    .displayName("Styrene").color(0xE8E0D0).chemicalFormula("C8H8")
+                    .meltingPointKelvin(243).boilingPointKelvin(418).density(0.909F).liquid().build(),
+            MaterialDeclaration.builder("Diethylbenzene")
+                    .displayName("Diethylbenzene").color(0xE0D8C8).chemicalFormula("C10H14")
+                    .meltingPointKelvin(190).boilingPointKelvin(457).density(0.86F).liquid().build(),
+            MaterialDeclaration.builder("Divinylbenzene")
+                    .displayName("Divinylbenzene").color(0xE8D8C0).chemicalFormula("C10H10")
+                    .meltingPointKelvin(207).boilingPointKelvin(468).density(0.91F).liquid().build(),
+            MaterialDeclaration.builder("Polystyrene")
+                    .displayName("Polystyrene").color(0xF0F0F0).chemicalFormula("(C8H8)n")
+                    .meltingPointKelvin(513).density(1.05F).dust().polymer().build(),
+            MaterialDeclaration.builder("CrosslinkedPolystyrene")
+                    .displayName("Crosslinked Polystyrene Beads").color(0xF0E8D8).chemicalFormula("(C8H8)n(C10H10)m")
+                    .meltingPointKelvin(573).density(1.05F).dust().build(),
+            MaterialDeclaration.builder("ChloromethylatedPolystyrene")
+                    .displayName("Chloromethylated Polystyrene").color(0xE8E0C0).chemicalFormula("(C9H9Cl)n")
+                    .meltingPointKelvin(573).density(1.15F).dust().build(),
+            MaterialDeclaration.builder("CationExchangeResin")
+                    .displayName("Cation Exchange Resin").color(0x8C4A2A).chemicalFormula("(C8H7SO3H)n")
+                    .meltingPointKelvin(573).density(1.25F).dust().build(),
+            MaterialDeclaration.builder("AnionExchangeResin")
+                    .displayName("Anion Exchange Resin").color(0xE0C890).chemicalFormula("(C12H18NCl)n")
+                    .meltingPointKelvin(573).density(1.10F).dust().build(),
+            MaterialDeclaration.builder("PolymethylMethacrylate")
+                    .displayName("PMMA").color(0xE0F0F8).chemicalFormula("(C5H8O2)n")
+                    .meltingPointKelvin(433).density(1.18F).dust().polymer().build());
 
     public static final List<MaterialFormRequest> FORMS = List.of();
 

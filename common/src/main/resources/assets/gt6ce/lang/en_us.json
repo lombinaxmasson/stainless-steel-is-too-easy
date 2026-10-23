@@ -86,5 +86,14 @@
   "material.gt6ce.polyvinylalcohol": "Polyvinyl Alcohol",
   "material.gt6ce.polyvinylbutyral": "Polyvinyl Butyral",
   "material.gt6ce.ethylenevinylacetate": "Ethylene-Vinyl Acetate",
-  "material.gt6ce.ethylacetate": "Ethyl Acetate"
+  "material.gt6ce.ethylacetate": "Ethyl Acetate",
+  "material.gt6ce.styrene": "Styrene",
+  "material.gt6ce.diethylbenzene": "Diethylbenzene",
+  "material.gt6ce.divinylbenzene": "Divinylbenzene",
+  "material.gt6ce.polystyrene": "Polystyrene",
+  "material.gt6ce.crosslinkedpolystyrene": "Crosslinked Polystyrene Beads",
+  "material.gt6ce.chloromethylatedpolystyrene": "Chloromethylated Polystyrene",
+  "material.gt6ce.cationexchangeresin": "Cation Exchange Resin",
+  "material.gt6ce.anionexchangeresin": "Anion Exchange Resin",
+  "material.gt6ce.polymethylmethacrylate": "PMMA"
 }

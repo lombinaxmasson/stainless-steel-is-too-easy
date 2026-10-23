@@ -86,5 +86,14 @@
   "material.gt6ce.polyvinylalcohol": "聚乙烯醇",
   "material.gt6ce.polyvinylbutyral": "聚乙烯醇缩丁醛",
   "material.gt6ce.ethylenevinylacetate": "EVA 共聚物",
-  "material.gt6ce.ethylacetate": "乙酸乙酯"
+  "material.gt6ce.ethylacetate": "乙酸乙酯",
+  "material.gt6ce.styrene": "苯乙烯",
+  "material.gt6ce.diethylbenzene": "二乙苯",
+  "material.gt6ce.divinylbenzene": "二乙烯苯",
+  "material.gt6ce.polystyrene": "聚苯乙烯",
+  "material.gt6ce.crosslinkedpolystyrene": "交联聚苯乙烯珠",
+  "material.gt6ce.chloromethylatedpolystyrene": "氯甲基化聚苯乙烯",
+  "material.gt6ce.cationexchangeresin": "阳离子交换树脂",
+  "material.gt6ce.anionexchangeresin": "阴离子交换树脂",
+  "material.gt6ce.polymethylmethacrylate": "有机玻璃"
 }

@@ -14,6 +14,7 @@ public final class PolymerRecipes {
         cOneCTwoPlatform();
         cThreePlatform();
         polyolefinVinyl();
+        styreneIonExchange();
     }
 
     // ── Card 1: C1/C2 platform chemicals (methanol, formaldehyde, acetic acid, ethylene oxide/glycol, vinyl chloride/acetate) ──
@@ -391,5 +392,121 @@ public final class PolymerRecipes {
                     null, null, null, null,
                     100, 16);
         }
+    }
+
+    // ── Card 4: styrene, ion-exchange resins, and PMMA ──
+
+    private static void styreneIonExchange() {
+        styrene();
+        divinylbenzene();
+        polystyrene();
+        crosslinkedBeads();
+        cationResin();
+        anionResin();
+        resinDeionizedWater();
+        resinBisphenolA();
+        pmma();
+        polymerForming("Polystyrene", false);
+        polymerForming("PolymethylMethacrylate", false);
+    }
+
+    private static void styrene() {
+        ChemistryRecipes.recipe("gt.recipe.catalyticcracking", "c4/styrene",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Hematite", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Ethylbenzene", "Steam"), ChemistryRecipes.amounts(1000, 2000),
+                ChemistryRecipes.fields("GenLiquid_Styrene", "Hydrogen", "DistW"),
+                ChemistryRecipes.amounts(1000, 1000, 2000),
+                200, 64, null, new int[]{0});
+    }
+
+    private static void divinylbenzene() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c4/diethylbenzene",
+                ChemistryRecipes.items(ChemistryRecipes.dust("ZSM5", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Ethylbenzene", "Ethylene"), ChemistryRecipes.amounts(1000, 1000),
+                ChemistryRecipes.fields("GenLiquid_Diethylbenzene"), ChemistryRecipes.amounts(1000),
+                160, 32, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.catalyticcracking", "c4/divinylbenzene",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Hematite", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Diethylbenzene", "Steam"), ChemistryRecipes.amounts(1000, 2000),
+                ChemistryRecipes.fields("GenLiquid_Divinylbenzene", "Hydrogen", "DistW"),
+                ChemistryRecipes.amounts(1000, 2000, 2000),
+                240, 64, null, new int[]{0});
+    }
+
+    private static void polystyrene() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c4/polystyrene",
+                ChemistryRecipes.items(ChemistryRecipes.circuit(1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Polystyrene", 1)),
+                ChemistryRecipes.fields("GenLiquid_Styrene", "GenLiquid_CumeneHydroperoxide"),
+                ChemistryRecipes.amounts(1000, 10),
+                null, null,
+                160, 32, null, new int[]{0});
+    }
+
+    private static void crosslinkedBeads() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c4/crosslinked-polystyrene",
+                ChemistryRecipes.items(ChemistryRecipes.circuit(2)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("CrosslinkedPolystyrene", 1)),
+                ChemistryRecipes.fields("GenLiquid_Styrene", "GenLiquid_Divinylbenzene", "GenLiquid_DeionizedWater",
+                        "GenLiquid_CumeneHydroperoxide"),
+                ChemistryRecipes.amounts(900, 100, 1000, 10),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                200, 48, null, new int[]{0});
+    }
+
+    private static void cationResin() {
+        ChemistryRecipes.recipe("gt.recipe.bath", "c4/cation-resin",
+                ChemistryRecipes.items(ChemistryRecipes.dust("CrosslinkedPolystyrene", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("CationExchangeResin", 1)),
+                ChemistryRecipes.fields("GenLiquid_SulfuricAcid"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                200, 32);
+    }
+
+    private static void anionResin() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c4/chloromethylated-polystyrene",
+                ChemistryRecipes.items(ChemistryRecipes.dust("CrosslinkedPolystyrene", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("ChloromethylatedPolystyrene", 1)),
+                ChemistryRecipes.fields("GenGas_Formaldehyde", "GenGas_HydrochloricAcid", "GenLiquid_Methanol"),
+                ChemistryRecipes.amounts(1000, 1000, 100),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                200, 48);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c4/anion-resin",
+                ChemistryRecipes.items(ChemistryRecipes.dust("ChloromethylatedPolystyrene", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("AnionExchangeResin", 1)),
+                ChemistryRecipes.fields("GenLiquid_Methanol", "GenGas_Ammonia"), ChemistryRecipes.amounts(3000, 1000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(3000),
+                200, 48);
+    }
+
+    private static void resinDeionizedWater() {
+        ChemistryRecipes.recipe("gt.recipe.bath", "c4/resin-deionized-water",
+                ChemistryRecipes.items(ChemistryRecipes.dust("CationExchangeResin", 1),
+                        ChemistryRecipes.dust("AnionExchangeResin", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_DemineralizedWater"), ChemistryRecipes.amounts(4000),
+                ChemistryRecipes.fields("GenLiquid_DeionizedWater", "Saltwater"), ChemistryRecipes.amounts(3950, 50),
+                120, 30, null, new int[]{0, 1});
+    }
+
+    private static void resinBisphenolA() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c4/resin-bisphenol-a",
+                ChemistryRecipes.items(ChemistryRecipes.dust("CationExchangeResin", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("BisphenolA", 1)),
+                ChemistryRecipes.fields("GenLiquid_Phenol", "GenLiquid_Acetone"), ChemistryRecipes.amounts(2000, 1000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                200, 48, null, new int[]{0});
+    }
+
+    private static void pmma() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c4/pmma",
+                ChemistryRecipes.items(), ChemistryRecipes.items(ChemistryRecipes.dust("PolymethylMethacrylate", 1)),
+                ChemistryRecipes.fields("GenLiquid_MethylMethacrylate", "GenLiquid_CumeneHydroperoxide"),
+                ChemistryRecipes.amounts(1000, 10),
+                null, null,
+                160, 32);
     }
 }
