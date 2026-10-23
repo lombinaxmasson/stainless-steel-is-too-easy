@@ -139,5 +139,14 @@
   "material.gt6ce.nitrilerubber": "丁腈橡胶",
   "material.gt6ce.neoprene": "氯丁橡胶",
   "material.gt6ce.siliconerubber": "硅橡胶",
-  "material.gt6ce.ebonite": "硬质胶"
+  "material.gt6ce.ebonite": "硬质胶",
+  "material.gt6ce.cyclohexane": "环己烷",
+  "material.gt6ce.cyclohexanone": "环己酮",
+  "material.gt6ce.hydroxylammoniumsulfate": "硫酸羟胺",
+  "material.gt6ce.cyclohexanoneoxime": "环己酮肟",
+  "material.gt6ce.caprolactam": "己内酰胺",
+  "material.gt6ce.polycaprolactam": "尼龙 6",
+  "material.gt6ce.polyacrylonitrile": "聚丙烯腈",
+  "material.gt6ce.oxidizedpolyacrylonitrile": "预氧化聚丙烯腈",
+  "material.gt6ce.carbonfiber": "碳纤维"
 }

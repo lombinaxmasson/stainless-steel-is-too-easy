@@ -253,7 +253,34 @@ public final class PolymerMaterials {
                     .meltingPointKelvin(450).density(1.15F).metal().build(),
             MaterialDeclaration.builder("Ebonite")
                     .displayName("Ebonite").color(0x1A1410).chemicalFormula("(C5H8)nS")
-                    .meltingPointKelvin(450).density(1.15F).dust().polymer().build());
+                    .meltingPointKelvin(450).density(1.15F).dust().polymer().build(),
+            MaterialDeclaration.builder("Cyclohexane")
+                    .displayName("Cyclohexane").color(0xE8E8E0).chemicalFormula("C6H12")
+                    .meltingPointKelvin(280).boilingPointKelvin(354).density(0.78F).liquid().build(),
+            MaterialDeclaration.builder("Cyclohexanone")
+                    .displayName("Cyclohexanone").color(0xE8E0D0).chemicalFormula("C6H10O")
+                    .meltingPointKelvin(242).boilingPointKelvin(429).density(0.95F).liquid().build(),
+            MaterialDeclaration.builder("HydroxylammoniumSulfate")
+                    .displayName("Hydroxylammonium Sulfate").color(0xF8F8F0).chemicalFormula("(NH3OH)2SO4")
+                    .meltingPointKelvin(393).density(1.88F).dust().build(),
+            MaterialDeclaration.builder("CyclohexanoneOxime")
+                    .displayName("Cyclohexanone Oxime").color(0xF0F0E0).chemicalFormula("C6H11NO")
+                    .meltingPointKelvin(363).boilingPointKelvin(483).density(1.10F).dust().build(),
+            MaterialDeclaration.builder("Caprolactam")
+                    .displayName("Caprolactam").color(0xFFFFF8).chemicalFormula("C6H11NO")
+                    .meltingPointKelvin(342).boilingPointKelvin(543).density(1.01F).dust().build(),
+            MaterialDeclaration.builder("Polycaprolactam")
+                    .displayName("Nylon 6").color(0xF0F0E8).chemicalFormula("(C6H11NO)n")
+                    .meltingPointKelvin(496).density(1.14F).dust().polymer().wires().build(),
+            MaterialDeclaration.builder("Polyacrylonitrile")
+                    .displayName("Polyacrylonitrile").color(0xF8F0E8).chemicalFormula("(C3H3N)n")
+                    .meltingPointKelvin(590).density(1.18F).dust().polymer().wires().build(),
+            MaterialDeclaration.builder("OxidizedPolyacrylonitrile")
+                    .displayName("Oxidized PAN").color(0x5A3A20).chemicalFormula("(C3HN)n")
+                    .meltingPointKelvin(900).density(1.38F).dust().wires().build(),
+            MaterialDeclaration.builder("CarbonFiber")
+                    .displayName("Carbon Fiber").color(0x1C1C20).chemicalFormula("C")
+                    .meltingPointKelvin(3800).density(1.80F).polymer().wires().build());
 
     public static final List<MaterialFormRequest> FORMS = List.of();
 

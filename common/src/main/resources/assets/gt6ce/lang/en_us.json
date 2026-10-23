@@ -139,5 +139,14 @@
   "material.gt6ce.nitrilerubber": "Nitrile Rubber",
   "material.gt6ce.neoprene": "Neoprene",
   "material.gt6ce.siliconerubber": "Silicone Rubber",
-  "material.gt6ce.ebonite": "Ebonite"
+  "material.gt6ce.ebonite": "Ebonite",
+  "material.gt6ce.cyclohexane": "Cyclohexane",
+  "material.gt6ce.cyclohexanone": "Cyclohexanone",
+  "material.gt6ce.hydroxylammoniumsulfate": "Hydroxylammonium Sulfate",
+  "material.gt6ce.cyclohexanoneoxime": "Cyclohexanone Oxime",
+  "material.gt6ce.caprolactam": "Caprolactam",
+  "material.gt6ce.polycaprolactam": "Nylon 6",
+  "material.gt6ce.polyacrylonitrile": "Polyacrylonitrile",
+  "material.gt6ce.oxidizedpolyacrylonitrile": "Oxidized PAN",
+  "material.gt6ce.carbonfiber": "Carbon Fiber"
 }

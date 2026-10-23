@@ -22,6 +22,7 @@ public final class PolymerRecipes {
         phenolicEpoxy();
         polyurethaneResin();
         rubberVulcanization();
+        nylonCarbonFiber();
     }
 
     // ── Card 1: C1/C2 platform chemicals (methanol, formaldehyde, acetic acid, ethylene oxide/glycol, vinyl chloride/acetate) ──
@@ -985,5 +986,97 @@ public final class PolymerRecipes {
                 ChemistryRecipes.items(ChemistryRecipes.item("ingot", cured, 1)),
                 null, null, null, null,
                 200, 48, null, new int[]{3});
+    }
+
+    // ── Card 9: caprolactam/nylon 6 and PAN/carbon fiber ──
+
+    private static void nylonCarbonFiber() {
+        cyclohexanone();
+        caprolactam();
+        carbonFiber();
+        polymerForming("Polycaprolactam", true);
+        polymerForming("Polyacrylonitrile", true);
+    }
+
+    private static void cyclohexanone() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c9/cyclohexane",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Nickel", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Benzene", "Hydrogen"), ChemistryRecipes.amounts(1000, 3000),
+                ChemistryRecipes.fields("GenLiquid_Cyclohexane"), ChemistryRecipes.amounts(1000),
+                160, 48, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c9/cyclohexanone-air",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Cobalt", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Cyclohexane", "Oxygen"), ChemistryRecipes.amounts(1000, 1000),
+                ChemistryRecipes.fields("GenLiquid_Cyclohexanone", "DistW"), ChemistryRecipes.amounts(1000, 1000),
+                200, 48, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c9/cyclohexanone-phenol",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Palladium", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Phenol", "Hydrogen"), ChemistryRecipes.amounts(1000, 2000),
+                ChemistryRecipes.fields("GenLiquid_Cyclohexanone"), ChemistryRecipes.amounts(1000),
+                160, 48, null, new int[]{0});
+    }
+
+    private static void caprolactam() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c9/hydroxylammonium-sulfate",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Platinum", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("HydroxylammoniumSulfate", 1)),
+                ChemistryRecipes.fields("GenGas_NitrogenMonoxide", "Hydrogen", "GenLiquid_SulfuricAcid"),
+                ChemistryRecipes.amounts(2000, 3000, 1000),
+                null, null,
+                200, 64, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c9/cyclohexanone-oxime",
+                ChemistryRecipes.items(ChemistryRecipes.dust("HydroxylammoniumSulfate", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("CyclohexanoneOxime", 2)),
+                ChemistryRecipes.fields("GenLiquid_Cyclohexanone", "GenGas_Ammonia"), ChemistryRecipes.amounts(2000, 2000),
+                ChemistryRecipes.fields("Dirty_Water"), ChemistryRecipes.amounts(2000),
+                200, 48);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c9/caprolactam",
+                ChemistryRecipes.items(ChemistryRecipes.dust("CyclohexanoneOxime", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Caprolactam", 1)),
+                ChemistryRecipes.fields("GenLiquid_DisulfuricAcid", "GenGas_Ammonia"), ChemistryRecipes.amounts(500, 1000),
+                ChemistryRecipes.fields("Dirty_Water"), ChemistryRecipes.amounts(1000),
+                160, 48);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c9/nylon6",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Caprolactam", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Polycaprolactam", 1)),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(10),
+                null, null,
+                240, 48);
+    }
+
+    private static void carbonFiber() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c9/polyacrylonitrile",
+                ChemistryRecipes.items(ChemistryRecipes.circuit(1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Polyacrylonitrile", 1)),
+                ChemistryRecipes.fields("GenLiquid_Acrylonitrile", "GenLiquid_DeionizedWater",
+                        "GenLiquid_CumeneHydroperoxide"),
+                ChemistryRecipes.amounts(1000, 1000, 10),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                200, 48, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.calciner", "c9/oxidize-pan",
+                ChemistryRecipes.items(ChemistryRecipes.item("wireFine", "Polyacrylonitrile", 16)),
+                ChemistryRecipes.items(ChemistryRecipes.item("wireFine", "OxidizedPolyacrylonitrile", 16)),
+                ChemistryRecipes.fields("Air"), ChemistryRecipes.amounts(1000),
+                null, null,
+                400, 64);
+        ChemistryRecipes.recipe("gt.recipe.calciner", "c9/carbonize",
+                ChemistryRecipes.items(ChemistryRecipes.item("wireFine", "OxidizedPolyacrylonitrile", 16)),
+                ChemistryRecipes.items(ChemistryRecipes.item("wireFine", "CarbonFiber", 8)),
+                ChemistryRecipes.fields("Nitrogen"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("GenLiquid_HydrogenCyanide"), ChemistryRecipes.amounts(50),
+                600, 128);
+        ChemistryRecipes.recipe("gt.recipe.loom", "c9/carbon-fiber-cloth",
+                ChemistryRecipes.items(ChemistryRecipes.item("wireFine", "CarbonFiber", 8)),
+                ChemistryRecipes.items(ChemistryRecipes.item("plate", "CarbonFiber", 1)),
+                null, null, null, null,
+                200, 32);
+        ChemistryRecipes.recipe("gt.recipe.rollingmill", "c9/carbon-fiber-foil",
+                ChemistryRecipes.items(ChemistryRecipes.item("plate", "CarbonFiber", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.item("foil", "CarbonFiber", 4)),
+                null, null, null, null,
+                100, 16);
     }
 }
