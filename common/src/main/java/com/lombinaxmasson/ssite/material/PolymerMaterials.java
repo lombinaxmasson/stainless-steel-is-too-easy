@@ -382,7 +382,43 @@ public final class PolymerMaterials {
                     .meltingPointKelvin(461).boilingPointKelvin(663).density(1.32F).dust().build(),
             MaterialDeclaration.builder("Kapton")
                     .displayName("Kapton").color(0xD08820).chemicalFormula("(C22H10N2O5)n")
-                    .meltingPointKelvin(870).density(1.42F).dust().polymer().build());
+                    .meltingPointKelvin(870).density(1.42F).dust().polymer().build(),
+            MaterialDeclaration.builder("MethylIsobutylKetone")
+                    .displayName("MIBK").color(0xE8E8E0).chemicalFormula("C6H12O")
+                    .meltingPointKelvin(189).boilingPointKelvin(390).density(0.80F).liquid().build(),
+            MaterialDeclaration.builder("PhosphorylChloride")
+                    .displayName("Phosphoryl Chloride").color(0xE8F0D8).chemicalFormula("POCl3")
+                    .meltingPointKelvin(274).boilingPointKelvin(379).density(1.65F).liquid().build(),
+            MaterialDeclaration.builder("TributylPhosphate")
+                    .displayName("Tributyl Phosphate").color(0xF0F0E0).chemicalFormula("C12H27O4P")
+                    .meltingPointKelvin(193).boilingPointKelvin(562).density(0.98F).liquid().build(),
+            MaterialDeclaration.builder("DiethylhexylPhosphoricAcid")
+                    .displayName("P204").color(0xF0E8D0).chemicalFormula("C16H35O4P")
+                    .meltingPointKelvin(213).boilingPointKelvin(600).density(0.97F).liquid().build(),
+            MaterialDeclaration.builder("Octanol")
+                    .displayName("1-Octanol").color(0xE8E8D8).chemicalFormula("C8H17OH")
+                    .meltingPointKelvin(257).boilingPointKelvin(468).density(0.83F).liquid().build(),
+            MaterialDeclaration.builder("Trioctylamine")
+                    .displayName("Trioctylamine").color(0xE0D8C8).chemicalFormula("C24H51N")
+                    .meltingPointKelvin(239).boilingPointKelvin(640).density(0.81F).liquid().build(),
+            MaterialDeclaration.builder("Aliquat")
+                    .displayName("Aliquat 336").color(0xE8D8B0).chemicalFormula("C25H54NCl")
+                    .meltingPointKelvin(253).boilingPointKelvin(500).density(0.88F).liquid().build(),
+            MaterialDeclaration.builder("AlphaOlefins")
+                    .displayName("Alpha Olefins").color(0xE0E0D0).chemicalFormula("CnH2n")
+                    .meltingPointKelvin(200).boilingPointKelvin(420).density(0.72F).liquid().build(),
+            MaterialDeclaration.builder("OneOctene")
+                    .displayName("1-Octene").color(0xE8E8D8).chemicalFormula("C8H16")
+                    .meltingPointKelvin(171).boilingPointKelvin(394).density(0.72F).liquid().build(),
+            MaterialDeclaration.builder("OneDecene")
+                    .displayName("1-Decene").color(0xE8E0D0).chemicalFormula("C10H20")
+                    .meltingPointKelvin(207).boilingPointKelvin(444).density(0.74F).liquid().build(),
+            MaterialDeclaration.builder("Polyalphaolefin")
+                    .displayName("Polyalphaolefin").color(0xF0E8C0).chemicalFormula("(C10H20)n")
+                    .meltingPointKelvin(220).boilingPointKelvin(650).density(0.82F).liquid().build(),
+            MaterialDeclaration.builder("Polyisobutylene")
+                    .displayName("Polyisobutylene").color(0xE8E0C8).chemicalFormula("(C4H8)n")
+                    .meltingPointKelvin(210).boilingPointKelvin(600).density(0.92F).liquid().build());
 
     public static final List<MaterialFormRequest> FORMS = List.of();
 

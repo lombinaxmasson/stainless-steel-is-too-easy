@@ -26,6 +26,7 @@ public final class PolymerRecipes {
         aramids();
         fluoropolymers();
         engineeringPlastics();
+        extractantsLubricants();
     }
 
     // ── Card 1: C1/C2 platform chemicals (methanol, formaldehyde, acetic acid, ethylene oxide/glycol, vinyl chloride/acetate) ──
@@ -1423,5 +1424,96 @@ public final class PolymerRecipes {
                 null, null,
                 ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(2000),
                 400, 128);
+    }
+
+    // ── Card 13: extractants and lubricant base oil ──
+
+    private static void extractantsLubricants() {
+        mibk();
+        phosphorusExtractants();
+        amineExtractants();
+        lubricants();
+    }
+
+    private static void mibk() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c13/mibk",
+                ChemistryRecipes.items(ChemistryRecipes.dust("CationExchangeResin", 1),
+                        ChemistryRecipes.dust("Palladium", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Acetone", "Hydrogen"), ChemistryRecipes.amounts(2000, 1000),
+                ChemistryRecipes.fields("GenLiquid_MethylIsobutylKetone", "DistW"), ChemistryRecipes.amounts(1000, 1000),
+                200, 48, null, new int[]{0, 1});
+    }
+
+    private static void phosphorusExtractants() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c13/phosphoryl-chloride",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Phosphorus", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenGas_Chlorine", "Oxygen"), ChemistryRecipes.amounts(3000, 500),
+                ChemistryRecipes.fields("GenLiquid_PhosphorylChloride"), ChemistryRecipes.amounts(1000),
+                160, 48);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c13/tributyl-phosphate",
+                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_PhosphorylChloride", "GenLiquid_Butanol"),
+                ChemistryRecipes.amounts(1000, 3000),
+                ChemistryRecipes.fields("GenLiquid_TributylPhosphate", "GenGas_HydrochloricAcid"),
+                ChemistryRecipes.amounts(1000, 3000),
+                200, 48);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c13/p204",
+                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_PhosphorylChloride", "GenLiquid_TwoEthylhexanol", "DistW"),
+                ChemistryRecipes.amounts(1000, 2000, 1000),
+                ChemistryRecipes.fields("GenLiquid_DiethylhexylPhosphoricAcid", "GenGas_HydrochloricAcid"),
+                ChemistryRecipes.amounts(1000, 3000),
+                200, 48);
+    }
+
+    private static void amineExtractants() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c13/octanol",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Aluminium", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("Ethylene", "Oxygen", "DistW"), ChemistryRecipes.amounts(4000, 500, 1000),
+                ChemistryRecipes.fields("GenLiquid_Octanol"), ChemistryRecipes.amounts(1000),
+                240, 64, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c13/trioctylamine",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Nickel", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Octanol", "GenGas_Ammonia"), ChemistryRecipes.amounts(3000, 1000),
+                ChemistryRecipes.fields("GenLiquid_Trioctylamine", "DistW"), ChemistryRecipes.amounts(1000, 3000),
+                240, 64, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c13/aliquat",
+                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Trioctylamine", "GenGas_Chloromethane"),
+                ChemistryRecipes.amounts(1000, 1000),
+                ChemistryRecipes.fields("GenLiquid_Aliquat"), ChemistryRecipes.amounts(1000),
+                160, 48);
+    }
+
+    private static void lubricants() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c13/alpha-olefins",
+                ChemistryRecipes.items(ChemistryRecipes.circuit(1), ChemistryRecipes.dust("Aluminium", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("Ethylene"), ChemistryRecipes.amounts(4000),
+                ChemistryRecipes.fields("GenLiquid_AlphaOlefins"), ChemistryRecipes.amounts(1000),
+                240, 64, null, new int[]{0, 1});
+        ChemistryRecipes.recipe("gt.recipe.distillationtower", "c13/alpha-olefins-distill",
+                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_AlphaOlefins"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("GenGas_OneButene", "GenLiquid_OneOctene", "GenLiquid_OneDecene", "Fuel"),
+                ChemistryRecipes.amounts(250, 300, 250, 200),
+                160, 64);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c13/pao",
+                ChemistryRecipes.items(ChemistryRecipes.dust("SolidPhosphoricAcid", 1),
+                        ChemistryRecipes.dust("Nickel", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_OneDecene", "Hydrogen"), ChemistryRecipes.amounts(3000, 1000),
+                ChemistryRecipes.fields("GenLiquid_Polyalphaolefin"), ChemistryRecipes.amounts(1000),
+                240, 64, null, new int[]{0, 1});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c13/polyisobutylene",
+                ChemistryRecipes.items(ChemistryRecipes.dust("FerricChloride", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenGas_Isobutylene"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("GenLiquid_Polyisobutylene"), ChemistryRecipes.amounts(1000),
+                200, 48, null, new int[]{0});
     }
 }

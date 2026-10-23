@@ -182,5 +182,17 @@
   "material.gt6ce.durene": "Durene",
   "material.gt6ce.pyromelliticdianhydride": "Pyromellitic Dianhydride",
   "material.gt6ce.oxydianiline": "Oxydianiline",
-  "material.gt6ce.kapton": "Kapton"
+  "material.gt6ce.kapton": "Kapton",
+  "material.gt6ce.methylisobutylketone": "MIBK",
+  "material.gt6ce.phosphorylchloride": "Phosphoryl Chloride",
+  "material.gt6ce.tributylphosphate": "Tributyl Phosphate",
+  "material.gt6ce.diethylhexylphosphoricacid": "P204",
+  "material.gt6ce.octanol": "1-Octanol",
+  "material.gt6ce.trioctylamine": "Trioctylamine",
+  "material.gt6ce.aliquat": "Aliquat 336",
+  "material.gt6ce.alphaolefins": "Alpha Olefins",
+  "material.gt6ce.oneoctene": "1-Octene",
+  "material.gt6ce.onedecene": "1-Decene",
+  "material.gt6ce.polyalphaolefin": "Polyalphaolefin",
+  "material.gt6ce.polyisobutylene": "Polyisobutylene"
 }

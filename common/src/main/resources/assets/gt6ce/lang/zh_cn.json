@@ -182,5 +182,17 @@
   "material.gt6ce.durene": "均四甲苯",
   "material.gt6ce.pyromelliticdianhydride": "均苯四甲酸二酐",
   "material.gt6ce.oxydianiline": "4,4'-二氨基二苯醚",
-  "material.gt6ce.kapton": "聚酰亚胺"
+  "material.gt6ce.kapton": "聚酰亚胺",
+  "material.gt6ce.methylisobutylketone": "甲基异丁基酮",
+  "material.gt6ce.phosphorylchloride": "三氯氧磷",
+  "material.gt6ce.tributylphosphate": "磷酸三丁酯",
+  "material.gt6ce.diethylhexylphosphoricacid": "P204",
+  "material.gt6ce.octanol": "正辛醇",
+  "material.gt6ce.trioctylamine": "三辛胺",
+  "material.gt6ce.aliquat": "Aliquat 336",
+  "material.gt6ce.alphaolefins": "α-烯烃混合物",
+  "material.gt6ce.oneoctene": "1-辛烯",
+  "material.gt6ce.onedecene": "1-癸烯",
+  "material.gt6ce.polyalphaolefin": "聚α-烯烃（PAO）",
+  "material.gt6ce.polyisobutylene": "聚异丁烯"
 }
