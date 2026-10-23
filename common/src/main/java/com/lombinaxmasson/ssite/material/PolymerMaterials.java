@@ -31,7 +31,49 @@ public final class PolymerMaterials {
                     .meltingPointKelvin(119).boilingPointKelvin(260).density(0.0026F).gas().build(),
             MaterialDeclaration.builder("VinylAcetate")
                     .displayName("Vinyl Acetate").color(0xF0E8D0).chemicalFormula("C4H6O2")
-                    .meltingPointKelvin(180).boilingPointKelvin(346).density(0.934F).liquid().build());
+                    .meltingPointKelvin(180).boilingPointKelvin(346).density(0.934F).liquid().build(),
+            MaterialDeclaration.builder("AllylChloride")
+                    .displayName("Allyl Chloride").color(0xE0E0B0).chemicalFormula("C3H5Cl")
+                    .meltingPointKelvin(138).boilingPointKelvin(318).density(0.94F).liquid().build(),
+            MaterialDeclaration.builder("Dichloropropanol")
+                    .displayName("Dichloropropanol").color(0xD8D8A8).chemicalFormula("C3H6Cl2O")
+                    .meltingPointKelvin(269).boilingPointKelvin(447).density(1.36F).liquid().build(),
+            MaterialDeclaration.builder("Epichlorohydrin")
+                    .displayName("Epichlorohydrin").color(0xE8E8C0).chemicalFormula("C3H5ClO")
+                    .meltingPointKelvin(247).boilingPointKelvin(391).density(1.18F).liquid().build(),
+            MaterialDeclaration.builder("HydrogenCyanide")
+                    .displayName("Hydrogen Cyanide").color(0xD0E8E8).chemicalFormula("HCN")
+                    .meltingPointKelvin(260).boilingPointKelvin(299).density(0.69F).liquid().build(),
+            MaterialDeclaration.builder("Acrylonitrile")
+                    .displayName("Acrylonitrile").color(0xE8D8C0).chemicalFormula("C3H3N")
+                    .meltingPointKelvin(189).boilingPointKelvin(350).density(0.81F).liquid().build(),
+            MaterialDeclaration.builder("Acrolein")
+                    .displayName("Acrolein").color(0xF0E0B0).chemicalFormula("C3H4O")
+                    .meltingPointKelvin(185).boilingPointKelvin(326).density(0.84F).liquid().build(),
+            MaterialDeclaration.builder("AcrylicAcid")
+                    .displayName("Acrylic Acid").color(0xF0F0D8).chemicalFormula("C3H4O2")
+                    .meltingPointKelvin(287).boilingPointKelvin(414).density(1.05F).liquid().build(),
+            MaterialDeclaration.builder("AcetoneCyanohydrin")
+                    .displayName("Acetone Cyanohydrin").color(0xE0D8C8).chemicalFormula("C4H7NO")
+                    .meltingPointKelvin(253).boilingPointKelvin(368).density(0.93F).liquid().build(),
+            MaterialDeclaration.builder("MethylMethacrylate")
+                    .displayName("Methyl Methacrylate").color(0xE8F0F8).chemicalFormula("C5H8O2")
+                    .meltingPointKelvin(225).boilingPointKelvin(374).density(0.94F).liquid().build(),
+            MaterialDeclaration.builder("Butyraldehyde")
+                    .displayName("Butyraldehyde").color(0xF0E8C8).chemicalFormula("C4H8O")
+                    .meltingPointKelvin(174).boilingPointKelvin(348).density(0.80F).liquid().build(),
+            MaterialDeclaration.builder("Butanol")
+                    .displayName("n-Butanol").color(0xE8E8E0).chemicalFormula("C4H9OH")
+                    .meltingPointKelvin(183).boilingPointKelvin(391).density(0.81F).liquid().build(),
+            MaterialDeclaration.builder("TwoEthylhexanol")
+                    .displayName("2-Ethylhexanol").color(0xE0E0D8).chemicalFormula("C8H17OH")
+                    .meltingPointKelvin(197).boilingPointKelvin(457).density(0.833F).liquid().build(),
+            MaterialDeclaration.builder("Dimethyldioxane")
+                    .displayName("4,4-Dimethyl-1,3-dioxane").color(0xE0E8D0).chemicalFormula("C6H12O2")
+                    .meltingPointKelvin(185).boilingPointKelvin(406).density(0.95F).liquid().build(),
+            MaterialDeclaration.builder("SolidPhosphoricAcid")
+                    .displayName("Solid Phosphoric Acid").color(0xD8D0B8).chemicalFormula("H3PO4·SiO2")
+                    .meltingPointKelvin(1000).boilingPointKelvin(2000).density(2.0F).dust().build());
 
     public static final List<MaterialFormRequest> FORMS = List.of();
 
