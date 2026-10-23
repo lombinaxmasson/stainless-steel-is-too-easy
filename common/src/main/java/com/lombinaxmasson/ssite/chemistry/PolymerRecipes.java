@@ -1,5 +1,8 @@
 package com.lombinaxmasson.ssite.chemistry;
 
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+
 /** M4 polymer recipes. Each M4 card adds one method; {@link #add()} wires them all. */
 public final class PolymerRecipes {
     /*
@@ -17,6 +20,7 @@ public final class PolymerRecipes {
         styreneIonExchange();
         aromaticOxidationPolyester();
         phenolicEpoxy();
+        polyurethaneResin();
     }
 
     // ── Card 1: C1/C2 platform chemicals (methanol, formaldehyde, acetic acid, ethylene oxide/glycol, vinyl chloride/acetate) ──
@@ -731,5 +735,102 @@ public final class PolymerRecipes {
                 ChemistryRecipes.fields("GenLiquid_CycloaliphaticEpoxy", "GenLiquid_AceticAcid"),
                 ChemistryRecipes.amounts(1000, 2000),
                 240, 64, null, new int[]{0});
+    }
+
+    // ── Card 7: aniline/MDI, polyurethane, and hydrogenated petroleum resin ──
+
+    private static void polyurethaneResin() {
+        aniline();
+        mdi();
+        polyetherPolyol();
+        polyurethane();
+        sponge();
+        petroleumResin();
+        polymerForming("Polyurethane", false);
+    }
+
+    private static void aniline() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c7/nitrobenzene",
+                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Benzene", "GenLiquid_NitricAcid", "GenLiquid_SulfuricAcid"),
+                ChemistryRecipes.amounts(1000, 1000, 100),
+                ChemistryRecipes.fields("GenLiquid_Nitrobenzene", "DistW"), ChemistryRecipes.amounts(1000, 1000),
+                160, 48);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c7/aniline",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Nickel", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Nitrobenzene", "Hydrogen"), ChemistryRecipes.amounts(1000, 3000),
+                ChemistryRecipes.fields("GenLiquid_Aniline", "DistW"), ChemistryRecipes.amounts(1000, 2000),
+                160, 48, null, new int[]{0});
+    }
+
+    private static void mdi() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c7/methylenedianiline",
+                ChemistryRecipes.items(),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Methylenedianiline", 1)),
+                ChemistryRecipes.fields("GenLiquid_Aniline", "GenGas_Formaldehyde", "GenGas_HydrochloricAcid"),
+                ChemistryRecipes.amounts(2000, 1000, 100),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                200, 48);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c7/mdi",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Methylenedianiline", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenGas_Phosgene"), ChemistryRecipes.amounts(2000),
+                ChemistryRecipes.fields("GenLiquid_MethyleneDiphenylDiisocyanate", "GenGas_HydrochloricAcid"),
+                ChemistryRecipes.amounts(1000, 4000),
+                200, 64);
+    }
+
+    private static void polyetherPolyol() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c7/polyether-polyol",
+                ChemistryRecipes.items(ChemistryRecipes.item("dustTiny", "PotassiumHydroxide", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Glycerol", "GenGas_EthyleneOxide"), ChemistryRecipes.amounts(1000, 3000),
+                ChemistryRecipes.fields("GenLiquid_PolyetherPolyol"), ChemistryRecipes.amounts(1000),
+                200, 48);
+    }
+
+    private static void polyurethane() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c7/polyurethane-polyol",
+                ChemistryRecipes.items(ChemistryRecipes.circuit(1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Polyurethane", 2)),
+                ChemistryRecipes.fields("GenLiquid_MethyleneDiphenylDiisocyanate", "GenLiquid_PolyetherPolyol"),
+                ChemistryRecipes.amounts(1000, 1000),
+                null, null,
+                200, 48, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c7/polyurethane-glycol",
+                ChemistryRecipes.items(ChemistryRecipes.circuit(2)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Polyurethane", 1)),
+                ChemistryRecipes.fields("GenLiquid_MethyleneDiphenylDiisocyanate", "GenLiquid_EthyleneGlycol"),
+                ChemistryRecipes.amounts(1000, 1000),
+                null, null,
+                200, 48, null, new int[]{0});
+    }
+
+    private static void sponge() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c7/sponge",
+                ChemistryRecipes.items(new ItemStack(Items.YELLOW_DYE, 1)),
+                ChemistryRecipes.items(new ItemStack(Items.SPONGE, 1)),
+                ChemistryRecipes.fields("GenLiquid_MethyleneDiphenylDiisocyanate", "GenLiquid_PolyetherPolyol",
+                        "CarbonDioxide"),
+                ChemistryRecipes.amounts(250, 250, 500),
+                null, null,
+                100, 32);
+    }
+
+    private static void petroleumResin() {
+        ChemistryRecipes.recipe("gt.recipe.calciner", "c7/petroleum-resin",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Norbornene", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("PetroleumResin", 3)),
+                ChemistryRecipes.fields("GenLiquid_Dicyclopentadiene", "GenLiquid_Benzene"),
+                ChemistryRecipes.amounts(1000, 1000),
+                null, null,
+                240, 48);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c7/hydrogenated-petroleum-resin",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Palladium", 1), ChemistryRecipes.dust("PetroleumResin", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("HydrogenatedPetroleumResin", 1)),
+                ChemistryRecipes.fields("Hydrogen"), ChemistryRecipes.amounts(1000),
+                null, null,
+                160, 48, null, new int[]{0});
     }
 }

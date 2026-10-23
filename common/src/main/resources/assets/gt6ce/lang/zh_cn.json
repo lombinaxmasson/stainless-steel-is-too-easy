@@ -114,5 +114,13 @@
   "material.gt6ce.epoxycresolnovolac": "邻甲酚醛环氧",
   "material.gt6ce.peraceticacid": "过氧乙酸",
   "material.gt6ce.tetrahydrobenzaldehyde": "四氢苯甲醛",
-  "material.gt6ce.cycloaliphaticepoxy": "脂环族环氧树脂"
+  "material.gt6ce.cycloaliphaticepoxy": "脂环族环氧树脂",
+  "material.gt6ce.nitrobenzene": "硝基苯",
+  "material.gt6ce.aniline": "苯胺",
+  "material.gt6ce.methylenedianiline": "4,4'-二氨基二苯甲烷",
+  "material.gt6ce.methylenediphenyldiisocyanate": "MDI",
+  "material.gt6ce.polyetherpolyol": "聚醚多元醇",
+  "material.gt6ce.polyurethane": "聚氨酯",
+  "material.gt6ce.petroleumresin": "石油树脂",
+  "material.gt6ce.hydrogenatedpetroleumresin": "氢化石油树脂"
 }

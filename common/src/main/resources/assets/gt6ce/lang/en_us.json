@@ -114,5 +114,13 @@
   "material.gt6ce.epoxycresolnovolac": "Epoxy Cresol Novolac",
   "material.gt6ce.peraceticacid": "Peracetic Acid",
   "material.gt6ce.tetrahydrobenzaldehyde": "Tetrahydrobenzaldehyde",
-  "material.gt6ce.cycloaliphaticepoxy": "Cycloaliphatic Epoxy"
+  "material.gt6ce.cycloaliphaticepoxy": "Cycloaliphatic Epoxy",
+  "material.gt6ce.nitrobenzene": "Nitrobenzene",
+  "material.gt6ce.aniline": "Aniline",
+  "material.gt6ce.methylenedianiline": "Methylenedianiline",
+  "material.gt6ce.methylenediphenyldiisocyanate": "MDI",
+  "material.gt6ce.polyetherpolyol": "Polyether Polyol",
+  "material.gt6ce.polyurethane": "Polyurethane",
+  "material.gt6ce.petroleumresin": "Petroleum Resin",
+  "material.gt6ce.hydrogenatedpetroleumresin": "Hydrogenated Petroleum Resin"
 }

@@ -178,7 +178,31 @@ public final class PolymerMaterials {
                     .meltingPointKelvin(177).boilingPointKelvin(437).density(0.94F).liquid().build(),
             MaterialDeclaration.builder("CycloaliphaticEpoxy")
                     .displayName("Cycloaliphatic Epoxy").color(0xF0F0E0).chemicalFormula("C14H20O4")
-                    .meltingPointKelvin(250).boilingPointKelvin(630).density(1.17F).liquid().build());
+                    .meltingPointKelvin(250).boilingPointKelvin(630).density(1.17F).liquid().build(),
+            MaterialDeclaration.builder("Nitrobenzene")
+                    .displayName("Nitrobenzene").color(0xE8D070).chemicalFormula("C6H5NO2")
+                    .meltingPointKelvin(279).boilingPointKelvin(484).density(1.20F).liquid().build(),
+            MaterialDeclaration.builder("Aniline")
+                    .displayName("Aniline").color(0xD8C8A0).chemicalFormula("C6H5NH2")
+                    .meltingPointKelvin(267).boilingPointKelvin(457).density(1.02F).liquid().build(),
+            MaterialDeclaration.builder("Methylenedianiline")
+                    .displayName("Methylenedianiline").color(0xD8C090).chemicalFormula("C13H14N2")
+                    .meltingPointKelvin(362).boilingPointKelvin(671).density(1.15F).dust().build(),
+            MaterialDeclaration.builder("MethyleneDiphenylDiisocyanate")
+                    .displayName("MDI").color(0xC89850).chemicalFormula("C15H10N2O2")
+                    .meltingPointKelvin(313).boilingPointKelvin(587).density(1.23F).liquid().build(),
+            MaterialDeclaration.builder("PolyetherPolyol")
+                    .displayName("Polyether Polyol").color(0xF0E8D8).chemicalFormula("(C2H4O)nC3H5(OH)3")
+                    .meltingPointKelvin(270).boilingPointKelvin(600).density(1.03F).liquid().build(),
+            MaterialDeclaration.builder("Polyurethane")
+                    .displayName("Polyurethane").color(0xE8D8A0).chemicalFormula("(C17H16N2O4)n")
+                    .meltingPointKelvin(450).density(1.20F).dust().polymer().build(),
+            MaterialDeclaration.builder("PetroleumResin")
+                    .displayName("Petroleum Resin").color(0xC89040).chemicalFormula("(C10H12)n(C6H6)(C7H10)")
+                    .meltingPointKelvin(370).density(1.04F).dust().build(),
+            MaterialDeclaration.builder("HydrogenatedPetroleumResin")
+                    .displayName("Hydrogenated Petroleum Resin").color(0xF8F0D8).chemicalFormula("(C10H16)n")
+                    .meltingPointKelvin(380).density(1.00F).dust().build());
 
     public static final List<MaterialFormRequest> FORMS = List.of();
 
