@@ -194,5 +194,20 @@
   "material.gt6ce.oneoctene": "1-辛烯",
   "material.gt6ce.onedecene": "1-癸烯",
   "material.gt6ce.polyalphaolefin": "聚α-烯烃（PAO）",
-  "material.gt6ce.polyisobutylene": "聚异丁烯"
+  "material.gt6ce.polyisobutylene": "聚异丁烯",
+  "material.gt6ce.propyleneoxide": "环氧丙烷",
+  "material.gt6ce.propyleneglycol": "丙二醇",
+  "material.gt6ce.adipicacid": "己二酸",
+  "material.gt6ce.adiponitrile": "己二腈",
+  "material.gt6ce.hexamethylenediamine": "己二胺",
+  "material.gt6ce.polyhexamethyleneadipamide": "尼龙 66",
+  "material.gt6ce.dinitrotoluene": "二硝基甲苯",
+  "material.gt6ce.toluenediamine": "甲苯二胺",
+  "material.gt6ce.toluenediisocyanate": "TDI",
+  "material.gt6ce.dimethylphenol": "2,6-二甲酚",
+  "material.gt6ce.polyphenyleneoxide": "聚苯醚（PPO）",
+  "material.gt6ce.bisphenoladianhydride": "双酚 A 二酐（BPADA）",
+  "material.gt6ce.polyetherimide": "聚醚酰亚胺（PEI）",
+  "material.gt6ce.calciumcyanamide": "氰氨化钙",
+  "material.gt6ce.dicyandiamide": "双氰胺"
 }

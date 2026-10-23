@@ -27,6 +27,7 @@ public final class PolymerRecipes {
         fluoropolymers();
         engineeringPlastics();
         extractantsLubricants();
+        deferredFill();
     }
 
     // ── Card 1: C1/C2 platform chemicals (methanol, formaldehyde, acetic acid, ethylene oxide/glycol, vinyl chloride/acetate) ──
@@ -1515,5 +1516,157 @@ public final class PolymerRecipes {
                 ChemistryRecipes.fields("GenGas_Isobutylene"), ChemistryRecipes.amounts(1000),
                 ChemistryRecipes.fields("GenLiquid_Polyisobutylene"), ChemistryRecipes.amounts(1000),
                 200, 48, null, new int[]{0});
+    }
+
+    // ── Card 14: deferred fill (TDI, propylene oxide, adipic acid/nylon 66, PPO, PEI, dicyandiamide) ──
+
+    private static void deferredFill() {
+        propyleneOxide();
+        adipicNylon66();
+        tdi();
+        ppo();
+        pei();
+        dicyandiamide();
+        polymerForming("PolyhexamethyleneAdipamide", true);
+        polymerForming("PolyphenyleneOxide", false);
+        polymerForming("Polyetherimide", false);
+    }
+
+    private static void propyleneOxide() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c14/propylene-oxide",
+                ChemistryRecipes.items(ChemistryRecipes.dust("ZSM5", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("Propylene", "GenGas_HydrogenPeroxide"), ChemistryRecipes.amounts(1000, 1000),
+                ChemistryRecipes.fields("GenLiquid_PropyleneOxide", "DistW"), ChemistryRecipes.amounts(1000, 1000),
+                160, 48, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c14/propylene-glycol",
+                ChemistryRecipes.items(), ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_PropyleneOxide", "DistW"), ChemistryRecipes.amounts(1000, 1000),
+                ChemistryRecipes.fields("GenLiquid_PropyleneGlycol"), ChemistryRecipes.amounts(1000),
+                100, 32);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c14/polyether-polyol-po",
+                ChemistryRecipes.items(ChemistryRecipes.circuit(2),
+                        ChemistryRecipes.item("dustTiny", "PotassiumHydroxide", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenLiquid_Glycerol", "GenLiquid_PropyleneOxide"),
+                ChemistryRecipes.amounts(1000, 3000),
+                ChemistryRecipes.fields("GenLiquid_PolyetherPolyol"), ChemistryRecipes.amounts(1000),
+                200, 48, null, new int[]{0});
+    }
+
+    private static void adipicNylon66() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c14/adipic-acid",
+                ChemistryRecipes.items(ChemistryRecipes.dust("VanadiumPentoxide", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("AdipicAcid", 1)),
+                ChemistryRecipes.fields("GenLiquid_Cyclohexanone", "GenLiquid_NitricAcid"),
+                ChemistryRecipes.amounts(1000, 2000),
+                ChemistryRecipes.fields("GenGas_NitrogenMonoxide", "DistW"), ChemistryRecipes.amounts(1000, 1000),
+                240, 96, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.calciner", "c14/adiponitrile",
+                ChemistryRecipes.items(ChemistryRecipes.dust("AdipicAcid", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenGas_Ammonia"), ChemistryRecipes.amounts(2000),
+                ChemistryRecipes.fields("GenLiquid_Adiponitrile", "DistW"), ChemistryRecipes.amounts(1000, 4000),
+                240, 96);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c14/hexamethylenediamine",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Nickel", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Hexamethylenediamine", 1)),
+                ChemistryRecipes.fields("GenLiquid_Adiponitrile", "Hydrogen"), ChemistryRecipes.amounts(1000, 4000),
+                null, null,
+                200, 64, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c14/nylon-66",
+                ChemistryRecipes.items(ChemistryRecipes.dust("AdipicAcid", 1),
+                        ChemistryRecipes.dust("Hexamethylenediamine", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("PolyhexamethyleneAdipamide", 1)),
+                null, null,
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(2000),
+                240, 96);
+    }
+
+    private static void tdi() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c14/dinitrotoluene",
+                ChemistryRecipes.items(),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Dinitrotoluene", 1)),
+                ChemistryRecipes.fields("GenLiquid_Toluene", "GenLiquid_NitricAcid", "GenLiquid_SulfuricAcid"),
+                ChemistryRecipes.amounts(1000, 2000, 100),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(2000),
+                200, 64);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c14/toluenediamine",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Nickel", 1),
+                        ChemistryRecipes.dust("Dinitrotoluene", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Toluenediamine", 1)),
+                ChemistryRecipes.fields("Hydrogen"), ChemistryRecipes.amounts(6000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(4000),
+                200, 64, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c14/tdi",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Toluenediamine", 1)),
+                ChemistryRecipes.items(),
+                ChemistryRecipes.fields("GenGas_Phosgene"), ChemistryRecipes.amounts(2000),
+                ChemistryRecipes.fields("GenLiquid_TolueneDiisocyanate", "GenGas_HydrochloricAcid"),
+                ChemistryRecipes.amounts(1000, 4000),
+                200, 64);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c14/polyurethane-tdi",
+                ChemistryRecipes.items(ChemistryRecipes.circuit(3)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Polyurethane", 2)),
+                ChemistryRecipes.fields("GenLiquid_TolueneDiisocyanate", "GenLiquid_PolyetherPolyol"),
+                ChemistryRecipes.amounts(1000, 1000),
+                null, null,
+                200, 48, null, new int[]{0});
+    }
+
+    private static void ppo() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c14/dimethylphenol",
+                ChemistryRecipes.items(ChemistryRecipes.dust("ZSM5", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Dimethylphenol", 1)),
+                ChemistryRecipes.fields("GenLiquid_Phenol", "GenLiquid_Methanol"), ChemistryRecipes.amounts(1000, 2000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(2000),
+                240, 64, null, new int[]{0});
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c14/ppo",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Copper", 1),
+                        ChemistryRecipes.dust("Dimethylphenol", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("PolyphenyleneOxide", 1)),
+                ChemistryRecipes.fields("Oxygen"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(1000),
+                240, 64, null, new int[]{0});
+    }
+
+    private static void pei() {
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c14/bpada",
+                ChemistryRecipes.items(ChemistryRecipes.dust("BisphenolA", 1),
+                        ChemistryRecipes.dust("PhthalicAnhydride", 2)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("BisphenolADianhydride", 1)),
+                null, null,
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(2000),
+                300, 96);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c14/pei",
+                ChemistryRecipes.items(ChemistryRecipes.dust("BisphenolADianhydride", 1),
+                        ChemistryRecipes.dust("MetaPhenylenediamine", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Polyetherimide", 1)),
+                null, null,
+                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(2000),
+                400, 128);
+    }
+
+    private static void dicyandiamide() {
+        ChemistryRecipes.recipe("gt.recipe.calciner", "c14/calcium-cyanamide",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Quicklime", 1),
+                        ChemistryRecipes.dust("CoalCoke", 3)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("CalciumCyanamide", 1)),
+                ChemistryRecipes.fields("Nitrogen"), ChemistryRecipes.amounts(1000),
+                ChemistryRecipes.fields("GenGas_CarbonMonoxide"), ChemistryRecipes.amounts(1000),
+                300, 96);
+        ChemistryRecipes.recipe("gt.recipe.calciner", "c14/dicyandiamide",
+                ChemistryRecipes.items(ChemistryRecipes.dust("CalciumCyanamide", 2)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Dicyandiamide", 1),
+                        ChemistryRecipes.dust("Calcite", 2)),
+                ChemistryRecipes.fields("DistW", "CarbonDioxide"), ChemistryRecipes.amounts(2000, 2000),
+                null, null,
+                200, 64);
+        ChemistryRecipes.recipe("gt.recipe.mixer", "c14/epoxy-dicyandiamide",
+                ChemistryRecipes.items(ChemistryRecipes.dust("Dicyandiamide", 1)),
+                ChemistryRecipes.items(ChemistryRecipes.dust("Epoxy", 1)),
+                ChemistryRecipes.fields("GenLiquid_EpoxyResin"), ChemistryRecipes.amounts(1000),
+                null, null,
+                200, 120);
     }
 }

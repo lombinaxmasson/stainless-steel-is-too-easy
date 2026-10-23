@@ -421,7 +421,52 @@ public final class PolymerMaterials {
                     .meltingPointKelvin(220).boilingPointKelvin(650).density(0.82F).liquid().build(),
             MaterialDeclaration.builder("Polyisobutylene")
                     .displayName("Polyisobutylene").color(0xE8E0C8).chemicalFormula("(C4H8)n")
-                    .meltingPointKelvin(210).boilingPointKelvin(600).density(0.92F).liquid().build());
+                    .meltingPointKelvin(210).boilingPointKelvin(600).density(0.92F).liquid().build(),
+            MaterialDeclaration.builder("PropyleneOxide")
+                    .displayName("Propylene Oxide").color(0xE8E8D0).chemicalFormula("C3H6O")
+                    .meltingPointKelvin(161).boilingPointKelvin(307).density(0.83F).liquid().build(),
+            MaterialDeclaration.builder("PropyleneGlycol")
+                    .displayName("Propylene Glycol").color(0xE0E8E0).chemicalFormula("C3H8O2")
+                    .meltingPointKelvin(213).boilingPointKelvin(461).density(1.04F).liquid().build(),
+            MaterialDeclaration.builder("AdipicAcid")
+                    .displayName("Adipic Acid").color(0xF8F8F0).chemicalFormula("C6H10O4")
+                    .meltingPointKelvin(425).boilingPointKelvin(610).density(1.36F).dust().build(),
+            MaterialDeclaration.builder("Adiponitrile")
+                    .displayName("Adiponitrile").color(0xE8E0D0).chemicalFormula("C6H8N2")
+                    .meltingPointKelvin(275).boilingPointKelvin(568).density(0.95F).liquid().build(),
+            MaterialDeclaration.builder("Hexamethylenediamine")
+                    .displayName("Hexamethylenediamine").color(0xE0D8C8).chemicalFormula("C6H16N2")
+                    .meltingPointKelvin(315).boilingPointKelvin(477).density(0.84F).dust().build(),
+            MaterialDeclaration.builder("PolyhexamethyleneAdipamide")
+                    .displayName("Nylon 66").color(0xF0F0E8).chemicalFormula("(C12H22N2O2)n")
+                    .meltingPointKelvin(538).density(1.14F).dust().polymer().wires().build(),
+            MaterialDeclaration.builder("Dinitrotoluene")
+                    .displayName("Dinitrotoluene").color(0xE8D878).chemicalFormula("C7H6N2O4")
+                    .meltingPointKelvin(344).boilingPointKelvin(573).density(1.52F).dust().build(),
+            MaterialDeclaration.builder("Toluenediamine")
+                    .displayName("Toluenediamine").color(0xD8C8A8).chemicalFormula("C7H10N2")
+                    .meltingPointKelvin(337).boilingPointKelvin(553).density(1.05F).dust().build(),
+            MaterialDeclaration.builder("TolueneDiisocyanate")
+                    .displayName("TDI").color(0xC8A060).chemicalFormula("C9H6N2O2")
+                    .meltingPointKelvin(294).boilingPointKelvin(524).density(1.21F).liquid().build(),
+            MaterialDeclaration.builder("Dimethylphenol")
+                    .displayName("2,6-Xylenol").color(0xE8D8B0).chemicalFormula("C8H10O")
+                    .meltingPointKelvin(318).boilingPointKelvin(476).density(1.01F).dust().build(),
+            MaterialDeclaration.builder("PolyphenyleneOxide")
+                    .displayName("PPO").color(0xE8E0C0).chemicalFormula("(C8H8O)n")
+                    .meltingPointKelvin(540).density(1.06F).dust().polymer().build(),
+            MaterialDeclaration.builder("BisphenolADianhydride")
+                    .displayName("BPADA").color(0xF8F0E0).chemicalFormula("C31H24O7")
+                    .meltingPointKelvin(460).density(1.30F).dust().build(),
+            MaterialDeclaration.builder("Polyetherimide")
+                    .displayName("PEI").color(0xD8B060).chemicalFormula("(C37H24N2O6)n")
+                    .meltingPointKelvin(490).density(1.27F).dust().polymer().build(),
+            MaterialDeclaration.builder("CalciumCyanamide")
+                    .displayName("Calcium Cyanamide").color(0x8C8C80).chemicalFormula("CaCN2")
+                    .meltingPointKelvin(1500).density(2.29F).dust().build(),
+            MaterialDeclaration.builder("Dicyandiamide")
+                    .displayName("Dicyandiamide").color(0xF0F0E8).chemicalFormula("C2H4N4")
+                    .meltingPointKelvin(482).density(1.40F).dust().build());
 
     public static final List<MaterialFormRequest> FORMS = buildForms();
 
@@ -450,11 +495,12 @@ public final class PolymerMaterials {
                 "PolyethyleneTerephthalate", "MetallizedPolyester", "Epoxy", "FiberReinforcedEpoxy",
                 "FlameRetardantLaminate", "Polyurethane", "Ebonite", "Polycaprolactam",
                 "Polyacrylonitrile", "CarbonFiber", "Nomex", "Kevlar", "PolyvinylideneFluoride",
-                "Nafion", "PolyphenyleneSulfide", "Polysulfone", "PolyetherEtherKetone", "Kapton"};
+                "Nafion", "PolyphenyleneSulfide", "Polysulfone", "PolyetherEtherKetone", "Kapton",
+                "PolyhexamethyleneAdipamide", "PolyphenyleneOxide", "Polyetherimide"};
         String[] wires = {
                 "UltraHighMolecularWeightPolyethylene", "PolyethyleneTerephthalate", "Polycaprolactam",
                 "Polyacrylonitrile", "CarbonFiber", "Nomex", "Kevlar", "GlassFiber",
-                "OxidizedPolyacrylonitrile"};
+                "OxidizedPolyacrylonitrile", "PolyhexamethyleneAdipamide"};
         var forms = new ArrayList<MaterialFormRequest>();
         for (String material : polymers) {
             forms.add(new MaterialFormRequest(material, "plate"));

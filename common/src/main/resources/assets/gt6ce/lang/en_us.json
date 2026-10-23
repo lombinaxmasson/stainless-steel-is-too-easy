@@ -194,5 +194,20 @@
   "material.gt6ce.oneoctene": "1-Octene",
   "material.gt6ce.onedecene": "1-Decene",
   "material.gt6ce.polyalphaolefin": "Polyalphaolefin",
-  "material.gt6ce.polyisobutylene": "Polyisobutylene"
+  "material.gt6ce.polyisobutylene": "Polyisobutylene",
+  "material.gt6ce.propyleneoxide": "Propylene Oxide",
+  "material.gt6ce.propyleneglycol": "Propylene Glycol",
+  "material.gt6ce.adipicacid": "Adipic Acid",
+  "material.gt6ce.adiponitrile": "Adiponitrile",
+  "material.gt6ce.hexamethylenediamine": "Hexamethylenediamine",
+  "material.gt6ce.polyhexamethyleneadipamide": "Nylon 66",
+  "material.gt6ce.dinitrotoluene": "Dinitrotoluene",
+  "material.gt6ce.toluenediamine": "Toluenediamine",
+  "material.gt6ce.toluenediisocyanate": "TDI",
+  "material.gt6ce.dimethylphenol": "2,6-Xylenol",
+  "material.gt6ce.polyphenyleneoxide": "PPO",
+  "material.gt6ce.bisphenoladianhydride": "BPADA",
+  "material.gt6ce.polyetherimide": "PEI",
+  "material.gt6ce.calciumcyanamide": "Calcium Cyanamide",
+  "material.gt6ce.dicyandiamide": "Dicyandiamide"
 }
