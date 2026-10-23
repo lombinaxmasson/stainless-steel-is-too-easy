@@ -1,11 +1,11 @@
 # M4 补遗：TDI、环氧丙烷、己二酸 / 尼龙 66、PPO / PEI 与双氰胺详细计划
 
 > 计划 slug：`m4/deferred-fill`
-> 状态：实现完成，待验收（2026-10-23）。前置是 [`聚氨酯与石油树脂`](closed/聚氨酯与石油树脂详细计划.md)（MDI、聚醚多元醇）、[`芳烃氧化、光气、PET 与聚碳酸酯`](closed/芳烃氧化光气聚酯与聚碳酸酯详细计划.md)（光气）、[`尼龙 6 与碳纤维`](closed/尼龙6与碳纤维详细计划.md)（环己酮）、[`芳纶`](closed/芳纶详细计划.md)（间苯二胺）、[`酚醛与环氧树脂`](closed/酚醛与环氧树脂详细计划.md)（环氧树脂与固化配方）。
+> 状态：关闭（2026-10-23）。本文件位于 `docs/card-plans/closed/`。前置是 [`聚氨酯与石油树脂`](聚氨酯与石油树脂详细计划.md)（MDI、聚醚多元醇）、[`芳烃氧化、光气、PET 与聚碳酸酯`](芳烃氧化光气聚酯与聚碳酸酯详细计划.md)（光气）、[`尼龙 6 与碳纤维`](尼龙6与碳纤维详细计划.md)（环己酮）、[`芳纶`](芳纶详细计划.md)（间苯二胺）、[`酚醛与环氧树脂`](酚醛与环氧树脂详细计划.md)（环氧树脂与固化配方）。
 > 性质：M4 收尾卡。把路线图里「延后」的六项内容一次补齐，全部沿用 M4 已建立的 `PolymerMaterials` / `PolymerRecipes` 骨架，不新增机器。
 
 ```text
-lane            = open
+lane            = closed
 slug            = m4/deferred-fill
 owned_paths     = PolymerMaterials.java、PolymerRecipes.java、gt6ce 中英文语言文件
 depends_on      = m4/polyurethane-resin、m4/aromatic-oxidation-polyester-pc、m4/nylon-carbon-fiber、m4/aramids、m4/phenolic-epoxy

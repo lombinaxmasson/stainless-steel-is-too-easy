@@ -114,7 +114,7 @@
 - [x] **BTX 与二甲苯三兄弟**：苯 (`Benzene`)、甲苯 (`Toluene`)、乙苯 (`Ethylbenzene`)、混合二甲苯 (`Xylene`)、**邻二甲苯 (`OrthoXylene`)**、**间二甲苯 (`MetaXylene`)**、**对二甲苯 (`ParaXylene`，流体+晶粉)**。
 - [x] **C4 烯烃系**：混合丁烯 (`Butene`)、**1-丁烯 (`OneButene`)**、**2-丁烯 (`TwoButene`)**、**异丁烯 (`Isobutylene`)**、**丁二烯 (`Butadiene`)**。
 - [x] **C5 馏分系**：C5 馏分 (`CFiveFraction`)、二聚 C5 馏分 (`DimerizedCFiveFraction`)、**异戊二烯 (`Isoprene`)**、**环戊二烯 (`Cyclopentadiene`)**、**双环戊二烯 (`Dicyclopentadiene` / DCPD)**、戊烷 (`Pentane`)、**降冰片烯 (`Norbornene` 粉)**。
-- [x] **基础衍生物单体（部分）**：异丙苯 (`Cumene`)、苯酚 (`Phenol`)、丙酮 (`Acetone`)、**双酚 A (`BisphenolA` 粉)** 已随 M3 注册；氯乙烯、醋酸乙烯、环氧乙烷、乙二醇、环氧氯丙烷、丙烯腈、丙烯酸、MMA、苯酐、PTA、间苯二甲酸、己内酰胺、MDI 移交 M4。
+- [x] **基础衍生物单体（部分）**：异丙苯 (`Cumene`)、苯酚 (`Phenol`)、丙酮 (`Acetone`)、**双酚 A (`BisphenolA` 粉)** 已随 M3 注册；氯乙烯、醋酸乙烯、环氧乙烷、乙二醇、环氧氯丙烷、丙烯腈、丙烯酸、MMA、苯酐、PTA、间苯二甲酸、己内酰胺、MDI 已在 M4 各卡实装。
 
 ### 3.2 核心工艺与内部副产自循环清单
 - [x] **BTX 溶剂抽提循环**：裂解汽油 / 重整油 + 糠醛 $\xrightarrow{\text{筛板塔/浴槽}}$ 芳烃萃取液 + **抽余油**（回裂解炉）+ **C5 馏分**；萃取液汽提回收糠醛，精馏得 **苯 + 甲苯 + 乙苯 + 混合二甲苯**。
@@ -132,7 +132,7 @@
   - [x] C5 馏分 $\xrightarrow{\text{加热器}}$ 二聚 C5（里面的环戊二烯自己聚合成高沸点的双环戊二烯 DCPD）。
   - [x] 二聚 C5 $\xrightarrow{\text{蒸馏塔}}$ **异戊二烯 (36%)** + **戊烷 (38%)** + **双环戊二烯 DCPD (13%)**。
   - [x] DCPD $\xrightarrow{\text{高温热解}}$ 2 份 **环戊二烯**（再与乙烯加成得**降冰片烯**）。
-  - [ ] *合成异戊二烯路线*（Prins 法，移交 M4）：异丁烯 + 甲醛 $\rightarrow$ 二甲基二噁烷 $\xrightarrow{\text{固体磷酸催化裂解}}$ **异戊二烯** + 甲醛循环。
+  - [x] *合成异戊二烯路线*（Prins 法，M4 卡 2 实装）：异丁烯 + 甲醛 $\rightarrow$ 二甲基二噁烷 $\xrightarrow{\text{固体磷酸催化裂解}}$ **异戊二烯** + 甲醛循环。
 - [x] **异丙苯法制苯酚与双酚 A**
   - [x] 苯 + 丙烯 $\rightarrow$ 异丙苯 $\xrightarrow{+\text{O}_2}$ 过氧化氢异丙苯 $\xrightarrow{\text{酸解}}$ **苯酚 + 丙酮**（缩合成 **双酚 A**，M3 用盐酸催化，阳离子交换树脂路线移交 M4）。
 
@@ -145,41 +145,49 @@
 > **策略**：按 `docs/supersymmetry-petrochem-uses.md` 表格注册最终材料与形态（粉、板、箔、环、纤维、管），把合成线修通；下游消耗配方留到 M6 再挂。
 
 ### 4.1 通用热塑性塑料
-- [ ] **聚烯烃系**：PE（高压自由基聚合 vs 低压 Ziegler-Natta 催化）、**UHMWPE（超高分子量聚乙烯，Kaminsky 茂金属催化，含板与防弹纤维）**、PP（聚丙烯）。
-- [ ] **乙烯基家族**：
-  - [ ] 氯乙烯 $\rightarrow$ **PVC**（粉、板、箔、物品管）
-  - [ ] 醋酸乙烯 $\rightarrow$ **PVAc（聚醋酸乙烯酯）** $\xrightarrow{+\text{乙醇醇解}}$ **PVA（聚乙烯醇）**（副产乙酸乙酯溶剂） $\xrightarrow{+\text{正丁醛}}$ **PVB（聚乙烯醇缩丁醛夹层玻璃膜）**
-  - [ ] 乙烯 + 醋酸乙烯 $\rightarrow$ **EVA**（粉、微型/小型流体软管）
-- [ ] **苯乙烯与丙烯酸系**：**PS（聚苯乙烯）**、**交联 PS 圆珠**（苯乙烯 + 二乙烯基苯）、**PMMA（有机玻璃）**。
-- [ ] **双酚 A 与聚酯系**：**PC（聚碳酸酯）**、**PET（聚对苯二甲酸乙二醇酯，含镀铝 Mylar 膜）**。
+- [x] **聚烯烃系**：PE（高压自由基聚合 vs 低压 Ziegler-Natta 催化）、**UHMWPE（超高分子量聚乙烯，Kaminsky 茂金属催化，含板与防弹纤维）**、PP（聚丙烯）。
+- [x] **乙烯基家族**：
+  - [x] 氯乙烯 $\rightarrow$ **PVC**（粉、板、箔、物品管）
+  - [x] 醋酸乙烯 $\rightarrow$ **PVAc（聚醋酸乙烯酯）** $\xrightarrow{+\text{乙醇醇解}}$ **PVA（聚乙烯醇）**（副产乙酸乙酯溶剂） $\xrightarrow{+\text{正丁醛}}$ **PVB（聚乙烯醇缩丁醛夹层玻璃膜）**
+  - [x] 乙烯 + 醋酸乙烯 $\rightarrow$ **EVA**（粉、微型/小型流体软管）
+- [x] **苯乙烯与丙烯酸系**：**PS（聚苯乙烯）**、**交联 PS 圆珠**（苯乙烯 + 二乙烯基苯）、**PMMA（有机玻璃）**。
+- [x] **双酚 A 与聚酯系**：**PC（聚碳酸酯）**、**PET（聚对苯二甲酸乙二醇酯，含镀铝 Mylar 膜）**。
 
 ### 4.2 热固性树脂
-- [ ] **酚醛树脂 (`Phenolic`)**：苯酚 + 甲醛。
-- [ ] **环氧树脂四兄弟**：
-  - [ ] 双酚 A + 环氧氯丙烷 + 固化剂（双氰胺 / 邻苯二甲酸酐） $\rightarrow$ **普通环氧树脂 (`Epoxy`)** + 浸玻纤出 **强化环氧板（玻璃钢）**。
-  - [ ] 四溴双酚 A（用上 M2 的溴！）+ 环氧氯丙烷 $\rightarrow$ **阻燃环氧 (`FlameRetardantEpoxy`)**。
-  - [ ] 甲酚 + 甲醛 + 环氧氯丙烷 $\rightarrow$ **甲酚醛环氧 (`EpoxyCresolNovolacs`)**。
-  - [ ] 丁二烯 + 丙烯醛 $\rightarrow$ **脂环族环氧液**。
-- [ ] **聚氨酯 (`Polyurethane`)**：MDI + 乙二醇/多元醇 + 超临界 $\text{CO}_2$ 发泡（顺手加一条：PU 块泡黄染料 = 原版海绵 `minecraft:sponge`！）。
-- [ ] **氢化石油树脂 (`HydrogenatedPetroleumResin`)**：DCPD + 苯 + 降冰片烯聚合后加氢（消化 C5 副产！）。
+- [x] **酚醛树脂 (`Phenolic`)**：苯酚 + 甲醛。
+- [x] **环氧树脂四兄弟**：
+  - [x] 双酚 A + 环氧氯丙烷 + 固化剂（双氰胺 / 邻苯二甲酸酐） $\rightarrow$ **普通环氧树脂 (`Epoxy`)** + 浸玻纤出 **强化环氧板（玻璃钢）**。
+  - [x] 四溴双酚 A（用上 M2 的溴！）+ 环氧氯丙烷 $\rightarrow$ **阻燃环氧 (`FlameRetardantEpoxy`)**。
+  - [x] 甲酚 + 甲醛 + 环氧氯丙烷 $\rightarrow$ **甲酚醛环氧 (`EpoxyCresolNovolacs`)**。
+  - [x] 丁二烯 + 丙烯醛 $\rightarrow$ **脂环族环氧液**。
+- [x] **聚氨酯 (`Polyurethane`)**：MDI + 乙二醇/多元醇 + 超临界 $\text{CO}_2$ 发泡（顺手加一条：PU 块泡黄染料 = 原版海绵 `minecraft:sponge`！）。
+- [x] **氢化石油树脂 (`HydrogenatedPetroleumResin`)**：DCPD + 苯 + 降冰片烯聚合后加氢（消化 C5 副产！）。
 
 ### 4.3 合成橡胶与硫化体系
-- [ ] **五大生胶合成**：
-  - [ ] 异戊二烯 $\rightarrow$ **聚异戊二烯 (`Polyisoprene`)** + 炭黑混炼
-  - [ ] 丁二烯 + 苯乙烯 $\rightarrow$ **丁苯橡胶 (`SBR`)** + 炭黑混炼
-  - [ ] 丁二烯 + 丙烯腈 $\rightarrow$ **丁腈橡胶 (`NBR`)**
-  - [ ] 丁二烯氯化 $\rightarrow$ 氯丁二烯 $\rightarrow$ **氯丁橡胶 (`Neoprene`)**
-  - [ ] 偏氟乙烯 + 六氟丙烯 $\rightarrow$ **氟橡胶 (`Viton`)**
-- [ ] **统一硫化成型配方**：生胶粉 + 硫磺 + 催化剂（氧化锌 / 氧化镁，不消耗）+ 模具 $\xrightarrow{\text{热压机/挤压机}}$ 对应橡胶的锭、板、环（`ring`）、箔（`foil`）。
+- [x] **五大生胶合成**：
+  - [x] 异戊二烯 $\rightarrow$ **聚异戊二烯 (`Polyisoprene`)** + 炭黑混炼
+  - [x] 丁二烯 + 苯乙烯 $\rightarrow$ **丁苯橡胶 (`SBR`)** + 炭黑混炼
+  - [x] 丁二烯 + 丙烯腈 $\rightarrow$ **丁腈橡胶 (`NBR`)**
+  - [x] 丁二烯氯化 $\rightarrow$ 氯丁二烯 $\rightarrow$ **氯丁橡胶 (`Neoprene`)**
+  - [x] 偏氟乙烯 + 六氟丙烯 $\rightarrow$ **氟橡胶 (`Viton`)**
+- [x] **统一硫化成型配方**：生胶粉 + 硫磺 + 催化剂（氧化锌 / 氧化镁，不消耗）$\xrightarrow{\text{搅拌机}}$ 对应橡胶的**硫化胶锭**（实现上省略模具，板、环等形态交给 GT6 通用金属加工）。
 
 ### 4.4 合成纤维与特种工程塑料（按喜好挑选实装）
-- [ ] **合成纤维四强**：
-  - [ ] 己内酰胺 $\rightarrow$ **尼龙 6 (`Polycaprolactam`)**
-  - [ ] 对苯二甲酰氯 + 对苯二胺 $\rightarrow$ **凯夫拉 (`Kevlar`)**
-  - [ ] 间苯二甲酰氯 + 间苯二胺 $\rightarrow$ **诺梅克斯 (`Nomex`)**
-  - [ ] 丙烯腈 $\rightarrow$ **聚丙烯腈 (PAN) 纤维** $\xrightarrow{\text{预氧化 + 惰性气氛高温碳化}}$ **碳纤维 (`CarbonFiber`)**
-- [ ] **氟塑料与特种工程塑料**：**PTFE（特氟龙）**、**PVDF**、**Nafion**、**聚砜 (`Polysulfone`)**、**PPS**、**PEEK**、**Kapton（聚酰亚胺）**。
-- [ ] **湿法冶金萃取剂与功能油品（可选）**：**TBP（磷酸三丁酯）**、**P204**、**Aliquat 336**、**PAO 全合成润滑油**。
+- [x] **合成纤维四强**：
+  - [x] 己内酰胺 $\rightarrow$ **尼龙 6 (`Polycaprolactam`)**
+  - [x] 对苯二甲酰氯 + 对苯二胺 $\rightarrow$ **凯夫拉 (`Kevlar`)**
+  - [x] 间苯二甲酰氯 + 间苯二胺 $\rightarrow$ **诺梅克斯 (`Nomex`)**
+  - [x] 丙烯腈 $\rightarrow$ **聚丙烯腈 (PAN) 纤维** $\xrightarrow{\text{预氧化 + 惰性气氛高温碳化}}$ **碳纤维 (`CarbonFiber`)**
+- [x] **氟塑料与特种工程塑料**：**PTFE（特氟龙）**、**PVDF**、**Nafion**、**聚砜 (`Polysulfone`)**、**PPS**、**PEEK**、**Kapton（聚酰亚胺）**。
+- [x] **湿法冶金萃取剂与功能油品（可选）**：**TBP（磷酸三丁酯）**、**P204**、**Aliquat 336**、**PAO 全合成润滑油**。
+
+### 4.5 补遗（2026-10-23 收尾卡）
+- [x] **TDI**：甲苯混酸硝化 $\rightarrow$ DNT $\rightarrow$ 加氢 TDA $\rightarrow$ 光气化 TDI；与聚醚多元醇出 TDI 型聚氨酯（电路 3 与 MDI 两条路线区分）。
+- [x] **环氧丙烷 / 丙二醇**：HPPO 法丙烯 + 过氧化氢在 ZSM-5 上直接氧化；水合得丙二醇，并补 PO 型聚醚多元醇。
+- [x] **己二酸 / 尼龙 66**：环己酮硝酸氧化得己二酸 $\rightarrow$ 己二腈 $\rightarrow$ 己二胺 $\rightarrow$ **尼龙 66**（可压板、轧箔、拉细线）。
+- [x] **PPO（聚苯醚）**：苯酚 + 甲醇甲基化得 2,6-二甲酚，铜催化氧化偶联得 PPO。
+- [x] **PEI（聚醚酰亚胺）**：双酚 A + 苯酐折一步得 BPADA，与间苯二胺亚胺化得 PEI。
+- [x] **双氰胺**：石灰氮法（生石灰 + 焦炭 + 氮气）；作为环氧的第二条固化路线，苯酐路线保留。
 
 ---
 
