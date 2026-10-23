@@ -18,11 +18,13 @@ public final class SsiteBehaviorMachines implements BehaviorMachineContributor {
     public Set<String> machineTypes() {
         Set<String> types = new LinkedHashSet<>();
         for (AodTier tier : AodTier.values()) types.add(tier.machineType());
+        types.add(VarFurnaceCore.MACHINE_TYPE);
         return types;
     }
 
     @Override
     public MachineBehavior create(String machineType) {
+        if (VarFurnaceCore.MACHINE_TYPE.equals(machineType)) return new VarBehavior();
         AodTier tier = AodTier.byMachineType(machineType);
         if (tier == null) throw new IllegalArgumentException("Unknown AOD machine type: " + machineType);
         return new AodBehavior(tier);

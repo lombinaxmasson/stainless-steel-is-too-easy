@@ -9,6 +9,7 @@
   "block.ssite.aod_converter_tungsten": "Tungsten AOD Converter",
   "block.ssite.aod_converter_ta4hfc5": "Tantalum Hafnium Carbide AOD Converter",
   "block.ssite.aod_lid": "AOD Converter Lid",
+  "block.ssite.var_furnace": "Water-Cooled Copper VAR Furnace",
   "ssite.aod.lid.open": "Lid: open",
   "ssite.aod.lid.closed": "Lid: closed",
   "block.ssite.pipe_tiny_stainless_steel_316l": "Tiny 316L Stainless Steel Fluid Pipe",

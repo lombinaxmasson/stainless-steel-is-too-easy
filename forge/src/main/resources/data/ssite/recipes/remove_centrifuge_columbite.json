@@ -1,0 +1,6 @@
+{
+  "_comment": "Drops the built-in centrifuge decomposition of Columbite into niobium pentoxide.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.centrifuge",
+  "item_inputs": [{ "item": "gt6ce:dust_columbite" }]
+}

@@ -40,7 +40,8 @@ public final class SsiteLidPart implements LayoutPartContributor {
     public static final class LidBehavior implements PartBehavior {
         @Override
         public boolean canInsert(PartContext context, int slot, ItemStack stack) {
-            return context.state().getBoolean(OPEN) && AodConverterCore.isCharge(stack);
+            return context.state().getBoolean(OPEN)
+                    && (AodConverterCore.isCharge(stack) || VarFurnaceCore.isCharge(stack));
         }
 
         @Override

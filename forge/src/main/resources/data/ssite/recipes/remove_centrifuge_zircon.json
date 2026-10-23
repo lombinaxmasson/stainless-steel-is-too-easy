@@ -1,0 +1,6 @@
+{
+  "_comment": "Drops the built-in centrifuge row that yields zirconium dust directly from Zircon.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.centrifuge",
+  "item_inputs": [{ "item": "gt6ce:dust_zircon" }]
+}

@@ -1,0 +1,7 @@
+{
+  "_comment": "Drops the direct electrolysis of Vitriol of Clay solution into Alumina.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.electrolyzer",
+  "fluid_inputs": [{ "fluid": "gt6ce:vitriolofclay" }],
+  "item_outputs": [{ "item": "gt6ce:dust_alumina" }]
+}

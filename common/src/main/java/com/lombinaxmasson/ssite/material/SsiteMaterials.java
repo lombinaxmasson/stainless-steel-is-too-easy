@@ -195,6 +195,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
                         .displayName("ZSM-5 Zeolite").color(0xE8ECF0).chemicalFormula("(Na,H)AlSi23O48")
                         .meltingPointKelvin(1900).boilingPointKelvin(2500).density(1.80F).dust().build()));
         materials.addAll(PolymerMaterials.MATERIALS);
+        materials.addAll(MetallurgyMaterials.MATERIALS);
         return List.copyOf(materials);
     }
 

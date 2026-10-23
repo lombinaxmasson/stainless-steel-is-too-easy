@@ -38,7 +38,8 @@ public final class SsiteCreativeTab {
         List<ItemStack> stacks = new ArrayList<>();
         for (var item : BuiltInRegistries.ITEM) {
             var id = BuiltInRegistries.ITEM.getKey(item);
-            if (!SsiteAddon.MOD_ID.equals(id.getNamespace()) || !id.getPath().startsWith("aod_")) continue;
+            if (!SsiteAddon.MOD_ID.equals(id.getNamespace())) continue;
+            if (!id.getPath().startsWith("aod_") && !id.getPath().equals("var_furnace")) continue;
             stacks.add(new ItemStack(item));
         }
         return stacks;

@@ -1,0 +1,7 @@
+{
+  "_comment": "Drops the 0 EU/t bath rows that reduce TiCl4 straight to titanium dust with Mg or Na.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.bath",
+  "fluid_inputs": [{ "fluid": "gt6ce:titaniumtetrachloride" }],
+  "item_outputs": [{ "item": "gt6ce:dust_titanium" }]
+}

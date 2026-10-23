@@ -32,6 +32,7 @@ public final class ChemistryRecipes {
         brineChain();
         PetrochemRecipes.add();
         PolymerRecipes.add();
+        MetallurgyRecipes.add();
         if (!REJECTED.isEmpty()) {
             throw new IllegalStateException("ssite recipes rejected: " + REJECTED);
         }
