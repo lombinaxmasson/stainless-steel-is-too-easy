@@ -2,6 +2,8 @@ package com.lombinaxmasson.ssite.material;
 
 import com.gregtech.gregtech.api.addon.MaterialDeclaration;
 import com.gregtech.gregtech.api.addon.MaterialFormRequest;
+import com.gregtech.gregtech.api.addon.platform.AddonItems;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -422,6 +424,24 @@ public final class PolymerMaterials {
                     .meltingPointKelvin(210).boilingPointKelvin(600).density(0.92F).liquid().build());
 
     public static final List<MaterialFormRequest> FORMS = buildForms();
+
+    private static final String[] CREATIVE_PREFIXES = {
+            "dust", "dustSmall", "dustTiny", "plate", "foil", "wireFine", "ingot"};
+
+    /**
+     * Item stacks for the ssite creative tab, in declaration order.
+     * Forms a material does not generate resolve to empty and are skipped.
+     */
+    public static List<ItemStack> creativeStacks() {
+        var stacks = new ArrayList<ItemStack>();
+        for (MaterialDeclaration declaration : MATERIALS) {
+            for (String prefix : CREATIVE_PREFIXES) {
+                ItemStack stack = AddonItems.stack(prefix, declaration.name(), 1);
+                if (!stack.isEmpty()) stacks.add(stack);
+            }
+        }
+        return List.copyOf(stacks);
+    }
 
     private static List<MaterialFormRequest> buildForms() {
         String[] polymers = {

@@ -1,6 +1,7 @@
 {
   "mod.ssite.name": "Stainless Steel is Too Easy",
   "mod.ssite.description": "A chemistry-focused GregTech 6 Community Edition addon.",
+  "itemGroup.ssite.materials": "ssite Materials",
   "block.ssite.aod_converter_steel": "Steel AOD Converter",
   "block.ssite.aod_converter_stainless_steel": "Stainless Steel AOD Converter",
   "block.ssite.aod_converter_niobium_titanium": "Niobium Titanium AOD Converter",

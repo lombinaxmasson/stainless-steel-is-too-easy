@@ -1,6 +1,7 @@
 {
   "mod.ssite.name": "Stainless Steel is Too Easy",
   "mod.ssite.description": "以化工为重心的 GregTech 6 Community Edition 附属。",
+  "itemGroup.ssite.materials": "ssite 材料",
   "block.ssite.aod_converter_steel": "钢制AOD精炼转炉",
   "block.ssite.aod_converter_stainless_steel": "不锈钢AOD精炼转炉",
   "block.ssite.aod_converter_niobium_titanium": "铌钛AOD精炼转炉",
