@@ -16,6 +16,10 @@ sourceSets.main {
     java.srcDir rootProject.file('common/src/main/java')
     resources.srcDir rootProject.file('common/src/main/resources')
 }
+sourceSets.test {
+    java.srcDir rootProject.file('common/src/test/java')
+    compileClasspath += sourceSets.main.compileClasspath
+}
 
 apply from: rootProject.file('gradle/gt6ce-sdk.gradle')
 
@@ -49,6 +53,7 @@ neoForge {
 
 dependencies {
     compileOnly files(neoSdk)
+    testImplementation files(neoSdk)
     if (neoRuntime.isFile()) {
         runtimeOnly files(neoRuntime)
     }
@@ -64,6 +69,18 @@ tasks.register('requireSdk') {
     }
 }
 tasks.named('compileJava').configure { dependsOn 'requireSdk' }
+tasks.named('compileTestJava').configure { dependsOn 'requireSdk' }
+
+def unitTest = tasks.register('unitTest', JavaExec) {
+    description = 'Runs pure-JVM pool reaction and crucible behavior tests.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.machine.MoltenPoolTests'
+    jvmArgs '-ea'
+}
+tasks.named('check').configure { dependsOn unitTest }
 
 tasks.register('requireRuntime') {
     description = 'Fail with the jar command when the dev game has no GregTech mod jar.'
@@ -84,15 +101,24 @@ tasks.configureEach {
 tasks.named('processResources', ProcessResources).configure {
     filteringCharset = 'UTF-8'
     def replaceProperties = [
-            mod_id       : mod_id,
-            mod_name     : mod_name,
-            mod_version  : mod_version,
-            mod_license  : mod_license,
-            mod_authors  : mod_authors,
+            mod_id             : mod_id,
+            mod_name           : mod_name,
+            mod_version        : mod_version,
+            mod_license        : mod_license,
+            mod_authors        : mod_authors,
+            gt6ce_version_range: "[${gt6ce_version},)",
     ]
     inputs.properties replaceProperties
     filesMatching(['META-INF/neoforge.mods.toml']) {
         expand replaceProperties
+    }
+    // 1.21 moved data/<ns>/recipes/ to data/<ns>/recipe/ and crafting result.item to result.id.
+    filesMatching(['data/ssite/recipes/*.json']) {
+        path = path.replace('data/ssite/recipes/', 'data/ssite/recipe/')
+        filter { String line ->
+            line.replace('"result": {', '"result": { "count": 1,')
+                .replace('    "item": "ssite:', '    "id": "ssite:')
+        }
     }
 }
 

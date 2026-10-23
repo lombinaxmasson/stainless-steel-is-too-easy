@@ -1,8 +1,0 @@
-{
-  "_comment": "Drops the consumable-free electrolysis of Alumina. The oxygen output keeps the cryolite Hall-Heroult rows.",
-  "type": "gt6ce:machine_removal",
-  "map": "gt.recipe.electrolyzer",
-  "item_inputs": [{ "item": "gt6ce:dust_alumina" }],
-  "item_outputs": [{ "item": "gt6ce:dust_aluminium" }],
-  "fluid_outputs": [{ "fluid": "gt6ce:oxygen" }]
-}

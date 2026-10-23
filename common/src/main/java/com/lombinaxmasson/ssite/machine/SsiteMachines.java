@@ -45,8 +45,7 @@ public final class SsiteMachines implements AddonMachineContributor {
                         .inputItems(4)
                         .outputItems(2)
                         .minimalInputItems(1)
-                        .inputFluids(2)
-                        .outputFluids(1)
+                        .inputFluids(1)
                         .minimalInputFluids(1)
                         .minimalInputs(2)
                         .needsOutputs(true)
@@ -77,18 +76,18 @@ public final class SsiteMachines implements AddonMachineContributor {
         List<StructureLayout> layouts = new ArrayList<>();
         for (AodTier tier : AodTier.values()) {
             layouts.add(StructureLayout.builder(tier.machineType())
-                    .cell(0, 1, 0, CellMatch.part(AodConverterCore.LID_PART), StructureRole.CASING)
+                    .cell(0, 1, 0, CellMatch.part(MoltenPool.LID_PART), StructureRole.CASING)
                     .build());
         }
         layouts.add(StructureLayout.builder(VarFurnaceCore.MACHINE_TYPE)
-                .cell(0, 1, 0, CellMatch.part(AodConverterCore.LID_PART), StructureRole.CASING)
+                .cell(0, 1, 0, CellMatch.part(MoltenPool.LID_PART), StructureRole.CASING)
                 .build());
         return List.copyOf(layouts);
     }
 
     @Override
     public List<LayoutPart> layoutParts() {
-        return List.of(LayoutPart.builder(AodConverterCore.LID_PART, "Steel")
+        return List.of(LayoutPart.builder(MoltenPool.LID_PART, "Steel")
                 .hardness(6.0F)
                 .texture("block/aod_lid")
                 .slots(PartSlots.builder(1).insert(MachineFace.TOP).build())

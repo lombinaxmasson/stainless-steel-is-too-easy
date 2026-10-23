@@ -1,6 +1,0 @@
-{
-  "_comment": "Drops mixer rows that output stainless dust. The item id is gt6ce:dust_stainlesssteel.",
-  "type": "gt6ce:machine_removal",
-  "map": "gt.recipe.mixer",
-  "item_outputs": [{ "item": "gt6ce:dust_stainlesssteel" }]
-}

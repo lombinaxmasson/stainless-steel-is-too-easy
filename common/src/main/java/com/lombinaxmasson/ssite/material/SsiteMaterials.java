@@ -5,13 +5,35 @@ import com.gregtech.gregtech.api.addon.CrucibleReactionDeclaration;
 import com.gregtech.gregtech.api.addon.CrucibleReactionRemoval;
 import com.gregtech.gregtech.api.addon.MaterialDeclaration;
 import com.gregtech.gregtech.api.addon.MaterialFormRequest;
+import com.gregtech.gregtech.api.addon.platform.AddonItems;
 import com.lombinaxmasson.ssite.SsiteAddon;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /** Material declarations. GregTech loads this through ServiceLoader while materials are still open. */
 public final class SsiteMaterials implements AddonMaterialContributor {
+    private static final String[] CREATIVE_PREFIXES = {
+            "dust", "dustSmall", "dustTiny", "plate", "foil", "wireFine", "ingot"};
+
+    public static final List<MaterialDeclaration> MATERIALS = buildMaterials();
+
+    /**
+     * Item stacks for the ssite creative tab, in declaration order across every milestone.
+     * Forms a material does not generate resolve to empty and are skipped.
+     */
+    public static List<ItemStack> creativeStacks() {
+        var stacks = new ArrayList<ItemStack>();
+        for (MaterialDeclaration declaration : MATERIALS) {
+            for (String prefix : CREATIVE_PREFIXES) {
+                ItemStack stack = AddonItems.stack(prefix, declaration.name(), 1);
+                if (!stack.isEmpty()) stacks.add(stack);
+            }
+        }
+        return List.copyOf(stacks);
+    }
+
     @Override
     public String addonId() {
         return SsiteAddon.MOD_ID;
@@ -19,6 +41,10 @@ public final class SsiteMaterials implements AddonMaterialContributor {
 
     @Override
     public List<MaterialDeclaration> materials() {
+        return MATERIALS;
+    }
+
+    private static List<MaterialDeclaration> buildMaterials() {
         var materials = new ArrayList<>(List.of(
                 MaterialDeclaration.builder("Ferrochromium")
                         .displayName("Ferrochromium").color(0xB4A8B8).chemicalFormula("FeCr2")

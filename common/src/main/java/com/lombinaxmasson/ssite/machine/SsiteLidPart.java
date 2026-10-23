@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.List;
 import java.util.Set;
 
-/** The hinged lid above an AOD converter. Its saved {@code open} flag gates top charging and gas retention. */
+/** The hinged lid above an AOD converter or VAR furnace. Its saved {@code open} flag gates top charging and gas retention. */
 public final class SsiteLidPart implements LayoutPartContributor {
     private static final String OPEN = "open";
 
@@ -26,22 +26,24 @@ public final class SsiteLidPart implements LayoutPartContributor {
 
     @Override
     public Set<String> partNames() {
-        return Set.of(AodConverterCore.LID_PART);
+        return Set.of(MoltenPool.LID_PART);
     }
 
     @Override
     public PartBehavior create(String partName) {
-        if (!AodConverterCore.LID_PART.equals(partName)) {
+        if (!MoltenPool.LID_PART.equals(partName)) {
             throw new IllegalArgumentException("Unknown AOD part: " + partName);
         }
         return new LidBehavior();
     }
 
     public static final class LidBehavior implements PartBehavior {
+        /** Only what the furnace below can melt; an unbound lid takes nothing, so its one slot cannot jam. */
         @Override
         public boolean canInsert(PartContext context, int slot, ItemStack stack) {
             return context.state().getBoolean(OPEN)
-                    && (AodConverterCore.isCharge(stack) || VarFurnaceCore.isCharge(stack));
+                    && context.controller() instanceof MoltenPool.Holder holder
+                    && holder.pool().isCharge(stack);
         }
 
         @Override

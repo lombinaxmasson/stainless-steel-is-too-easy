@@ -1,6 +1,0 @@
-{
-  "_comment": "Drops the built-in centrifuge decomposition of Bauxite. The Bayer autoclave line replaces it.",
-  "type": "gt6ce:machine_removal",
-  "map": "gt.recipe.centrifuge",
-  "item_inputs": [{ "item": "gt6ce:dust_bauxite" }]
-}

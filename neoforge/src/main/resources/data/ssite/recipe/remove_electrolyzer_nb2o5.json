@@ -1,6 +1,0 @@
-{
-  "_comment": "Drops the consumable-free electrolysis of Niobium Pentoxide into niobium.",
-  "type": "gt6ce:machine_removal",
-  "map": "gt.recipe.electrolyzer",
-  "item_inputs": [{ "item": "gt6ce:dust_niobiumpentoxide" }]
-}

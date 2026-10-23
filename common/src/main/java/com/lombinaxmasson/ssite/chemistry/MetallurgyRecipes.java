@@ -1,8 +1,10 @@
 package com.lombinaxmasson.ssite.chemistry;
 
-import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
 import com.lombinaxmasson.ssite.machine.SsiteMachines;
-import net.minecraft.world.item.ItemStack;
+
+import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.circuit;
+import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.dust;
+import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.row;
 
 /** M5 metallurgy recipes. Each M5 card adds one method; {@link #add()} wires them all. */
 public final class MetallurgyRecipes {
@@ -24,86 +26,65 @@ public final class MetallurgyRecipes {
 
     private static void titaniumChlorination() {
         for (String carbon : new String[]{"Carbon", "CoalCoke"}) {
-            ChemistryRecipes.recipe("gt.recipe.calciner", "titanium/rutile-" + carbon,
-                    ChemistryRecipes.items(ChemistryRecipes.dust("Rutile", 1),
-                            ChemistryRecipes.dust(carbon, 2)),
-                    ChemistryRecipes.items(),
-                    ChemistryRecipes.fields("GenGas_Chlorine"), ChemistryRecipes.amounts(4000),
-                    ChemistryRecipes.fields("GenLiquid_CrudeTitaniumTetrachloride", "GenGas_CarbonMonoxide"),
-                    ChemistryRecipes.amounts(1000, 2000),
-                    160, 64);
-            ChemistryRecipes.recipe("gt.recipe.calciner", "titanium/ilmenite-" + carbon,
-                    ChemistryRecipes.items(ChemistryRecipes.dust("Ilmenite", 1),
-                            ChemistryRecipes.dust(carbon, 3)),
-                    ChemistryRecipes.items(ChemistryRecipes.dust("FerricChloride", 1)),
-                    ChemistryRecipes.fields("GenGas_Chlorine"), ChemistryRecipes.amounts(7000),
-                    ChemistryRecipes.fields("GenLiquid_CrudeTitaniumTetrachloride", "GenGas_CarbonMonoxide"),
-                    ChemistryRecipes.amounts(1000, 3000),
-                    200, 64);
+            row("gt.recipe.calciner", "titanium/rutile-" + carbon)
+                    .in(dust("Rutile", 1), dust(carbon, 2))
+                    .fluidIn("GenGas_Chlorine", 4000)
+                    .fluidOut("GenLiquid_CrudeTitaniumTetrachloride", 1000, "GenGas_CarbonMonoxide", 2000)
+                    .add(160, 64);
+            row("gt.recipe.calciner", "titanium/ilmenite-" + carbon)
+                    .in(dust("Ilmenite", 1), dust(carbon, 3))
+                    .out(dust("FerricChloride", 1))
+                    .fluidIn("GenGas_Chlorine", 7000)
+                    .fluidOut("GenLiquid_CrudeTitaniumTetrachloride", 1000, "GenGas_CarbonMonoxide", 3000)
+                    .add(200, 64);
         }
-        ChemistryRecipes.recipe("gt.recipe.calciner", "titanium/ferric-chloride",
-                ChemistryRecipes.items(ChemistryRecipes.dust("FerricChloride", 2)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("Hematite", 1)),
-                ChemistryRecipes.fields("Oxygen"), ChemistryRecipes.amounts(1500),
-                ChemistryRecipes.fields("GenGas_Chlorine"), ChemistryRecipes.amounts(3000),
-                120, 48);
+        row("gt.recipe.calciner", "titanium/ferric-chloride")
+                .in(dust("FerricChloride", 2))
+                .out(dust("Hematite", 1))
+                .fluidIn("Oxygen", 1500)
+                .fluidOut("GenGas_Chlorine", 3000)
+                .add(120, 48);
     }
 
     private static void vanadiumRecovery() {
-        ChemistryRecipes.recipe("gt.recipe.distillationtower", "titanium/vanadium-tower",
-                ChemistryRecipes.items(),
-                ChemistryRecipes.items(),
-                ChemistryRecipes.fields("GenLiquid_CrudeTitaniumTetrachloride"), ChemistryRecipes.amounts(10000),
-                ChemistryRecipes.fields("GenLiquid_TitaniumTetrachloride", "GenLiquid_VanadiumOxytrichloride"),
-                ChemistryRecipes.amounts(9500, 500),
-                200, 64);
-        ChemistryRecipes.recipe("gt.recipe.distillery", "titanium/vanadium-still",
-                ChemistryRecipes.items(ChemistryRecipes.circuit(1)),
-                ChemistryRecipes.items(),
-                ChemistryRecipes.fields("GenLiquid_CrudeTitaniumTetrachloride"), ChemistryRecipes.amounts(1000),
-                ChemistryRecipes.fields("GenLiquid_TitaniumTetrachloride", "GenLiquid_VanadiumOxytrichloride"),
-                ChemistryRecipes.amounts(900, 100),
-                100, 48, null, new int[]{0});
-        ChemistryRecipes.recipe("gt.recipe.mixer", "vanadium/oxide",
-                ChemistryRecipes.items(),
-                ChemistryRecipes.items(ChemistryRecipes.dust("VanadiumPentoxide", 1)),
-                ChemistryRecipes.fields("GenLiquid_VanadiumOxytrichloride", "DistW"),
-                ChemistryRecipes.amounts(2000, 3000),
-                ChemistryRecipes.fields("GenGas_HydrochloricAcid"), ChemistryRecipes.amounts(6000),
-                160, 48);
-        ChemistryRecipes.recipe("gt.recipe.calciner", "vanadium/magnetite",
-                ChemistryRecipes.items(ChemistryRecipes.dust("VanadiumMagnetite", 1),
-                        ChemistryRecipes.dust("SodiumCarbonate", 1)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("Hematite", 1),
-                        ChemistryRecipes.dust("VanadiumPentoxide", 1)),
-                ChemistryRecipes.fields("Oxygen"), ChemistryRecipes.amounts(1000),
-                ChemistryRecipes.fields("CarbonDioxide"), ChemistryRecipes.amounts(1000),
-                200, 64);
-        ChemistryRecipes.recipe("gt.recipe.calciner", "vanadium/calcium",
-                ChemistryRecipes.items(ChemistryRecipes.dust("VanadiumPentoxide", 1),
-                        ChemistryRecipes.dust("Calcium", 5)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("Vanadium", 2),
-                        ChemistryRecipes.dust("Quicklime", 5)),
-                null, null, null, null,
-                200, 96);
-        ChemistryRecipes.recipe("gt.recipe.calciner", "vanadium/aluminium",
-                ChemistryRecipes.items(ChemistryRecipes.dust("VanadiumPentoxide", 3),
-                        ChemistryRecipes.dust("Aluminium", 10)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("Vanadium", 6),
-                        ChemistryRecipes.dust("Alumina", 5)),
-                null, null, null, null,
-                240, 96);
+        row("gt.recipe.distillationtower", "titanium/vanadium-tower")
+                .fluidIn("GenLiquid_CrudeTitaniumTetrachloride", 10000)
+                .fluidOut("GenLiquid_TitaniumTetrachloride", 9500, "GenLiquid_VanadiumOxytrichloride", 500)
+                .add(200, 64);
+        row("gt.recipe.distillery", "titanium/vanadium-still")
+                .in(circuit(1))
+                .fluidIn("GenLiquid_CrudeTitaniumTetrachloride", 1000)
+                .fluidOut("GenLiquid_TitaniumTetrachloride", 900, "GenLiquid_VanadiumOxytrichloride", 100)
+                .keep(0)
+                .add(100, 48);
+        row("gt.recipe.mixer", "vanadium/oxide")
+                .out(dust("VanadiumPentoxide", 1))
+                .fluidIn("GenLiquid_VanadiumOxytrichloride", 2000, "DistW", 3000)
+                .fluidOut("GenGas_HydrochloricAcid", 6000)
+                .add(160, 48);
+        row("gt.recipe.calciner", "vanadium/magnetite")
+                .in(dust("VanadiumMagnetite", 1), dust("SodiumCarbonate", 1))
+                .out(dust("Hematite", 1), dust("VanadiumPentoxide", 1))
+                .fluidIn("Oxygen", 1000)
+                .fluidOut("CarbonDioxide", 1000)
+                .add(200, 64);
+        row("gt.recipe.calciner", "vanadium/calcium")
+                .in(dust("VanadiumPentoxide", 1), dust("Calcium", 5))
+                .out(dust("Vanadium", 2), dust("Quicklime", 5))
+                .add(200, 96);
+        row("gt.recipe.calciner", "vanadium/aluminium")
+                .in(dust("VanadiumPentoxide", 3), dust("Aluminium", 10))
+                .out(dust("Vanadium", 6), dust("Alumina", 5))
+                .add(240, 96);
     }
 
     private static void kroll() {
-        ChemistryRecipes.recipe("gt.recipe.calciner", "titanium/kroll",
-                ChemistryRecipes.items(ChemistryRecipes.dust("Magnesium", 2)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("TitaniumSponge", 1),
-                        ChemistryRecipes.dust("MagnesiumChloride", 2)),
-                ChemistryRecipes.fields("GenLiquid_TitaniumTetrachloride", "GenGas_Argon"),
-                ChemistryRecipes.amounts(1000, 100),
-                ChemistryRecipes.fields("GenGas_Argon"), ChemistryRecipes.amounts(100),
-                240, 96);
+        row("gt.recipe.calciner", "titanium/kroll")
+                .in(dust("Magnesium", 2))
+                .out(dust("TitaniumSponge", 1), dust("MagnesiumChloride", 2))
+                .fluidIn("GenLiquid_TitaniumTetrachloride", 1000, "GenGas_Argon", 100)
+                .fluidOut("GenGas_Argon", 100)
+                .add(240, 96);
     }
 
     private static void zirconiumHafniumMibk() {
@@ -114,85 +95,67 @@ public final class MetallurgyRecipes {
 
     private static void zirconChlorination() {
         for (String carbon : new String[]{"Carbon", "CoalCoke"}) {
-            ChemistryRecipes.recipe("gt.recipe.calciner", "zircon/chloride-" + carbon,
-                    ChemistryRecipes.items(ChemistryRecipes.dust("Zircon", 1),
-                            ChemistryRecipes.dust(carbon, 4)),
-                    ChemistryRecipes.items(ChemistryRecipes.dust("CrudeZirconiumTetrachloride", 1)),
-                    ChemistryRecipes.fields("GenGas_Chlorine"), ChemistryRecipes.amounts(4000),
-                    ChemistryRecipes.fields("GenLiquid_SiliconTetrachloride", "GenGas_CarbonMonoxide"),
-                    ChemistryRecipes.amounts(1000, 4000),
-                    200, 96);
+            row("gt.recipe.calciner", "zircon/chloride-" + carbon)
+                    .in(dust("Zircon", 1), dust(carbon, 4))
+                    .out(dust("CrudeZirconiumTetrachloride", 1))
+                    .fluidIn("GenGas_Chlorine", 4000)
+                    .fluidOut("GenLiquid_SiliconTetrachloride", 1000, "GenGas_CarbonMonoxide", 4000)
+                    .add(200, 96);
         }
-        ChemistryRecipes.recipe("gt.recipe.mixer", "zircon/sicl4-hydrolysis",
-                ChemistryRecipes.items(),
-                ChemistryRecipes.items(ChemistryRecipes.dust("SiliconDioxide", 1)),
-                ChemistryRecipes.fields("GenLiquid_SiliconTetrachloride", "DistW"),
-                ChemistryRecipes.amounts(1000, 2000),
-                ChemistryRecipes.fields("GenGas_HydrochloricAcid"), ChemistryRecipes.amounts(4000),
-                100, 32);
+        row("gt.recipe.mixer", "zircon/sicl4-hydrolysis")
+                .out(dust("SiliconDioxide", 1))
+                .fluidIn("GenLiquid_SiliconTetrachloride", 1000, "DistW", 2000)
+                .fluidOut("GenGas_HydrochloricAcid", 4000)
+                .add(100, 32);
     }
 
     private static void zirconHafniumSeparation() {
-        ChemistryRecipes.recipe("gt.recipe.mixer", "zircon/hydrolysis",
-                ChemistryRecipes.items(ChemistryRecipes.dust("CrudeZirconiumTetrachloride", 1)),
-                ChemistryRecipes.items(),
-                ChemistryRecipes.fields("GenLiquid_DeionizedWater"), ChemistryRecipes.amounts(2000),
-                ChemistryRecipes.fields("GenLiquid_ZirconylChlorideSolution", "GenGas_HydrochloricAcid"),
-                ChemistryRecipes.amounts(1000, 2000),
-                120, 48);
-        ChemistryRecipes.recipe("gt.recipe.mixer", "zircon/mibk-extract",
-                ChemistryRecipes.items(),
-                ChemistryRecipes.items(ChemistryRecipes.dust("Zirconia", 4)),
-                ChemistryRecipes.fields("GenLiquid_ZirconylChlorideSolution",
-                        "GenLiquid_MethylIsobutylKetone", "GenGas_Ammonia"),
-                ChemistryRecipes.amounts(5000, 1000, 1000),
-                ChemistryRecipes.fields("GenLiquid_HafniumExtract", "Dirty_Water"),
-                ChemistryRecipes.amounts(1000, 4000),
-                200, 64);
+        row("gt.recipe.mixer", "zircon/hydrolysis")
+                .in(dust("CrudeZirconiumTetrachloride", 1))
+                .fluidIn("GenLiquid_DeionizedWater", 2000)
+                .fluidOut("GenLiquid_ZirconylChlorideSolution", 1000, "GenGas_HydrochloricAcid", 2000)
+                .add(120, 48);
+        row("gt.recipe.mixer", "zircon/mibk-extract")
+                .out(dust("Zirconia", 4))
+                .fluidIn("GenLiquid_ZirconylChlorideSolution", 5000,
+                        "GenLiquid_MethylIsobutylKetone", 1000, "GenGas_Ammonia", 1000)
+                .fluidOut("GenLiquid_HafniumExtract", 1000, "Dirty_Water", 4000)
+                .add(200, 64);
         // The centrifuge has one fluid input; the mixer fits the acid strip and MIBK return.
-        ChemistryRecipes.recipe("gt.recipe.mixer", "zircon/hafnium-strip",
-                ChemistryRecipes.items(),
-                ChemistryRecipes.items(ChemistryRecipes.dust("Hafnia", 1)),
-                ChemistryRecipes.fields("GenLiquid_HafniumExtract", "GenLiquid_SulfuricAcid"),
-                ChemistryRecipes.amounts(1000, 500),
-                ChemistryRecipes.fields("GenLiquid_MethylIsobutylKetone", "Dirty_Water"),
-                ChemistryRecipes.amounts(950, 500),
-                160, 64);
+        row("gt.recipe.mixer", "zircon/hafnium-strip")
+                .out(dust("Hafnia", 1))
+                .fluidIn("GenLiquid_HafniumExtract", 1000, "GenLiquid_SulfuricAcid", 500)
+                .fluidOut("GenLiquid_MethylIsobutylKetone", 950, "Dirty_Water", 500)
+                .add(160, 64);
     }
 
     private static void zirconiumHafniumKroll() {
         for (String carbon : new String[]{"Carbon", "CoalCoke"}) {
-            ChemistryRecipes.recipe("gt.recipe.calciner", "zirconia/chloride-" + carbon,
-                    ChemistryRecipes.items(ChemistryRecipes.dust("Zirconia", 1),
-                            ChemistryRecipes.dust(carbon, 2)),
-                    ChemistryRecipes.items(ChemistryRecipes.dust("ZirconiumTetrachloride", 1)),
-                    ChemistryRecipes.fields("GenGas_Chlorine"), ChemistryRecipes.amounts(4000),
-                    ChemistryRecipes.fields("GenGas_CarbonMonoxide"), ChemistryRecipes.amounts(2000),
-                    160, 64);
-            ChemistryRecipes.recipe("gt.recipe.calciner", "hafnia/chloride-" + carbon,
-                    ChemistryRecipes.items(ChemistryRecipes.dust("Hafnia", 1),
-                            ChemistryRecipes.dust(carbon, 2)),
-                    ChemistryRecipes.items(ChemistryRecipes.dust("HafniumTetrachloride", 1)),
-                    ChemistryRecipes.fields("GenGas_Chlorine"), ChemistryRecipes.amounts(4000),
-                    ChemistryRecipes.fields("GenGas_CarbonMonoxide"), ChemistryRecipes.amounts(2000),
-                    160, 64);
+            row("gt.recipe.calciner", "zirconia/chloride-" + carbon)
+                    .in(dust("Zirconia", 1), dust(carbon, 2))
+                    .out(dust("ZirconiumTetrachloride", 1))
+                    .fluidIn("GenGas_Chlorine", 4000)
+                    .fluidOut("GenGas_CarbonMonoxide", 2000)
+                    .add(160, 64);
+            row("gt.recipe.calciner", "hafnia/chloride-" + carbon)
+                    .in(dust("Hafnia", 1), dust(carbon, 2))
+                    .out(dust("HafniumTetrachloride", 1))
+                    .fluidIn("GenGas_Chlorine", 4000)
+                    .fluidOut("GenGas_CarbonMonoxide", 2000)
+                    .add(160, 64);
         }
-        ChemistryRecipes.recipe("gt.recipe.calciner", "zirconium/kroll",
-                ChemistryRecipes.items(ChemistryRecipes.dust("ZirconiumTetrachloride", 1),
-                        ChemistryRecipes.dust("Magnesium", 2)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("ZirconiumSponge", 1),
-                        ChemistryRecipes.dust("MagnesiumChloride", 2)),
-                ChemistryRecipes.fields("GenGas_Argon"), ChemistryRecipes.amounts(100),
-                ChemistryRecipes.fields("GenGas_Argon"), ChemistryRecipes.amounts(100),
-                240, 96);
-        ChemistryRecipes.recipe("gt.recipe.calciner", "hafnium/kroll",
-                ChemistryRecipes.items(ChemistryRecipes.dust("HafniumTetrachloride", 1),
-                        ChemistryRecipes.dust("Magnesium", 2)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("HafniumSponge", 1),
-                        ChemistryRecipes.dust("MagnesiumChloride", 2)),
-                ChemistryRecipes.fields("GenGas_Argon"), ChemistryRecipes.amounts(100),
-                ChemistryRecipes.fields("GenGas_Argon"), ChemistryRecipes.amounts(100),
-                240, 120);
+        row("gt.recipe.calciner", "zirconium/kroll")
+                .in(dust("ZirconiumTetrachloride", 1), dust("Magnesium", 2))
+                .out(dust("ZirconiumSponge", 1), dust("MagnesiumChloride", 2))
+                .fluidIn("GenGas_Argon", 100)
+                .fluidOut("GenGas_Argon", 100)
+                .add(240, 96);
+        row("gt.recipe.calciner", "hafnium/kroll")
+                .in(dust("HafniumTetrachloride", 1), dust("Magnesium", 2))
+                .out(dust("HafniumSponge", 1), dust("MagnesiumChloride", 2))
+                .fluidIn("GenGas_Argon", 100)
+                .fluidOut("GenGas_Argon", 100)
+                .add(240, 120);
     }
 
     private static void niobiumTantalumMibk() {
@@ -202,112 +165,85 @@ public final class MetallurgyRecipes {
     }
 
     private static void niobiumTantalumLeaching() {
-        ChemistryRecipes.recipe("gt.recipe.mixer", "coltan/leach",
-                ChemistryRecipes.items(ChemistryRecipes.dust("Coltan", 2)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("Pyrolusite", 1)),
-                ChemistryRecipes.fields("GenGas_HydrogenFluoride", "GenLiquid_SulfuricAcid"),
-                ChemistryRecipes.amounts(6000, 1000),
-                ChemistryRecipes.fields("GenLiquid_NbTaLeachLiquor", "Dirty_Water"),
-                ChemistryRecipes.amounts(2000, 1000),
-                200, 64);
-        ChemistryRecipes.recipe("gt.recipe.calciner", "columbite/leach",
-                ChemistryRecipes.items(ChemistryRecipes.dust("Columbite", 2)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("NiobiumPentoxide", 1),
-                        ChemistryRecipes.dust("Pyrolusite", 1)),
-                ChemistryRecipes.fields("GenGas_HydrogenFluoride", "GenLiquid_SulfuricAcid"),
-                ChemistryRecipes.amounts(4000, 1000),
-                ChemistryRecipes.fields("GenLiquid_NbTaLeachLiquor"), ChemistryRecipes.amounts(1000),
-                200, 64);
-        ChemistryRecipes.recipe("gt.recipe.calciner", "tantalite/leach",
-                ChemistryRecipes.items(ChemistryRecipes.dust("Tantalite", 2)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("TantalumPentoxide", 1),
-                        ChemistryRecipes.dust("Pyrolusite", 1)),
-                ChemistryRecipes.fields("GenGas_HydrogenFluoride", "GenLiquid_SulfuricAcid"),
-                ChemistryRecipes.amounts(4000, 1000),
-                ChemistryRecipes.fields("GenLiquid_NbTaLeachLiquor"), ChemistryRecipes.amounts(1000),
-                200, 64);
-        ChemistryRecipes.recipe("gt.recipe.mixer", "tantalum/k2taf7",
-                ChemistryRecipes.items(ChemistryRecipes.dust("TantalumPentoxide", 1),
-                        ChemistryRecipes.dust("PotassiumFluoride", 2)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("PotassiumHeptafluorotantalate", 2)),
-                ChemistryRecipes.fields("GenGas_HydrogenFluoride"), ChemistryRecipes.amounts(5000),
-                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(3000),
-                160, 64);
+        row("gt.recipe.mixer", "coltan/leach")
+                .in(dust("Coltan", 2))
+                .out(dust("Pyrolusite", 1))
+                .fluidIn("GenGas_HydrogenFluoride", 6000, "GenLiquid_SulfuricAcid", 1000)
+                .fluidOut("GenLiquid_NbTaLeachLiquor", 2000, "Dirty_Water", 1000)
+                .add(200, 64);
+        row("gt.recipe.calciner", "columbite/leach")
+                .in(dust("Columbite", 2))
+                .out(dust("NiobiumPentoxide", 1), dust("Pyrolusite", 1))
+                .fluidIn("GenGas_HydrogenFluoride", 4000, "GenLiquid_SulfuricAcid", 1000)
+                .fluidOut("GenLiquid_NbTaLeachLiquor", 1000)
+                .add(200, 64);
+        row("gt.recipe.calciner", "tantalite/leach")
+                .in(dust("Tantalite", 2))
+                .out(dust("TantalumPentoxide", 1), dust("Pyrolusite", 1))
+                .fluidIn("GenGas_HydrogenFluoride", 4000, "GenLiquid_SulfuricAcid", 1000)
+                .fluidOut("GenLiquid_NbTaLeachLiquor", 1000)
+                .add(200, 64);
+        row("gt.recipe.mixer", "tantalum/k2taf7")
+                .in(dust("TantalumPentoxide", 1), dust("PotassiumFluoride", 2))
+                .out(dust("PotassiumHeptafluorotantalate", 2))
+                .fluidIn("GenGas_HydrogenFluoride", 5000)
+                .fluidOut("DistW", 3000)
+                .add(160, 64);
     }
 
     private static void niobiumTantalumSeparation() {
-        ChemistryRecipes.recipe("gt.recipe.mixer", "niobium-tantalum/extract",
-                ChemistryRecipes.items(),
-                ChemistryRecipes.items(),
-                ChemistryRecipes.fields("GenLiquid_NbTaLeachLiquor", "GenLiquid_MethylIsobutylKetone"),
-                ChemistryRecipes.amounts(2000, 2000),
-                ChemistryRecipes.fields("GenLiquid_NbTaMibkExtract", "Dirty_Water"),
-                ChemistryRecipes.amounts(2000, 2000),
-                160, 64);
-        ChemistryRecipes.recipe("gt.recipe.mixer", "niobium/strip",
-                ChemistryRecipes.items(),
-                ChemistryRecipes.items(ChemistryRecipes.dust("NiobiumPentoxide", 1)),
-                ChemistryRecipes.fields("GenLiquid_NbTaMibkExtract", "GenLiquid_DeionizedWater"),
-                ChemistryRecipes.amounts(2000, 1000),
-                ChemistryRecipes.fields("GenLiquid_TantalumRichMibk", "GenGas_HydrogenFluoride"),
-                ChemistryRecipes.amounts(2000, 2000),
-                160, 64);
-        ChemistryRecipes.recipe("gt.recipe.centrifuge", "tantalum/strip",
-                ChemistryRecipes.items(ChemistryRecipes.dust("PotassiumFluoride", 2)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("PotassiumHeptafluorotantalate", 1)),
-                ChemistryRecipes.fields("GenLiquid_TantalumRichMibk"), ChemistryRecipes.amounts(2000),
-                ChemistryRecipes.fields("GenLiquid_MethylIsobutylKetone", "GenGas_HydrogenFluoride"),
-                ChemistryRecipes.amounts(1900, 1000),
-                160, 64);
+        row("gt.recipe.mixer", "niobium-tantalum/extract")
+                .fluidIn("GenLiquid_NbTaLeachLiquor", 2000, "GenLiquid_MethylIsobutylKetone", 2000)
+                .fluidOut("GenLiquid_NbTaMibkExtract", 2000, "Dirty_Water", 2000)
+                .add(160, 64);
+        row("gt.recipe.mixer", "niobium/strip")
+                .out(dust("NiobiumPentoxide", 1))
+                .fluidIn("GenLiquid_NbTaMibkExtract", 2000, "GenLiquid_DeionizedWater", 1000)
+                .fluidOut("GenLiquid_TantalumRichMibk", 2000, "GenGas_HydrogenFluoride", 2000)
+                .add(160, 64);
+        row("gt.recipe.centrifuge", "tantalum/strip")
+                .in(dust("PotassiumFluoride", 2))
+                .out(dust("PotassiumHeptafluorotantalate", 1))
+                .fluidIn("GenLiquid_TantalumRichMibk", 2000)
+                .fluidOut("GenLiquid_MethylIsobutylKetone", 1900, "GenGas_HydrogenFluoride", 1000)
+                .add(160, 64);
     }
 
     private static void niobiumTantalumReduction() {
-        ChemistryRecipes.recipe("gt.recipe.calciner", "niobium/aluminothermy",
-                ChemistryRecipes.items(ChemistryRecipes.dust("NiobiumPentoxide", 1),
-                        ChemistryRecipes.dust("Aluminium", 2)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("Niobium", 2),
-                        ChemistryRecipes.dust("Alumina", 1)),
-                null, null, null, null,
-                240, 96);
-        ChemistryRecipes.recipe("gt.recipe.calciner", "tantalum/sodium",
-                ChemistryRecipes.items(ChemistryRecipes.dust("PotassiumHeptafluorotantalate", 1),
-                        ChemistryRecipes.dust("Sodium", 5)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("Tantalum", 1),
-                        ChemistryRecipes.dust("PotassiumFluoride", 2),
-                        ChemistryRecipes.dust("SodiumFluoride", 5)),
-                null, null, null, null,
-                240, 96);
-        ChemistryRecipes.recipe("gt.recipe.mixer", "sodium-fluoride/hf",
-                ChemistryRecipes.items(ChemistryRecipes.dust("SodiumFluoride", 2)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("SodiumSulfate", 1)),
-                ChemistryRecipes.fields("GenLiquid_SulfuricAcid"), ChemistryRecipes.amounts(1000),
-                ChemistryRecipes.fields("GenGas_HydrogenFluoride"), ChemistryRecipes.amounts(2000),
-                100, 32);
+        row("gt.recipe.calciner", "niobium/aluminothermy")
+                .in(dust("NiobiumPentoxide", 1), dust("Aluminium", 2))
+                .out(dust("Niobium", 2), dust("Alumina", 1))
+                .add(240, 96);
+        row("gt.recipe.calciner", "tantalum/sodium")
+                .in(dust("PotassiumHeptafluorotantalate", 1), dust("Sodium", 5))
+                .out(dust("Tantalum", 1), dust("PotassiumFluoride", 2), dust("SodiumFluoride", 5))
+                .add(240, 96);
+        row("gt.recipe.mixer", "sodium-fluoride/hf")
+                .in(dust("SodiumFluoride", 2))
+                .out(dust("SodiumSulfate", 1))
+                .fluidIn("GenLiquid_SulfuricAcid", 1000)
+                .fluidOut("GenGas_HydrogenFluoride", 2000)
+                .add(100, 32);
     }
 
     /** The furnace runs these in its behavior; the rows only document the ratios and gas use. */
     private static void varDisplay() {
-        display("var/titanium", ChemistryRecipes.items(ChemistryRecipes.dust("TitaniumSponge", 1)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("Titanium", 1)), 100);
-        display("var/zirconium", ChemistryRecipes.items(ChemistryRecipes.dust("ZirconiumSponge", 1)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("Zirconium", 1)), 100);
-        display("var/hafnium", ChemistryRecipes.items(ChemistryRecipes.dust("HafniumSponge", 1)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("Hafnium", 1)), 100);
-        display("var/niobium-titanium",
-                ChemistryRecipes.items(ChemistryRecipes.dust("Niobium", 1), ChemistryRecipes.dust("Titanium", 1)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("NiobiumTitanium", 2)), 100);
-        display("var/ta4hfc5",
-                ChemistryRecipes.items(ChemistryRecipes.dust("Tantalum", 4),
-                        ChemistryRecipes.dust("Hafnium", 1), ChemistryRecipes.dust("Carbon", 5)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("TantalumHafniumCarbide", 10)), 200);
-    }
-
-    private static void display(String label, ItemStack[] itemInputs, ItemStack[] itemOutputs, int argonMillibuckets) {
-        AddonRecipes.Line line = AddonRecipes.map(SsiteMachines.VAR_MAP).addDisplay(
-                FluidBridge.line(itemInputs, itemOutputs,
-                        ChemistryRecipes.fields("GenGas_Argon"), ChemistryRecipes.amounts(argonMillibuckets),
-                        null, null, 200, 128));
-        if (line == null) ChemistryRecipes.REJECTED.add(label);
+        row(SsiteMachines.VAR_MAP, "var/titanium")
+                .in(dust("TitaniumSponge", 1)).out(dust("Titanium", 1))
+                .fluidIn("GenGas_Argon", 100).display(200, 128);
+        row(SsiteMachines.VAR_MAP, "var/zirconium")
+                .in(dust("ZirconiumSponge", 1)).out(dust("Zirconium", 1))
+                .fluidIn("GenGas_Argon", 100).display(200, 128);
+        row(SsiteMachines.VAR_MAP, "var/hafnium")
+                .in(dust("HafniumSponge", 1)).out(dust("Hafnium", 1))
+                .fluidIn("GenGas_Argon", 100).display(200, 128);
+        row(SsiteMachines.VAR_MAP, "var/niobium-titanium")
+                .in(dust("Niobium", 1), dust("Titanium", 1)).out(dust("NiobiumTitanium", 2))
+                .fluidIn("GenGas_Argon", 100).display(200, 128);
+        row(SsiteMachines.VAR_MAP, "var/ta4hfc5")
+                .in(dust("Tantalum", 4), dust("Hafnium", 1), dust("Carbon", 5))
+                .out(dust("TantalumHafniumCarbide", 10))
+                .fluidIn("GenGas_Argon", 200).display(200, 128);
     }
 
     private static void bayerAluminiumGallium() {
@@ -319,84 +255,65 @@ public final class MetallurgyRecipes {
     }
 
     private static void bayerDigestion() {
-        ChemistryRecipes.recipe("gt.recipe.autoclave", "bayer/digest",
-                ChemistryRecipes.items(
-                        ChemistryRecipes.dust("Bauxite", 2),
-                        ChemistryRecipes.dust("SodiumHydroxide", 2)),
-                ChemistryRecipes.items(
-                        ChemistryRecipes.dust("SodiumAluminate", 2),
-                        ChemistryRecipes.dust("RedMud", 1)),
-                ChemistryRecipes.fields("Steam"), ChemistryRecipes.amounts(4000),
-                ChemistryRecipes.fields("GenLiquid_BayerLiquor"), ChemistryRecipes.amounts(1000),
-                200, 64);
-        ChemistryRecipes.recipe("gt.recipe.calciner", "bayer/calcine",
-                ChemistryRecipes.items(ChemistryRecipes.dust("AluminiumHydroxide", 2),
-                        ChemistryRecipes.circuit(1)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("Alumina", 1)),
-                null, null,
-                ChemistryRecipes.fields("DistW"), ChemistryRecipes.amounts(3000),
-                120, 48, null, new int[]{1});
+        row("gt.recipe.autoclave", "bayer/digest")
+                .in(dust("Bauxite", 2), dust("SodiumHydroxide", 2))
+                .out(dust("SodiumAluminate", 2), dust("RedMud", 1))
+                .fluidIn("Steam", 4000)
+                .fluidOut("GenLiquid_BayerLiquor", 1000)
+                .add(200, 64);
+        row("gt.recipe.calciner", "bayer/calcine")
+                .in(dust("AluminiumHydroxide", 2), circuit(1))
+                .out(dust("Alumina", 1))
+                .fluidOut("DistW", 3000)
+                .keep(1)
+                .add(120, 48);
     }
 
     private static void redMudRecovery() {
-        ChemistryRecipes.recipe("gt.recipe.bath", "bayer/red-mud",
-                ChemistryRecipes.items(ChemistryRecipes.dust("RedMud", 3)),
-                ChemistryRecipes.items(
-                        ChemistryRecipes.dust("Hematite", 1),
-                        ChemistryRecipes.dust("Rutile", 1),
-                        ChemistryRecipes.dust("SiliconDioxide", 1)),
-                ChemistryRecipes.fields("GenLiquid_SulfuricAcid"), ChemistryRecipes.amounts(2000),
-                ChemistryRecipes.fields("Dirty_Water"), ChemistryRecipes.amounts(1000),
-                160, 32);
+        row("gt.recipe.bath", "bayer/red-mud")
+                .in(dust("RedMud", 3))
+                .out(dust("Hematite", 1), dust("Rutile", 1), dust("SiliconDioxide", 1))
+                .fluidIn("GenLiquid_SulfuricAcid", 2000)
+                .fluidOut("Dirty_Water", 1000)
+                .add(160, 32);
     }
 
     private static void gallium() {
-        ChemistryRecipes.recipe("gt.recipe.mixer", "gallium/carbonate",
-                ChemistryRecipes.items(),
-                ChemistryRecipes.items(ChemistryRecipes.dust("GalliumHydroxide", 1)),
-                ChemistryRecipes.fields("GenLiquid_BayerLiquor", "CarbonDioxide"),
-                ChemistryRecipes.amounts(4000, 1000),
-                ChemistryRecipes.fields("Saltwater"), ChemistryRecipes.amounts(1000),
-                160, 48);
-        ChemistryRecipes.recipe("gt.recipe.electrolyzer", "gallium/electrolysis",
-                ChemistryRecipes.items(
-                        ChemistryRecipes.dust("GalliumHydroxide", 2),
-                        ChemistryRecipes.circuit(1)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("Gallium", 2)),
-                null, null,
-                ChemistryRecipes.fields("Oxygen", "DistW"), ChemistryRecipes.amounts(1500, 3000),
-                200, 64, null, new int[]{1});
+        row("gt.recipe.mixer", "gallium/carbonate")
+                .out(dust("GalliumHydroxide", 1))
+                .fluidIn("GenLiquid_BayerLiquor", 4000, "CarbonDioxide", 1000)
+                .fluidOut("Saltwater", 1000)
+                .add(160, 48);
+        row("gt.recipe.electrolyzer", "gallium/electrolysis")
+                .in(dust("GalliumHydroxide", 2), circuit(1))
+                .out(dust("Gallium", 2))
+                .fluidOut("Oxygen", 1500, "DistW", 3000)
+                .keep(1)
+                .add(200, 64);
     }
 
     private static void aluminiumFluoride() {
-        ChemistryRecipes.recipe("gt.recipe.mixer", "alf3/hf",
-                ChemistryRecipes.items(
-                        ChemistryRecipes.circuit(1),
-                        ChemistryRecipes.dust("Alumina", 1)),
-                ChemistryRecipes.items(),
-                ChemistryRecipes.fields("GenGas_HydrogenFluoride"), ChemistryRecipes.amounts(6000),
-                ChemistryRecipes.fields("GenLiquid_AluminiumFluoride", "DistW"),
-                ChemistryRecipes.amounts(2000, 3000),
-                160, 48, null, new int[]{0});
-        ChemistryRecipes.recipe("gt.recipe.mixer", "alf3/h2sif6",
-                ChemistryRecipes.items(ChemistryRecipes.dust("Alumina", 1)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("SiliconDioxide", 1)),
-                ChemistryRecipes.fields("GenLiquid_HexafluorosilicicAcid"), ChemistryRecipes.amounts(3000),
-                ChemistryRecipes.fields("GenLiquid_AluminiumFluoride", "DistW"),
-                ChemistryRecipes.amounts(2000, 1000),
-                160, 48);
+        row("gt.recipe.mixer", "alf3/hf")
+                .in(circuit(1), dust("Alumina", 1))
+                .fluidIn("GenGas_HydrogenFluoride", 6000)
+                .fluidOut("GenLiquid_AluminiumFluoride", 2000, "DistW", 3000)
+                .keep(0)
+                .add(160, 48);
+        row("gt.recipe.mixer", "alf3/h2sif6")
+                .in(dust("Alumina", 1))
+                .out(dust("SiliconDioxide", 1))
+                .fluidIn("GenLiquid_HexafluorosilicicAcid", 3000)
+                .fluidOut("GenLiquid_AluminiumFluoride", 2000, "DistW", 1000)
+                .add(160, 48);
     }
 
     private static void hallHeroult() {
         // CoalCoke has a built-in electrolytic decomposition, which collides with this row's inputs.
-        ChemistryRecipes.recipe("gt.recipe.electrolyzer", "aluminium/Carbon",
-                ChemistryRecipes.items(
-                        ChemistryRecipes.dust("Alumina", 2),
-                        ChemistryRecipes.dust("Carbon", 3)),
-                ChemistryRecipes.items(ChemistryRecipes.dust("Aluminium", 4)),
-                ChemistryRecipes.fields("GenLiquid_Cryolite", "GenLiquid_AluminiumFluoride"),
-                ChemistryRecipes.amounts(50, 50),
-                ChemistryRecipes.fields("CarbonDioxide"), ChemistryRecipes.amounts(3000),
-                300, 96);
+        row("gt.recipe.electrolyzer", "aluminium/Carbon")
+                .in(dust("Alumina", 2), dust("Carbon", 3))
+                .out(dust("Aluminium", 4))
+                .fluidIn("GenLiquid_Cryolite", 50, "GenLiquid_AluminiumFluoride", 50)
+                .fluidOut("CarbonDioxide", 3000)
+                .add(300, 96);
     }
 }

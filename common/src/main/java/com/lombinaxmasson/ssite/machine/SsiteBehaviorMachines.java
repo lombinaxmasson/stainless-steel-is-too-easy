@@ -24,9 +24,9 @@ public final class SsiteBehaviorMachines implements BehaviorMachineContributor {
 
     @Override
     public MachineBehavior create(String machineType) {
-        if (VarFurnaceCore.MACHINE_TYPE.equals(machineType)) return new VarBehavior();
+        if (VarFurnaceCore.MACHINE_TYPE.equals(machineType)) return new ArgonCrucibleBehavior(VarFurnaceCore.INSTANCE);
         AodTier tier = AodTier.byMachineType(machineType);
         if (tier == null) throw new IllegalArgumentException("Unknown AOD machine type: " + machineType);
-        return new AodBehavior(tier);
+        return new ArgonCrucibleBehavior(new AodConverterCore(tier));
     }
 }

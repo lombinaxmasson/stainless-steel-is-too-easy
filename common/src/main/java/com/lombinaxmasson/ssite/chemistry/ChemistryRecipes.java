@@ -1,7 +1,9 @@
 package com.lombinaxmasson.ssite.chemistry;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.gregtech.gregtech.api.addon.GregTechAddon;
 import com.gregtech.gregtech.api.addon.platform.AddonItems;
@@ -10,11 +12,12 @@ import com.lombinaxmasson.ssite.machine.SsiteMachines;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * Chemistry recipe changes. GregTech calls this once, after its own machine recipes exist.
+ * Chemistry recipe changes. GregTech calls this after its own machine recipes exist.
  * Fluid stacks differ by loader, so {@link FluidBridge} packs them.
  */
 public final class ChemistryRecipes {
     static final List<String> REJECTED = new ArrayList<>();
+    static final Set<String> MISSING = new LinkedHashSet<>();
 
     private ChemistryRecipes() {}
 
@@ -22,6 +25,8 @@ public final class ChemistryRecipes {
         if (context.apiVersion() != 0) {
             throw new IllegalStateException("ssite expects GregTech addon API 0, found " + context.apiVersion());
         }
+        REJECTED.clear();
+        MISSING.clear();
         ferrochromium();
         chromium();
         ferrosilicon();
@@ -33,19 +38,139 @@ public final class ChemistryRecipes {
         PetrochemRecipes.add();
         PolymerRecipes.add();
         MetallurgyRecipes.add();
-        if (!REJECTED.isEmpty()) {
-            throw new IllegalStateException("ssite recipes rejected: " + REJECTED);
+        if (!MISSING.isEmpty() || !REJECTED.isEmpty()) {
+            throw new IllegalStateException("ssite recipes failed; missing=" + MISSING + ", rejected=" + REJECTED);
         }
+    }
+
+    static void missing(String what) {
+        MISSING.add(what);
+    }
+
+    /** Builder for one machine recipe or display row. */
+    static final class Row {
+        private final String map;
+        private final String label;
+        private ItemStack[] itemInputs;
+        private ItemStack[] itemOutputs;
+        private final List<String> fluidInFields = new ArrayList<>(4);
+        private final List<Integer> fluidInAmounts = new ArrayList<>(4);
+        private final List<String> fluidOutFields = new ArrayList<>(4);
+        private final List<Integer> fluidOutAmounts = new ArrayList<>(4);
+        private int[] outputChances;
+        private int[] keptInputs;
+
+        Row(String map, String label) {
+            this.map = map;
+            this.label = label;
+        }
+
+        Row in(ItemStack... stacks) {
+            this.itemInputs = stacks;
+            return this;
+        }
+
+        Row out(ItemStack... stacks) {
+            this.itemOutputs = stacks;
+            return this;
+        }
+
+        Row fluidIn(String field, int amount) {
+            fluidInFields.add(field);
+            fluidInAmounts.add(amount);
+            return this;
+        }
+
+        Row fluidIn(String f1, int a1, String f2, int a2) {
+            return fluidIn(f1, a1).fluidIn(f2, a2);
+        }
+
+        Row fluidIn(String f1, int a1, String f2, int a2, String f3, int a3) {
+            return fluidIn(f1, a1).fluidIn(f2, a2).fluidIn(f3, a3);
+        }
+
+        Row fluidIn(String[] fields, int[] amounts) {
+            if (fields == null) return this;
+            for (int i = 0; i < fields.length; i++) fluidIn(fields[i], amounts[i]);
+            return this;
+        }
+
+        Row fluidOut(String field, int amount) {
+            fluidOutFields.add(field);
+            fluidOutAmounts.add(amount);
+            return this;
+        }
+
+        Row fluidOut(String f1, int a1, String f2, int a2) {
+            return fluidOut(f1, a1).fluidOut(f2, a2);
+        }
+
+        Row fluidOut(String f1, int a1, String f2, int a2, String f3, int a3) {
+            return fluidOut(f1, a1).fluidOut(f2, a2).fluidOut(f3, a3);
+        }
+
+        Row fluidOut(String[] fields, int[] amounts) {
+            if (fields == null) return this;
+            for (int i = 0; i < fields.length; i++) fluidOut(fields[i], amounts[i]);
+            return this;
+        }
+
+        Row chances(int... chances) {
+            this.outputChances = chances;
+            return this;
+        }
+
+        Row keep(int... slots) {
+            this.keptInputs = slots;
+            return this;
+        }
+
+        void add(long duration, long perTick) {
+            submit(duration, perTick, false);
+        }
+
+        void display(long duration, long perTick) {
+            submit(duration, perTick, true);
+        }
+
+        private void submit(long duration, long perTick, boolean displayOnly) {
+            AddonRecipes.Line built = FluidBridge.line(
+                    itemInputs, itemOutputs,
+                    toNames(fluidInFields), toInts(fluidInAmounts),
+                    toNames(fluidOutFields), toInts(fluidOutAmounts),
+                    duration, perTick, outputChances, keptInputs);
+            if (built == null) {
+                REJECTED.add(label);
+                return;
+            }
+            AddonRecipes.Map table = AddonRecipes.map(map);
+            AddonRecipes.Line added = displayOnly ? table.addDisplay(built) : table.add(built);
+            if (added == null) REJECTED.add(label);
+        }
+
+        private static String[] toNames(List<String> list) {
+            return list.isEmpty() ? null : list.toArray(String[]::new);
+        }
+
+        private static int[] toInts(List<Integer> list) {
+            if (list.isEmpty()) return null;
+            int[] array = new int[list.size()];
+            for (int i = 0; i < list.size(); i++) array[i] = list.get(i);
+            return array;
+        }
+    }
+
+    static Row row(String map, String label) {
+        return new Row(map, label);
     }
 
     private static void ferrochromium() {
         for (String carbon : new String[]{"Carbon", "CoalCoke"}) {
-            recipe("gt.recipe.calciner", "ferrochromium/" + carbon,
-                    items(dust("Chromite", 1), dust("Quicklime", 1), dust(carbon, 3)),
-                    items(dust("Ferrochromium", 1)),
-                    null, null,
-                    fields("GenGas_CarbonMonoxide"), amounts(1000),
-                    200, 48);
+            row("gt.recipe.calciner", "ferrochromium/" + carbon)
+                    .in(dust("Chromite", 1), dust("Quicklime", 1), dust(carbon, 3))
+                    .out(dust("Ferrochromium", 1))
+                    .fluidOut("GenGas_CarbonMonoxide", 1000)
+                    .add(200, 48);
         }
     }
 
@@ -55,74 +180,59 @@ public final class ChemistryRecipes {
      * so carbon reduction and the thermite step share one calciner row.
      */
     private static void chromium() {
-        recipe("gt.recipe.calciner", "sodium-chromate",
-                items(dust("Chromite", 1), dust("SodiumCarbonate", 2)),
-                items(dust("SodiumChromate", 2), dust("Hematite", 1)),
-                fields("Oxygen"), amounts(3000),
-                null, null,
-                160, 32);
-        recipe("gt.recipe.bath", "sodium-dichromate",
-                items(dust("SodiumChromate", 2)),
-                items(dust("SodiumDichromate", 1)),
-                fields("GenLiquid_SulfuricAcid"), amounts(1000),
-                null, null,
-                100, 16);
-        recipe("gt.recipe.calciner", "chromium",
-                items(dust("SodiumDichromate", 1), dust("Carbon", 2), dust("Aluminium", 2)),
-                items(dust("Chromium", 2), dust("Alumina", 1), dust("SodiumCarbonate", 1)),
-                null, null,
-                fields("GenGas_CarbonMonoxide"), amounts(1000),
-                200, 64);
+        row("gt.recipe.calciner", "sodium-chromate")
+                .in(dust("Chromite", 1), dust("SodiumCarbonate", 2))
+                .out(dust("SodiumChromate", 2), dust("Hematite", 1))
+                .fluidIn("Oxygen", 3000)
+                .add(160, 32);
+        row("gt.recipe.bath", "sodium-dichromate")
+                .in(dust("SodiumChromate", 2))
+                .out(dust("SodiumDichromate", 1))
+                .fluidIn("GenLiquid_SulfuricAcid", 1000)
+                .add(100, 16);
+        row("gt.recipe.calciner", "chromium")
+                .in(dust("SodiumDichromate", 1), dust("Carbon", 2), dust("Aluminium", 2))
+                .out(dust("Chromium", 2), dust("Alumina", 1), dust("SodiumCarbonate", 1))
+                .fluidOut("GenGas_CarbonMonoxide", 1000)
+                .add(200, 64);
     }
 
     private static void ferrosilicon() {
         for (String silica : new String[]{"SiliconDioxide", "Quartzite"}) {
-            recipe("gt.recipe.calciner", "ferrosilicon/" + silica,
-                    items(dust(silica, 1), dust("Iron", 1), dust("Carbon", 3)),
-                    items(dust("Ferrosilicon", 1)),
-                    null, null,
-                    fields("GenGas_CarbonMonoxide"), amounts(1000),
-                    200, 48);
+            row("gt.recipe.calciner", "ferrosilicon/" + silica)
+                    .in(dust(silica, 1), dust("Iron", 1), dust("Carbon", 3))
+                    .out(dust("Ferrosilicon", 1))
+                    .fluidOut("GenGas_CarbonMonoxide", 1000)
+                    .add(200, 48);
         }
     }
 
     /** Display rows for the AOD table; the converter itself refines through {@code AodConverterCore}. */
     private static void aod() {
-        recipe(SsiteMachines.AOD_MAP, "air",
-                items(dust("CarburizedStainlessSteel", 9), dust("Ferrosilicon", 1), dust("Quicklime", 2)),
-                items(dust("StainlessSteel", 5), dust("AodSlag", 4)),
-                fields("Air"), amounts(4000),
-                fields("GenGas_CarbonMonoxide"), amounts(1000),
-                400, 32);
-        recipe(SsiteMachines.AOD_MAP, "nitrogen",
-                items(dust("CarburizedStainlessSteel", 9), dust("Ferrosilicon", 1),
-                        dust("Quicklime", 1), dust("Fluorite", 1)),
-                items(dust("StainlessSteel", 7), dust("AodSlag", 2)),
-                fields("Oxygen", "Nitrogen"), amounts(2000, 2000),
-                fields("GenGas_CarbonMonoxide"), amounts(1000),
-                240, 64);
-        recipe(SsiteMachines.AOD_MAP, "argon",
-                items(dust("CarburizedStainlessSteel", 9), dust("Ferrosilicon", 1),
-                        dust("Quicklime", 1), dust("Fluorite", 1)),
-                items(dust("StainlessSteel", 9), dust("AodSlag", 1)),
-                fields("Oxygen", "Argon"), amounts(1500, 500),
-                fields("GenGas_CarbonMonoxide"), amounts(1000),
-                120, 64);
-        recipe(SsiteMachines.AOD_MAP, "316l",
-                items(dust("CarburizedStainlessSteel", 8), dust("Molybdenum", 1),
-                        dust("Ferrosilicon", 1), dust("Fluorite", 1)),
-                items(dust("StainlessSteel316L", 9), dust("AodSlag", 1)),
-                fields("Oxygen", "Argon"), amounts(1500, 1000),
-                fields("GenGas_CarbonMonoxide"), amounts(1000),
-                160, 64);
+        row(SsiteMachines.AOD_MAP, "air")
+                .in(dust("CarburizedStainlessSteel", 9), dust("Ferrosilicon", 1), dust("Quicklime", 2))
+                .out(dust("StainlessSteel", 5), dust("AodSlag", 4))
+                .fluidIn("Air", 400)
+                .display(400, 32);
+        row(SsiteMachines.AOD_MAP, "argon")
+                .in(dust("CarburizedStainlessSteel", 9), dust("Ferrosilicon", 1),
+                        dust("Quicklime", 1), dust("Fluorite", 1))
+                .out(dust("StainlessSteel", 9), dust("AodSlag", 1))
+                .fluidIn("GenGas_Argon", 100)
+                .display(120, 64);
+        row(SsiteMachines.AOD_MAP, "316l")
+                .in(dust("CarburizedStainlessSteel", 8), dust("Molybdenum", 1),
+                        dust("Ferrosilicon", 1), dust("Fluorite", 1))
+                .out(dust("StainlessSteel316L", 9), dust("AodSlag", 1))
+                .fluidIn("GenGas_Argon", 100)
+                .display(160, 64);
     }
 
     private static void slag() {
-        recipe("gt.recipe.centrifuge", "slag",
-                items(dust("AodSlag", 4)),
-                items(dust("Chromite", 1), dust("Quicklime", 2), dust("SiliconDioxide", 1)),
-                null, null, null, null,
-                200, 16);
+        row("gt.recipe.centrifuge", "slag")
+                .in(dust("AodSlag", 4))
+                .out(dust("Chromite", 1), dust("Quicklime", 2), dust("SiliconDioxide", 1))
+                .add(200, 16);
     }
 
     private static void waterTreatment() {
@@ -133,42 +243,39 @@ public final class ChemistryRecipes {
 
     private static void alum() {
         // Alunite leaching; the hydroxide + sulphuric-acid route collides with a built-in GT6CE row.
-        recipe("gt.recipe.bath", "alum/alunite",
-                items(dust("Alunite", 2)),
-                items(dust("Alum", 2), dust("SiliconDioxide", 1)),
-                fields("GenLiquid_SulfuricAcid"), amounts(1000),
-                null, null,
-                100, 16);
+        row("gt.recipe.bath", "alum/alunite")
+                .in(dust("Alunite", 2))
+                .out(dust("Alum", 2), dust("SiliconDioxide", 1))
+                .fluidIn("GenLiquid_SulfuricAcid", 1000)
+                .add(100, 16);
     }
 
     private static void celluloseAcetate() {
         for (String pulp : new String[]{"Wood", "Paper"}) {
-            recipe("gt.recipe.mixer", "cellulose-acetate/" + pulp,
-                    items(dust(pulp, 2)),
-                    items(dust("CelluloseAcetate", 2)),
-                    fields("Vinegar_Grape", "GenLiquid_SulfuricAcid"), amounts(2000, 250),
-                    fields("Dirty_Water"), amounts(1000),
-                    160, 30);
+            row("gt.recipe.mixer", "cellulose-acetate/" + pulp)
+                    .in(dust(pulp, 2))
+                    .out(dust("CelluloseAcetate", 2))
+                    .fluidIn("Vinegar_Grape", 2000, "GenLiquid_SulfuricAcid", 250)
+                    .fluidOut("Dirty_Water", 1000)
+                    .add(160, 30);
         }
-        recipe("gt.recipe.press", "cellulose-acetate/plate",
-                items(dust("CelluloseAcetate", 1), circuit(1)),
-                items(item("plate", "CelluloseAcetate", 1)),
-                null, null, null, null,
-                40, 16, null, new int[]{1});
-        recipe("gt.recipe.rollingmill", "cellulose-acetate/foil",
-                items(item("plate", "CelluloseAcetate", 1)),
-                items(item("foil", "CelluloseAcetate", 4)),
-                null, null, null, null,
-                40, 16);
+        row("gt.recipe.press", "cellulose-acetate/plate")
+                .in(dust("CelluloseAcetate", 1), circuit(1))
+                .out(item("plate", "CelluloseAcetate", 1))
+                .keep(1)
+                .add(40, 16);
+        row("gt.recipe.rollingmill", "cellulose-acetate/foil")
+                .in(item("plate", "CelluloseAcetate", 1))
+                .out(item("foil", "CelluloseAcetate", 4))
+                .add(40, 16);
     }
 
     private static void ozone() {
-        recipe("gt.recipe.electrolyzer", "ozone",
-                items(circuit(3)),
-                items(),
-                fields("Oxygen"), amounts(3000),
-                fields("GenGas_Ozone"), amounts(2000),
-                100, 64);
+        row("gt.recipe.electrolyzer", "ozone")
+                .in(circuit(3))
+                .fluidIn("Oxygen", 3000)
+                .fluidOut("GenGas_Ozone", 2000)
+                .add(100, 64);
     }
 
     private static void waterPurification() {
@@ -183,78 +290,77 @@ public final class ChemistryRecipes {
     private static void clarifiedWater() {
         for (String source : new String[]{"Water", "River_Water", "Dirty_Water", "Stagnant_Water", "Swampwater"}) {
             for (String flocculant : new String[]{"Alum", "VitriolOfClay"}) {
-                recipe("gt.recipe.bath", "clarified/" + source + "/" + flocculant,
-                        items(dust(flocculant, 1)),
-                        items(),
-                        fields(source), amounts(4000),
-                        fields("GenLiquid_ClarifiedWater", "Sludge"), amounts(3600, 400),
-                        100, 16);
+                row("gt.recipe.bath", "clarified/" + source + "/" + flocculant)
+                        .in(dust(flocculant, 1))
+                        .fluidIn(source, 4000)
+                        .fluidOut("GenLiquid_ClarifiedWater", 3600, "Sludge", 400)
+                        .add(100, 16);
             }
         }
-        recipe("gt.recipe.bath", "clarified/sewage",
-                items(dust("Alum", 2)),
-                items(),
-                fields("Sewage"), amounts(4000),
-                fields("GenLiquid_ClarifiedWater", "Sludge"), amounts(3000, 1000),
-                160, 16);
+        row("gt.recipe.bath", "clarified/sewage")
+                .in(dust("Alum", 2))
+                .fluidIn("Sewage", 4000)
+                .fluidOut("GenLiquid_ClarifiedWater", 3000, "Sludge", 1000)
+                .add(160, 16);
     }
 
     private static void sludgeRecovery() {
-        recipe("gt.recipe.drying", "sludge/dry",
-                items(),
-                items(dust("Clay", 1)),
-                fields("Sludge"), amounts(1000),
-                fields("Biomass", "Dirty_Water"), amounts(250, 500),
-                120, 16);
-        recipe("gt.recipe.centrifuge", "sludge/centrifuge",
-                items(),
-                items(dust("Clay", 2), dust("Sand", 1), item("dustTiny", "RareEarth", 1)),
-                fields("Sludge"), amounts(2000),
-                fields("Biomass", "Dirty_Water"), amounts(500, 1000),
-                160, 24, new int[]{10000, 10000, 2500}, null);
+        row("gt.recipe.drying", "sludge/dry")
+                .out(dust("Clay", 1))
+                .fluidIn("Sludge", 1000)
+                .fluidOut("Biomass", 250, "Dirty_Water", 500)
+                .add(120, 16);
+        row("gt.recipe.centrifuge", "sludge/centrifuge")
+                .out(dust("Clay", 2), dust("Sand", 1), item("dustTiny", "RareEarth", 1))
+                .fluidIn("Sludge", 2000)
+                .fluidOut("Biomass", 500, "Dirty_Water", 1000)
+                .chances(10000, 10000, 2500)
+                .add(160, 24);
     }
 
     private static void demineralizedWater() {
-        recipe("gt.recipe.bath", "demineralized/soften",
-                items(dust("QuartzSand", 1), item("dustTiny", "SodiumCarbonate", 1)),
-                items(item("dustSmall", "Calcite", 1), item("dustTiny", "MagnesiumCarbonate", 1)),
-                fields("GenLiquid_ClarifiedWater"), amounts(4000),
-                fields("GenLiquid_DemineralizedWater"), amounts(3800),
-                120, 16, null, new int[]{0});
-        recipe("gt.recipe.distillery", "demineralized/distill",
-                items(circuit(1)),
-                items(),
-                fields("GenLiquid_DemineralizedWater"), amounts(1000),
-                fields("DistW"), amounts(1000),
-                40, 16);
+        row("gt.recipe.bath", "demineralized/soften")
+                .in(dust("QuartzSand", 1), item("dustTiny", "SodiumCarbonate", 1))
+                .out(item("dustSmall", "Calcite", 1), item("dustTiny", "MagnesiumCarbonate", 1))
+                .fluidIn("GenLiquid_ClarifiedWater", 4000)
+                .fluidOut("GenLiquid_DemineralizedWater", 3800)
+                .keep(0)
+                .add(120, 16);
+        row("gt.recipe.distillery", "demineralized/distill")
+                .in(circuit(1))
+                .fluidIn("GenLiquid_DemineralizedWater", 1000)
+                .fluidOut("DistW", 1000)
+                .add(40, 16);
     }
 
     private static void deionizedWater() {
-        recipe("gt.recipe.bath", "deionized",
-                items(dust("Zeolite", 1), item("dustTiny", "SodiumHydroxide", 1)),
-                items(),
-                fields("GenLiquid_DemineralizedWater"), amounts(4000),
-                fields("GenLiquid_DeionizedWater", "Saltwater"), amounts(3800, 200),
-                120, 30, null, new int[]{0});
+        row("gt.recipe.bath", "deionized")
+                .in(dust("Zeolite", 1), item("dustTiny", "SodiumHydroxide", 1))
+                .fluidIn("GenLiquid_DemineralizedWater", 4000)
+                .fluidOut("GenLiquid_DeionizedWater", 3800, "Saltwater", 200)
+                .keep(0)
+                .add(120, 30);
     }
 
     private static void filteredWater() {
-        recipe("gt.recipe.autoclave", "filtered/ro",
-                items(item("foil", "CelluloseAcetate", 1), circuit(1)),
-                items(item("dustTiny", "Salt", 1)),
-                fields("GenLiquid_DeionizedWater"), amounts(4000),
-                fields("GenLiquid_FilteredWater"), amounts(3600),
-                160, 64, new int[]{1000}, new int[]{0, 1});
+        row("gt.recipe.autoclave", "filtered/ro")
+                .in(item("foil", "CelluloseAcetate", 1), circuit(1))
+                .out(item("dustTiny", "Salt", 1))
+                .fluidIn("GenLiquid_DeionizedWater", 4000)
+                .fluidOut("GenLiquid_FilteredWater", 3600)
+                .chances(1000)
+                .keep(0, 1)
+                .add(160, 64);
     }
 
     private static void ultrapureWater() {
         for (String lens : new String[]{"Sapphire", "Diamond"}) {
-            recipe("gt.recipe.mixer", "ultrapure/" + lens,
-                    items(item("lens", lens, 1)),
-                    items(),
-                    fields("GenLiquid_FilteredWater", "GenGas_Ozone"), amounts(4000, 250),
-                    fields("GenLiquid_UltrapureWater", "Oxygen"), amounts(4000, 375),
-                    200, 120, null, new int[]{0});
+            row("gt.recipe.mixer", "ultrapure/" + lens)
+                    .in(item("lens", lens, 1))
+                    .fluidIn("GenLiquid_FilteredWater", 4000, "GenGas_Ozone", 250)
+                    .fluidOut("GenLiquid_UltrapureWater", 4000, "Oxygen", 375)
+                    .keep(0)
+                    .add(200, 120);
         }
     }
 
@@ -266,110 +372,81 @@ public final class ChemistryRecipes {
     }
 
     private static void concentrateBrine() {
-        recipe("gt.recipe.distillationtower", "brine/ocean",
-                items(),
-                items(dust("Salt", 2), dust("Gypsum", 1)),
-                fields("Ocean"), amounts(10000),
-                fields("DistW", "Brine"), amounts(7500, 2000),
-                200, 48);
-        recipe("gt.recipe.distillationtower", "brine/saltwater",
-                items(),
-                items(dust("Salt", 1)),
-                fields("Saltwater"), amounts(5000),
-                fields("DistW", "Brine"), amounts(3500, 1000),
-                120, 32);
-        recipe("gt.recipe.distillery", "brine/ocean-early",
-                items(circuit(2)),
-                items(item("dustSmall", "Gypsum", 1)),
-                fields("Ocean"), amounts(2000),
-                fields("DistW", "Brine"), amounts(1400, 400),
-                100, 16);
+        row("gt.recipe.distillationtower", "brine/ocean")
+                .out(dust("Salt", 2), dust("Gypsum", 1))
+                .fluidIn("Ocean", 10000)
+                .fluidOut("DistW", 7500, "Brine", 2000)
+                .add(200, 48);
+        row("gt.recipe.distillationtower", "brine/saltwater")
+                .out(dust("Salt", 1))
+                .fluidIn("Saltwater", 5000)
+                .fluidOut("DistW", 3500, "Brine", 1000)
+                .add(120, 32);
+        row("gt.recipe.distillery", "brine/ocean-early")
+                .in(circuit(2))
+                .out(item("dustSmall", "Gypsum", 1))
+                .fluidIn("Ocean", 2000)
+                .fluidOut("DistW", 1400, "Brine", 400)
+                .add(100, 16);
     }
 
     private static void removeMagnesiumCalcium() {
-        recipe("gt.recipe.bath", "brine/slake-lime",
-                items(dust("Quicklime", 1)),
-                items(dust("CalciumHydroxide", 1)),
-                fields("Water"), amounts(1000),
-                null, null,
-                40, 8);
-        recipe("gt.recipe.bath", "brine/remove-mg-ca",
-                items(dust("CalciumHydroxide", 1), dust("SodiumCarbonate", 1)),
-                items(dust("MagnesiumHydroxide", 1), dust("Calcite", 1)),
-                fields("Brine"), amounts(4000),
-                fields("GenLiquid_DecalcifiedBrine"), amounts(3600),
-                120, 24);
-        recipe("gt.recipe.bath", "brine/magnesium-chloride",
-                items(dust("MagnesiumHydroxide", 1)),
-                items(dust("MagnesiumChloride", 1)),
-                fields("GenGas_HydrochloricAcid"), amounts(2000),
-                fields("DistW"), amounts(2000),
-                80, 16);
+        row("gt.recipe.bath", "brine/slake-lime")
+                .in(dust("Quicklime", 1))
+                .out(dust("CalciumHydroxide", 1))
+                .fluidIn("Water", 1000)
+                .add(40, 8);
+        row("gt.recipe.bath", "brine/remove-mg-ca")
+                .in(dust("CalciumHydroxide", 1), dust("SodiumCarbonate", 1))
+                .out(dust("MagnesiumHydroxide", 1), dust("Calcite", 1))
+                .fluidIn("Brine", 4000)
+                .fluidOut("GenLiquid_DecalcifiedBrine", 3600)
+                .add(120, 24);
+        row("gt.recipe.bath", "brine/magnesium-chloride")
+                .in(dust("MagnesiumHydroxide", 1))
+                .out(dust("MagnesiumChloride", 1))
+                .fluidIn("GenGas_HydrochloricAcid", 2000)
+                .fluidOut("DistW", 2000)
+                .add(80, 16);
     }
 
     private static void blowBromine() {
-        recipe("gt.recipe.mixer", "brine/blow-bromine",
-                items(),
-                items(),
-                fields("GenLiquid_DecalcifiedBrine", "GenGas_Chlorine", "GenLiquid_SulfuricAcid"),
-                amounts(4000, 1000, 250),
-                fields("GenGas_CrudeBromine", "GenLiquid_LithiumRichBrine"), amounts(1000, 3000),
-                160, 48);
-        recipe("gt.recipe.distillationtower", "brine/bromine",
-                items(),
-                items(),
-                fields("GenGas_CrudeBromine"), amounts(2000),
-                fields("GenGas_Bromine", "GenGas_Iodine", "GenGas_Chlorine", "GenGas_HydrochloricAcid"),
-                amounts(1500, 200, 200, 100),
-                160, 64);
-        recipe("gt.recipe.distillery", "brine/bromine-early",
-                items(circuit(1)),
-                items(),
-                fields("GenGas_CrudeBromine"), amounts(1000),
-                fields("GenGas_Bromine", "GenGas_HydrochloricAcid"), amounts(700, 200),
-                120, 30);
+        row("gt.recipe.mixer", "brine/blow-bromine")
+                .fluidIn("GenLiquid_DecalcifiedBrine", 4000, "GenGas_Chlorine", 1000, "GenLiquid_SulfuricAcid", 250)
+                .fluidOut("GenGas_CrudeBromine", 1000, "GenLiquid_LithiumRichBrine", 3000)
+                .add(160, 48);
+        row("gt.recipe.distillationtower", "brine/bromine")
+                .fluidIn("GenGas_CrudeBromine", 2000)
+                .fluidOut(fields("GenGas_Bromine", "GenGas_Iodine", "GenGas_Chlorine", "GenGas_HydrochloricAcid"),
+                        amounts(1500, 200, 200, 100))
+                .add(160, 64);
+        row("gt.recipe.distillery", "brine/bromine-early")
+                .in(circuit(1))
+                .fluidIn("GenGas_CrudeBromine", 1000)
+                .fluidOut("GenGas_Bromine", 700, "GenGas_HydrochloricAcid", 200)
+                .add(120, 30);
     }
 
     private static void precipitateLithium() {
-        recipe("gt.recipe.bath", "brine/lithium-carbonate",
-                items(dust("SodiumCarbonate", 2)),
-                items(dust("LithiumCarbonate", 1), dust("Salt", 2)),
-                fields("GenLiquid_LithiumRichBrine"), amounts(3000),
-                fields("DistW"), amounts(2000),
-                140, 30);
-        recipe("gt.recipe.bath", "brine/lithium-chloride",
-                items(dust("LithiumCarbonate", 1)),
-                items(dust("LithiumChloride", 2)),
-                fields("GenGas_HydrochloricAcid"), amounts(2000),
-                fields("CarbonDioxide", "DistW"), amounts(1000, 1000),
-                100, 24);
+        row("gt.recipe.bath", "brine/lithium-carbonate")
+                .in(dust("SodiumCarbonate", 2))
+                .out(dust("LithiumCarbonate", 1), dust("Salt", 2))
+                .fluidIn("GenLiquid_LithiumRichBrine", 3000)
+                .fluidOut("DistW", 2000)
+                .add(140, 30);
+        row("gt.recipe.bath", "brine/lithium-chloride")
+                .in(dust("LithiumCarbonate", 1))
+                .out(dust("LithiumChloride", 2))
+                .fluidIn("GenGas_HydrochloricAcid", 2000)
+                .fluidOut("CarbonDioxide", 1000, "DistW", 1000)
+                .add(100, 24);
         // LiCl molten-salt electrolysis already exists in GT6CE; no separate row.
-    }
-
-    static void recipe(String map, String label, ItemStack[] itemInputs, ItemStack[] itemOutputs,
-                               String[] fluidInFields, int[] fluidInAmounts,
-                               String[] fluidOutFields, int[] fluidOutAmounts,
-                               long duration, long perTick) {
-        recipe(map, label, itemInputs, itemOutputs, fluidInFields, fluidInAmounts, fluidOutFields, fluidOutAmounts,
-                duration, perTick, null, null);
-    }
-
-    static void recipe(String map, String label, ItemStack[] itemInputs, ItemStack[] itemOutputs,
-                               String[] fluidInFields, int[] fluidInAmounts,
-                               String[] fluidOutFields, int[] fluidOutAmounts,
-                               long duration, long perTick, int[] outputChances, int[] keptInputs) {
-        AddonRecipes.Line line = AddonRecipes.map(map).add(FluidBridge.line(
-                itemInputs, itemOutputs, fluidInFields, fluidInAmounts, fluidOutFields, fluidOutAmounts,
-                duration, perTick, outputChances, keptInputs));
-        if (line == null) {
-            REJECTED.add(label);
-        }
     }
 
     static ItemStack item(String prefix, String material, int count) {
         ItemStack stack = AddonItems.stack(prefix, material, count);
         if (stack.isEmpty()) {
-            throw new IllegalStateException("ssite missing " + prefix + " " + material);
+            missing(prefix + " " + material);
         }
         return stack;
     }
@@ -380,10 +457,6 @@ public final class ChemistryRecipes {
 
     static ItemStack circuit(int n) {
         return AddonItems.selectorTag(n);
-    }
-
-    static ItemStack[] items(ItemStack... stacks) {
-        return stacks;
     }
 
     static String[] fields(String... names) {

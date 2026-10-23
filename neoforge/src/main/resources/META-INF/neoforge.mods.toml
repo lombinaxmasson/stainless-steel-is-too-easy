@@ -26,6 +26,6 @@ side="BOTH"
 [[dependencies.${mod_id}]]
 modId="gt6ce"
 type="required"
-versionRange="[0.0.0,)"
+versionRange="${gt6ce_version_range}"
 ordering="NONE"
 side="BOTH"

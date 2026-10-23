@@ -17,6 +17,9 @@ sourceSets.main {
     java.srcDir rootProject.file('common/src/main/java')
     resources.srcDir rootProject.file('common/src/main/resources')
 }
+sourceSets.test {
+    java.srcDir rootProject.file('common/src/test/java')
+}
 
 apply from: rootProject.file('gradle/gt6ce-sdk.gradle')
 
@@ -57,6 +60,7 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly files(forgeSdk)
+    testImplementation files(forgeSdk)
     if (forgeRuntime.isFile()) {
         // The Forge release jar is SRG. flatDir lets fg.deobf remap it for the Mojang-named dev game.
         runtimeOnly fg.deobf("blank:gt6ce-${minecraft_version}-forge:${gt6ce_version}")
@@ -73,6 +77,17 @@ tasks.register('requireSdk') {
     }
 }
 tasks.named('compileJava').configure { dependsOn 'requireSdk' }
+tasks.named('compileTestJava').configure { dependsOn 'requireSdk' }
+
+def unitTest = tasks.register('unitTest', JavaExec) {
+    description = 'Runs pure-JVM pool reaction and crucible behavior tests.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.machine.MoltenPoolTests'
+    jvmArgs '-ea'
+}
+tasks.named('check').configure { dependsOn unitTest }
 
 tasks.register('requireRuntime') {
     description = 'Fail with the distribution-jar command when the dev game has no GregTech mod jar.'
@@ -100,6 +115,7 @@ tasks.named('processResources', ProcessResources).configure {
             mod_authors            : mod_authors,
             loader_version_range   : '[47,)',
             minecraft_version_range: '[1.20.1,1.21)',
+            gt6ce_version_range    : "[${gt6ce_version},)",
     ]
     inputs.properties replaceProperties
     filesMatching(['META-INF/mods.toml']) {

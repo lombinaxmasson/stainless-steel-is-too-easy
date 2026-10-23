@@ -3,35 +3,43 @@ package com.lombinaxmasson.ssite.machine;
 import com.gregtech.gregtech.api.addon.CrucibleMold;
 import com.gregtech.gregtech.api.addon.MachineFace;
 import com.gregtech.gregtech.api.addon.platform.AddonFluids;
+import com.gregtech.gregtech.api.addon.platform.AddonTool;
 import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
 import com.gregtech.gregtech.api.addon.platform.MachineBehaviorContext;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
-/** Forge half of the AOD converter: the argon tank is the only loader-specific piece. */
-public final class AodBehavior implements MachineBehavior {
-    private final AodTier tier;
+/** Forge half of an argon-fed crucible: the argon tank is the only loader-specific piece. */
+public final class ArgonCrucibleBehavior implements MachineBehavior, MoltenPool.Holder {
+    private final MoltenPool pool;
     private Fluid argon;
 
-    public AodBehavior(AodTier tier) {
-        this.tier = tier;
+    public ArgonCrucibleBehavior(MoltenPool pool) {
+        this.pool = pool;
+    }
+
+    @Override
+    public MoltenPool pool() {
+        return pool;
     }
 
     @Override
     public void tick(MachineBehaviorContext context) {
-        AodConverterCore.tick(context, tier, new AodConverterCore.ArgonTank() {
+        pool.tick(context, new MoltenPool.ArgonTank() {
             @Override
             public int availableMillibuckets() {
-                FluidStack stack = context.fluid(AodConverterCore.ARGON_TANK);
+                FluidStack stack = context.fluid(MoltenPool.ARGON_TANK);
                 return stack.isEmpty() ? 0 : stack.getAmount();
             }
 
             @Override
             public boolean drainMillibuckets(int amount) {
-                FluidStack drained = context.drain(AodConverterCore.ARGON_TANK, amount, true);
+                FluidStack drained = context.drain(MoltenPool.ARGON_TANK, amount, true);
                 if (drained.isEmpty() || drained.getAmount() < amount || !isArgon(drained)) return false;
-                context.drain(AodConverterCore.ARGON_TANK, amount, false);
+                context.drain(MoltenPool.ARGON_TANK, amount, false);
                 return true;
             }
         });
@@ -39,35 +47,42 @@ public final class AodBehavior implements MachineBehavior {
 
     @Override
     public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) {
-        return AodConverterCore.canInsert(context, slot, stack);
+        return pool.canInsert(context, slot, stack);
     }
 
     /** Pipes only fill the charge slot through the open top; the menu is not the physical lid. */
     @Override
     public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack, MachineFace face) {
         if (face != null && face != MachineFace.TOP) return false;
-        if (face == MachineFace.TOP && !AodConverterCore.lidOpen(context)) return false;
-        return AodConverterCore.canInsert(context, slot, stack);
+        if (face == MachineFace.TOP && !pool.lidOpen(context)) return false;
+        return pool.canInsert(context, slot, stack);
     }
 
     @Override
     public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) {
-        return AodConverterCore.canFill(context, tank) && isArgon(stack);
+        return pool.canFill(context, tank) && isArgon(stack);
+    }
+
+    @Override
+    public boolean onTool(MachineBehaviorContext context, AddonTool tool, Player player,
+                          InteractionHand hand, MachineFace face) {
+        if (tool != AddonTool.SPADE && tool != AddonTool.UNIVERSAL_SPADE) return false;
+        return pool.skim(context, player);
     }
 
     @Override
     public long getCrucibleTemperature(MachineBehaviorContext context) {
-        return AodConverterCore.temperature(context);
+        return pool.temperature(context);
     }
 
     @Override
     public long getCrucibleContentAmount(MachineBehaviorContext context) {
-        return AodConverterCore.contentAmount(context);
+        return pool.contentAmount(context);
     }
 
     @Override
     public boolean fillMoldAtSide(MachineBehaviorContext context, CrucibleMold mold, int crucibleSide, int moldSide) {
-        return AodConverterCore.pour(context, mold, moldSide);
+        return pool.pour(context, mold, moldSide);
     }
 
     private boolean isArgon(FluidStack stack) {

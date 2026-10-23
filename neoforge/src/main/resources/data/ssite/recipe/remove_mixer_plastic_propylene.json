@@ -1,7 +1,0 @@
-{
-  "_comment": "Drops the GT6 mixer row that turns propylene into Plastic, so propylene can make independent polypropylene. The ethylene row is untouched.",
-  "type": "gt6ce:machine_removal",
-  "map": "gt.recipe.mixer",
-  "item_outputs": [{ "item": "gt6ce:dust_plastic" }],
-  "fluid_inputs": [{ "fluid": "gt6ce:propylene" }]
-}

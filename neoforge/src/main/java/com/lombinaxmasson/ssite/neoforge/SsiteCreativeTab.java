@@ -1,7 +1,7 @@
 package com.lombinaxmasson.ssite.neoforge;
 
 import com.lombinaxmasson.ssite.SsiteAddon;
-import com.lombinaxmasson.ssite.material.PolymerMaterials;
+import com.lombinaxmasson.ssite.material.SsiteMaterials;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -13,7 +13,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.ArrayList;
 import java.util.List;
 
-/** The AOD machines and the M4 polymer and chemical item forms. */
+/** The ssite machines, pipes and material forms. */
 public final class SsiteCreativeTab {
     private static final DeferredRegister<CreativeModeTab> TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, SsiteAddon.MOD_ID);
@@ -27,26 +27,24 @@ public final class SsiteCreativeTab {
                 .icon(SsiteCreativeTab::icon)
                 .displayItems((params, output) -> {
                     output.acceptAll(machineStacks());
-                    output.acceptAll(PolymerMaterials.creativeStacks());
+                    output.acceptAll(SsiteMaterials.creativeStacks());
                 })
                 .build());
         TABS.register(modEventBus);
     }
 
-    /** The AOD converter block items are registered by GregTech under the addon id. */
+    /** Block items GregTech registers under the addon id. */
     private static List<ItemStack> machineStacks() {
         List<ItemStack> stacks = new ArrayList<>();
         for (var item : BuiltInRegistries.ITEM) {
             var id = BuiltInRegistries.ITEM.getKey(item);
-            if (!SsiteAddon.MOD_ID.equals(id.getNamespace())) continue;
-            if (!id.getPath().startsWith("aod_") && !id.getPath().equals("var_furnace")) continue;
-            stacks.add(new ItemStack(item));
+            if (SsiteAddon.MOD_ID.equals(id.getNamespace())) stacks.add(new ItemStack(item));
         }
         return stacks;
     }
 
     private static ItemStack icon() {
-        var stacks = PolymerMaterials.creativeStacks();
+        var stacks = SsiteMaterials.creativeStacks();
         return stacks.isEmpty() ? ItemStack.EMPTY : stacks.get(0);
     }
 }

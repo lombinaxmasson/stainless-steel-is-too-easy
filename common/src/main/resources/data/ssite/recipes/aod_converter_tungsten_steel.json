@@ -13,20 +13,19 @@
       "item": "gt6ce:pipe_small_copper"
     },
     "K": {
-      "item": "gt6ce:smelting_crucible_stainless_steel"
+      "item": "gt6ce:smelting_crucible_tungsten"
     },
     "M": {
-      "item": "gt6ce:casing_machine_stainlesssteel"
+      "item": "gt6ce:casing_machine_tungstensteel"
     },
     "P": {
-      "item": "gt6ce:plate_double_stainlesssteel"
+      "item": "gt6ce:plate_double_tungstensteel"
     },
     "S": {
       "item": "gt6ce:pipe_small_steel"
     }
   },
   "result": {
-    "id": "ssite:aod_converter_stainless_steel",
-    "count": 1
+    "item": "ssite:aod_converter_tungsten_steel"
   }
 }

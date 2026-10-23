@@ -4,8 +4,8 @@ plugins {
 
 tasks.register('compileBoth') {
     group = 'build'
-    description = 'Compile the Forge 1.20.1 and NeoForge 1.21.1 projects.'
-    dependsOn ':forge:compileJava', ':neoforge:compileJava'
+    description = 'Compile and test the Forge 1.20.1 and NeoForge 1.21.1 projects.'
+    dependsOn ':forge:compileJava', ':neoforge:compileJava', ':forge:unitTest', ':neoforge:unitTest'
 }
 
 tasks.named('assemble').configure {

@@ -1,6 +1,0 @@
-{
-  "_comment": "Drops the burn mixer rows that skip vanadium removal and emit pure TiCl4 directly.",
-  "type": "gt6ce:machine_removal",
-  "map": "gt.recipe.burnmixer",
-  "fluid_outputs": [{ "fluid": "gt6ce:titaniumtetrachloride" }]
-}
