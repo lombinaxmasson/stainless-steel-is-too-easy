@@ -1,7 +1,7 @@
 # 稀土 P204 / Aliquat 336 分级萃取与变价分离详细计划
 
 > 计划 slug：`m6/rare-earth-extraction`
-> 状态：待实现（2026-10-24）。本文件位于 `docs/card-plans/`。前置是 [`稀土三矿开矿与直拆捷径移除`](稀土三矿开矿与直拆捷径移除详细计划.md)（提供 `MixedRareEarthSolution`）与 M4 [`萃取剂与润滑油基础油`](closed/萃取剂与润滑油基础油详细计划.md)（提供 `P204`、`Aliquat 336`）。
+> 状态：已关闭（2026-10-24）。本文件位于 `docs/card-plans/closed/`。前置是 [`稀土三矿开矿与直拆捷径移除`](稀土三矿开矿与直拆捷径移除详细计划.md)（提供 `MixedRareEarthSolution`）与 M4 [`萃取剂与润滑油基础油`](萃取剂与润滑油基础油详细计划.md)（提供 `P204`、`Aliquat 336`）。
 > 性质：M6 第二张卡。把上一张卡的混合稀土母液用 **`P204`** 切成轻 / 中 / 重三段，再用 **$\text{Ce}^{4+}$ 氧化沉淀**、**$\text{Eu}^{2+}$ 锌还原**与 **`Aliquat 336`** 把 11 种单一稀土氧化物拆出来。全程只用 GT6CE 内置 `mixer` 与 `centrifuge`，不新增机器。
 
 ```text
@@ -75,8 +75,8 @@ close_target    = 24 种材料注册；P204 三段分组、Ce/Eu 变价分离、
 
 1. **P204 粗分：轻中稀土进有机相，重稀土留在水相（`gt.recipe.mixer`）**：
    `GenLiquid_MixedRareEarthSolution (4000) + GenLiquid_DiethylhexylPhosphoricAcid (2000) + GenGas_HydrochloricAcid (500)`
-   $\rightarrow$ `GenLiquid_LightMiddleP204Extract (2000) + GenLiquid_HeavyRareEarthChloride (2000) + Dirty_Water (2000)`；160 ticks，64 EU/t。
-   - 说明：P204 对轻/中稀土亲和力高，重稀土留在萃余水相；`HCl` 调酸度。
+   $\rightarrow$ `GenLiquid_LightMiddleP204Extract (2000) + GenLiquid_HeavyRareEarthChloride (2000)`；160 ticks，64 EU/t。
+   - 说明：P204 对轻/中稀土亲和力高，重稀土留在萃余水相；`HCl` 调酸度。`gt.recipe.mixer` 只有 2 个流体输出槽（`6 入 / 1 物品出 / 2 流体出`），所以本行不单列 `Dirty_Water`，水量并入重稀土氯化液。
 2. **轻段反萃（`gt.recipe.mixer`）**：
    `GenLiquid_LightMiddleP204Extract (2000) + GenGas_HydrochloricAcid (1500)`
    $\rightarrow$ `GenLiquid_LightRareEarthChloride (2000) + GenLiquid_MiddleRareEarthP204Extract (2000)`；160 ticks，64 EU/t。
@@ -161,10 +161,10 @@ close_target    = 24 种材料注册；P204 三段分组、Ce/Eu 变价分离、
 
 ## 5. 验收标准
 
-- [ ] 24 种新材料全部注册，中英文译名齐全。
-- [ ] `MixedRareEarthSolution` 经 P204 粗分得到轻/中/重三段，P204 在三条反萃线上各回收 95%。
-- [ ] 轻段：`CeO2` 由氯气氧化沉淀单独拆出；`La2O3` 由 Aliquat 336 拆出；`Pr2O3` / `Nd2O3` 由 P204 拆开。
-- [ ] 中段：`Eu2O3` 由锌粉还原单独拆出；`Sm2O3` / `Gd2O3` 由 P204 拆开。
-- [ ] 重段：`Y2O3` 由 Aliquat 336 拆出；`Lu2O3`、`Tb2O3`、`Dy2O3` 与 `HeavyRareEarthResidue` 由 P204 + 离心机拆开。
-- [ ] 11 种单一氧化物全部可在 EMI 中查到来源，且都能进入第 3 张卡的氟化炉。
-- [ ] 所有配方注册成功，`REJECTED` 为空；双加载器 `build` 通过，NeoForge 服务端启动至 `Done` 无异常。
+- [x] 24 种新材料全部注册，中英文译名齐全。
+- [x] `MixedRareEarthSolution` 经 P204 粗分得到轻/中/重三段，P204 在三条反萃线上各回收 95%。
+- [x] 轻段：`CeO2` 由氯气氧化沉淀单独拆出；`La2O3` 由 Aliquat 336 拆出；`Pr2O3` / `Nd2O3` 由 P204 拆开。
+- [x] 中段：`Eu2O3` 由锌粉还原单独拆出；`Sm2O3` / `Gd2O3` 由 P204 拆开。
+- [x] 重段：`Y2O3` 由 Aliquat 336 拆出；`Lu2O3`、`Tb2O3`、`Dy2O3` 与 `HeavyRareEarthResidue` 由 P204 + 离心机拆开。
+- [x] 11 种单一氧化物全部可在 EMI 中查到来源，且都能进入第 3 张卡的氟化炉。
+- [x] 所有配方注册成功，`REJECTED` 为空；双加载器 `build` 通过，NeoForge 服务端启动至 `Done` 无异常。
