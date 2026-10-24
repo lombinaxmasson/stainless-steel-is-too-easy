@@ -6,6 +6,7 @@ import com.gregtech.gregtech.api.addon.platform.AddonFluids;
 import com.gregtech.gregtech.api.addon.platform.AddonTool;
 import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
 import com.gregtech.gregtech.api.addon.platform.MachineBehaviorContext;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -81,8 +82,9 @@ public final class ArgonCrucibleBehavior implements MachineBehavior, MoltenPool.
     }
 
     @Override
-    public boolean fillMoldAtSide(MachineBehaviorContext context, CrucibleMold mold, int crucibleSide, int moldSide) {
-        return pool.pour(context, mold, moldSide);
+    public boolean fillMoldAtSide(MachineBehaviorContext context, CrucibleMold mold,
+                                  Direction crucibleSide, Direction moldSide) {
+        return pool.pour(context, mold, moldSide.ordinal());
     }
 
     private boolean isArgon(FluidStack stack) {

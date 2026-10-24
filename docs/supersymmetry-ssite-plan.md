@@ -235,17 +235,19 @@
 
 ## M6 · 湿法萃取篇：稀土三矿全分离与铀钍前段 (Rare Earths & Nuclear Hydrometallurgy)
 
-> **设计目标**：堵住 GT6CE 中 `RareEarth` 离心机一步甩出钕/钇/镧/铈/镉/铯、`Bastnasite`（氟碳铈矿）与 `Uraninite`（晶质铀矿）电解或坩埚直接出铈和铀、`Pitchblende`（沥青铀矿）离心直接拆出钍和铅的捷径。全面启用 M4 储备的 **`P204`、`TBP`、`Aliquat 336`、离子交换树脂**，在零新增机器的前提下跑通稀土三矿分级萃取与核燃料湿法前段。
+> **设计目标**：堵住 GT6CE 中 `RareEarth` 离心机一步甩出钕/钇/镧/铈/镉/铯、`Bastnasite`（氟碳铈矿）电解或坩埚直接出铈、`Uraninite`（晶质铀矿）/ `Pitchblende`（沥青铀矿）坩埚直接出铀、`Pitchblende` 离心直接拆出钍和铅的捷径。全面启用 M4 储备的 **`P204`、`TBP`、`Aliquat 336`、离子交换树脂**，在零新增机器的前提下跑通稀土三矿分级萃取与核燃料湿法前段。
+
+> **计划卡（2026-10-24 开卡）**：见 [`docs/card-plans/总览.md`](card-plans/总览.md) 的 M6 节，四张卡已拆分并链接。**第 1 张卡（三矿开矿与直拆捷径移除）已于 2026-10-24 关闭**；坩埚直熔移除因 GT6CE 分支编译失败记为已知缺口。
 
 ### 6.1 砍掉稀土与铀矿直拆捷径
-- [ ] **移除离心直拆 (`gt.recipe.centrifuge`)**：移除 `RareEarth`（稀土粉全套形态）、`Monazite`（独居石）、`Pitchblende`（沥青铀矿）的内置离心分解配方。
-- [ ] **移除电解与坩埚直熔**：移除 `Bastnasite`（氟碳铈矿）与 `Uraninite`（晶质铀矿）的内置电解分解配方与坩埚直熔反应。
+- [x] **移除离心直拆 (`gt.recipe.centrifuge`)**：移除 `RareEarth`（稀土粉全套形态）与 `Pitchblende`（沥青铀矿）的内置离心分解配方。
+- [ ] **移除电解与坩埚直熔**：`Monazite`（独居石）与 `Bastnasite`（氟碳铈矿）的电解分解配方已移除；`Bastnasite` / `Uraninite`（晶质铀矿）/ `Pitchblende` 的坩埚直熔移除已在 GT6CE 工作区实现，但该分支 `RecipeMap` 编译失败导致运行 JAR 无法重建，**仍为已知缺口**。
 
 ### 6.2 稀土三矿开矿、分级萃取与变价提纯
-- [ ] **三矿差异化开矿**：
-  - [ ] **氟碳铈矿 (`Bastnasite`)**：氧化焙烧脱氟放出 $\text{HF}$ 与 $\text{CO}_2$，盐酸浸出得富轻稀土母液。
-  - [ ] **独居石 (`Monazite`)**：浓硫酸/热碱分解，优先沉淀分离出 **氢氧化钍精矿 (`ThoriumConcentrate`)** 与微量铀，得轻中稀土母液。
-  - [ ] **磷钇矿 (`Xenotime` / 富钇矿源)**：酸浸得富重稀土与钇母液。
+- [x] **三矿差异化开矿**：
+  - [x] **氟碳铈矿 (`Bastnasite`)**：氧化焙烧脱氟放出 $\text{HF}$ 与 $\text{CO}_2$，盐酸浸出得富轻稀土母液。
+  - [x] **独居石 (`Monazite`)**：浓硫酸/热碱分解，优先沉淀分离出 **氢氧化钍精矿 (`ThoriumConcentrate`)** 与微量铀，得轻中稀土母液。
+  - [x] **磷钇矿 (`Xenotime` / 富钇矿源)**：酸浸得富重稀土与钇母液。
 - [ ] **P204 / Aliquat 336 分级溶剂萃取**：
   - [ ] 稀土母液在 `mixer` + `centrifuge` 中经 **`P204`** 萃取切分为 **轻稀土组（La-Ce-Pr-Nd）**、**中稀土组（Sm-Eu-Gd）**、**重稀土组（Tb-Dy-Y-Lu）**。
   - [ ] **经典变价分离**：轻稀土组氧化沉淀拆出四价铈（$\text{CeO}_2$），余液经 `Aliquat 336` 拆出镧（$\text{La}_2\text{O}_3$）、镨、钕（$\text{Nd}_2\text{O}_3$）；中稀土组用锌粉还原沉淀二价铕（$\text{EuSO}_4 \rightarrow \text{Eu}_2\text{O}_3$），余液拆出钐（$\text{Sm}_2\text{O}_3$）与钆（$\text{Gd}_2\text{O}_3$）；重稀土组拆出钇（$\text{Y}_2\text{O}_3$）与镥。

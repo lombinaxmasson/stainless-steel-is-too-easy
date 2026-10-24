@@ -1,0 +1,6 @@
+{
+  "_comment": "Drops the refined-crushed centrifuge split of RareEarth ore processing.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.centrifuge",
+  "item_inputs": [{ "item": "gt6ce:crushed_centrifuged_rareearth" }]
+}

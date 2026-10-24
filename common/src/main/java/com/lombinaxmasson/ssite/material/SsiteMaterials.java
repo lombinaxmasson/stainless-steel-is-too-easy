@@ -5,6 +5,8 @@ import com.gregtech.gregtech.api.addon.CrucibleReactionDeclaration;
 import com.gregtech.gregtech.api.addon.CrucibleReactionRemoval;
 import com.gregtech.gregtech.api.addon.MaterialDeclaration;
 import com.gregtech.gregtech.api.addon.MaterialFormRequest;
+import com.gregtech.gregtech.api.addon.OreVeinDeclaration;
+import com.gregtech.gregtech.api.addon.SmeltingTargetRemoval;
 import com.gregtech.gregtech.api.addon.platform.AddonItems;
 import com.lombinaxmasson.ssite.SsiteAddon;
 import net.minecraft.world.item.ItemStack;
@@ -222,6 +224,8 @@ public final class SsiteMaterials implements AddonMaterialContributor {
                         .meltingPointKelvin(1900).boilingPointKelvin(2500).density(1.80F).dust().build()));
         materials.addAll(PolymerMaterials.MATERIALS);
         materials.addAll(MetallurgyMaterials.MATERIALS);
+        materials.addAll(RareEarthMaterials.MATERIALS);
+        materials.addAll(NuclearMaterials.MATERIALS);
         return List.copyOf(materials);
     }
 
@@ -232,6 +236,20 @@ public final class SsiteMaterials implements AddonMaterialContributor {
                 new MaterialFormRequest("CelluloseAcetate", "foil")));
         forms.addAll(PolymerMaterials.FORMS);
         return List.copyOf(forms);
+    }
+
+    /** The three ores melt into a metal in the built-in crucible table; M6 replaces them with wet routes. */
+    @Override
+    public List<SmeltingTargetRemoval> smeltingTargetRemovals() {
+        return List.of(new SmeltingTargetRemoval("Bastnasite"),
+                new SmeltingTargetRemoval("Uraninite"),
+                new SmeltingTargetRemoval("Pitchblende"));
+    }
+
+    @Override
+    public List<OreVeinDeclaration> oreVeins() {
+        return List.of(new OreVeinDeclaration("xenotime", OreVeinDeclaration.OVERWORLD,
+                0, 30, 20, 3, 16, "Xenotime", "Xenotime", "Monazite", "RareEarth"));
     }
 
     /** An empty input list drops every built-in crucible row that outputs StainlessSteel. */

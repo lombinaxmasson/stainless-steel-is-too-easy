@@ -1,0 +1,6 @@
+{
+  "_comment": "Drops the small-dust centrifuge split of RareEarth. Without it slime-processed ore still yields six elements.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.centrifuge",
+  "item_inputs": [{ "item": "gt6ce:dust_small_rareearth" }]
+}

@@ -38,6 +38,8 @@ public final class ChemistryRecipes {
         PetrochemRecipes.add();
         PolymerRecipes.add();
         MetallurgyRecipes.add();
+        RareEarthRecipes.add();
+        NuclearRecipes.add();
         if (!MISSING.isEmpty() || !REJECTED.isEmpty()) {
             throw new IllegalStateException("ssite recipes failed; missing=" + MISSING + ", rejected=" + REJECTED);
         }

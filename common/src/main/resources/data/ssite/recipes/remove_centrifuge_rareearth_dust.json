@@ -1,0 +1,6 @@
+{
+  "_comment": "Drops the built-in centrifuge split of RareEarth dust into six elements. The three ore routes replace it.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.centrifuge",
+  "item_inputs": [{ "item": "gt6ce:dust_rareearth" }]
+}

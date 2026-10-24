@@ -1,0 +1,6 @@
+{
+  "_comment": "Drops the tiny-dust centrifuge split of RareEarth, the form produced by water-treatment sludge.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.centrifuge",
+  "item_inputs": [{ "item": "gt6ce:dust_tiny_rareearth" }]
+}

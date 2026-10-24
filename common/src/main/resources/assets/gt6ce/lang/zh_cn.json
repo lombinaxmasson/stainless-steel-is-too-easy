@@ -228,5 +228,10 @@
   "material.gt6ce.hafniumtetrachloride": "四氯化铪",
   "material.gt6ce.nbtaleachliquor": "氟铌钽酸浸出液",
   "material.gt6ce.nbtamibkextract": "负载铌钽 MIBK 有机相",
-  "material.gt6ce.tantalumrichmibk": "富钽 MIBK 有机相"
+  "material.gt6ce.tantalumrichmibk": "富钽 MIBK 有机相",
+  "material.gt6ce.xenotime": "磷钇矿",
+  "material.gt6ce.bastnasitecalcine": "氟碳铈矿焙烧精矿",
+  "material.gt6ce.mixedrareearthsolution": "混合稀土母液",
+  "material.gt6ce.thoriumconcentrate": "氢氧化钍精矿",
+  "material.gt6ce.uranylsulfatesolution": "硫酸铀酰粗液"
 }

@@ -228,5 +228,10 @@
   "material.gt6ce.hafniumtetrachloride": "Hafnium Tetrachloride",
   "material.gt6ce.nbtaleachliquor": "Fluoroniobic-Tantalic Leach Liquor",
   "material.gt6ce.nbtamibkextract": "Loaded Nb-Ta MIBK Extract",
-  "material.gt6ce.tantalumrichmibk": "Tantalum-Rich MIBK Phase"
+  "material.gt6ce.tantalumrichmibk": "Tantalum-Rich MIBK Phase",
+  "material.gt6ce.xenotime": "Xenotime",
+  "material.gt6ce.bastnasitecalcine": "Bastnasite Calcine",
+  "material.gt6ce.mixedrareearthsolution": "Mixed Rare Earth Solution",
+  "material.gt6ce.thoriumconcentrate": "Thorium Hydroxide Concentrate",
+  "material.gt6ce.uranylsulfatesolution": "Crude Uranyl Sulfate Solution"
 }

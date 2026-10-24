@@ -1,0 +1,6 @@
+{
+  "_comment": "Drops the one-step Pitchblende split into Uraninite, Th and Pb. Card 4 replaces it with oxidative acid leaching.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.centrifuge",
+  "item_inputs": [{ "item": "gt6ce:dust_pitchblende" }]
+}
