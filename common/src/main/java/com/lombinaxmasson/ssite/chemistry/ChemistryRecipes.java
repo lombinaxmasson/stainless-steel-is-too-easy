@@ -40,6 +40,7 @@ public final class ChemistryRecipes {
         MetallurgyRecipes.add();
         RareEarthRecipes.add();
         NuclearRecipes.add();
+        BaseMetalRecipes.add();
         if (!MISSING.isEmpty() || !REJECTED.isEmpty()) {
             throw new IllegalStateException("ssite recipes failed; missing=" + MISSING + ", rejected=" + REJECTED);
         }
@@ -220,13 +221,13 @@ public final class ChemistryRecipes {
                 .in(dust("CarburizedStainlessSteel", 9), dust("Ferrosilicon", 1),
                         dust("Quicklime", 1), dust("Fluorite", 1))
                 .out(dust("StainlessSteel", 9), dust("AodSlag", 1))
-                .fluidIn("GenGas_Argon", 100)
+                .fluidIn("GenGas_Argon", 10)
                 .display(120, 64);
         row(SsiteMachines.AOD_MAP, "316l")
                 .in(dust("CarburizedStainlessSteel", 8), dust("Molybdenum", 1),
                         dust("Ferrosilicon", 1), dust("Fluorite", 1))
                 .out(dust("StainlessSteel316L", 9), dust("AodSlag", 1))
-                .fluidIn("GenGas_Argon", 100)
+                .fluidIn("GenGas_Argon", 10)
                 .display(160, 64);
     }
 

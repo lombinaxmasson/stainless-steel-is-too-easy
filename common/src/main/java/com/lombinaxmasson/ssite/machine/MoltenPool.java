@@ -25,7 +25,6 @@ public abstract class MoltenPool {
 
     protected static final long U = GTValues.U;
     protected static final long AMBIENT_K = 293L;
-    protected static final int MB_PER_GAS_UNIT = 100;
     protected static final long MAX_GAS_UNITS = 64L;
 
     static final String K_TEMP = "temp.k";
@@ -213,13 +212,13 @@ public abstract class MoltenPool {
     }
 
     /** Draws whole gas units of argon, at most {@code units}. Returns how many were drawn. */
-    static long drawArgon(ArgonTank argon, long units) {
+    static long drawArgon(ArgonTank argon, long units, int mbPerGasUnit) {
         if (units <= 0) return 0;
-        long wanted = Math.min(units, MAX_GAS_UNITS) * MB_PER_GAS_UNIT;
+        long wanted = Math.min(units, MAX_GAS_UNITS) * mbPerGasUnit;
         int use = (int) Math.min(wanted, argon.availableMillibuckets());
-        use -= use % MB_PER_GAS_UNIT;
+        use -= use % mbPerGasUnit;
         if (use <= 0 || !argon.drainMillibuckets(use)) return 0;
-        return use / MB_PER_GAS_UNIT;
+        return use / mbPerGasUnit;
     }
 
     private interface SlotSink {

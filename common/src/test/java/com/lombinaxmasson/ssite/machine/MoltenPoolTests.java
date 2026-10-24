@@ -55,7 +55,7 @@ public final class MoltenPoolTests {
         state.setLong("pool.fluorite", U);
         Tank tank = new Tank(500);
         AodConverterCore.injectGas(state, 1000L, false, AodConverterCore.AOD_K, tank);
-        check(tank.mb == 400 && state.getLong(MoltenPool.K_ARGON) == 1L, "1000 KU draws 100 mB = 1 argon unit");
+        check(tank.mb == 490 && state.getLong(MoltenPool.K_ARGON) == 1L, "1000 KU draws 10 mB = 1 AOD argon unit");
         check(AodConverterCore.react(state, AodConverterCore.AOD_K, false, AodConverterCore.MOLYBDENUM_K),
                 "closed argon blow reacts with 1 argon unit");
         check(state.getLong("pool.stainless") == 9L * U, "argon blow yields 9 U stainless steel");

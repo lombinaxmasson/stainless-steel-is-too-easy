@@ -280,5 +280,14 @@
   "material.gt6ce.thoriumnitratesolution": "硝酸钍粗液",
   "material.gt6ce.purethoriumnitrate": "核纯硝酸钍",
   "material.gt6ce.tbpthoriumextract": "负载钍 TBP 有机相",
-  "material.gt6ce.thoriumdioxide": "二氧化钍"
+  "material.gt6ce.thoriumdioxide": "二氧化钍",
+  "material.gt6ce.greenmatte": "绿锍",
+  "material.gt6ce.whitematte": "白锍",
+  "material.gt6ce.crudecopper": "粗铜",
+  "material.gt6ce.copperanodeslime": "铜阳极泥",
+  "material.gt6ce.platinumgroupconcentrate": "铂族精矿",
+  "material.gt6ce.nickelcobaltsulfate": "镍钴硫酸盐溶液",
+  "material.gt6ce.nickelsulfatesolution": "硫酸镍溶液",
+  "material.gt6ce.cobaltsulfatesolution": "硫酸钴溶液",
+  "material.gt6ce.cobaltp204extract": "钴负载 P204 有机相"
 }

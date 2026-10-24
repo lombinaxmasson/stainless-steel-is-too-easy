@@ -226,6 +226,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         materials.addAll(MetallurgyMaterials.MATERIALS);
         materials.addAll(RareEarthMaterials.MATERIALS);
         materials.addAll(NuclearMaterials.MATERIALS);
+        materials.addAll(BaseMetalMaterials.MATERIALS);
         return List.copyOf(materials);
     }
 
@@ -238,12 +239,20 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         return List.copyOf(forms);
     }
 
-    /** The three ores melt into a metal in the built-in crucible table; M6 replaces them with wet routes. */
+    /** These ores melt into a metal in the built-in crucible table; the cards replace them with real routes. */
     @Override
     public List<SmeltingTargetRemoval> smeltingTargetRemovals() {
         return List.of(new SmeltingTargetRemoval("Bastnasite"),
                 new SmeltingTargetRemoval("Uraninite"),
-                new SmeltingTargetRemoval("Pitchblende"));
+                new SmeltingTargetRemoval("Pitchblende"),
+                new SmeltingTargetRemoval("Chalcopyrite"),
+                new SmeltingTargetRemoval("Pentlandite"),
+                new SmeltingTargetRemoval("Sphalerite"),
+                new SmeltingTargetRemoval("Galena"),
+                new SmeltingTargetRemoval("Molybdenite"),
+                new SmeltingTargetRemoval("Cooperite"),
+                new SmeltingTargetRemoval("Sperrylite"),
+                new SmeltingTargetRemoval("Stibnite"));
     }
 
     @Override

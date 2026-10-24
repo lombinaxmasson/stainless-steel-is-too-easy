@@ -14,6 +14,7 @@ public final class VarFurnaceCore extends MoltenPool {
 
     static final long MAX_TEMP_K = 4800L;
     private static final long HEAT_PER_KELVIN = 128L;
+    static final int MB_PER_GAS_UNIT = 100;
 
     private static final List<Charge> CHARGES = List.of(
             new Charge("TitaniumSponge", "pool.titanium_sponge", 1941L),
@@ -71,7 +72,7 @@ public final class VarFurnaceCore extends MoltenPool {
     static void autoArgon(BehaviorState state, boolean lidOpen, long temperature, boolean heated, ArgonTank argon) {
         if (lidOpen || (!heated && temperature <= AMBIENT_K)) return;
         long stored = state.getLong(K_ARGON);
-        state.setLong(K_ARGON, stored + drawArgon(argon, MAX_GAS_UNITS - stored));
+        state.setLong(K_ARGON, stored + drawArgon(argon, MAX_GAS_UNITS - stored, MB_PER_GAS_UNIT));
     }
 
     /** Pools are in GT units; argon is in units of one recipe U, 100 mB each. */

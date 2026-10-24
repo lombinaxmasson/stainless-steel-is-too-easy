@@ -1,0 +1,6 @@
+{
+  "_comment": "Drops the one-step roasting of Tetrahedrite into copper and antimony; the matte route supplies copper.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.roaster",
+  "item_inputs": [{ "item": "gt6ce:dust_tetrahedrite" }]
+}

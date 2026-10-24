@@ -1,0 +1,6 @@
+{
+  "_comment": "Drops the one-step roasting of Galena into lead and silver; the lead refinery card replaces it.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.roaster",
+  "item_inputs": [{ "item": "gt6ce:dust_galena" }]
+}

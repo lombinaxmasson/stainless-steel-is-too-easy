@@ -16,6 +16,8 @@ public final class AodConverterCore extends MoltenPool {
     /** Molybdenum must melt first, so this is the floor for the 316L row. */
     static final long MOLYBDENUM_K = 2896L;
     static final long KU_PER_GAS_UNIT = 1000L;
+    /** AOD dilution gas is cheap: one unit per batch of 9 is 10 mB. */
+    static final int MB_PER_GAS_UNIT = 10;
 
     static final String K_KU_CARRY = "ku.carry";
     static final String K_AIR = "gas.air";
@@ -87,7 +89,7 @@ public final class AodConverterCore extends MoltenPool {
 
     /**
      * Every 1000 KU blows one gas unit. With the lid closed at refining heat the unit comes from
-     * the argon tank when it has 100 mB; otherwise it is air. Below refining heat the argon stays in the tank.
+     * the argon tank when it has 10 mB; otherwise it is air. Below refining heat the argon stays in the tank.
      */
     static void injectGas(BehaviorState state, long ku, boolean lidOpen, long temperature, ArgonTank argon) {
         long units = ku / KU_PER_GAS_UNIT;
@@ -98,7 +100,7 @@ public final class AodConverterCore extends MoltenPool {
 
         if (!lidOpen && temperature >= AOD_K) {
             long room = MAX_GAS_UNITS - state.getLong(K_ARGON);
-            long drawn = drawArgon(argon, Math.min(units, room));
+            long drawn = drawArgon(argon, Math.min(units, room), MB_PER_GAS_UNIT);
             state.setLong(K_ARGON, state.getLong(K_ARGON) + drawn);
             units -= drawn;
         }

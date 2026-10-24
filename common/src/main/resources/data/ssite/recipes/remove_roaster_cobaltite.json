@@ -1,0 +1,6 @@
+{
+  "_comment": "Drops the one-step roasting of Cobaltite into cobalt and arsenic; the matte route supplies cobalt.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.roaster",
+  "item_inputs": [{ "item": "gt6ce:dust_cobaltite" }]
+}

@@ -280,5 +280,14 @@
   "material.gt6ce.thoriumnitratesolution": "Crude Thorium Nitrate Solution",
   "material.gt6ce.purethoriumnitrate": "Nuclear-Grade Thorium Nitrate",
   "material.gt6ce.tbpthoriumextract": "Thorium-Loaded TBP Extract",
-  "material.gt6ce.thoriumdioxide": "Thorium Dioxide"
+  "material.gt6ce.thoriumdioxide": "Thorium Dioxide",
+  "material.gt6ce.greenmatte": "Green Matte",
+  "material.gt6ce.whitematte": "White Matte",
+  "material.gt6ce.crudecopper": "Crude Copper",
+  "material.gt6ce.copperanodeslime": "Copper Anode Slime",
+  "material.gt6ce.platinumgroupconcentrate": "Platinum-Group Concentrate",
+  "material.gt6ce.nickelcobaltsulfate": "Nickel-Cobalt Sulfate Solution",
+  "material.gt6ce.nickelsulfatesolution": "Nickel Sulfate Solution",
+  "material.gt6ce.cobaltsulfatesolution": "Cobalt Sulfate Solution",
+  "material.gt6ce.cobaltp204extract": "Cobalt-Loaded P204 Organic"
 }

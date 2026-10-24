@@ -1,0 +1,6 @@
+{
+  "_comment": "Drops the electrolysis of Sperrylite into platinum and arsenic; PGM separation replaces it.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.electrolyzer",
+  "item_inputs": [{ "item": "gt6ce:dust_sperrylite" }]
+}

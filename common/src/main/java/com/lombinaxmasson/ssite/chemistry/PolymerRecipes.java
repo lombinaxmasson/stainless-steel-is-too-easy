@@ -17,6 +17,7 @@ public final class PolymerRecipes {
      * 1. Programmed circuits go in keptInputs and are never consumed.
      * 2. When one machine hosts a recipe whose inputs are a subset of another, tell them apart by a different circuit number.
      * 3. Scale follows M3: roughly 1000 mB of monomer yields one dust of polymer.
+     * 4. dustTiny catalysts and initiators stay in keptInputs; stoichiometric reagents are consumed.
      */
     private PolymerRecipes() {}
 
@@ -217,6 +218,7 @@ public final class PolymerRecipes {
                 .in(item("dustTiny", "SodiumHydroxide", 1))
                 .fluidIn("GenLiquid_Acetone", 1000, "GenLiquid_HydrogenCyanide", 1000)
                 .fluidOut("GenLiquid_AcetoneCyanohydrin", 1000)
+                .keep(0)
                 .add(120, 32);
         row("gt.recipe.mixer", "c3/methyl-methacrylate")
                 .fluidIn("GenLiquid_AcetoneCyanohydrin", 1000, "GenLiquid_Methanol", 1000, "GenLiquid_SulfuricAcid", 1000)
@@ -241,7 +243,7 @@ public final class PolymerRecipes {
                 .in(circuit(2), dust("Nickel", 1), item("dustTiny", "SodiumHydroxide", 1))
                 .fluidIn("GenLiquid_Butyraldehyde", 2000, "Hydrogen", 2000)
                 .fluidOut("GenLiquid_TwoEthylhexanol", 1000, "DistW", 1000)
-                .keep(0, 1)
+                .keep(0, 1, 2)
                 .add(200, 48);
     }
 
@@ -592,6 +594,7 @@ public final class PolymerRecipes {
                 .in(item("dustTiny", "SodiumHydroxide", 1))
                 .fluidIn("GenLiquid_Phenol", 1000, "GenGas_Formaldehyde", 1000)
                 .fluidOut("GenLiquid_PhenolicResin", 1000)
+                .keep(0)
                 .add(160, 32);
         row("gt.recipe.coagulator", "c6/bakelite")
                 .out(dust("Bakelite", 1))
@@ -727,6 +730,7 @@ public final class PolymerRecipes {
                 .in(item("dustTiny", "PotassiumHydroxide", 1))
                 .fluidIn("GenLiquid_Glycerol", 1000, "GenGas_EthyleneOxide", 3000)
                 .fluidOut("GenLiquid_PolyetherPolyol", 1000)
+                .keep(0)
                 .add(200, 48);
     }
 
@@ -1163,7 +1167,7 @@ public final class PolymerRecipes {
                 .out(dust("Nafion", 1))
                 .fluidIn("GenGas_Tetrafluoroethylene", 1000, "GenLiquid_PerfluorosulfonylVinylEther", 1000, "GenLiquid_DeionizedWater", 1000)
                 .fluidOut("DistW", 1000)
-                .keep(0)
+                .keep(0, 1)
                 .add(300, 128);
     }
 
@@ -1174,7 +1178,7 @@ public final class PolymerRecipes {
                 .out(dust(product, 1))
                 .fluidIn(appendMonomers(monomers, "GenLiquid_DeionizedWater"), appendAmounts(amounts, 1000))
                 .fluidOut("DistW", 1000)
-                .keep(0)
+                .keep(0, 1)
                 .add(duration, perTick);
     }
 
@@ -1405,7 +1409,7 @@ public final class PolymerRecipes {
                 .in(circuit(2), item("dustTiny", "PotassiumHydroxide", 1))
                 .fluidIn("GenLiquid_Glycerol", 1000, "GenLiquid_PropyleneOxide", 3000)
                 .fluidOut("GenLiquid_PolyetherPolyol", 1000)
-                .keep(0)
+                .keep(0, 1)
                 .add(200, 48);
     }
 

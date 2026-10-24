@@ -116,8 +116,9 @@ tasks.named('processResources', ProcessResources).configure {
     filesMatching(['data/ssite/recipes/*.json']) {
         path = path.replace('data/ssite/recipes/', 'data/ssite/recipe/')
         filter { String line ->
+            // Only the four-space result line becomes "id"; ingredient entries stay "item".
             line.replace('"result": {', '"result": { "count": 1,')
-                .replace('    "item": "ssite:', '    "id": "ssite:')
+                .replaceAll('^    "item": "ssite:', '    "id": "ssite:')
         }
     }
 }
