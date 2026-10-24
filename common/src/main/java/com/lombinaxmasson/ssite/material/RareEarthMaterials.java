@@ -102,7 +102,50 @@ public final class RareEarthMaterials {
             MaterialDeclaration.builder("TbDyP204Extract")
                     .displayName("Tb-Dy P204 Extract").color(0xA89858)
                     .chemicalFormula("(Tb,Dy)·P204")
-                    .meltingPointKelvin(210).boilingPointKelvin(400).density(0.97F).liquid().build()
+                    .meltingPointKelvin(210).boilingPointKelvin(400).density(0.97F).liquid().build(),
+            MaterialDeclaration.builder("LanthanumFluoride")
+                    .displayName("Lanthanum Fluoride").color(0xE8E8D8).chemicalFormula("LaF3")
+                    .meltingPointKelvin(1766).boilingPointKelvin(2600).density(5.94F).dust().build(),
+            MaterialDeclaration.builder("CeriumFluoride")
+                    .displayName("Cerium Fluoride").color(0xF0F0D0).chemicalFormula("CeF3")
+                    .meltingPointKelvin(1703).boilingPointKelvin(2500).density(6.16F).dust().build(),
+            MaterialDeclaration.builder("PraseodymiumFluoride")
+                    .displayName("Praseodymium Fluoride").color(0x98B860).chemicalFormula("PrF3")
+                    .meltingPointKelvin(1663).boilingPointKelvin(2500).density(6.27F).dust().build(),
+            MaterialDeclaration.builder("NeodymiumFluoride")
+                    .displayName("Neodymium Fluoride").color(0xC8B8E0).chemicalFormula("NdF3")
+                    .meltingPointKelvin(1653).boilingPointKelvin(2500).density(6.51F).dust().build(),
+            MaterialDeclaration.builder("SamariumFluoride")
+                    .displayName("Samarium Fluoride").color(0xE0D0A0).chemicalFormula("SmF3")
+                    .meltingPointKelvin(1573).boilingPointKelvin(2400).density(6.93F).dust().build(),
+            MaterialDeclaration.builder("EuropiumFluoride")
+                    .displayName("Europium Fluoride").color(0xE8C0D0).chemicalFormula("EuF3")
+                    .meltingPointKelvin(1543).boilingPointKelvin(2400).density(6.50F).dust().build(),
+            MaterialDeclaration.builder("GadoliniumFluoride")
+                    .displayName("Gadolinium Fluoride").color(0xD8D8E0).chemicalFormula("GdF3")
+                    .meltingPointKelvin(1503).boilingPointKelvin(2400).density(7.05F).dust().build(),
+            MaterialDeclaration.builder("TerbiumFluoride")
+                    .displayName("Terbium Fluoride").color(0xD0C098).chemicalFormula("TbF3")
+                    .meltingPointKelvin(1443).boilingPointKelvin(2400).density(7.30F).dust().build(),
+            MaterialDeclaration.builder("DysprosiumFluoride")
+                    .displayName("Dysprosium Fluoride").color(0xC0C8D0).chemicalFormula("DyF3")
+                    .meltingPointKelvin(1423).boilingPointKelvin(2400).density(7.46F).dust().build(),
+            MaterialDeclaration.builder("YttriumFluoride")
+                    .displayName("Yttrium Fluoride").color(0xE0E0D8).chemicalFormula("YF3")
+                    .meltingPointKelvin(1663).boilingPointKelvin(2500).density(4.01F).dust().build(),
+            MaterialDeclaration.builder("LutetiumFluoride")
+                    .displayName("Lutetium Fluoride").color(0xC8D0E0).chemicalFormula("LuF3")
+                    .meltingPointKelvin(1453).boilingPointKelvin(2400).density(8.33F).dust().build(),
+            MaterialDeclaration.builder("NeodymiumIronBoron")
+                    .displayName("Neodymium-Iron-Boron").color(0x808890).chemicalFormula("Nd2Fe14B")
+                    .meltingPointKelvin(1600).boilingPointKelvin(3000).density(7.50F).metal().build(),
+            MaterialDeclaration.builder("SamariumCobalt")
+                    .displayName("Samarium-Cobalt").color(0x9098A0).chemicalFormula("SmCo5")
+                    .meltingPointKelvin(1600).boilingPointKelvin(3000).density(8.30F).metal().build(),
+            MaterialDeclaration.builder("YttriumAluminiumGarnet")
+                    .displayName("Yttrium Aluminium Garnet (YAG)").color(0xF0F0E0)
+                    .chemicalFormula("Y3Al5O12")
+                    .meltingPointKelvin(2200).boilingPointKelvin(3400).density(4.55F).dust().build()
     );
 
     private RareEarthMaterials() {}

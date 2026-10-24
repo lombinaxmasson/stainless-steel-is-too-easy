@@ -257,5 +257,19 @@
   "material.gt6ce.smgdchloride": "Sm-Gd Chloride Liquor",
   "material.gt6ce.smp204extract": "Samarium P204 Extract",
   "material.gt6ce.tbdyluchloride": "Tb-Dy-Lu Chloride Liquor",
-  "material.gt6ce.tbdyp204extract": "Tb-Dy P204 Extract"
+  "material.gt6ce.tbdyp204extract": "Tb-Dy P204 Extract",
+  "material.gt6ce.lanthanumfluoride": "Lanthanum Fluoride",
+  "material.gt6ce.ceriumfluoride": "Cerium Fluoride",
+  "material.gt6ce.praseodymiumfluoride": "Praseodymium Fluoride",
+  "material.gt6ce.neodymiumfluoride": "Neodymium Fluoride",
+  "material.gt6ce.samariumfluoride": "Samarium Fluoride",
+  "material.gt6ce.europiumfluoride": "Europium Fluoride",
+  "material.gt6ce.gadoliniumfluoride": "Gadolinium Fluoride",
+  "material.gt6ce.terbiumfluoride": "Terbium Fluoride",
+  "material.gt6ce.dysprosiumfluoride": "Dysprosium Fluoride",
+  "material.gt6ce.yttriumfluoride": "Yttrium Fluoride",
+  "material.gt6ce.lutetiumfluoride": "Lutetium Fluoride",
+  "material.gt6ce.neodymiumironboron": "Neodymium-Iron-Boron",
+  "material.gt6ce.samariumcobalt": "Samarium-Cobalt",
+  "material.gt6ce.yttriumaluminiumgarnet": "Yttrium Aluminium Garnet (YAG)"
 }

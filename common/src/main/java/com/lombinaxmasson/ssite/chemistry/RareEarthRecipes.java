@@ -10,6 +10,7 @@ public final class RareEarthRecipes {
     static void add() {
         oreLeaching();
         rareEarthExtraction();
+        rareEarthMetals();
     }
 
     /** Three ore routes converge on MixedRareEarthSolution; monazite also yields Th and U. */
@@ -136,5 +137,68 @@ public final class RareEarthRecipes {
                 .out(dust("TerbiumOxide", 1), dust("DysprosiumOxide", 1), dust("HeavyRareEarthResidue", 1))
                 .fluidOut("GenLiquid_DiethylhexylPhosphoricAcid", 950, "Dirty_Water", 500)
                 .add(160, 64);
+    }
+
+    /** X2O3 + 6 HF -> 2 XF3 + 3 H2O, then 2 XF3 + 3 Ca -> 2 X + 3 CaF2. GT6CE spells lanthanum "Lanthanium". */
+    private static void rareEarthMetals() {
+        String[][] chain = {
+                {"LanthanumOxide", "LanthanumFluoride", "Lanthanium"},
+                {"CeriumOxide", "CeriumFluoride", "Cerium"},
+                {"PraseodymiumOxide", "PraseodymiumFluoride", "Praseodymium"},
+                {"NeodymiumOxide", "NeodymiumFluoride", "Neodymium"},
+                {"SamariumOxide", "SamariumFluoride", "Samarium"},
+                {"EuropiumOxide", "EuropiumFluoride", "Europium"},
+                {"GadoliniumOxide", "GadoliniumFluoride", "Gadolinium"},
+                {"TerbiumOxide", "TerbiumFluoride", "Terbium"},
+                {"DysprosiumOxide", "DysprosiumFluoride", "Dysprosium"},
+                {"YttriumOxide", "YttriumFluoride", "Yttrium"},
+                {"LutetiumOxide", "LutetiumFluoride", "Lutetium"}
+        };
+        for (String[] e : chain) {
+            if (e[0].equals("CeriumOxide")) continue;
+            row("gt.recipe.calciner", "rare-earth/fluoride-" + e[0])
+                    .in(dust(e[0], 1))
+                    .out(dust(e[1], 2))
+                    .fluidIn("GenGas_HydrogenFluoride", 6000)
+                    .fluidOut("DistW", 3000)
+                    .add(160, 64);
+        }
+
+        // CeO2 is tetravalent: 4 CeO2 + 12 HF -> 4 CeF3 + 6 H2O + O2. The basic machine input
+        // tank holds 8000 mB per slot, so this row runs half a batch to keep HF at 6000 mB.
+        row("gt.recipe.calciner", "rare-earth/fluoride-cerium")
+                .in(dust("CeriumOxide", 2))
+                .out(dust("CeriumFluoride", 2))
+                .fluidIn("GenGas_HydrogenFluoride", 6000)
+                .fluidOut("DistW", 3000, "Oxygen", 500)
+                .add(100, 64);
+
+        for (String[] e : chain) {
+            row("gt.recipe.calciner", "rare-earth/calciothermy-" + e[1])
+                    .in(dust(e[1], 2), dust("Calcium", 3))
+                    .out(dust(e[2], 2), dust("Fluorite", 3))
+                    .add(240, 96);
+        }
+
+        row("gt.recipe.calciner", "rare-earth/ndfeb")
+                .in(dust("Neodymium", 2), dust("Iron", 14), dust("Boron", 1))
+                .out(dust("NeodymiumIronBoron", 17))
+                .add(240, 96);
+
+        row("gt.recipe.calciner", "rare-earth/smco")
+                .in(dust("Samarium", 1), dust("Cobalt", 5))
+                .out(dust("SamariumCobalt", 6))
+                .add(240, 96);
+
+        row("gt.recipe.calciner", "rare-earth/ybco")
+                .in(dust("Yttrium", 1), dust("Barium", 2), dust("Copper", 3))
+                .fluidIn("Oxygen", 7000)
+                .out(dust("YttriumBariumCuprate", 6))
+                .add(240, 96);
+
+        row("gt.recipe.calciner", "rare-earth/yag")
+                .in(dust("YttriumOxide", 3), dust("Alumina", 5))
+                .out(dust("YttriumAluminiumGarnet", 2))
+                .add(240, 64);
     }
 }

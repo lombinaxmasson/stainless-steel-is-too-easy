@@ -257,5 +257,19 @@
   "material.gt6ce.smgdchloride": "钐钆氯化液",
   "material.gt6ce.smp204extract": "钐 P204 负载相",
   "material.gt6ce.tbdyluchloride": "铽镝镥氯化液",
-  "material.gt6ce.tbdyp204extract": "铽镝 P204 负载相"
+  "material.gt6ce.tbdyp204extract": "铽镝 P204 负载相",
+  "material.gt6ce.lanthanumfluoride": "氟化镧",
+  "material.gt6ce.ceriumfluoride": "氟化铈",
+  "material.gt6ce.praseodymiumfluoride": "氟化镨",
+  "material.gt6ce.neodymiumfluoride": "氟化钕",
+  "material.gt6ce.samariumfluoride": "氟化钐",
+  "material.gt6ce.europiumfluoride": "氟化铕",
+  "material.gt6ce.gadoliniumfluoride": "氟化钆",
+  "material.gt6ce.terbiumfluoride": "氟化铽",
+  "material.gt6ce.dysprosiumfluoride": "氟化镝",
+  "material.gt6ce.yttriumfluoride": "氟化钇",
+  "material.gt6ce.lutetiumfluoride": "氟化镥",
+  "material.gt6ce.neodymiumironboron": "钕铁硼",
+  "material.gt6ce.samariumcobalt": "钐钴",
+  "material.gt6ce.yttriumaluminiumgarnet": "钇铝石榴石"
 }
