@@ -271,5 +271,14 @@
   "material.gt6ce.lutetiumfluoride": "Lutetium Fluoride",
   "material.gt6ce.neodymiumironboron": "Neodymium-Iron-Boron",
   "material.gt6ce.samariumcobalt": "Samarium-Cobalt",
-  "material.gt6ce.yttriumaluminiumgarnet": "Yttrium Aluminium Garnet (YAG)"
+  "material.gt6ce.yttriumaluminiumgarnet": "Yttrium Aluminium Garnet (YAG)",
+  "material.gt6ce.yellowcake": "Yellowcake (Ammonium Diuranate)",
+  "material.gt6ce.uranylnitratesolution": "Crude Uranyl Nitrate Solution",
+  "material.gt6ce.pureuranylnitrate": "Nuclear-Grade Uranyl Nitrate",
+  "material.gt6ce.tbpuraniumextract": "Uranium-Loaded TBP Extract",
+  "material.gt6ce.uraniumdioxide": "Uranium Dioxide",
+  "material.gt6ce.thoriumnitratesolution": "Crude Thorium Nitrate Solution",
+  "material.gt6ce.purethoriumnitrate": "Nuclear-Grade Thorium Nitrate",
+  "material.gt6ce.tbpthoriumextract": "Thorium-Loaded TBP Extract",
+  "material.gt6ce.thoriumdioxide": "Thorium Dioxide"
 }

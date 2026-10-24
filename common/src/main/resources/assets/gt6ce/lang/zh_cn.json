@@ -271,5 +271,14 @@
   "material.gt6ce.lutetiumfluoride": "氟化镥",
   "material.gt6ce.neodymiumironboron": "钕铁硼",
   "material.gt6ce.samariumcobalt": "钐钴",
-  "material.gt6ce.yttriumaluminiumgarnet": "钇铝石榴石"
+  "material.gt6ce.yttriumaluminiumgarnet": "钇铝石榴石",
+  "material.gt6ce.yellowcake": "黄饼（重铀酸铵）",
+  "material.gt6ce.uranylnitratesolution": "硝酸铀酰粗液",
+  "material.gt6ce.pureuranylnitrate": "核纯硝酸铀酰",
+  "material.gt6ce.tbpuraniumextract": "负载铀 TBP 有机相",
+  "material.gt6ce.uraniumdioxide": "二氧化铀",
+  "material.gt6ce.thoriumnitratesolution": "硝酸钍粗液",
+  "material.gt6ce.purethoriumnitrate": "核纯硝酸钍",
+  "material.gt6ce.tbpthoriumextract": "负载钍 TBP 有机相",
+  "material.gt6ce.thoriumdioxide": "二氧化钍"
 }

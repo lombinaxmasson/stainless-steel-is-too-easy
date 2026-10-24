@@ -1,7 +1,7 @@
 # 铀钍钒湿法前段与 TBP 核纯萃取详细计划
 
 > 计划 slug：`m6/uranium-thorium-tbp`
-> 状态：待实现（2026-10-24）。本文件位于 `docs/card-plans/`。前置是 [`稀土三矿开矿与直拆捷径移除`](稀土三矿开矿与直拆捷径移除详细计划.md)（提供 `UranylSulfateSolution` 与 `ThoriumConcentrate`）与 M4 [`萃取剂与润滑油基础油`](closed/萃取剂与润滑油基础油详细计划.md)（提供 `TBP`）以及 [`苯乙烯、离子交换树脂与 PMMA`](closed/苯乙烯离子交换树脂与PMMA详细计划.md)（提供 `AnionExchangeResin`）。
+> 状态：已关闭（2026-10-24）。本文件位于 `docs/card-plans/closed/`。前置是 [`稀土三矿开矿与直拆捷径移除`](稀土三矿开矿与直拆捷径移除详细计划.md)（提供 `UranylSulfateSolution` 与 `ThoriumConcentrate`）与 M4 [`萃取剂与润滑油基础油`](萃取剂与润滑油基础油详细计划.md)（提供 `TBP`）以及 [`苯乙烯、离子交换树脂与 PMMA`](苯乙烯离子交换树脂与PMMA详细计划.md)（提供 `AnionExchangeResin`）。
 > 性质：M6 第四张卡，与第 2、3 张卡并行。把沥青铀矿/晶质铀矿的氧化酸浸液用 **强碱阴离子交换树脂** 富集成黄饼，再用 **`TBP` 萃取反萃** 得到核纯硝酸铀酰与硝酸钍，最终产出 `UO2 → UF4` 与 `ThO2 → Th`，接回 GT6CE 原有的 UF6 富集与钍燃料链。
 
 ```text
@@ -52,11 +52,11 @@ close_target    = 9 种核材料注册；黄饼、TBP 铀钍萃取、UO2/UF4 与
 
 ### 2.1 铀矿氧化酸浸与树脂提黄饼
 
-1. **沥青铀矿氧化酸浸（`gt.recipe.autoclave`）**：
+1. **沥青铀矿氧化酸浸（`gt.recipe.calciner`）**：
    `2 × dust Pitchblende + GenLiquid_SulfuricAcid (2000) + GenGas_HydrogenPeroxide (1000)`
    $\rightarrow$ `GenLiquid_UranylSulfateSolution (2000) + 1 × dust ThoriumConcentrate + 1 × dust Lead`；240 ticks，64 EU/t。
-   - 说明：四价铀被过氧化氢氧化成 `UO22+` 进入硫酸液；铅以硫酸铅渣形式留下（折成 `Lead` 粉），钍并入 `ThoriumConcentrate` 走钍线。
-2. **晶质铀矿氧化酸浸（`gt.recipe.autoclave`）**：
+   - 说明：四价铀被过氧化氢氧化成 `UO22+` 进入硫酸液；铅以硫酸铅渣形式留下（折成 `Lead` 粉），钍并入 `ThoriumConcentrate` 走钍线。GT6CE 的 `autoclave` 只有 1 个流体输入槽且要求至少 2 个物品输入，两液一固的氧化浸出放不进去，因此改用 M6 第 1 张卡已经使用的 `calciner` 酸浸做法。
+2. **晶质铀矿氧化酸浸（`gt.recipe.calciner`）**：
    `2 × dust Uraninite + GenLiquid_SulfuricAcid (2000) + GenGas_HydrogenPeroxide (1000)`
    $\rightarrow$ `GenLiquid_UranylSulfateSolution (2500)`；200 ticks，64 EU/t。
    - 说明：晶质铀矿不含钍铅，单独一条，产出略高。
@@ -96,7 +96,7 @@ close_target    = 9 种核材料注册；黄饼、TBP 铀钍萃取、UO2/UF4 与
 3. **稀硝酸反萃并再生 TBP（`gt.recipe.mixer`）**：
    `GenLiquid_TbpThoriumExtract (1000) + DistW (1000)`
    $\rightarrow$ `GenLiquid_PureThoriumNitrate (2000) + GenLiquid_TributylPhosphate (950)`；160 ticks，48 EU/t。
-4. **煅烧成 `ThO2`（`gt.recipe.calciner`）**：
+4. **煅烧成 `ThO2`（`gt.recipe.drying`）**：
    `GenLiquid_PureThoriumNitrate (2000)`
    $\rightarrow$ `1 × dust ThoriumDioxide + GenGas_NitrogenDioxide (4000) + Oxygen (2000)`；200 ticks，64 EU/t。
    - 说明：`Th(NO3)4 -> ThO2 + 4 NO2 + O2`；`ThO2` 是钍燃料与钨钍电极的原料。
@@ -116,7 +116,7 @@ close_target    = 9 种核材料注册；黄饼、TBP 铀钍萃取、UO2/UF4 与
 | TBP 提铀 | 1000 TBP | 回收 950 TBP | 95% |
 | TBP 提钍 | 1000 TBP | 回收 950 TBP | 95% |
 
-- 所有 `mixer` 行最多 3 路流体输入、2 路流体输出；`autoclave` 最多 2 物品入 / 2 流体入 / 1 流体出；`calciner` 最多 3/3。
+- 所有 `mixer` 行最多 6 路流体输入、2 路流体输出；`calciner` 最多 3 物品入 / 3 物品出 / 3 流体入 / 3 流体出，且至少 2 路总输入；`drying` 最多 1 流体入 / 3 流体出，硝酸钍单液流煅烧用它。`autoclave` 实际为 2 物品入 / 1 流体入 / 1 流体出，装不下氧化浸出的两种酸，因此本卡不使用它。
 - `UF4` 之后不再新增配方，直接使用 GT6CE 的 `UF4 -> UF6 -> 离心富集` 与 `Ca + UF4 -> U_238`。
 - 钍线只做到 `Th`，不新增钍燃料棒配方；GT6CE 已有钍燃料链继续消化。
 
@@ -129,7 +129,7 @@ close_target    = 9 种核材料注册；黄饼、TBP 铀钍萃取、UO2/UF4 与
 3. **铅渣折成 `Lead` 粉**：沥青铀矿的硫酸铅渣没有对应 GT6CE 材料（没有 `LeadSulfate`），按 M5 的副产折法折成 `Lead`；若后续 M7 做铅线，可改为 `Anglesite` 或 `LeadSulfate`。
 4. **`UO2` 与 `ThO2` 是新材料**：GT6CE 只有 `Uraninite`（`UO2` 矿）与 `UF4/UF6`，没有可用的 `UO2` / `ThO2` 粉；本卡新建，用于核燃料芯块与钍金属还原。
 5. **不重写同位素分离**：`UF6` 离心富集、`U-235/U-238` 分离、钍燃料棒全部沿用 GT6CE 内置配方。
-6. **零新增机器**：全部 `autoclave` / `mixer` / `calciner`，没有新机器贴图。
+6. **零新增机器**：全部 `calciner` / `mixer` / `drying`，没有新机器贴图。氧化浸出改用 `calciner` 的原因见 2.1-1，硝酸钍煅烧改用 `drying` 的原因见第 3 节。
 
 ---
 
@@ -145,11 +145,11 @@ close_target    = 9 种核材料注册；黄饼、TBP 铀钍萃取、UO2/UF4 与
 
 ## 6. 验收标准
 
-- [ ] 9 种新材料注册成功，中英文译名齐全。
-- [ ] `Pitchblende` / `Uraninite` 氧化酸浸都能产出 `UranylSulfateSolution`；沥青铀矿额外产 `ThoriumConcentrate` 与铅渣。
-- [ ] 阴离子交换树脂吸附 + 氨水洗脱产出 `Yellowcake`，树脂不消耗、可循环。
-- [ ] 黄饼经硝酸溶解 + TBP 萃取/反萃得到核纯硝酸铀酰，TBP 回收 95%。
-- [ ] 核纯硝酸铀酰经还原煅烧得 `UO2`，再经 `HF` 得 `UF4`；`UF4` 可在 GT6CE 原有链里继续到 `UF6`。
-- [ ] 独居石钍饼经硝酸溶解 + TBP 萃取/反萃得到核纯硝酸钍，TBP 回收 95%；煅烧得 `ThO2`，钙热还原得 `Th`。
-- [ ] 所有配方注册成功，`REJECTED` 为空；双加载器 `build` 通过，NeoForge 服务端启动至 `Done` 无异常。
-- [ ] 无新增机器方块与手工贴图。
+- [x] 9 种新材料注册成功，中英文译名齐全。
+- [x] `Pitchblende` / `Uraninite` 氧化酸浸都能产出 `UranylSulfateSolution`；沥青铀矿额外产 `ThoriumConcentrate` 与铅渣。
+- [x] 阴离子交换树脂吸附 + 氨水洗脱产出 `Yellowcake`，树脂不消耗、可循环。
+- [x] 黄饼经硝酸溶解 + TBP 萃取/反萃得到核纯硝酸铀酰，TBP 回收 95%。
+- [x] 核纯硝酸铀酰经还原煅烧得 `UO2`，再经 `HF` 得 `UF4`；`UF4` 可在 GT6CE 原有链里继续到 `UF6`。
+- [x] 独居石钍饼经硝酸溶解 + TBP 萃取/反萃得到核纯硝酸钍，TBP 回收 95%；煅烧得 `ThO2`，钙热还原得 `Th`。
+- [x] 所有配方注册成功，`REJECTED` 为空；双加载器 `build` 通过，NeoForge 服务端启动至 `Done` 无异常。
+- [x] 无新增机器方块与手工贴图。
