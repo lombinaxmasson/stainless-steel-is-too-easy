@@ -317,5 +317,15 @@
   "material.gt6ce.indiumsulfatesolution": "铟反萃液",
   "material.gt6ce.crudegermaniumtetrachloride": "粗四氯化锗",
   "material.gt6ce.germaniumtetrachloride": "四氯化锗",
-  "material.gt6ce.germaniumdioxide": "二氧化锗"
+  "material.gt6ce.germaniumdioxide": "二氧化锗",
+  "material.gt6ce.leadcalcine": "铅焙砂",
+  "material.gt6ce.crudolead": "粗铅",
+  "material.gt6ce.copperdross": "铜浮渣",
+  "material.gt6ce.drossedlead": "除铜铅",
+  "material.gt6ce.softenedlead": "软化铅",
+  "material.gt6ce.sodiumarsenate": "砷酸钠",
+  "material.gt6ce.sodiumantimonate": "锑酸钠",
+  "material.gt6ce.desilveredlead": "脱银铅",
+  "material.gt6ce.silverzinccrust": "银锌壳",
+  "material.gt6ce.bismuthdross": "铋渣"
 }

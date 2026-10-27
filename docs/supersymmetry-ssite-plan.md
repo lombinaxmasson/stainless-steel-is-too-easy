@@ -279,7 +279,7 @@
 - [x] **浸出电积锌与浸出渣提铟锗**：氧化锌焙砂硫酸浸出电积得金属锌（`Zinc`）并再生硫酸；**锌浸出渣 (`ZincLeachResidue`)** 盐酸溶解后，一路经 **`TBP` 萃取**与锌置换得 **铟 (`Indium`)**，另一路经四氯化锗精馏、超纯水水解与氢还原得半导体级 **锗 (`Germanium`)**。
 
 ### 7.4 火法炼铅五步精炼与辉钼矿烟气提铼
-- [ ] **方铅矿火法五步精炼（回收 As / Sb / Bi / Ag）**：方铅矿（`Galena`）焙烧还原得粗铅（`CrudeLead`） $\rightarrow$ 除铜浮渣 $\rightarrow$ **哈里斯碱熔软化**（拆出砷酸钠与锑酸钠，还原得 **砷 `Arsenic`** 与 **锑 `Antimony`**） $\rightarrow$ **帕克斯加锌脱银**（回收 **银 `Silver`**） $\rightarrow$ **克罗尔-贝特顿钙镁脱铋**（回收 **铋 `Bismuth`**）+ 高纯 **铅 (`Lead`)**。
+- [x] **方铅矿火法五步精炼（回收 As / Sb / Bi / Ag）**：方铅矿（`Galena`）焙烧还原得粗铅（`CrudeLead`） $\rightarrow$ 除铜浮渣 $\rightarrow$ **哈里斯碱熔软化**（拆出砷酸钠与锑酸钠，还原得 **砷 `Arsenic`** 与 **锑 `Antimony`**） $\rightarrow$ **帕克斯加锌脱银**（回收 **银 `Silver`**） $\rightarrow$ **克罗尔-贝特顿钙镁脱铋**（回收 **铋 `Bismuth`**）+ 高纯 **铅 (`Lead`)**。
 - [ ] **辉钼矿焙烧烟气离子交换提铼 (`Rhenium`)**：辉钼矿（`Molybdenite`）氧化焙烧产出三氧化钼（`MolybdenumTrioxide`，氨溶氢还原得纯钼）+ **含铼烟气**；水洗吸收液经 M4 **阴离子交换树脂**吸附、氨水洗脱得高铼酸铵（`AmmoniumPerrhenate`），氢还原得超合金核心金属 **铼 (`Rhenium`)**。
 
 ---

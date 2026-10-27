@@ -18,6 +18,10 @@ public final class BaseMetalRecipes {
         zincChain();
         cadmiumThallium();
         indiumGermanium();
+        leadSmelting();
+        leadSoftening();
+        leadDesilverizing();
+        leadDebismuthizing();
     }
 
     private static void matteSmelting() {
@@ -297,6 +301,66 @@ public final class BaseMetalRecipes {
                 .out(dust("Indium", 1))
                 .fluidIn("GenLiquid_IndiumSulfateSolution", 2000)
                 .fluidOut("GenLiquid_WhiteVitriol", 2000)
+                .add(200, 64);
+    }
+
+    /** Galena first oxidises to lead calcine, then coke reduces it to crude lead. */
+    private static void leadSmelting() {
+        row("gt.recipe.calciner", "m7/galena-roast")
+                .in(dust("Galena", 2))
+                .out(dust("LeadCalcine", 2))
+                .fluidIn("Oxygen", 3000)
+                .fluidOut("GenGas_SulfurDioxide", 2000)
+                .add(240, 64);
+        row("gt.recipe.calciner", "m7/lead-reduce")
+                .in(dust("LeadCalcine", 2), dust("CoalCoke", 2))
+                .out(dust("CrudeLead", 2))
+                .fluidOut("GenGas_CarbonMonoxide", 2000)
+                .add(240, 80);
+    }
+
+    /** Sulfur skims copper as a dross; molten caustic then oxidises arsenic and antimony into sodium salts. */
+    private static void leadSoftening() {
+        row("gt.recipe.calciner", "m7/lead-copper-dross")
+                .in(dust("CrudeLead", 2), dust("Sulfur", 1))
+                .out(dust("DrossedLead", 2), dust("CopperDross", 1))
+                .add(200, 64);
+        row("gt.recipe.calciner", "m7/lead-harris")
+                .in(dust("DrossedLead", 2), dust("SodiumHydroxide", 4), dust("SodiumNitrate", 2))
+                .out(dust("SoftenedLead", 2), dust("SodiumArsenate", 1), dust("SodiumAntimonate", 1))
+                .add(240, 96);
+        row("gt.recipe.calciner", "m7/arsenate-reduce")
+                .in(dust("SodiumArsenate", 2), dust("CoalCoke", 3))
+                .out(dust("Arsenic", 2), dust("SodiumCarbonate", 3))
+                .add(200, 64);
+        row("gt.recipe.calciner", "m7/antimonate-reduce")
+                .in(dust("SodiumAntimonate", 2), dust("CoalCoke", 3))
+                .out(dust("Antimony", 2), dust("SodiumCarbonate", 3))
+                .add(200, 64);
+    }
+
+    /** Parkes: zinc takes silver into a crust that floats on the lead; the crust splits into silver and zinc. */
+    private static void leadDesilverizing() {
+        row("gt.recipe.calciner", "m7/lead-parkes")
+                .in(dust("SoftenedLead", 2), dust("Zinc", 2))
+                .out(dust("DesilveredLead", 2), dust("SilverZincCrust", 1))
+                .add(240, 80);
+        row("gt.recipe.centrifuge", "m7/silver-zinc-crust")
+                .in(dust("SilverZincCrust", 2))
+                .out(dust("Silver", 1), dust("Zinc", 2))
+                .add(200, 64);
+    }
+
+    /** Kroll-Betterton: calcium and magnesium pull bismuth into a dross that chlorine converts to metal. */
+    private static void leadDebismuthizing() {
+        row("gt.recipe.calciner", "m7/lead-kroll-betterton")
+                .in(dust("DesilveredLead", 2), dust("Calcium", 1), dust("Magnesium", 1))
+                .out(dust("Lead", 2), dust("BismuthDross", 1))
+                .add(240, 96);
+        row("gt.recipe.calciner", "m7/bismuth-dross")
+                .in(dust("BismuthDross", 2))
+                .out(dust("Bismuth", 2), dust("CalciumChloride", 1), dust("MagnesiumChloride", 1))
+                .fluidIn("GenGas_Chlorine", 1000)
                 .add(200, 64);
     }
 }

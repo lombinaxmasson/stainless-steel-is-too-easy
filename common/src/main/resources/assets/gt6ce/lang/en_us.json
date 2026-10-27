@@ -317,5 +317,15 @@
   "material.gt6ce.indiumsulfatesolution": "Indium Strip Liquor",
   "material.gt6ce.crudegermaniumtetrachloride": "Crude Germanium Tetrachloride",
   "material.gt6ce.germaniumtetrachloride": "Germanium Tetrachloride",
-  "material.gt6ce.germaniumdioxide": "Germanium Dioxide"
+  "material.gt6ce.germaniumdioxide": "Germanium Dioxide",
+  "material.gt6ce.leadcalcine": "Lead Calcine",
+  "material.gt6ce.crudolead": "Crude Lead",
+  "material.gt6ce.copperdross": "Copper Dross",
+  "material.gt6ce.drossedlead": "Copper-Free Lead",
+  "material.gt6ce.softenedlead": "Softened Lead",
+  "material.gt6ce.sodiumarsenate": "Sodium Arsenate",
+  "material.gt6ce.sodiumantimonate": "Sodium Antimonate",
+  "material.gt6ce.desilveredlead": "Desilvered Lead",
+  "material.gt6ce.silverzinccrust": "Silver-Zinc Crust",
+  "material.gt6ce.bismuthdross": "Bismuth Dross"
 }

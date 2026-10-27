@@ -131,7 +131,38 @@ public final class BaseMetalMaterials {
                     .meltingPointKelvin(238).boilingPointKelvin(356).density(1.88F).liquid().build(),
             MaterialDeclaration.builder("GermaniumDioxide")
                     .displayName("Germanium Dioxide").color(0xE0E4E8).chemicalFormula("GeO2")
-                    .meltingPointKelvin(1388).boilingPointKelvin(1473).density(4.25F).dust().build()
+                    .meltingPointKelvin(1388).boilingPointKelvin(1473).density(4.25F).dust().build(),
+            MaterialDeclaration.builder("LeadCalcine")
+                    .displayName("Lead Calcine").color(0xD8C860).chemicalFormula("PbO")
+                    .meltingPointKelvin(1163).boilingPointKelvin(1743).density(9.53F).dust().build(),
+            MaterialDeclaration.builder("CrudeLead")
+                    .displayName("Crude Lead").color(0x6A6A78)
+                    .chemicalFormula("Pb (Cu·As·Sb·Bi·Ag)")
+                    .meltingPointKelvin(600).boilingPointKelvin(2022).density(11.34F).dust().build(),
+            MaterialDeclaration.builder("CopperDross")
+                    .displayName("Copper Dross").color(0x5A4A38).chemicalFormula("Cu2S·Pb")
+                    .meltingPointKelvin(900).boilingPointKelvin(1500).density(6.00F).dust().build(),
+            MaterialDeclaration.builder("DrossedLead")
+                    .displayName("Copper-Free Lead").color(0x7A7A88).chemicalFormula("Pb (As·Sb·Bi·Ag)")
+                    .meltingPointKelvin(600).boilingPointKelvin(2022).density(11.30F).dust().build(),
+            MaterialDeclaration.builder("SoftenedLead")
+                    .displayName("Softened Lead").color(0x8A8A98).chemicalFormula("Pb (Bi·Ag)")
+                    .meltingPointKelvin(600).boilingPointKelvin(2022).density(11.30F).dust().build(),
+            MaterialDeclaration.builder("SodiumArsenate")
+                    .displayName("Sodium Arsenate").color(0xD8D8C8).chemicalFormula("Na3AsO4")
+                    .meltingPointKelvin(1000).boilingPointKelvin(1600).density(2.80F).dust().build(),
+            MaterialDeclaration.builder("SodiumAntimonate")
+                    .displayName("Sodium Antimonate").color(0xE0E0D0).chemicalFormula("NaSbO3")
+                    .meltingPointKelvin(1100).boilingPointKelvin(1700).density(4.80F).dust().build(),
+            MaterialDeclaration.builder("DesilveredLead")
+                    .displayName("Desilvered Lead").color(0x9A9AA8).chemicalFormula("Pb (Bi)")
+                    .meltingPointKelvin(600).boilingPointKelvin(2022).density(11.30F).dust().build(),
+            MaterialDeclaration.builder("SilverZincCrust")
+                    .displayName("Silver-Zinc Crust").color(0xB8B8C8).chemicalFormula("Ag·Zn·Pb")
+                    .meltingPointKelvin(700).boilingPointKelvin(1200).density(8.00F).dust().build(),
+            MaterialDeclaration.builder("BismuthDross")
+                    .displayName("Bismuth Dross").color(0xC0A8A0).chemicalFormula("Ca3Bi2·Mg3Bi2")
+                    .meltingPointKelvin(900).boilingPointKelvin(1400).density(6.50F).dust().build()
     );
 
     private BaseMetalMaterials() {}
