@@ -22,6 +22,9 @@ public final class BaseMetalRecipes {
         leadSoftening();
         leadDesilverizing();
         leadDebismuthizing();
+        molybdenumRoasting();
+        rheniumRecovery();
+        molybdenumReduction();
     }
 
     private static void matteSmelting() {
@@ -361,6 +364,56 @@ public final class BaseMetalRecipes {
                 .in(dust("BismuthDross", 2))
                 .out(dust("Bismuth", 2), dust("CalciumChloride", 1), dust("MagnesiumChloride", 1))
                 .fluidIn("GenGas_Chlorine", 1000)
+                .add(200, 64);
+    }
+
+    /** Molybdenite roasting leaves molybdenum trioxide; rhenium volatilises into the flue gas. */
+    private static void molybdenumRoasting() {
+        row("gt.recipe.calciner", "m7/moly-roast")
+                .in(dust("Molybdenite", 2))
+                .out(dust("MolybdenumTrioxide", 2))
+                .fluidIn("Oxygen", 7000)
+                .fluidOut("GenGas_SulfurDioxide", 1500, "GenGas_RheniumFlueGas", 1000)
+                .add(240, 64);
+    }
+
+    /** Water scrubbing turns Re2O7 into perrhenic acid; the weak-base resin loads and elutes it as ammonium perrhenate. */
+    private static void rheniumRecovery() {
+        row("gt.recipe.mixer", "m7/rhenium-scrub")
+                .fluidIn("GenGas_RheniumFlueGas", 1000, "DistW", 2000)
+                .fluidOut("GenLiquid_RheniumScrubSolution", 2000)
+                .add(160, 48);
+        row("gt.recipe.bath", "m7/rhenium-adsorb")
+                .in(dust("AnionExchangeResin", 1))
+                .out(dust("RheniumLoadedResin", 1))
+                .fluidIn("GenLiquid_RheniumScrubSolution", 2000)
+                .fluidOut("Dirty_Water", 2000)
+                .add(160, 32);
+        row("gt.recipe.bath", "m7/rhenium-elute")
+                .in(dust("RheniumLoadedResin", 1))
+                .out(dust("AmmoniumPerrhenate", 1), dust("AnionExchangeResin", 1))
+                .fluidIn("GenGas_Ammonia", 2000)
+                .fluidOut("Dirty_Water", 1000)
+                .add(160, 32);
+        row("gt.recipe.calciner", "m7/rhenium-reduce")
+                .in(dust("AmmoniumPerrhenate", 2))
+                .out(dust("Rhenium", 2))
+                .fluidIn("GenGas_Hydrogen", 4000)
+                .fluidOut("GenGas_Ammonia", 2000, "DistW", 4000)
+                .add(200, 64);
+    }
+
+    /** High-purity molybdenum: trioxide dissolves in ammonia and the molybdate reduces under hydrogen. */
+    private static void molybdenumReduction() {
+        row("gt.recipe.mixer", "m7/moly-dissolve")
+                .in(dust("MolybdenumTrioxide", 2))
+                .fluidIn("GenGas_Ammonia", 2000, "DistW", 2000)
+                .fluidOut("GenLiquid_AmmoniumMolybdateSolution", 2000)
+                .add(160, 48);
+        row("gt.recipe.calciner", "m7/moly-reduce")
+                .fluidIn("GenLiquid_AmmoniumMolybdateSolution", 2000, "GenGas_Hydrogen", 3000)
+                .out(dust("Molybdenum", 1))
+                .fluidOut("GenGas_Ammonia", 2000, "DistW", 4000)
                 .add(200, 64);
     }
 }

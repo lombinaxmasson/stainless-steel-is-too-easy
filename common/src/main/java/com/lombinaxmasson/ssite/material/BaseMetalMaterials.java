@@ -162,7 +162,28 @@ public final class BaseMetalMaterials {
                     .meltingPointKelvin(700).boilingPointKelvin(1200).density(8.00F).dust().build(),
             MaterialDeclaration.builder("BismuthDross")
                     .displayName("Bismuth Dross").color(0xC0A8A0).chemicalFormula("Ca3Bi2·Mg3Bi2")
-                    .meltingPointKelvin(900).boilingPointKelvin(1400).density(6.50F).dust().build()
+                    .meltingPointKelvin(900).boilingPointKelvin(1400).density(6.50F).dust().build(),
+            MaterialDeclaration.builder("MolybdenumTrioxide")
+                    .displayName("Molybdenum Trioxide").color(0xE8F0E0).chemicalFormula("MoO3")
+                    .meltingPointKelvin(1068).boilingPointKelvin(1428).density(4.70F).dust().build(),
+            MaterialDeclaration.builder("RheniumFlueGas")
+                    .displayName("Rhenium-Bearing Flue Gas").color(0xC8D8E0)
+                    .chemicalFormula("Re2O7·SO2")
+                    .meltingPointKelvin(300).boilingPointKelvin(400).density(0.0040F).gas().build(),
+            MaterialDeclaration.builder("RheniumScrubSolution")
+                    .displayName("Rhenium Scrub Solution").color(0xC0D8E8).chemicalFormula("HReO4(aq)")
+                    .meltingPointKelvin(280).boilingPointKelvin(390).density(1.30F).liquid().build(),
+            MaterialDeclaration.builder("RheniumLoadedResin")
+                    .displayName("Rhenium-Loaded Resin").color(0xA8C0A0)
+                    .chemicalFormula("R3NH+ReO4-")
+                    .meltingPointKelvin(573).density(1.15F).dust().build(),
+            MaterialDeclaration.builder("AmmoniumPerrhenate")
+                    .displayName("Ammonium Perrhenate").color(0xE8E8F0).chemicalFormula("NH4ReO4")
+                    .meltingPointKelvin(638).boilingPointKelvin(800).density(3.20F).dust().build(),
+            MaterialDeclaration.builder("AmmoniumMolybdateSolution")
+                    .displayName("Ammonium Molybdate Solution").color(0xC8E0C0)
+                    .chemicalFormula("(NH4)2MoO4(aq)")
+                    .meltingPointKelvin(280).boilingPointKelvin(390).density(1.40F).liquid().build()
     );
 
     private BaseMetalMaterials() {}

@@ -327,5 +327,11 @@
   "material.gt6ce.sodiumantimonate": "Sodium Antimonate",
   "material.gt6ce.desilveredlead": "Desilvered Lead",
   "material.gt6ce.silverzinccrust": "Silver-Zinc Crust",
-  "material.gt6ce.bismuthdross": "Bismuth Dross"
+  "material.gt6ce.bismuthdross": "Bismuth Dross",
+  "material.gt6ce.molybdenumtrioxide": "Molybdenum Trioxide",
+  "material.gt6ce.rheniumfluegas": "Rhenium-Bearing Flue Gas",
+  "material.gt6ce.rheniumscrubsolution": "Rhenium Scrub Solution",
+  "material.gt6ce.rheniumloadedresin": "Rhenium-Loaded Resin",
+  "material.gt6ce.ammoniumperrhenate": "Ammonium Perrhenate",
+  "material.gt6ce.ammoniummolybdatesolution": "Ammonium Molybdate Solution"
 }

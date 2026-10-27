@@ -327,5 +327,11 @@
   "material.gt6ce.sodiumantimonate": "锑酸钠",
   "material.gt6ce.desilveredlead": "脱银铅",
   "material.gt6ce.silverzinccrust": "银锌壳",
-  "material.gt6ce.bismuthdross": "铋渣"
+  "material.gt6ce.bismuthdross": "铋渣",
+  "material.gt6ce.molybdenumtrioxide": "三氧化钼",
+  "material.gt6ce.rheniumfluegas": "含铼烟气",
+  "material.gt6ce.rheniumscrubsolution": "铼水洗液",
+  "material.gt6ce.rheniumloadedresin": "载铼树脂",
+  "material.gt6ce.ammoniumperrhenate": "高铼酸铵",
+  "material.gt6ce.ammoniummolybdatesolution": "钼酸铵溶液"
 }
