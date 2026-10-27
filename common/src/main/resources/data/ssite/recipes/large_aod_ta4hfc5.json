@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CMC",
+    "OHA",
+    "CLC"
+  ],
+  "key": {
+    "C": {
+      "item": "ssite:large_aod_casing_ta4hfc5"
+    },
+    "M": {
+      "item": "ssite:aod_converter_ta4hfc5"
+    },
+    "O": {
+      "item": "ssite:large_aod_oxygen"
+    },
+    "A": {
+      "item": "ssite:large_aod_argon"
+    },
+    "H": {
+      "item": "ssite:large_aod_heat"
+    },
+    "L": {
+      "item": "ssite:aod_lid"
+    }
+  },
+  "result": {
+    "item": "ssite:large_aod_ta4hfc5",
+    "count": 1
+  }
+}

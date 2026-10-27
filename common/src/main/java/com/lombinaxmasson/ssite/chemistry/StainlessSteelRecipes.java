@@ -14,6 +14,7 @@ public final class StainlessSteelRecipes {
         chromium();
         ferrosilicon();
         aod();
+        largeAod();
         slag();
     }
 
@@ -79,6 +80,22 @@ public final class StainlessSteelRecipes {
                 .out(dust("StainlessSteel316L", 9), dust("AodSlag", 1))
                 .fluidIn("GenGas_Argon", 10)
                 .display(160, 64);
+    }
+
+    /** Large furnace uses piped oxygen; its argon rows consume a 1:1 O2/Ar mixture. */
+    private static void largeAod() {
+        row(SsiteMachines.LARGE_AOD_MAP, "oxygen")
+                .in(dust("CarburizedStainlessSteel", 9), dust("Ferrosilicon", 1), dust("Quicklime", 2))
+                .out(dust("StainlessSteel", 5), dust("AodSlag", 4))
+                .fluidIn("Oxygen", 40).display(400, 32);
+        row(SsiteMachines.LARGE_AOD_MAP, "argon")
+                .in(dust("CarburizedStainlessSteel", 9), dust("Ferrosilicon", 1), dust("Quicklime", 1), dust("Fluorite", 1))
+                .out(dust("StainlessSteel", 9), dust("AodSlag", 1))
+                .fluidIn("Oxygen", 10).fluidIn("GenGas_Argon", 10).display(400, 32);
+        row(SsiteMachines.LARGE_AOD_MAP, "316l")
+                .in(dust("CarburizedStainlessSteel", 8), dust("Molybdenum", 1), dust("Ferrosilicon", 1), dust("Fluorite", 1))
+                .out(dust("StainlessSteel316L", 9), dust("AodSlag", 1))
+                .fluidIn("Oxygen", 10).fluidIn("GenGas_Argon", 10).display(400, 32);
     }
 
     private static void slag() {

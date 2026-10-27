@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CMC",
+    "OHA",
+    "CLC"
+  ],
+  "key": {
+    "C": {
+      "item": "ssite:large_aod_casing_niobium_titanium"
+    },
+    "M": {
+      "item": "ssite:aod_converter_niobium_titanium"
+    },
+    "O": {
+      "item": "ssite:large_aod_oxygen"
+    },
+    "A": {
+      "item": "ssite:large_aod_argon"
+    },
+    "H": {
+      "item": "ssite:large_aod_heat"
+    },
+    "L": {
+      "item": "ssite:aod_lid"
+    }
+  },
+  "result": {
+    "item": "ssite:large_aod_niobium_titanium",
+    "count": 1
+  }
+}

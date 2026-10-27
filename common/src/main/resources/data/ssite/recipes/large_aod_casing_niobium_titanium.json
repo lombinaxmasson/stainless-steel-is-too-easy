@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PFP",
+    "FMF",
+    "PFP"
+  ],
+  "key": {
+    "P": {
+      "item": "gt6ce:plate_double_niobiumtitanium"
+    },
+    "M": {
+      "item": "gt6ce:casing_machine_niobiumtitanium"
+    },
+    "F": {
+      "item": "gt6ce:fire_bricks"
+    }
+  },
+  "result": {
+    "item": "ssite:large_aod_casing_niobium_titanium",
+    "count": 4
+  }
+}

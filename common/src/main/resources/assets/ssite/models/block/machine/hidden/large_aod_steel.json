@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "ssite:block/machine/aod_converter/steel_side"
+  },
+  "elements": []
+}

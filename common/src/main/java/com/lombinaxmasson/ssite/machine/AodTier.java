@@ -31,6 +31,10 @@ public enum AodTier {
         return "aod_converter_" + suffix;
     }
 
+    public String largeMachineType() { return "large_aod_" + suffix; }
+
+    public String largeCasing() { return "large_aod_casing_" + suffix; }
+
     public String material() {
         return material;
     }

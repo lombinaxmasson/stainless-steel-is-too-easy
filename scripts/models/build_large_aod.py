@@ -274,7 +274,7 @@ def main():
     mesh=machine();compact=mesh.export(OUT);stats=validate(mesh,compact)
     opened(mesh).export(OUT,"large_aod_open")
     ports=[dict(p,owner_cells=[sub(cell,p["normal"]) for cell in p["connection_cells"]]) for p in PORTS]
-    manifest=dict(schema_version=2,name="SSITE large AOD / art prototype 02",units="blocks",up="+Y",front="-Z",origin="(0,0,0) is on the heat-contact plane; furnace center X/Z=(0.5,0.5)",heat_footprint=[3,3],ports=ports,stats=stats,groups=list(compact),texture_filter="nearest",lid=LID,regular_column=dict(y_range=[1,3],layers=2,section="12-sided constant cross-section"),runtime_integrated=False)
+    manifest=dict(schema_version=2,name="SSITE large AOD / art prototype 02",units="blocks",up="+Y",front="-Z",origin="(0,0,0) is on the heat-contact plane; furnace center X/Z=(0.5,0.5)",heat_footprint=[3,3],ports=ports,stats=stats,groups=list(compact),texture_filter="nearest",lid=LID,regular_column=dict(y_range=[1,3],layers=2,section="12-sided constant cross-section"),runtime_integrated=True)
     (OUT/"ports.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     data=dict(meshes=compact,ports=PORTS,stats=stats,lid=LID,texture=base64.b64encode((OUT/"large_aod_atlas.png").read_bytes()).decode())
     template=(Path(__file__).with_name("large_aod_viewer.html")).read_text(encoding="utf-8")

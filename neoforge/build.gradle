@@ -37,7 +37,7 @@ neoForge {
         }
         server {
             server()
-            gameDirectory = project.file('run-server')
+            gameDirectory = project.file(providers.gradleProperty('ssiteServerDir').getOrElse('run-server'))
             programArgument '--nogui'
         }
         configureEach {

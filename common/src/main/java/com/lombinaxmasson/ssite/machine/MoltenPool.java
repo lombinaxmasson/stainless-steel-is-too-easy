@@ -9,6 +9,8 @@ import gregtech.api.addon.platform.MachineBehaviorContext;
 import gregtech.api.material.GTValues;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.core.BlockPos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,14 +158,14 @@ public abstract class MoltenPool {
 
     public boolean lidOpen(MachineBehaviorContext context) {
         BoundPart lid = lidPart(context);
-        if (lid == null) return false;
+        if (lid == null) return true;
         var partContext = lid.context();
         return partContext != null && partContext.state().getBoolean("open");
     }
 
     private static BoundPart lidPart(MachineBehaviorContext context) {
         for (BoundPart part : context.parts()) {
-            if (LID_PART.equals(part.name())) return part;
+            if (LID_PART.equals(part.name()) || LargeAodStructure.LID.equals(part.name())) return part;
         }
         return null;
     }
@@ -190,13 +192,51 @@ public abstract class MoltenPool {
         long heat = context.energy();
         if (heat <= 0) return false;
         BehaviorState state = context.state();
-        context.consume(heat);
-        long carry = state.getLong(K_HEAT_CARRY) + heat;
-        long kelvin = Math.max(1L, perKelvin);
-        state.setLong(K_TEMP, Math.min(maxK, temperature(state) + carry / kelvin));
-        state.setLong(K_HEAT_CARRY, carry % kelvin);
+        if (!context.consume(heat)) return false;
+        addHeat(state, heat, perKelvin, maxK);
         context.working(true);
         return true;
+    }
+
+    static void addHeat(BehaviorState state, long heat, long perKelvin, long maxK) {
+        long kelvin = Math.max(1L, perKelvin);
+        long carry = Math.max(0, state.getLong(K_HEAT_CARRY)) % kelvin;
+        long remainder = Math.max(0, heat) % kelvin;
+        long rise = Math.max(0, heat) / kelvin;
+        if (remainder >= kelvin - carry) { rise++; carry = remainder - (kelvin - carry); }
+        else carry += remainder;
+        long current = temperature(state);
+        state.setLong(K_TEMP, Math.min(maxK, rise > Long.MAX_VALUE - current ? Long.MAX_VALUE : current + rise));
+        state.setLong(K_HEAT_CARRY, carry);
+    }
+
+    enum Failure { NONE, MELTDOWN, EXPLOSION }
+
+    static Failure failure(long temperature, long limit, boolean open) {
+        return limit <= 0 || temperature <= limit ? Failure.NONE : open ? Failure.MELTDOWN : Failure.EXPLOSION;
+    }
+
+    /** Check before cooling or reacting: an overtemperature tick must not make one final batch. */
+    protected boolean overheat(MachineBehaviorContext context, long limit) {
+        Failure failure = failure(temperature(context), limit, lidOpen(context));
+        if (failure == Failure.NONE) return false;
+        if (context.level().isClientSide) return true;
+        List<BlockPos> positions = new ArrayList<>(failurePositions(context));
+        context.working(false);
+        for (BlockPos pos : positions) context.level().destroyBlock(pos, false);
+        context.level().destroyBlock(context.pos(), false);
+        if (failure == Failure.EXPLOSION) {
+            BlockPos pos = context.pos();
+            context.level().explode(null, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5,
+                    explosionPower(), Level.ExplosionInteraction.BLOCK);
+        }
+        return true;
+    }
+
+    protected float explosionPower() { return 2.0F; }
+
+    protected List<BlockPos> failurePositions(MachineBehaviorContext context) {
+        return context.parts().stream().map(BoundPart::pos).toList();
     }
 
     /** Loses one kelvin every 10 ticks, or every 5 with the lid open. */
@@ -225,7 +265,7 @@ public abstract class MoltenPool {
         void set(ItemStack stack);
     }
 
-    /** Melts one item from the menu slot, then from the open lid's top-feed slot. */
+    /** Already charged items keep melting after the lid closes; only new insertion needs an open lid. */
     protected boolean meltCharge(MachineBehaviorContext context, long temperature) {
         BehaviorState state = context.state();
         if (meltFrom(state, temperature, context.item(CHARGE_SLOT),
@@ -233,7 +273,7 @@ public abstract class MoltenPool {
             return true;
         }
         BoundPart lid = lidPart(context);
-        if (lid == null || lid.context() == null || lid.slots() <= 0 || !lidOpen(context)) return false;
+        if (lid == null || lid.context() == null || lid.slots() <= 0) return false;
         var lidContext = lid.context();
         return meltFrom(state, temperature, lid.item(0), stack -> lidContext.setItem(0, stack));
     }

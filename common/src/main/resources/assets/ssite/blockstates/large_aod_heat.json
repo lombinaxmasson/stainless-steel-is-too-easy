@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ssite:block/machine/hidden/large_aod_heat"
+    }
+  }
+}

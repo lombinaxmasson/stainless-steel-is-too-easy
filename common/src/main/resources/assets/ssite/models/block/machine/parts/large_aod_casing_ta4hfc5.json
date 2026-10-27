@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "ssite:block/machine/aod_converter/ta4hfc5_side"
+  }
+}

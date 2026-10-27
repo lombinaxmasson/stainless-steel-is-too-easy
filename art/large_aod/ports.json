@@ -411,5 +411,5 @@
     "layers": 2,
     "section": "12-sided constant cross-section"
   },
-  "runtime_integrated": false
+  "runtime_integrated": true
 }

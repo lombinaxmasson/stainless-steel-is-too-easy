@@ -46,6 +46,10 @@
 
 两端各有同包名的 `ArgonCrucibleBehavior` 与 `FluidBridge`，分别适配流体、方向和平台接口。它们由各自子项目编译，不能同时移入 `common/`。调整共用逻辑时，需检查两份适配实现。
 
+大型 AOD 使用 `LargeAodStructure` 和 `LargeAodCore`。浇铸控制器位于 OBJ 的 (0,1,−2)，底部九个普通结构端口以 `ENERGY_INPUT` 角色转发 HU（行为机器宿主不支持用 `HEAT_INPUT` 角色转发）；两个功能端口各自储存气体。炉盖字段 `open` 与 `lid.mode` 负责手动/红石开盖，已投料后的熔炼不受盖子开关阻断。过温由共享熔池在冷却、反应之前处理：闭盖爆炸，开盖熔毁。详见 [大型 AOD 使用说明](large-aod.md)。
+
+`compat/CrucibleFaucetSignalMixin` 是唯一涉及宿主内部方法名的兼容点：GT6CE 0.1.0 龙头读取自身红石输出，SSITE 对连接本附属炉子的龙头改读邻接信号，保留原有自动取料开关。此注入不引用 GT 实现类型，方法注入允许宿主后续移除；升级 GT 时需复测并在上游修复后移除此补丁。
+
 AOD 与 VAR 配方表中的展示行不执行熔池反应；真实反应在行为核心中执行。修改工艺数值时，要核对行为、展示行和文档是否一致。气体单位也按设备区分：AOD 每内部单位 10 mB，VAR 为 100 mB。
 
 客户端的 `ObjMesh` 将模型解析为三角形，`SmallFurnaceRenderer` 负责朝向、炉盖和电极变换，再通过两端的 `MeshSink` 写入顶点。`RenderType.entityCutout` 使用 QUADS，因此每个 OBJ 三角形必须提交为 `A,B,C,C` 四个顶点；直接连续提交三个顶点会把相邻面和动作分组错误连接，关闭背面剔除无法修复这种错接。OBJ 的原始朝向和法向保持不变。

@@ -18,7 +18,7 @@ public final class SsiteMachineClient implements BehaviorMachineClient {
 
     static {
         Set<String> types = new LinkedHashSet<>();
-        for (AodTier tier : AodTier.values()) types.add(tier.machineType());
+        for (AodTier tier : AodTier.values()) { types.add(tier.machineType()); types.add(tier.largeMachineType()); }
         types.add(VarFurnaceCore.MACHINE_TYPE);
         TYPES = Set.copyOf(types);
     }

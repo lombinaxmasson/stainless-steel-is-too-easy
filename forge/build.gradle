@@ -34,6 +34,7 @@ minecraft {
     runs {
         configureEach {
             workingDirectory project.file('run')
+            args '--mixin', 'ssite.mixins.json'
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             // GregTech ships mixins whose refmap is remapped to SRG; dev runs use official names.
@@ -134,6 +135,7 @@ tasks.named('jar', Jar).configure {
                 'Implementation-Title'  : mod_name,
                 'Implementation-Version': project.version,
                 'Implementation-Vendor' : mod_authors,
+                'MixinConfigs'          : 'ssite.mixins.json',
         ])
     }
     finalizedBy 'reobfJar'

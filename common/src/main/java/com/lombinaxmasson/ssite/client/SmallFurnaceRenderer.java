@@ -1,6 +1,7 @@
 package com.lombinaxmasson.ssite.client;
 
 import com.lombinaxmasson.ssite.machine.AodTier;
+import com.lombinaxmasson.ssite.machine.LargeAodStructure;
 import com.lombinaxmasson.ssite.machine.VarFurnaceCore;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -53,31 +54,32 @@ public final class SmallFurnaceRenderer implements BlockEntityRenderer<BlockEnti
         ObjMesh mesh = ObjMesh.load(model.mesh());
         if (mesh.groups().isEmpty()) return;
 
-        boolean open = lidOpen(level, blockEntity.getBlockPos());
+        Direction facing = blockEntity.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
+        BlockPos lidPos = model.kind() == Kind.LARGE_AOD
+                ? LargeAodStructure.world(blockEntity.getBlockPos(), facing, 0, 3, 2)
+                : blockEntity.getBlockPos().above();
+        BlockEntity lidEntity = level.getBlockEntity(lidPos);
+        boolean open = !(lidEntity instanceof PartClientView part) || part.getBoolean("open");
         float progress = animations.computeIfAbsent(blockEntity, ignored -> new Animation())
                 .advance(level.getGameTime() + partialTick, open);
 
         // The OBJ winding is already outward-facing. This pass consumes QUADS, so draw()
         // expands each source triangle to a complete four-vertex primitive.
         VertexConsumer buffer = buffers.getBuffer(RenderType.entityCutout(model.texture()));
-        Direction facing = blockEntity.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
 
         poseStack.pushPose();
         poseStack.translate(0.5D, 0.0D, 0.5D);
         poseStack.mulPose(Axis.YP.rotationDegrees(-yaw(facing)));
         poseStack.translate(-0.5D, 0.0D, -0.5D);
+        if (model.kind() == Kind.LARGE_AOD) poseStack.translate(0, -1, 2);
         for (ObjMesh.Group group : mesh.groups()) {
+            if (model.kind() == Kind.LARGE_AOD && group.name().equals("bath") && view.getLong("pool.amount") <= 0) continue;
             poseStack.pushPose();
             poseGroup(poseStack, group.name(), model.kind(), progress);
             draw(poseStack, buffer, group, packedLight);
             poseStack.popPose();
         }
         poseStack.popPose();
-    }
-
-    private static boolean lidOpen(Level level, BlockPos pos) {
-        BlockEntity above = level.getBlockEntity(pos.above());
-        return above instanceof PartClientView part && part.getBoolean("open");
     }
 
     /** The OBJ front is -Z, which is the north-facing blockstate rotation of 0 degrees. */
@@ -92,6 +94,12 @@ public final class SmallFurnaceRenderer implements BlockEntityRenderer<BlockEnti
 
     private static void poseGroup(PoseStack poseStack, String group, Kind kind, float progress) {
         if ("lid".equals(group)) {
+            if (kind == Kind.LARGE_AOD) {
+                poseStack.translate(.5, 5.1, 1.84);
+                poseStack.mulPose(Axis.XP.rotationDegrees(progress * 105));
+                poseStack.translate(-.5, -5.1, -1.84);
+                return;
+            }
             poseStack.translate(LID_PIVOT_X, LID_PIVOT_Y, LID_PIVOT_Z);
             poseStack.mulPose(Axis.XP.rotationDegrees(lidAngle(kind, progress)));
             poseStack.translate(-LID_PIVOT_X, -LID_PIVOT_Y, -LID_PIVOT_Z);
@@ -153,11 +161,14 @@ public final class SmallFurnaceRenderer implements BlockEntityRenderer<BlockEnti
     }
 
     private enum Kind {
-        AOD, VAR
+        AOD, VAR, LARGE_AOD
     }
 
     private record FurnaceModel(Kind kind, String mesh, ResourceLocation texture) {
         private static FurnaceModel of(String machineType) {
+            AodTier large = LargeAodStructure.tier(machineType);
+            if (large != null) return new FurnaceModel(Kind.LARGE_AOD, "/assets/ssite/obj/large_aod.obj",
+                    texture("large_aod/" + large.suffix()));
             if (VarFurnaceCore.MACHINE_TYPE.equals(machineType)) {
                 return new FurnaceModel(Kind.VAR, "/assets/ssite/obj/var.obj", texture("var"));
             }
@@ -169,6 +180,10 @@ public final class SmallFurnaceRenderer implements BlockEntityRenderer<BlockEnti
         private static ResourceLocation texture(String path) {
             return ResourceLocation.tryBuild("ssite", "textures/machine/" + path + ".png");
         }
+    }
+
+    @Override public boolean shouldRenderOffScreen(BlockEntity entity) {
+        return entity instanceof BehaviorMachineClientView view && LargeAodStructure.tier(view.machineType()) != null;
     }
 
     /** Client-only easing state; a machine loaded for the first time snaps to its current pose. */

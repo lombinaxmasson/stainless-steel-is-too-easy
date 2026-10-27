@@ -17,13 +17,15 @@ public final class SsiteBehaviorMachines implements BehaviorMachineContributor {
     @Override
     public Set<String> machineTypes() {
         Set<String> types = new LinkedHashSet<>();
-        for (AodTier tier : AodTier.values()) types.add(tier.machineType());
+        for (AodTier tier : AodTier.values()) { types.add(tier.machineType()); types.add(tier.largeMachineType()); }
         types.add(VarFurnaceCore.MACHINE_TYPE);
         return types;
     }
 
     @Override
     public MachineBehavior create(String machineType) {
+        AodTier large = LargeAodStructure.tier(machineType);
+        if (large != null) return new ArgonCrucibleBehavior(new LargeAodCore(large));
         if (VarFurnaceCore.MACHINE_TYPE.equals(machineType)) return new ArgonCrucibleBehavior(VarFurnaceCore.INSTANCE);
         AodTier tier = AodTier.byMachineType(machineType);
         if (tier == null) throw new IllegalArgumentException("Unknown AOD machine type: " + machineType);

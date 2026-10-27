@@ -32,10 +32,10 @@ public final class SmallFurnaceRenderTests {
 
     public static void main(String[] args) throws Exception {
         int groups = 0;
-        for (String kind : new String[]{"aod", "var"}) {
+        for (String kind : new String[]{"aod", "var", "large_aod"}) {
             ObjMesh mesh = ObjMesh.load("/assets/ssite/obj/" + kind + ".obj");
             check(!mesh.groups().isEmpty(), kind + " model must load");
-            Object modelKind = KIND.getEnumConstants()["aod".equals(kind) ? 0 : 1];
+            Object modelKind = KIND.getEnumConstants()["aod".equals(kind) ? 0 : "var".equals(kind) ? 1 : 2];
             for (float yaw : new float[]{0, 90, 180, 270}) {
                 for (float progress : new float[]{0, .15F, .3F, .45F, .6F, .8F, 1}) {
                     RecordingSink sink = new RecordingSink();
@@ -45,6 +45,7 @@ public final class SmallFurnaceRenderTests {
                         stack.translate(.5, 0, .5);
                         stack.mulPose(Axis.YP.rotationDegrees(-yaw));
                         stack.translate(-.5, 0, -.5);
+                        if (kind.equals("large_aod")) stack.translate(0, -1, 2);
                         POSE_GROUP.invoke(null, stack, group.name(), modelKind, progress);
                         int start = sink.vertices.size();
                         DRAW.invoke(renderer, stack, null, group, LIGHT);
@@ -54,10 +55,32 @@ public final class SmallFurnaceRenderTests {
                     }
                 }
             }
-            verifyContacts(mesh);
+            if (kind.equals("large_aod")) verifyLargeContacts(mesh);
+            else verifyContacts(mesh);
         }
         System.out.println("SmallFurnaceRenderTests: " + groups
-                + " group/pose checks passed; both models, four facings, seven animation poses, five contact faces.");
+                + " group/pose checks passed; three models, four facings, seven animation poses, aligned contact faces.");
+    }
+
+    private static void verifyLargeContacts(ObjMesh mesh) {
+        for (String name : new String[]{"heat_contact", "port_oxygen", "port_argon", "port_casting"}) {
+            var group = mesh.groups().stream().filter(g -> g.name().equals(name)).findFirst().orElseThrow();
+            float[] data = group.triangles();
+            int axis = name.equals("heat_contact") ? 1 : name.equals("port_casting") ? 2 : 0;
+            float plane = axis == 1 ? 0 : axis == 2 ? -2 : 3;
+            Vector3f outward = axis == 1 ? new Vector3f(0,-1,0) : axis == 2 ? new Vector3f(0,0,-1) : new Vector3f(1,0,0);
+            float total = 0;
+            for (int i=0; i<data.length; i+=24) {
+                if (Math.abs(data[i+axis]-plane)>1E-5 || Math.abs(data[i+8+axis]-plane)>1E-5 || Math.abs(data[i+16+axis]-plane)>1E-5) continue;
+                Vector3f a = new Vector3f(data[i],data[i+1],data[i+2]);
+                Vector3f b = new Vector3f(data[i+8],data[i+9],data[i+10]);
+                Vector3f c = new Vector3f(data[i+16],data[i+17],data[i+18]);
+                Vector3f cross = b.sub(a).cross(c.sub(a));
+                check(cross.dot(outward)>0, name+": port faces outward");
+                total += cross.length() * .5F;
+            }
+            near(total, axis == 1 ? 9 : 1, name+": full world-aligned contact plane");
+        }
     }
 
     private static void verifyGroup(ObjMesh.Group group, PoseStack stack, List<Vertex> vertices) {

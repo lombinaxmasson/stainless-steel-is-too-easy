@@ -18,6 +18,7 @@ import java.util.Set;
 /** The hinged lid above an AOD converter or VAR furnace. Its saved {@code open} flag gates top charging and gas retention. */
 public final class SsiteLidPart implements LayoutPartContributor {
     private static final String OPEN = "open";
+    private static final String MODE = "lid.mode";
 
     @Override
     public String addonId() {
@@ -26,45 +27,79 @@ public final class SsiteLidPart implements LayoutPartContributor {
 
     @Override
     public Set<String> partNames() {
-        return Set.of(MoltenPool.LID_PART);
+        return Set.of(MoltenPool.LID_PART, LargeAodStructure.LID, LargeAodStructure.ARGON, LargeAodStructure.OXYGEN);
     }
 
     @Override
     public PartBehavior create(String partName) {
-        if (!MoltenPool.LID_PART.equals(partName)) {
+        if (LargeAodStructure.ARGON.equals(partName) || LargeAodStructure.OXYGEN.equals(partName))
+            return ArgonCrucibleBehavior.gasPort(partName);
+        if (!MoltenPool.LID_PART.equals(partName) && !LargeAodStructure.LID.equals(partName)) {
             throw new IllegalArgumentException("Unknown AOD part: " + partName);
         }
         return new LidBehavior();
     }
 
     public static final class LidBehavior implements PartBehavior {
+        @Override public void tick(PartContext context) {
+            int mode = context.state().getInt(MODE);
+            if (mode != 0) setOpen(context, redstoneOpen(mode, context.level().hasNeighborSignal(context.pos()), false));
+        }
+
+        static boolean redstoneOpen(int mode, boolean signal, boolean manualOpen) {
+            return mode == 1 ? signal : mode == 2 ? !signal : manualOpen;
+        }
+
         /** Only what the furnace below can melt; an unbound lid takes nothing, so its one slot cannot jam. */
         @Override
         public boolean canInsert(PartContext context, int slot, ItemStack stack) {
-            return context.state().getBoolean(OPEN)
+            return slot == 0 && context.state().getBoolean(OPEN)
                     && context.controller() instanceof MoltenPool.Holder holder
                     && holder.pool().isCharge(stack);
         }
 
         @Override
         public boolean canExtract(PartContext context, int slot) {
-            return context.state().getBoolean(OPEN);
+            return context.state().getBoolean(OPEN) && (!context.name().equals(LargeAodStructure.LID) || slot == 1);
         }
 
         @Override
         public boolean onUse(PartContext context, Player player, InteractionHand hand, PartHit hit) {
-            boolean open = !context.state().getBoolean(OPEN);
+            if (player.isShiftKeyDown()) {
+                int mode = (context.state().getInt(MODE) + 1) % 3;
+                context.state().setInt(MODE, mode);
+                tick(context);
+                player.displayClientMessage(Component.translatable("ssite.aod.lid.mode." + mode), true);
+                return true;
+            }
+            ItemStack held = player.getItemInHand(hand);
+            if (!held.isEmpty() && canInsert(context, 0, held)) {
+                ItemStack stored = context.item(0);
+                if (stored.isEmpty()) {
+                    context.setItem(0, held.copy());
+                    player.setItemInHand(hand, ItemStack.EMPTY);
+                }
+                return true;
+            }
+            int mode = context.state().getInt(MODE);
+            if (mode == 0) setOpen(context, !context.state().getBoolean(OPEN));
+            else player.displayClientMessage(Component.translatable("ssite.aod.lid.mode." + mode), true);
+            return true;
+        }
+
+        private static void setOpen(PartContext context, boolean open) {
+            if (context.state().getBoolean(OPEN) == open) return;
             context.state().setBoolean(OPEN, open);
             context.level().playSound(null, context.pos(),
                     open ? SoundEvents.IRON_TRAPDOOR_OPEN : SoundEvents.IRON_TRAPDOOR_CLOSE,
                     SoundSource.BLOCKS, 0.7F, open ? 1.1F : 0.9F);
-            return true;
         }
 
         @Override
         public List<Component> describe(PartContext context) {
             return List.of(Component.translatable(
-                    context.state().getBoolean(OPEN) ? "ssite.aod.lid.open" : "ssite.aod.lid.closed"));
+                    context.state().getBoolean(OPEN) ? "ssite.aod.lid.open" : "ssite.aod.lid.closed"),
+                    Component.translatable("ssite.aod.lid.mode." + context.state().getInt(MODE)));
         }
     }
 }

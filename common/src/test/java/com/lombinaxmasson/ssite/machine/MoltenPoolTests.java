@@ -24,7 +24,87 @@ public final class MoltenPoolTests {
         aodDoesNotDrainArgonWhileWarmingUp();
         varSpongeAndAlloys();
         unformedCrucibleStillCoolsAndVents();
-        System.out.println("MoltenPoolTests: all 7 checks passed.");
+        overtemperatureAndResidualHeat();
+        redstoneOnlyMovesTheLid();
+        largeGasNeedsOxygen();
+        largeLayoutMatchesPorts();
+        System.out.println("MoltenPoolTests: all 11 checks passed.");
+    }
+
+    private static void overtemperatureAndResidualHeat() {
+        for (boolean open : new boolean[]{false, true}) {
+            check(MoltenPool.failure(4800, 4800, open) == MoltenPool.Failure.NONE, "safe at threshold");
+            check(MoltenPool.failure(4801, 4800, open) == (open ? MoltenPool.Failure.MELTDOWN : MoltenPool.Failure.EXPLOSION),
+                    "overtemperature follows actual lid state");
+        }
+        State state = new State();
+        state.setLong(MoltenPool.K_TEMP, 4800);
+        MoltenPool.addHeat(state, 128, 128, Long.MAX_VALUE);
+        check(state.getLong(MoltenPool.K_TEMP) == 4801, "VAR heat is not clamped to its failure limit");
+        MoltenPool.addHeat(state, Long.MAX_VALUE, 1, Long.MAX_VALUE);
+        check(state.getLong(MoltenPool.K_TEMP) == Long.MAX_VALUE, "heat cannot wrap to a cold temperature");
+        State carry = new State();
+        MoltenPool.addHeat(carry, 127, 128, Long.MAX_VALUE);
+        check(MoltenPool.temperature(carry) == 293, "fractional HU retained");
+        MoltenPool.addHeat(carry, 1, 128, Long.MAX_VALUE);
+        check(MoltenPool.temperature(carry) == 294, "retained HU becomes heat");
+        State melt = new State();
+        melt.setLong("pool.titanium_sponge", U);
+        melt.setLong(MoltenPool.K_ARGON, 1);
+        check(VarFurnaceCore.react(melt, 2000), "warm pool reacts with no new energy or enable flag");
+        State aod = new State();
+        aod.setLong("pool.carburized", 8 * U); aod.setLong("pool.molybdenum", U);
+        aod.setLong("pool.ferrosilicon", U); aod.setLong("pool.fluorite", U); aod.setLong(MoltenPool.K_ARGON, 1);
+        check(!AodConverterCore.react(aod, 3000, true, 2896), "open lid cannot use stale argon for 316L");
+    }
+
+    private static void redstoneOnlyMovesTheLid() {
+        for (boolean signal : new boolean[]{false, true}) for (boolean manual : new boolean[]{false, true}) {
+            check(SsiteLidPart.LidBehavior.redstoneOpen(0, signal, manual) == manual, "manual mode ignores redstone");
+            check(SsiteLidPart.LidBehavior.redstoneOpen(1, signal, manual) == signal, "high signal opens");
+            check(SsiteLidPart.LidBehavior.redstoneOpen(2, signal, manual) != signal, "low signal opens");
+        }
+        for (var machine : new SsiteMachines().addonMachines())
+            if (machine instanceof gregtech.api.addon.machine.BehaviorMachine behavior)
+                check(behavior.toggles().isEmpty(), "furnaces have no processing enable switch");
+    }
+
+    private static void largeGasNeedsOxygen() {
+        State state = new State();
+        Gases gas = new Gases(10, 0);
+        LargeAodCore.supply(state, gas, false, 2000);
+        check(gas.argon == 10 && state.getLong(MoltenPool.K_ARGON) == 0, "argon alone cannot blow large AOD");
+        gas.oxygen = 10;
+        LargeAodCore.supply(state, gas, false, 1200);
+        check(gas.argon == 10 && gas.oxygen == 10, "cold furnace preserves both gases");
+        LargeAodCore.supply(state, gas, false, 2000);
+        check(gas.argon == 0 && gas.oxygen == 0 && state.getLong(MoltenPool.K_ARGON) == 1, "closed mixture consumes both gases");
+        state = new State(); gas = new Gases(100, 40);
+        LargeAodCore.supply(state, gas, true, 2000);
+        check(gas.argon == 100 && gas.oxygen == 0 && state.getLong(AodConverterCore.K_AIR) == 4, "open oxygen route preserves tank argon");
+    }
+
+    private static void largeLayoutMatchesPorts() {
+        for (AodTier tier : AodTier.values()) {
+            var layout = LargeAodStructure.layout(tier);
+            long heat = layout.cells().stream().filter(c -> c.role() == gregtech.api.multiblock.StructureRole.ENERGY_INPUT).count();
+            check(heat == 9, "all nine HU cells accept energy");
+            for (var cell : layout.cells()) if (cell.role() == gregtech.api.multiblock.StructureRole.ENERGY_INPUT)
+                check(cell.up() == -1 && Math.abs(cell.right()) <= 1 && cell.back() >= 1 && cell.back() <= 3, "3x3 sole under vessel");
+            check(layout.cells().stream().anyMatch(c -> c.right() == 2 && c.up() == 0 && c.back() == 1
+                    && c.match().toString().equals(LargeAodStructure.OXYGEN)), "O2 at model owner (2,1,-1)");
+            check(layout.cells().stream().anyMatch(c -> c.right() == 0 && c.up() == 3 && c.back() == 2
+                    && c.match().toString().equals(LargeAodStructure.LID)), "feed at model owner (0,4,0)");
+        }
+    }
+
+    private static final class Gases implements LargeAodCore.GasSupply {
+        int argon, oxygen;
+        Gases(int argon, int oxygen) { this.argon = argon; this.oxygen = oxygen; }
+        public int availableMillibuckets() { return argon; }
+        public int oxygenMillibuckets() { return oxygen; }
+        public boolean drainMillibuckets(int amount) { if (argon < amount) return false; argon -= amount; return true; }
+        public boolean drainOxygen(int amount) { if (oxygen < amount) return false; oxygen -= amount; return true; }
     }
 
     private static void everyPoolHasAnOutlet() {

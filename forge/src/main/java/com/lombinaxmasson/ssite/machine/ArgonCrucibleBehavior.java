@@ -5,6 +5,8 @@ import gregtech.api.machine.MachineFace;
 import gregtech.api.addon.platform.AddonFluids;
 import gregtech.api.addon.platform.AddonTool;
 import gregtech.api.addon.platform.MachineBehavior;
+import gregtech.api.addon.platform.PartBehavior;
+import gregtech.api.addon.platform.PartContext;
 import gregtech.api.addon.platform.MachineBehaviorContext;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -29,26 +31,57 @@ public final class ArgonCrucibleBehavior implements MachineBehavior, MoltenPool.
 
     @Override
     public void tick(MachineBehaviorContext context) {
-        pool.tick(context, new MoltenPool.ArgonTank() {
-            @Override
-            public int availableMillibuckets() {
-                FluidStack stack = context.fluid(MoltenPool.ARGON_TANK);
-                return stack.isEmpty() ? 0 : stack.getAmount();
-            }
-
-            @Override
-            public boolean drainMillibuckets(int amount) {
-                FluidStack drained = context.drain(MoltenPool.ARGON_TANK, amount, true);
-                if (drained.isEmpty() || drained.getAmount() < amount || !isArgon(drained)) return false;
-                context.drain(MoltenPool.ARGON_TANK, amount, false);
-                return true;
-            }
+        MoltenPool.ArgonTank argonTank = tank(context, LargeAodStructure.ARGON, "GenGas_Argon");
+        MoltenPool.ArgonTank oxygenTank = pool instanceof LargeAodCore
+                ? tank(context, LargeAodStructure.OXYGEN, "Oxygen") : null;
+        pool.tick(context, new LargeAodCore.GasSupply() {
+            public int availableMillibuckets() { return argonTank.availableMillibuckets(); }
+            public boolean drainMillibuckets(int amount) { return argonTank.drainMillibuckets(amount); }
+            public int oxygenMillibuckets() { return oxygenTank == null ? 0 : oxygenTank.availableMillibuckets(); }
+            public boolean drainOxygen(int amount) { return oxygenTank != null && oxygenTank.drainMillibuckets(amount); }
         });
+    }
+
+    private MoltenPool.ArgonTank tank(MachineBehaviorContext context, String name, String fluidName) {
+        PartContext found = null;
+        if (pool instanceof LargeAodCore) {
+            for (var part : context.parts()) if (part.name().equals(name)) { found = part.context(); break; }
+        }
+        PartContext port = found;
+        boolean large = pool instanceof LargeAodCore;
+        return new MoltenPool.ArgonTank() {
+            public int availableMillibuckets() {
+                if (large && port == null) return 0;
+                FluidStack stack = port == null ? context.fluid(0) : port.fluid(0);
+                return matches(stack, fluidName) ? stack.getAmount() : 0;
+            }
+            public boolean drainMillibuckets(int amount) {
+                if (amount <= 0 || availableMillibuckets() < amount) return false;
+                FluidStack drained = port == null ? context.drain(0, amount, false) : port.drain(0, amount, false);
+                return matches(drained, fluidName) && drained.getAmount() == amount;
+            }
+        };
+    }
+
+    public static PartBehavior gasPort(String name) {
+        String gas = LargeAodStructure.ARGON.equals(name) ? "GenGas_Argon" : "Oxygen";
+        return new PartBehavior() {
+            @Override public boolean canFill(PartContext context, int tank, FluidStack stack) {
+                return tank == 0 && matches(stack, gas);
+            }
+            @Override public boolean canDrain(PartContext context, int tank) { return false; }
+        };
+    }
+
+    private static boolean matches(FluidStack stack, String fluidName) {
+        FluidStack expected = AddonFluids.still(fluidName, 1);
+        return stack != null && !stack.isEmpty() && expected != null && !expected.isEmpty()
+                && stack.getFluid() == expected.getFluid();
     }
 
     @Override
     public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) {
-        return pool.canInsert(context, slot, stack);
+        return pool.lidOpen(context) && pool.canInsert(context, slot, stack);
     }
 
     /** Pipes only fill the charge slot through the open top; the menu is not the physical lid. */
@@ -56,7 +89,7 @@ public final class ArgonCrucibleBehavior implements MachineBehavior, MoltenPool.
     public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack, MachineFace face) {
         if (face != null && face != MachineFace.TOP) return false;
         if (face == MachineFace.TOP && !pool.lidOpen(context)) return false;
-        return pool.canInsert(context, slot, stack);
+        return pool.lidOpen(context) && pool.canInsert(context, slot, stack);
     }
 
     @Override
@@ -84,6 +117,7 @@ public final class ArgonCrucibleBehavior implements MachineBehavior, MoltenPool.
     @Override
     public boolean fillMoldAtSide(MachineBehaviorContext context, CrucibleMold mold,
                                   Direction crucibleSide, Direction moldSide) {
+        if (pool instanceof LargeAodCore && (!context.structureFormed() || crucibleSide != context.facing())) return false;
         return pool.pour(context, mold, moldSide.ordinal());
     }
 

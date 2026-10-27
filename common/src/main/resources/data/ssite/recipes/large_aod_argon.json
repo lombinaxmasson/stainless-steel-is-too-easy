@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PSP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gt6ce:plate_stainlesssteel"
+    },
+    "S": {
+      "item": "gt6ce:pipe_small_copper"
+    }
+  },
+  "result": {
+    "item": "ssite:large_aod_argon",
+    "count": 1
+  }
+}

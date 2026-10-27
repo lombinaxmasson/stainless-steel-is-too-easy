@@ -3,14 +3,13 @@ package com.lombinaxmasson.ssite.machine;
 import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.platform.AddonItems;
 import gregtech.api.addon.platform.BehaviorState;
-import gregtech.api.addon.platform.BoundPart;
 import gregtech.api.addon.platform.MachineBehaviorContext;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
 /** AOD converter pool: hull heat capacity and melt-down from {@link AodTier}, KU blowing and the three refining rows. */
-public final class AodConverterCore extends MoltenPool {
+public class AodConverterCore extends MoltenPool {
     /** Refining temperature from the card. */
     static final long AOD_K = 1943L;
     /** Molybdenum must melt first, so this is the floor for the 316L row. */
@@ -43,7 +42,7 @@ public final class AodConverterCore extends MoltenPool {
 
     private static volatile long molybdenumMeltK;
 
-    private final AodTier tier;
+    protected final AodTier tier;
 
     public AodConverterCore(AodTier tier) {
         super(CHARGES, POURS, SKIMS, AOD_K);
@@ -58,33 +57,39 @@ public final class AodConverterCore extends MoltenPool {
 
     @Override
     public void tick(MachineBehaviorContext context, ArgonTank argon) {
+        if (overheat(context, tier.meltDownK())) return;
         if (!formed(context)) return;
         BehaviorState state = context.state();
         boolean lidOpen = lidOpen(context);
 
-        heat(context, tier.heatPerKelvin(), Long.MAX_VALUE);
+        heat(context, heatPerKelvin(), Long.MAX_VALUE);
+        if (overheat(context, tier.meltDownK())) return;
         drift(state, lidOpen);
         long temperature = temperature(state);
 
-        long ku = context.energy("KU");
-        if (ku > 0) {
-            context.consume("KU", ku);
-            injectGas(state, ku, lidOpen, temperature, argon);
-            context.working(true);
-        }
+        supplyGas(context, argon, lidOpen, temperature);
 
         if (meltCharge(context, temperature)) context.working(true);
-        if (react(state, temperature, lidOpen, molybdenumMeltK())) context.working(true);
+        if (refine(state, temperature, lidOpen)) context.working(true);
         flushSlag(context, state);
 
         if (lidOpen || temperature < AOD_K) vent(state);
 
-        long meltDown = tier.meltDownK();
-        if (meltDown > 0 && temperature > meltDown) {
-            meltDown(context);
-            return;
+        context.progress((float) Math.min(1, Math.max(0L, temperature - AMBIENT_K) / (double) (3200L - AMBIENT_K)));
+    }
+
+    protected long heatPerKelvin() { return tier.heatPerKelvin(); }
+
+    protected void supplyGas(MachineBehaviorContext context, ArgonTank argon, boolean open, long temperature) {
+        long ku = context.energy("KU");
+        if (ku > 0 && context.consume("KU", ku)) {
+            injectGas(context.state(), ku, open, temperature, argon);
+            context.working(true);
         }
-        context.progress((float) (Math.max(0L, temperature - AMBIENT_K) / (double) (3200L - AMBIENT_K)));
+    }
+
+    protected boolean refine(BehaviorState state, long temperature, boolean open) {
+        return react(state, temperature, open, molybdenumMeltK());
     }
 
     /**
@@ -120,7 +125,7 @@ public final class AodConverterCore extends MoltenPool {
         long air = state.getLong(K_AIR);
         long argon = state.getLong(K_ARGON);
 
-        if (temperature >= molybdenumK
+        if (!lidOpen && temperature >= molybdenumK
                 && carburized >= 8L * U && molybdenum >= U
                 && ferrosilicon >= U && fluorite >= U && argon >= 1) {
             state.setLong("pool.carburized", carburized - 8L * U);
@@ -158,7 +163,7 @@ public final class AodConverterCore extends MoltenPool {
         return false;
     }
 
-    private static void flushSlag(MachineBehaviorContext context, BehaviorState state) {
+    protected void flushSlag(MachineBehaviorContext context, BehaviorState state) {
         long pending = state.getLong(K_SLAG);
         while (pending >= U) {
             int count = (int) Math.min(pending / U, 64L);
@@ -171,15 +176,6 @@ public final class AodConverterCore extends MoltenPool {
             state.setLong(K_SLAG, pending);
             if (accepted < count * U) return;
         }
-    }
-
-    private static void meltDown(MachineBehaviorContext context) {
-        if (context.level().isClientSide) return;
-        for (BoundPart part : context.parts()) {
-            var partContext = part.context();
-            if (partContext != null) context.level().destroyBlock(partContext.pos(), false);
-        }
-        context.level().destroyBlock(context.pos(), false);
     }
 
     private static long molybdenumMeltK() {

@@ -11,6 +11,7 @@ import gregtech.api.machine.MachineCasing;
 import gregtech.api.machine.MachineFace;
 import gregtech.api.machine.MachineIo;
 import gregtech.api.addon.machine.PartSlots;
+import gregtech.api.addon.machine.PartTanks;
 import gregtech.api.addon.recipe.RecipeTable;
 import gregtech.api.multiblock.StructureLayout;
 import gregtech.api.multiblock.StructureRole;
@@ -39,6 +40,11 @@ public final class SsiteMachines implements AddonMachineContributor {
     @Override
     public List<RecipeTable> recipeTables() {
         return List.of(
+                RecipeTable.machine(LARGE_AOD_MAP)
+                        .title("Large AOD Refining")
+                        .gui("ssite:textures/gui/recipes/aod")
+                        .inputItems(4).outputItems(2).minimalInputItems(1)
+                        .inputFluids(2).minimalInputFluids(1).minimalInputs(2).needsOutputs(true).build(),
                 RecipeTable.machine(AOD_MAP)
                         .title("AOD Refining")
                         .gui("ssite:textures/gui/recipes/aod")
@@ -66,7 +72,10 @@ public final class SsiteMachines implements AddonMachineContributor {
     @Override
     public List<AddonMachine> addonMachines() {
         List<AddonMachine> machines = new ArrayList<>();
-        for (AodTier tier : AodTier.values()) machines.add(converter(tier));
+        for (AodTier tier : AodTier.values()) {
+            machines.add(converter(tier));
+            machines.add(largeConverter(tier));
+        }
         machines.add(varFurnace());
         return List.copyOf(machines);
     }
@@ -75,6 +84,7 @@ public final class SsiteMachines implements AddonMachineContributor {
     public List<StructureLayout> structureLayouts() {
         List<StructureLayout> layouts = new ArrayList<>();
         for (AodTier tier : AodTier.values()) {
+            layouts.add(LargeAodStructure.layout(tier));
             layouts.add(StructureLayout.builder(tier.machineType())
                     .cell(0, 1, 0, CellMatch.part(MoltenPool.LID_PART), StructureRole.CASING)
                     .build());
@@ -87,14 +97,50 @@ public final class SsiteMachines implements AddonMachineContributor {
 
     @Override
     public List<LayoutPart> layoutParts() {
-        return List.of(LayoutPart.builder(MoltenPool.LID_PART, "Steel")
+        List<LayoutPart> parts = new ArrayList<>();
+        parts.add(lid(MoltenPool.LID_PART));
+        parts.add(lid(LargeAodStructure.LID));
+        parts.add(LayoutPart.builder(LargeAodStructure.HEAT, "Steel")
+                .hardness(8).texture("block/aod_lid").build());
+        for (AodTier tier : AodTier.values()) parts.add(LayoutPart.builder(tier.largeCasing(), tier.material())
+                .hardness(8).texture("block/machine/aod_converter/" + tier.suffix() + "_side").build());
+        for (String gas : List.of(LargeAodStructure.OXYGEN, LargeAodStructure.ARGON))
+            parts.add(LayoutPart.builder(gas, "StainlessSteel")
+                    .hardness(8).texture("block/aod_lid")
+                    .tanks(PartTanks.builder(1).capacity(32000).insert(GAS_FACES).build())
+                    .build());
+        return List.copyOf(parts);
+    }
+
+    private static LayoutPart lid(String name) {
+        return LayoutPart.builder(name, "Steel")
                 .hardness(6.0F)
                 .texture("block/aod_lid")
-                .slots(PartSlots.builder(1).insert(MachineFace.TOP).build())
+                .slots(name.equals(LargeAodStructure.LID)
+                        ? PartSlots.builder(2).insert(MachineFace.TOP).extract(MachineFace.TOP).build()
+                        : PartSlots.builder(1).insert(MachineFace.TOP).build())
                 .use()
+                .tick()
                 .field("open")
-                .build());
+                .field("lid.mode")
+                .build();
     }
+
+    private static BehaviorMachine largeConverter(AodTier tier) {
+        return BehaviorMachine.builder(MachineCasing.builder(tier.largeMachineType(), tier.material())
+                        .machineType(tier.largeMachineType()).tier(3).build())
+                // SDK requires one local face. BACK is buried against a mandatory wall; real HU enters via the sole.
+                .energy(EnergyInput.builder("HU", 2304).anyPacket().capacity(9_000_000L).faces(MachineFace.BACK).build())
+                .gui("ssite:textures/gui/aod_converter.png")
+                .recipeMaps(LARGE_AOD_MAP)
+                .clientState("structure.formed", "temp.k", "pool.amount")
+                .item(44, 26, BehaviorMachine.SlotRole.INPUT)
+                .item(116, 26, BehaviorMachine.SlotRole.OUTPUT)
+                .io(MachineIo.builder().build())
+                .build();
+    }
+
+    public static final String LARGE_AOD_MAP = "ssite.recipe.large_aod";
 
     /** Acid-proof 316L line. Temperature 0 uses the material melting point times 1.25. */
     @Override

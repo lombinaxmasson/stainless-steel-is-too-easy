@@ -6,7 +6,7 @@ import gregtech.api.addon.platform.MachineBehaviorContext;
 import java.util.List;
 
 /**
- * Water-cooled copper arc furnace. The copper wall grows its own skull, so the hull never melts;
+ * Water-cooled copper arc furnace. Its protective skull permits operation up to 4800 K;
  * sponge metals and the two hottest AOD alloys only exist as liquid inside this pool.
  */
 public final class VarFurnaceCore extends MoltenPool {
@@ -50,11 +50,13 @@ public final class VarFurnaceCore extends MoltenPool {
 
     @Override
     public void tick(MachineBehaviorContext context, ArgonTank argon) {
+        if (overheat(context, MAX_TEMP_K)) return;
         if (!formed(context)) return;
         BehaviorState state = context.state();
         boolean lidOpen = lidOpen(context);
 
-        boolean heated = heat(context, HEAT_PER_KELVIN, MAX_TEMP_K);
+        boolean heated = heat(context, HEAT_PER_KELVIN, Long.MAX_VALUE);
+        if (overheat(context, MAX_TEMP_K)) return;
         drift(state, lidOpen);
         long temperature = temperature(state);
 
