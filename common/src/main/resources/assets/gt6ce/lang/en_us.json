@@ -306,5 +306,16 @@
   "material.gt6ce.ammoniumchloroplatinate": "Ammonium Hexachloroplatinate",
   "material.gt6ce.diamminepalladiumchloride": "Diammine Palladium(II) Chloride",
   "material.gt6ce.ammoniumhexachloroiridate": "Ammonium Hexachloroiridate",
-  "material.gt6ce.rhodiumchloridesolution": "Rhodium Chloride Solution"
+  "material.gt6ce.rhodiumchloridesolution": "Rhodium Chloride Solution",
+  "material.gt6ce.zincite": "Zinc Oxide Calcine",
+  "material.gt6ce.cadmiumthalliumfluedust": "Cadmium-Thallium Flue Dust",
+  "material.gt6ce.zincleachresidue": "Zinc Leach Residue",
+  "material.gt6ce.cadmiumthalliumsolution": "Cadmium-Thallium Sulfate Solution",
+  "material.gt6ce.thalliumsulfatesolution": "Thallium Sulfate Solution",
+  "material.gt6ce.indiumchloridesolution": "Indium Chloride Solution",
+  "material.gt6ce.tbpindiumextract": "Indium-Loaded TBP Organic",
+  "material.gt6ce.indiumsulfatesolution": "Indium Strip Liquor",
+  "material.gt6ce.crudegermaniumtetrachloride": "Crude Germanium Tetrachloride",
+  "material.gt6ce.germaniumtetrachloride": "Germanium Tetrachloride",
+  "material.gt6ce.germaniumdioxide": "Germanium Dioxide"
 }

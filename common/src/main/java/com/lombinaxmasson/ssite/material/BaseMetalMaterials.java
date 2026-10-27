@@ -95,7 +95,43 @@ public final class BaseMetalMaterials {
                     .meltingPointKelvin(550).boilingPointKelvin(900).density(3.10F).dust().build(),
             MaterialDeclaration.builder("RhodiumChlorideSolution")
                     .displayName("Rhodium Chloride Solution").color(0xC86060).chemicalFormula("RhCl3(aq)")
-                    .meltingPointKelvin(280).boilingPointKelvin(400).density(1.40F).liquid().build()
+                    .meltingPointKelvin(280).boilingPointKelvin(400).density(1.40F).liquid().build(),
+            MaterialDeclaration.builder("Zincite")
+                    .displayName("Zinc Oxide Calcine").color(0xE8E8DC).chemicalFormula("ZnO")
+                    .meltingPointKelvin(2248).boilingPointKelvin(2600).density(5.61F).dust().build(),
+            MaterialDeclaration.builder("CadmiumThalliumFlueDust")
+                    .displayName("Cadmium-Thallium Flue Dust").color(0x7A6A58).chemicalFormula("Cd·Tl·Zn")
+                    .meltingPointKelvin(600).boilingPointKelvin(1400).density(6.20F).dust().build(),
+            MaterialDeclaration.builder("ZincLeachResidue")
+                    .displayName("Zinc Leach Residue").color(0x6A5A48).chemicalFormula("In·Ge·Fe")
+                    .meltingPointKelvin(900).boilingPointKelvin(1800).density(4.50F).dust().build(),
+            MaterialDeclaration.builder("CadmiumThalliumSolution")
+                    .displayName("Cadmium-Thallium Sulfate Solution").color(0xC8C0A8)
+                    .chemicalFormula("CdSO4·Tl2SO4(aq)")
+                    .meltingPointKelvin(280).boilingPointKelvin(390).density(1.45F).liquid().build(),
+            MaterialDeclaration.builder("ThalliumSulfateSolution")
+                    .displayName("Thallium Sulfate Solution").color(0xB8A8C8).chemicalFormula("Tl2SO4(aq)")
+                    .meltingPointKelvin(280).boilingPointKelvin(390).density(1.40F).liquid().build(),
+            MaterialDeclaration.builder("IndiumChlorideSolution")
+                    .displayName("Indium Chloride Solution").color(0xA8C8E8).chemicalFormula("InCl3(aq)")
+                    .meltingPointKelvin(280).boilingPointKelvin(400).density(1.40F).liquid().build(),
+            MaterialDeclaration.builder("TbpIndiumExtract")
+                    .displayName("Indium-Loaded TBP Organic").color(0xC8B890)
+                    .chemicalFormula("InCl3·TBP")
+                    .meltingPointKelvin(250).boilingPointKelvin(420).density(0.98F).liquid().build(),
+            MaterialDeclaration.builder("IndiumSulfateSolution")
+                    .displayName("Indium Strip Liquor").color(0xB8D0C8).chemicalFormula("In2(SO4)3(aq)")
+                    .meltingPointKelvin(280).boilingPointKelvin(400).density(1.42F).liquid().build(),
+            MaterialDeclaration.builder("CrudeGermaniumTetrachloride")
+                    .displayName("Crude Germanium Tetrachloride").color(0x8A8A88)
+                    .chemicalFormula("GeCl4 (impure)")
+                    .meltingPointKelvin(238).boilingPointKelvin(356).density(1.85F).liquid().build(),
+            MaterialDeclaration.builder("GermaniumTetrachloride")
+                    .displayName("Germanium Tetrachloride").color(0xA8B0B8).chemicalFormula("GeCl4")
+                    .meltingPointKelvin(238).boilingPointKelvin(356).density(1.88F).liquid().build(),
+            MaterialDeclaration.builder("GermaniumDioxide")
+                    .displayName("Germanium Dioxide").color(0xE0E4E8).chemicalFormula("GeO2")
+                    .meltingPointKelvin(1388).boilingPointKelvin(1473).density(4.25F).dust().build()
     );
 
     private BaseMetalMaterials() {}

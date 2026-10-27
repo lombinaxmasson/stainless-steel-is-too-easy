@@ -306,5 +306,16 @@
   "material.gt6ce.ammoniumchloroplatinate": "氯铂酸铵",
   "material.gt6ce.diamminepalladiumchloride": "二氨合氯化钯",
   "material.gt6ce.ammoniumhexachloroiridate": "六氯铱酸铵",
-  "material.gt6ce.rhodiumchloridesolution": "氯化铑溶液"
+  "material.gt6ce.rhodiumchloridesolution": "氯化铑溶液",
+  "material.gt6ce.zincite": "氧化锌焙砂",
+  "material.gt6ce.cadmiumthalliumfluedust": "镉铊烟尘",
+  "material.gt6ce.zincleachresidue": "锌浸出渣",
+  "material.gt6ce.cadmiumthalliumsolution": "镉铊硫酸盐溶液",
+  "material.gt6ce.thalliumsulfatesolution": "硫酸铊溶液",
+  "material.gt6ce.indiumchloridesolution": "氯化铟溶液",
+  "material.gt6ce.tbpindiumextract": "铟负载 TBP 有机相",
+  "material.gt6ce.indiumsulfatesolution": "铟反萃液",
+  "material.gt6ce.crudegermaniumtetrachloride": "粗四氯化锗",
+  "material.gt6ce.germaniumtetrachloride": "四氯化锗",
+  "material.gt6ce.germaniumdioxide": "二氧化锗"
 }

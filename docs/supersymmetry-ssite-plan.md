@@ -275,8 +275,8 @@
 - [x] **铂族六兄弟氯络合分离（Pt / Pd / Rh / Ir / Ru / Os）**：铂族精矿（及焙烧后的硫铂矿 `Cooperite`、砷铂矿 `Sperrylite`）经王水溶解为氯铂族酸母液 $\rightarrow$ 氧化蒸馏优先分离四氧化锇/四氧化钌（氢还原得 **锇 `Osmium`**、**钌 `Ruthenium`**） $\rightarrow$ 氯化铵沉淀氯铂酸铵（煅烧得海绵 **铂 `Platinum`**） $\rightarrow$ 氨络合沉淀得 **钯 `Palladium`** $\rightarrow$ 拆出六氯铱酸铵与氯铑酸铵（氢还原得 **铱 `Iridium`** 与 **铑 `Rhodium`**）。
 
 ### 7.3 湿法炼锌与镉、铊、铟、锗伴生回收
-- [ ] **闪锌矿焙烧与烟尘提镉铊**：闪锌矿（`Sphalerite`）氧化焙烧产出氧化锌焙砂（`Zincite`）+ $\text{SO}_2$ + **富镉铊烟尘 (`CadmiumThalliumFlueDust`)**；烟尘酸浸后用锌粉置换拆分出 **镉 (`Cadmium`)** 与 **铊 (`Thallium`)**。
-- [ ] **浸出电积锌与浸出渣提铟锗**：氧化锌焙砂硫酸浸出电积得金属锌（`Zinc`）并再生硫酸；**锌浸出渣 (`ZincLeachResidue`)** 盐酸溶解后，一路经 **`TBP` 萃取**与锌置换得 **铟 (`Indium`)**，另一路经四氯化锗精馏、超纯水水解与氢还原得半导体级 **锗 (`Germanium`)**。
+- [x] **闪锌矿焙烧与烟尘提镉铊**：闪锌矿（`Sphalerite`）氧化焙烧产出氧化锌焙砂（`Zincite`）+ $\text{SO}_2$ + **富镉铊烟尘 (`CadmiumThalliumFlueDust`)**；烟尘酸浸后用锌粉置换拆分出 **镉 (`Cadmium`)** 与 **铊 (`Thallium`)**。
+- [x] **浸出电积锌与浸出渣提铟锗**：氧化锌焙砂硫酸浸出电积得金属锌（`Zinc`）并再生硫酸；**锌浸出渣 (`ZincLeachResidue`)** 盐酸溶解后，一路经 **`TBP` 萃取**与锌置换得 **铟 (`Indium`)**，另一路经四氯化锗精馏、超纯水水解与氢还原得半导体级 **锗 (`Germanium`)**。
 
 ### 7.4 火法炼铅五步精炼与辉钼矿烟气提铼
 - [ ] **方铅矿火法五步精炼（回收 As / Sb / Bi / Ag）**：方铅矿（`Galena`）焙烧还原得粗铅（`CrudeLead`） $\rightarrow$ 除铜浮渣 $\rightarrow$ **哈里斯碱熔软化**（拆出砷酸钠与锑酸钠，还原得 **砷 `Arsenic`** 与 **锑 `Antimony`**） $\rightarrow$ **帕克斯加锌脱银**（回收 **银 `Silver`**） $\rightarrow$ **克罗尔-贝特顿钙镁脱铋**（回收 **铋 `Bismuth`**）+ 高纯 **铅 (`Lead`)**。

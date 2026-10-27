@@ -15,6 +15,9 @@ public final class BaseMetalRecipes {
         electrowinning();
         slimeRefining();
         platinumGroupSeparation();
+        zincChain();
+        cadmiumThallium();
+        indiumGermanium();
     }
 
     private static void matteSmelting() {
@@ -212,6 +215,88 @@ public final class BaseMetalRecipes {
                 .out(dust("Rhodium", 1))
                 .fluidIn("GenLiquid_RhodiumChlorideSolution", 500, "GenGas_Hydrogen", 750)
                 .fluidOut("GenGas_HydrochloricAcid", 1500)
+                .add(200, 64);
+    }
+
+    /** Sphalerite roast leaves zinc calcine and a cadmium-thallium flue dust. */
+    private static void zincChain() {
+        row("gt.recipe.calciner", "m7/zinc-roast")
+                .in(dust("Sphalerite", 2))
+                .out(dust("Zincite", 2), dust("CadmiumThalliumFlueDust", 1))
+                .fluidIn("Oxygen", 3000)
+                .fluidOut("GenGas_SulfurDioxide", 2000)
+                .add(240, 64);
+        // The sulfate solution reuses GT6CE's WhiteVitriol fluid; its built-in electrolyzer row makes zinc.
+        row("gt.recipe.mixer", "m7/zincite-leach")
+                .in(dust("Zincite", 1))
+                .out(dust("ZincLeachResidue", 1))
+                .fluidIn("GenLiquid_SulfuricAcid", 2000, "DistW", 1000)
+                .fluidOut("GenLiquid_WhiteVitriol", 3000)
+                .add(200, 64);
+    }
+
+    /** Zinc dust cements cadmium first, then thallium; both steps return zinc to the sulfate line. */
+    private static void cadmiumThallium() {
+        row("gt.recipe.mixer", "m7/flue-dust-leach")
+                .in(dust("CadmiumThalliumFlueDust", 2))
+                .fluidIn("GenLiquid_SulfuricAcid", 2000, "DistW", 1000)
+                .fluidOut("GenLiquid_CadmiumThalliumSolution", 2000, "Dirty_Water", 1000)
+                .add(160, 48);
+        row("gt.recipe.mixer", "m7/cadmium-cement")
+                .in(dust("Zinc", 1))
+                .out(dust("Cadmium", 1))
+                .fluidIn("GenLiquid_CadmiumThalliumSolution", 2000)
+                .fluidOut("GenLiquid_ThalliumSulfateSolution", 2000, "GenLiquid_WhiteVitriol", 1000)
+                .add(200, 64);
+        row("gt.recipe.mixer", "m7/thallium-cement")
+                .in(dust("Zinc", 1))
+                .out(dust("Thallium", 1))
+                .fluidIn("GenLiquid_ThalliumSulfateSolution", 2000)
+                .fluidOut("GenLiquid_WhiteVitriol", 2000)
+                .add(200, 64);
+    }
+
+    /** The zinc leach residue carries indium and germanium; TBP takes indium, distillation takes germanium. */
+    private static void indiumGermanium() {
+        row("gt.recipe.mixer", "m7/zinc-residue-leach")
+                .in(dust("ZincLeachResidue", 4))
+                .out(dust("Hematite", 1))
+                .fluidIn("GenGas_HydrochloricAcid", 4000)
+                .fluidOut("GenLiquid_IndiumChlorideSolution", 2000,
+                        "GenLiquid_CrudeGermaniumTetrachloride", 4000)
+                .add(240, 64);
+        row("gt.recipe.distillery", "m7/germanium-distill")
+                .in(circuit(1))
+                .keep(0)
+                .fluidIn("GenLiquid_CrudeGermaniumTetrachloride", 4000)
+                .fluidOut("GenLiquid_GermaniumTetrachloride", 3000, "Dirty_Water", 1000)
+                .add(240, 64);
+        row("gt.recipe.mixer", "m7/germanium-hydrolysis")
+                .fluidIn("GenLiquid_GermaniumTetrachloride", 2000, "GenLiquid_UltrapureWater", 4000)
+                .out(dust("GermaniumDioxide", 1))
+                .fluidOut("GenGas_HydrochloricAcid", 4000)
+                .add(200, 64);
+        row("gt.recipe.calciner", "m7/germanium-reduction")
+                .in(dust("GermaniumDioxide", 1))
+                .out(dust("Germanium", 1))
+                .fluidIn("GenGas_Hydrogen", 2000)
+                .fluidOut("DistW", 2000)
+                .add(200, 64);
+        row("gt.recipe.mixer", "m7/tbp-indium")
+                .fluidIn("GenLiquid_IndiumChlorideSolution", 2000,
+                        "GenLiquid_TributylPhosphate", 1000)
+                .fluidOut("GenLiquid_TbpIndiumExtract", 1000, "Dirty_Water", 2000)
+                .add(160, 64);
+        row("gt.recipe.mixer", "m7/indium-strip")
+                .fluidIn("GenLiquid_TbpIndiumExtract", 1000, "GenLiquid_SulfuricAcid", 1000)
+                .fluidOut("GenLiquid_IndiumSulfateSolution", 2000,
+                        "GenLiquid_TributylPhosphate", 950)
+                .add(160, 48);
+        row("gt.recipe.mixer", "m7/indium-cement")
+                .in(dust("Zinc", 1))
+                .out(dust("Indium", 1))
+                .fluidIn("GenLiquid_IndiumSulfateSolution", 2000)
+                .fluidOut("GenLiquid_WhiteVitriol", 2000)
                 .add(200, 64);
     }
 }
