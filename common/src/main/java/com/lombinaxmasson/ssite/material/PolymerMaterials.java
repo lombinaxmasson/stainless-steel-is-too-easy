@@ -1,7 +1,7 @@
 package com.lombinaxmasson.ssite.material;
 
-import com.gregtech.gregtech.api.addon.MaterialDeclaration;
-import com.gregtech.gregtech.api.addon.MaterialFormRequest;
+import gregtech.api.addon.material.MaterialDeclaration;
+import gregtech.api.addon.material.MaterialFormRequest;
 
 import java.util.ArrayList;
 import java.util.List;

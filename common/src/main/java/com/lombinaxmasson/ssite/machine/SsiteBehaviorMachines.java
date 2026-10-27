@@ -1,7 +1,7 @@
 package com.lombinaxmasson.ssite.machine;
 
-import com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor;
-import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
+import gregtech.api.addon.platform.BehaviorMachineContributor;
+import gregtech.api.addon.platform.MachineBehavior;
 import com.lombinaxmasson.ssite.SsiteAddon;
 
 import java.util.LinkedHashSet;

@@ -1,64 +1,52 @@
 {
   "variants": {
-    "facing=north,lit=false,running=false": {
-      "model": "ssite:block/machine/basic/var_furnace"
-    },
-    "facing=north,lit=false,running=true": {
-      "model": "ssite:block/machine/basic/var_furnace_running"
+    "facing=north,lit=true,running=true": {
+      "model": "ssite:block/machine/hidden/var_furnace"
     },
     "facing=north,lit=true,running=false": {
-      "model": "ssite:block/machine/basic/var_furnace_active"
+      "model": "ssite:block/machine/hidden/var_furnace"
     },
-    "facing=north,lit=true,running=true": {
-      "model": "ssite:block/machine/basic/var_furnace_active"
+    "facing=north,lit=false,running=true": {
+      "model": "ssite:block/machine/hidden/var_furnace"
     },
-    "facing=east,lit=false,running=false": {
-      "model": "ssite:block/machine/basic/var_furnace",
-      "y": 90
-    },
-    "facing=east,lit=false,running=true": {
-      "model": "ssite:block/machine/basic/var_furnace_running",
-      "y": 90
-    },
-    "facing=east,lit=true,running=false": {
-      "model": "ssite:block/machine/basic/var_furnace_active",
-      "y": 90
+    "facing=north,lit=false,running=false": {
+      "model": "ssite:block/machine/hidden/var_furnace"
     },
     "facing=east,lit=true,running=true": {
-      "model": "ssite:block/machine/basic/var_furnace_active",
-      "y": 90
+      "model": "ssite:block/machine/hidden/var_furnace"
     },
-    "facing=south,lit=false,running=false": {
-      "model": "ssite:block/machine/basic/var_furnace",
-      "y": 180
+    "facing=east,lit=true,running=false": {
+      "model": "ssite:block/machine/hidden/var_furnace"
     },
-    "facing=south,lit=false,running=true": {
-      "model": "ssite:block/machine/basic/var_furnace_running",
-      "y": 180
+    "facing=east,lit=false,running=true": {
+      "model": "ssite:block/machine/hidden/var_furnace"
     },
-    "facing=south,lit=true,running=false": {
-      "model": "ssite:block/machine/basic/var_furnace_active",
-      "y": 180
+    "facing=east,lit=false,running=false": {
+      "model": "ssite:block/machine/hidden/var_furnace"
     },
     "facing=south,lit=true,running=true": {
-      "model": "ssite:block/machine/basic/var_furnace_active",
-      "y": 180
+      "model": "ssite:block/machine/hidden/var_furnace"
     },
-    "facing=west,lit=false,running=false": {
-      "model": "ssite:block/machine/basic/var_furnace",
-      "y": 270
+    "facing=south,lit=true,running=false": {
+      "model": "ssite:block/machine/hidden/var_furnace"
     },
-    "facing=west,lit=false,running=true": {
-      "model": "ssite:block/machine/basic/var_furnace_running",
-      "y": 270
+    "facing=south,lit=false,running=true": {
+      "model": "ssite:block/machine/hidden/var_furnace"
     },
-    "facing=west,lit=true,running=false": {
-      "model": "ssite:block/machine/basic/var_furnace_active",
-      "y": 270
+    "facing=south,lit=false,running=false": {
+      "model": "ssite:block/machine/hidden/var_furnace"
     },
     "facing=west,lit=true,running=true": {
-      "model": "ssite:block/machine/basic/var_furnace_active",
-      "y": 270
+      "model": "ssite:block/machine/hidden/var_furnace"
+    },
+    "facing=west,lit=true,running=false": {
+      "model": "ssite:block/machine/hidden/var_furnace"
+    },
+    "facing=west,lit=false,running=true": {
+      "model": "ssite:block/machine/hidden/var_furnace"
+    },
+    "facing=west,lit=false,running=false": {
+      "model": "ssite:block/machine/hidden/var_furnace"
     }
   }
 }

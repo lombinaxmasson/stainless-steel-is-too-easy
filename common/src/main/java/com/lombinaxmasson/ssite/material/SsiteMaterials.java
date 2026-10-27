@@ -1,13 +1,13 @@
 package com.lombinaxmasson.ssite.material;
 
-import com.gregtech.gregtech.api.addon.AddonMaterialContributor;
-import com.gregtech.gregtech.api.addon.CrucibleReactionDeclaration;
-import com.gregtech.gregtech.api.addon.CrucibleReactionRemoval;
-import com.gregtech.gregtech.api.addon.MaterialDeclaration;
-import com.gregtech.gregtech.api.addon.MaterialFormRequest;
-import com.gregtech.gregtech.api.addon.OreVeinDeclaration;
-import com.gregtech.gregtech.api.addon.SmeltingTargetRemoval;
-import com.gregtech.gregtech.api.addon.platform.AddonItems;
+import gregtech.api.addon.material.AddonMaterialContributor;
+import gregtech.api.addon.recipe.CrucibleReactionDeclaration;
+import gregtech.api.addon.recipe.CrucibleReactionRemoval;
+import gregtech.api.addon.material.MaterialDeclaration;
+import gregtech.api.addon.material.MaterialFormRequest;
+import gregtech.api.addon.worldgen.OreVeinDeclaration;
+import gregtech.api.addon.material.SmeltingTargetRemoval;
+import gregtech.api.addon.platform.AddonItems;
 import com.lombinaxmasson.ssite.SsiteAddon;
 import net.minecraft.world.item.ItemStack;
 

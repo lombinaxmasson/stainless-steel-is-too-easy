@@ -1,9 +1,9 @@
 package com.lombinaxmasson.ssite.machine;
 
-import com.gregtech.gregtech.api.addon.platform.LayoutPartContributor;
-import com.gregtech.gregtech.api.addon.platform.PartBehavior;
-import com.gregtech.gregtech.api.addon.platform.PartContext;
-import com.gregtech.gregtech.api.addon.platform.PartHit;
+import gregtech.api.addon.platform.LayoutPartContributor;
+import gregtech.api.addon.platform.PartBehavior;
+import gregtech.api.addon.platform.PartContext;
+import gregtech.api.addon.platform.PartHit;
 import com.lombinaxmasson.ssite.SsiteAddon;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;

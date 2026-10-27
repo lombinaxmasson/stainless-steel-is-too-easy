@@ -1,6 +1,6 @@
 package com.lombinaxmasson.ssite.machine;
 
-import com.gregtech.gregtech.api.addon.GregTechMaterials;
+import gregtech.api.addon.material.GregTechMaterials;
 
 /** One AOD converter hull material. Melting point and density are read once, the first time they resolve. */
 public enum AodTier {

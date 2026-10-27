@@ -2,7 +2,9 @@
 
 GregTech 6 Community Edition 的化工向附属。打算在 SuSy 的一些内容和自己的设计上改配方、加配方，并加一些机器。
 
-这个仓库目前是空工程：Forge 1.20.1 和 NeoForge 1.21.1 都能单独编译，配方和机器还没开始写。
+目前已实现不锈钢与 AOD 转炉、水净化与卤水、石化与高分子、活泼/难熔金属与 VAR 电弧炉、稀土与铀钍提纯，以及 M7 的铜镍钴锍前段。支持 Forge 1.20.1 与 NeoForge 1.21.1，尚未对外发布。
+
+当前先整理代码、架构和文档，准备后续脑洞讨论；M7 后续卡暂不推进。实现状态和待验收事项见 [计划卡总览](docs/card-plans/总览.md)，文档入口见 [文档导航](docs/README.md)，代码分层见 [架构说明](docs/architecture.md)。
 
 模组 id 是 `ssite`，依赖的 GT6CE 模组 id 是 `gt6ce`。两边加载器共用 `common/` 里的代码。`com.lombinaxmasson.ssite.chemistry.ChemistryRecipes` 是加配方的入口。新材料用 `AddonMaterialContributor`，新机器用 `AddonMachineContributor`，类要 public、带 public 无参构造，并写进对应加载器的 `META-INF/services`。GT6CE 的类只在编译期使用，不会打进这个 jar。
 

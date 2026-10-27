@@ -23,8 +23,9 @@ sourceSets.test {
 
 apply from: rootProject.file('gradle/gt6ce-sdk.gradle')
 
-def neoSdk = resolveGt6ce("multiversion/versions/1.21.1-neoforge/build/addon-sdk/gt6ce-addon-sdk-1.21.1-neoforge-${gt6ce_version}.jar")
-def neoRuntime = resolveGt6ce("multiversion/versions/1.21.1-neoforge/build/libs/gt6ce-neoforge-1.21.1-${gt6ce_version}.jar")
+def neoApi = resolveGt6ce("api/common/build/libs/gt6ce-api-${gt6ce_api_version}.jar")
+def neoSdk = resolveGt6ce("minecraft/versions/1.21.1-neoforge/build/addon-sdk/gt6ce-addon-sdk-1.21.1-neoforge-${gt6ce_api_version}.jar")
+def neoRuntime = resolveGt6ce("minecraft/versions/1.21.1-neoforge/build/libs/gt6ce-neoforge-1.21.1-${gt6ce_version}.jar")
 
 neoForge {
     version = neoforge_version
@@ -52,8 +53,8 @@ neoForge {
 }
 
 dependencies {
-    compileOnly files(neoSdk)
-    testImplementation files(neoSdk)
+    compileOnly files(neoApi, neoSdk)
+    testImplementation files(neoApi, neoSdk)
     if (neoRuntime.isFile()) {
         runtimeOnly files(neoRuntime)
     }
@@ -63,8 +64,8 @@ tasks.register('requireSdk') {
     description = 'Fail with the SDK build command when the GregTech addon SDK jar is missing.'
     group = 'verification'
     doFirst {
-        if (!neoSdk.isFile()) {
-            throw new GradleException("Missing GregTech addon SDK:\n  ${neoSdk.absolutePath}\nBuild it from the GregTech6 checkout:\n  gradlew.bat :multiversion:1.21.1-neoforge:addonSdkJar")
+        if (!neoApi.isFile() || !neoSdk.isFile()) {
+            throw new GradleException("Missing GregTech addon API jars:\n  ${neoApi.absolutePath}\n  ${neoSdk.absolutePath}\nBuild them from the GregTech6 checkout:\n  gradlew.bat :api:assemble :minecraft:1.21.1-neoforge:addonSdkJar")
         }
     }
 }
@@ -81,13 +82,14 @@ def unitTest = tasks.register('unitTest', JavaExec) {
     jvmArgs '-ea'
 }
 tasks.named('check').configure { dependsOn unitTest }
+apply from: rootProject.file('gradle/furnace-render-test.gradle')
 
 tasks.register('requireRuntime') {
     description = 'Fail with the jar command when the dev game has no GregTech mod jar.'
     group = 'verification'
     doFirst {
         if (!neoRuntime.isFile()) {
-            throw new GradleException("Missing GregTech NeoForge jar for the dev game:\n  ${neoRuntime.absolutePath}\nBuild it from the GregTech6 checkout:\n  gradlew.bat :multiversion:1.21.1-neoforge:build\nOr copy that jar into libs/ with the same file name.")
+            throw new GradleException("Missing GregTech NeoForge jar for the dev game:\n  ${neoRuntime.absolutePath}\nBuild it from the GregTech6 checkout:\n  gradlew.bat :minecraft:1.21.1-neoforge:build\nOr copy that jar into libs/ with the same file name.")
         }
     }
 }

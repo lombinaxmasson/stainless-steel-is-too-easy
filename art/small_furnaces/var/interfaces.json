@@ -1,0 +1,343 @@
+{
+  "id": "var",
+  "title": "VAR 电弧炉",
+  "revision": 3,
+  "units": "blocks",
+  "up": "+Y",
+  "front": "-Z",
+  "base_cell": [
+    0,
+    0,
+    0
+  ],
+  "lid_cell": [
+    0,
+    1,
+    0
+  ],
+  "protected_side_y": [
+    0,
+    1
+  ],
+  "textures": {
+    "size": [
+      512,
+      256
+    ],
+    "tile_size": 64,
+    "side_texels": [
+      48,
+      64
+    ],
+    "albedo": "small_var_atlas.png",
+    "surface": "small_var_surface.png",
+    "metallic": "small_var_metallic.png",
+    "roughness": "small_var_roughness.png",
+    "specular": "small_var_specular.png",
+    "neutral": "small_var_neutral.png",
+    "tint_mask": "small_var_tint_mask.png",
+    "neutral_surface": "small_var_neutral_surface.png",
+    "surface_channels": {
+      "R": "metalness",
+      "G": "roughness",
+      "B": "emission"
+    },
+    "albedo_color_space": "sRGB",
+    "parameter_color_space": "linear"
+  },
+  "variants": [],
+  "side_contact_width": 0.75,
+  "corner_cut": 0.125,
+  "square_sole_height": 0.03125,
+  "front_mark": {
+    "source": "User-supplied GT6CE reference",
+    "variant": "arc",
+    "file": "gt6ce_var_mark.svg",
+    "surface": "texture_only"
+  },
+  "ports": [
+    {
+      "id": "bottom",
+      "label": "底面完整面",
+      "normal": [
+        0,
+        -1,
+        0
+      ],
+      "bounds": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ]
+      ],
+      "plane": "Y = 0",
+      "size": "1 × 1",
+      "area": 1,
+      "code": "底面 100%",
+      "groups": [
+        "contact_bottom"
+      ],
+      "surface": "solid",
+      "connection_cells": [
+        [
+          0,
+          -1,
+          0
+        ]
+      ],
+      "media": "VAR：EU 能源连接"
+    },
+    {
+      "id": "north",
+      "label": "北面平整连接区",
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "bounds": [
+        [
+          0.125,
+          0,
+          0
+        ],
+        [
+          0.875,
+          1,
+          0
+        ]
+      ],
+      "plane": "Z = 0",
+      "size": "宽 0.75 × 高 1",
+      "area": 0.75,
+      "code": "北面 75%",
+      "groups": [
+        "contact_north"
+      ],
+      "surface": "solid",
+      "connection_cells": [
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "media": "气管、浇铸口、仪表可贴合；此处保留几何空间，不限定该面的功能"
+    },
+    {
+      "id": "east",
+      "label": "东面平整连接区",
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "bounds": [
+        [
+          1,
+          0,
+          0.125
+        ],
+        [
+          1,
+          1,
+          0.875
+        ]
+      ],
+      "plane": "X = 1",
+      "size": "宽 0.75 × 高 1",
+      "area": 0.75,
+      "code": "东面 75%",
+      "groups": [
+        "contact_east"
+      ],
+      "surface": "solid",
+      "connection_cells": [
+        [
+          1,
+          0,
+          0
+        ]
+      ],
+      "media": "气管、浇铸口、仪表可贴合；此处保留几何空间，不限定该面的功能"
+    },
+    {
+      "id": "south",
+      "label": "南面平整连接区",
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "bounds": [
+        [
+          0.125,
+          0,
+          1
+        ],
+        [
+          0.875,
+          1,
+          1
+        ]
+      ],
+      "plane": "Z = 1",
+      "size": "宽 0.75 × 高 1",
+      "area": 0.75,
+      "code": "南面 75%",
+      "groups": [
+        "contact_south"
+      ],
+      "surface": "solid",
+      "connection_cells": [
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "media": "气管、浇铸口、仪表可贴合；此处保留几何空间，不限定该面的功能"
+    },
+    {
+      "id": "west",
+      "label": "西面平整连接区",
+      "normal": [
+        -1,
+        0,
+        0
+      ],
+      "bounds": [
+        [
+          0,
+          0,
+          0.125
+        ],
+        [
+          0,
+          1,
+          0.875
+        ]
+      ],
+      "plane": "X = 0",
+      "size": "宽 0.75 × 高 1",
+      "area": 0.75,
+      "code": "西面 75%",
+      "groups": [
+        "contact_west"
+      ],
+      "surface": "solid",
+      "connection_cells": [
+        [
+          -1,
+          0,
+          0
+        ]
+      ],
+      "media": "气管、浇铸口、仪表可贴合；此处保留几何空间，不限定该面的功能"
+    },
+    {
+      "id": "feed",
+      "label": "开盖投料通道",
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "bounds": [
+        [
+          0.34,
+          1.025,
+          0.34
+        ],
+        [
+          0.66,
+          1.025,
+          0.66
+        ]
+      ],
+      "plane": "Y = 1.025",
+      "size": "0.32 × 0.32",
+      "area": 0.1024,
+      "code": "投料",
+      "groups": [],
+      "surface": "opening",
+      "connection_cells": [],
+      "media": "开盖后中央通道畅通；VAR 先提起并移开电极"
+    }
+  ],
+  "stats": {
+    "closed_bounds": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1.98,
+        1
+      ]
+    ],
+    "open_bounds": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1.98,
+        1
+      ]
+    ],
+    "triangles": 1086,
+    "groups": 18,
+    "contact_areas": {
+      "bottom": 1.0,
+      "north": 0.75,
+      "east": 0.75,
+      "south": 0.75,
+      "west": 0.75
+    },
+    "side_width": 0.75,
+    "side_height": 1,
+    "corner_cut": 0.125,
+    "square_sole_height": 0.03125,
+    "animation_samples": 41,
+    "within_1x1x2": true,
+    "open_feed_clear": true
+  },
+  "lid": {
+    "group": "lid",
+    "pivot": [
+      0.5,
+      1.16,
+      0.86
+    ],
+    "open_angle_degrees": 90
+  },
+  "runtime_integrated": false,
+  "motion": {
+    "type": "retract_park_hinge",
+    "electrode_group": "electrode",
+    "suspension_group": "suspension",
+    "carriage_group": "carriage",
+    "lift": 0.3,
+    "park": [
+      0.32,
+      0,
+      -0.32
+    ],
+    "stages": [
+      0.3,
+      0.6,
+      1
+    ]
+  }
+}

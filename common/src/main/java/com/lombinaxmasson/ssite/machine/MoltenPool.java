@@ -1,12 +1,12 @@
 package com.lombinaxmasson.ssite.machine;
 
-import com.gregtech.gregtech.api.addon.CrucibleMold;
-import com.gregtech.gregtech.api.addon.GregTechMaterials;
-import com.gregtech.gregtech.api.addon.platform.AddonItems;
-import com.gregtech.gregtech.api.addon.platform.BehaviorState;
-import com.gregtech.gregtech.api.addon.platform.BoundPart;
-import com.gregtech.gregtech.api.addon.platform.MachineBehaviorContext;
-import com.gregtech.gregtech.api.material.GTValues;
+import gregtech.api.addon.recipe.CrucibleMold;
+import gregtech.api.addon.material.GregTechMaterials;
+import gregtech.api.addon.platform.AddonItems;
+import gregtech.api.addon.platform.BehaviorState;
+import gregtech.api.addon.platform.BoundPart;
+import gregtech.api.addon.platform.MachineBehaviorContext;
+import gregtech.api.material.GTValues;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 

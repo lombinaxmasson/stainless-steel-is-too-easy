@@ -8,6 +8,8 @@
 
 ---
 
+> 当前实现进度与验收状态统一看 [计划卡总览](card-plans/总览.md)。本文件保留设计目标与工艺背景；旧描述若与现有实现有差异，以代码和对应卡的收卡说明为准。2026-10-25 起先做项目整理与脑洞准备，暂不推进后续内容卡。
+
 ## 总体分期路线图
 
 为了避免“摊子铺太大写到一半弃坑”，整个工程拆成 **可独立交付的里程碑（Milestone）**。每个阶段做完都能直接进游戏跑通闭环：
@@ -31,8 +33,8 @@
   - [x] 确定 `addonId` 为 `ssite`，配置 `mods.toml`（Forge 1.20.1）与 `neoforge.mods.toml`（NeoForge 1.21.1），声明强制依赖 `gt6ce`（`side="BOTH"`）。
   - [x] 在 `@Mod` 构造方法中调用 `GregTechAddons.register(new GregTechAddon() { ... })`。
 - [x] **SPI 服务文件挂载 (`META-INF/services/`)**
-  - [x] `com.gregtech.gregtech.api.addon.AddonMaterialContributor`（注册新材料、形态、坩埚反应与禁用规则）
-  - [x] `com.gregtech.gregtech.api.addon.AddonMachineContributor`（注册新配方表、单方块/多方块机器、管道、气罐）
+  - [x] `gregtech.api.addon.material.AddonMaterialContributor`（注册新材料、形态、坩埚反应与禁用规则）
+  - [x] `gregtech.api.addon.machine.AddonMachineContributor`（注册新配方表、单方块/多方块机器、管道、气罐）
 - [x] **资源与语言文件结构**
   - [x] `assets/gt6ce/lang/en_us.json` 与 `zh_cn.json`（存放新增材料的 `material.gt6ce.<小写材料名>` 译名）
   - [x] `assets/ssite/lang/en_us.json` 与 `zh_cn.json`（存放自定义方块、机器、唱片物品译名）

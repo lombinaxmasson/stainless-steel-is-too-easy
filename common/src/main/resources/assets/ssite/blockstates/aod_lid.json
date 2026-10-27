@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "ssite:block/machine/hidden/aod_lid"
+    },
+    "facing=east": {
+      "model": "ssite:block/machine/hidden/aod_lid"
+    },
+    "facing=south": {
+      "model": "ssite:block/machine/hidden/aod_lid"
+    },
+    "facing=west": {
+      "model": "ssite:block/machine/hidden/aod_lid"
+    }
+  }
+}

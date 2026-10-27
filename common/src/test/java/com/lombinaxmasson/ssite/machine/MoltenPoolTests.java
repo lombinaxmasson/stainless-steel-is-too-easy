@@ -1,7 +1,7 @@
 package com.lombinaxmasson.ssite.machine;
 
-import com.gregtech.gregtech.api.addon.platform.BehaviorState;
-import com.gregtech.gregtech.api.material.GTValues;
+import gregtech.api.addon.platform.BehaviorState;
+import gregtech.api.material.GTValues;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.HashMap;

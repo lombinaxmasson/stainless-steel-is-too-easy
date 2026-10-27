@@ -1,0 +1,11 @@
+// Captures the real OBJ renderer output without starting Minecraft or creating an OpenGL context.
+def furnaceRenderTest = tasks.register('furnaceRenderTest', JavaExec) {
+    description = 'Checks furnace OBJ triangles submitted through the Minecraft QUADS vertex stream.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.client.SmallFurnaceRenderTests'
+    jvmArgs '-ea'
+}
+tasks.named('check').configure { dependsOn furnaceRenderTest }

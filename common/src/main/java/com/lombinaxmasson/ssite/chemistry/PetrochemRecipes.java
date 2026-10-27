@@ -18,6 +18,7 @@ public final class PetrochemRecipes {
         xyleneTolueneLoop();
         cFiveChain();
         cumenePhenol();
+        engineFuels();
     }
 
     // ── Card 2: crude atmospheric distillation, naphtha steam cracking, platinum reforming ──
@@ -257,5 +258,26 @@ public final class PetrochemRecipes {
                 .fluidIn("GenLiquid_Phenol", 2000, "GenLiquid_Acetone", 1000, "GenGas_HydrochloricAcid", 100)
                 .fluidOut("DistW", 1000)
                 .add(200, 48);
+    }
+
+    // ── Engine fuel rows for refinery side streams ──
+    // GT6CE already burns Petrol/Kerosine/Diesel/Fuel (448/448/448/512 RU per mB).
+    // These rows give the streams that are neither cracked nor extracted a worse-but-real outlet.
+
+    private static void engineFuels() {
+        engineFuel("pentane", "GenLiquid_Pentane", 48, 7);
+        engineFuel("c5-fraction", "GenLiquid_CFiveFraction", 48, 7);
+        engineFuel("pygas", "GenLiquid_PyrolysisGasoline", 48, 7);
+        engineFuel("raffinate", "GenLiquid_Raffinate", 56, 7);
+        engineFuel("naphtha", "GenLiquid_Naphtha", 56, 7);
+        engineFuel("reformate", "GenLiquid_Reformate", 64, 7);
+        engineFuel("c5-dimerized", "GenLiquid_DimerizedCFiveFraction", 64, 8);
+    }
+
+    private static void engineFuel(String label, String fluid, long eutPerTick, long ticks) {
+        row("gt.recipe.fuels.engine", "fuel/" + label)
+                .fluidIn(fluid, 1)
+                .fluidOut("CarbonDioxide", 1)
+                .add(ticks, -eutPerTick);
     }
 }

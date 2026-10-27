@@ -1,0 +1,139 @@
+newmtl furnace_bottom
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 51.36
+d 1
+illum 2
+map_Kd small_aod_ta4hfc5_atlas.png
+map_Ks small_aod_ta4hfc5_specular.png
+
+newmtl furnace_north
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 51.36
+d 1
+illum 2
+map_Kd small_aod_ta4hfc5_atlas.png
+map_Ks small_aod_ta4hfc5_specular.png
+
+newmtl furnace_chamfer
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 51.36
+d 1
+illum 2
+map_Kd small_aod_ta4hfc5_atlas.png
+map_Ks small_aod_ta4hfc5_specular.png
+
+newmtl furnace_dark
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 42.67
+d 1
+illum 2
+map_Kd small_aod_ta4hfc5_atlas.png
+map_Ks small_aod_ta4hfc5_specular.png
+
+newmtl furnace_west
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 51.36
+d 1
+illum 2
+map_Kd small_aod_ta4hfc5_atlas.png
+map_Ks small_aod_ta4hfc5_specular.png
+
+newmtl furnace_south
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 51.36
+d 1
+illum 2
+map_Kd small_aod_ta4hfc5_atlas.png
+map_Ks small_aod_ta4hfc5_specular.png
+
+newmtl furnace_east
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 51.36
+d 1
+illum 2
+map_Kd small_aod_ta4hfc5_atlas.png
+map_Ks small_aod_ta4hfc5_specular.png
+
+newmtl furnace_plate
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 51.36
+d 1
+illum 2
+map_Kd small_aod_ta4hfc5_atlas.png
+map_Ks small_aod_ta4hfc5_specular.png
+
+newmtl furnace_edge
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 51.36
+d 1
+illum 2
+map_Kd small_aod_ta4hfc5_atlas.png
+map_Ks small_aod_ta4hfc5_specular.png
+
+newmtl furnace_brick
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 0.56
+d 1
+illum 2
+map_Kd small_aod_ta4hfc5_atlas.png
+map_Ks small_aod_ta4hfc5_specular.png
+
+newmtl furnace_molten
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 0.00
+d 1
+illum 2
+map_Kd small_aod_ta4hfc5_atlas.png
+map_Ks small_aod_ta4hfc5_specular.png
+
+newmtl furnace_yellow
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 5.44
+d 1
+illum 2
+map_Kd small_aod_ta4hfc5_atlas.png
+map_Ks small_aod_ta4hfc5_specular.png
+
+newmtl furnace_pipe
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 280.77
+d 1
+illum 2
+map_Kd small_aod_ta4hfc5_atlas.png
+map_Ks small_aod_ta4hfc5_specular.png
+
+newmtl furnace_red
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 5.44
+d 1
+illum 2
+map_Kd small_aod_ta4hfc5_atlas.png
+map_Ks small_aod_ta4hfc5_specular.png

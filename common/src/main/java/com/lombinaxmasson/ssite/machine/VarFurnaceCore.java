@@ -1,7 +1,7 @@
 package com.lombinaxmasson.ssite.machine;
 
-import com.gregtech.gregtech.api.addon.platform.BehaviorState;
-import com.gregtech.gregtech.api.addon.platform.MachineBehaviorContext;
+import gregtech.api.addon.platform.BehaviorState;
+import gregtech.api.addon.platform.MachineBehaviorContext;
 
 import java.util.List;
 

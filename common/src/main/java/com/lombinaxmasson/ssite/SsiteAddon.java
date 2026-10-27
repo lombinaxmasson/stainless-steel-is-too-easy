@@ -1,7 +1,7 @@
 package com.lombinaxmasson.ssite;
 
-import com.gregtech.gregtech.api.addon.GregTechAddon;
-import com.gregtech.gregtech.api.addon.GregTechAddons;
+import gregtech.api.addon.GregTechAddon;
+import gregtech.api.addon.GregTechAddons;
 import com.lombinaxmasson.ssite.chemistry.ChemistryRecipes;
 
 /** Shared entry for both loaders. Call {@link #register()} from each mod constructor. */

@@ -23,8 +23,9 @@ sourceSets.test {
 
 apply from: rootProject.file('gradle/gt6ce-sdk.gradle')
 
-def forgeSdk = resolveGt6ce("multiversion/versions/1.20.1-forge/build/addon-sdk/gt6ce-addon-sdk-${minecraft_version}-forge-${gt6ce_version}.jar")
-def forgeRuntime = resolveGt6ce("multiversion/versions/1.20.1-forge/build/libs/gt6ce-${minecraft_version}-forge-${gt6ce_version}.jar")
+def forgeApi = resolveGt6ce("api/common/build/libs/gt6ce-api-${gt6ce_api_version}.jar")
+def forgeSdk = resolveGt6ce("minecraft/versions/1.20.1-forge/build/addon-sdk/gt6ce-addon-sdk-${minecraft_version}-forge-${gt6ce_api_version}.jar")
+def forgeRuntime = resolveGt6ce("minecraft/versions/1.20.1-forge/build/libs/gt6ce-${minecraft_version}-forge-${gt6ce_version}.jar")
 
 minecraft {
     mappings channel: 'official', version: minecraft_version
@@ -59,8 +60,8 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    compileOnly files(forgeSdk)
-    testImplementation files(forgeSdk)
+    compileOnly files(forgeApi, forgeSdk)
+    testImplementation files(forgeApi, forgeSdk)
     if (forgeRuntime.isFile()) {
         // The Forge release jar is SRG. flatDir lets fg.deobf remap it for the Mojang-named dev game.
         runtimeOnly fg.deobf("blank:gt6ce-${minecraft_version}-forge:${gt6ce_version}")
@@ -71,8 +72,8 @@ tasks.register('requireSdk') {
     description = 'Fail with the SDK build command when the GregTech addon SDK jar is missing.'
     group = 'verification'
     doFirst {
-        if (!forgeSdk.isFile()) {
-            throw new GradleException("Missing GregTech addon SDK:\n  ${forgeSdk.absolutePath}\nBuild it from the GregTech6 checkout:\n  gradlew.bat :multiversion:1.20.1-forge:addonSdkJar")
+        if (!forgeApi.isFile() || !forgeSdk.isFile()) {
+            throw new GradleException("Missing GregTech addon API jars:\n  ${forgeApi.absolutePath}\n  ${forgeSdk.absolutePath}\nBuild them from the GregTech6 checkout:\n  gradlew.bat :api:assemble :minecraft:1.20.1-forge:addonSdkJar")
         }
     }
 }
@@ -88,13 +89,14 @@ def unitTest = tasks.register('unitTest', JavaExec) {
     jvmArgs '-ea'
 }
 tasks.named('check').configure { dependsOn unitTest }
+apply from: rootProject.file('gradle/furnace-render-test.gradle')
 
 tasks.register('requireRuntime') {
     description = 'Fail with the distribution-jar command when the dev game has no GregTech mod jar.'
     group = 'verification'
     doFirst {
         if (!forgeRuntime.isFile()) {
-            throw new GradleException("Missing GregTech Forge jar for the dev game:\n  ${forgeRuntime.absolutePath}\nBuild it from the GregTech6 checkout:\n  gradlew.bat :multiversion:1.20.1-forge:distributionJar\nOr copy that jar into libs/ with the same file name.")
+            throw new GradleException("Missing GregTech Forge jar for the dev game:\n  ${forgeRuntime.absolutePath}\nBuild it from the GregTech6 checkout:\n  gradlew.bat :minecraft:1.20.1-forge:distributionJar\nOr copy that jar into libs/ with the same file name.")
         }
     }
 }

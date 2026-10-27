@@ -1,7 +1,7 @@
 package com.lombinaxmasson.ssite.chemistry;
 
-import com.gregtech.gregtech.api.addon.platform.AddonFluids;
-import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
+import gregtech.api.addon.platform.AddonFluids;
+import gregtech.api.addon.platform.AddonRecipes;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.fluids.FluidStack;
 

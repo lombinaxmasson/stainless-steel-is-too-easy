@@ -1,10 +1,10 @@
 package com.lombinaxmasson.ssite.machine;
 
-import com.gregtech.gregtech.api.addon.GregTechMaterials;
-import com.gregtech.gregtech.api.addon.platform.AddonItems;
-import com.gregtech.gregtech.api.addon.platform.BehaviorState;
-import com.gregtech.gregtech.api.addon.platform.BoundPart;
-import com.gregtech.gregtech.api.addon.platform.MachineBehaviorContext;
+import gregtech.api.addon.material.GregTechMaterials;
+import gregtech.api.addon.platform.AddonItems;
+import gregtech.api.addon.platform.BehaviorState;
+import gregtech.api.addon.platform.BoundPart;
+import gregtech.api.addon.platform.MachineBehaviorContext;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;

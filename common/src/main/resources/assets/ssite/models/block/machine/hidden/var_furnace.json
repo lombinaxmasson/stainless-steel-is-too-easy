@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "ssite:block/machine/var_furnace/side"
+  }
+}

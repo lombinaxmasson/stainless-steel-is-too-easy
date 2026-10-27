@@ -1,11 +1,11 @@
 package com.lombinaxmasson.ssite.machine;
 
-import com.gregtech.gregtech.api.addon.CrucibleMold;
-import com.gregtech.gregtech.api.addon.MachineFace;
-import com.gregtech.gregtech.api.addon.platform.AddonFluids;
-import com.gregtech.gregtech.api.addon.platform.AddonTool;
-import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
-import com.gregtech.gregtech.api.addon.platform.MachineBehaviorContext;
+import gregtech.api.addon.recipe.CrucibleMold;
+import gregtech.api.machine.MachineFace;
+import gregtech.api.addon.platform.AddonFluids;
+import gregtech.api.addon.platform.AddonTool;
+import gregtech.api.addon.platform.MachineBehavior;
+import gregtech.api.addon.platform.MachineBehaviorContext;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;

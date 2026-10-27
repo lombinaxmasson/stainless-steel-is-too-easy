@@ -1,64 +1,52 @@
 {
   "variants": {
-    "facing=north,lit=false,running=false": {
-      "model": "ssite:block/machine/basic/aod_converter_niobium_titanium"
-    },
-    "facing=north,lit=false,running=true": {
-      "model": "ssite:block/machine/basic/aod_converter_niobium_titanium_running"
+    "facing=north,lit=true,running=true": {
+      "model": "ssite:block/machine/hidden/aod_converter_niobium_titanium"
     },
     "facing=north,lit=true,running=false": {
-      "model": "ssite:block/machine/basic/aod_converter_niobium_titanium_active"
+      "model": "ssite:block/machine/hidden/aod_converter_niobium_titanium"
     },
-    "facing=north,lit=true,running=true": {
-      "model": "ssite:block/machine/basic/aod_converter_niobium_titanium_active"
+    "facing=north,lit=false,running=true": {
+      "model": "ssite:block/machine/hidden/aod_converter_niobium_titanium"
     },
-    "facing=east,lit=false,running=false": {
-      "model": "ssite:block/machine/basic/aod_converter_niobium_titanium",
-      "y": 90
-    },
-    "facing=east,lit=false,running=true": {
-      "model": "ssite:block/machine/basic/aod_converter_niobium_titanium_running",
-      "y": 90
-    },
-    "facing=east,lit=true,running=false": {
-      "model": "ssite:block/machine/basic/aod_converter_niobium_titanium_active",
-      "y": 90
+    "facing=north,lit=false,running=false": {
+      "model": "ssite:block/machine/hidden/aod_converter_niobium_titanium"
     },
     "facing=east,lit=true,running=true": {
-      "model": "ssite:block/machine/basic/aod_converter_niobium_titanium_active",
-      "y": 90
+      "model": "ssite:block/machine/hidden/aod_converter_niobium_titanium"
     },
-    "facing=south,lit=false,running=false": {
-      "model": "ssite:block/machine/basic/aod_converter_niobium_titanium",
-      "y": 180
+    "facing=east,lit=true,running=false": {
+      "model": "ssite:block/machine/hidden/aod_converter_niobium_titanium"
     },
-    "facing=south,lit=false,running=true": {
-      "model": "ssite:block/machine/basic/aod_converter_niobium_titanium_running",
-      "y": 180
+    "facing=east,lit=false,running=true": {
+      "model": "ssite:block/machine/hidden/aod_converter_niobium_titanium"
     },
-    "facing=south,lit=true,running=false": {
-      "model": "ssite:block/machine/basic/aod_converter_niobium_titanium_active",
-      "y": 180
+    "facing=east,lit=false,running=false": {
+      "model": "ssite:block/machine/hidden/aod_converter_niobium_titanium"
     },
     "facing=south,lit=true,running=true": {
-      "model": "ssite:block/machine/basic/aod_converter_niobium_titanium_active",
-      "y": 180
+      "model": "ssite:block/machine/hidden/aod_converter_niobium_titanium"
     },
-    "facing=west,lit=false,running=false": {
-      "model": "ssite:block/machine/basic/aod_converter_niobium_titanium",
-      "y": 270
+    "facing=south,lit=true,running=false": {
+      "model": "ssite:block/machine/hidden/aod_converter_niobium_titanium"
     },
-    "facing=west,lit=false,running=true": {
-      "model": "ssite:block/machine/basic/aod_converter_niobium_titanium_running",
-      "y": 270
+    "facing=south,lit=false,running=true": {
+      "model": "ssite:block/machine/hidden/aod_converter_niobium_titanium"
     },
-    "facing=west,lit=true,running=false": {
-      "model": "ssite:block/machine/basic/aod_converter_niobium_titanium_active",
-      "y": 270
+    "facing=south,lit=false,running=false": {
+      "model": "ssite:block/machine/hidden/aod_converter_niobium_titanium"
     },
     "facing=west,lit=true,running=true": {
-      "model": "ssite:block/machine/basic/aod_converter_niobium_titanium_active",
-      "y": 270
+      "model": "ssite:block/machine/hidden/aod_converter_niobium_titanium"
+    },
+    "facing=west,lit=true,running=false": {
+      "model": "ssite:block/machine/hidden/aod_converter_niobium_titanium"
+    },
+    "facing=west,lit=false,running=true": {
+      "model": "ssite:block/machine/hidden/aod_converter_niobium_titanium"
+    },
+    "facing=west,lit=false,running=false": {
+      "model": "ssite:block/machine/hidden/aod_converter_niobium_titanium"
     }
   }
 }

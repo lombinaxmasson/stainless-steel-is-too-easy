@@ -1,0 +1,456 @@
+{
+  "id": "aod",
+  "title": "小型 AOD",
+  "revision": 3,
+  "units": "blocks",
+  "up": "+Y",
+  "front": "-Z",
+  "base_cell": [
+    0,
+    0,
+    0
+  ],
+  "lid_cell": [
+    0,
+    1,
+    0
+  ],
+  "protected_side_y": [
+    0,
+    1
+  ],
+  "textures": {
+    "size": [
+      512,
+      256
+    ],
+    "tile_size": 64,
+    "side_texels": [
+      48,
+      64
+    ],
+    "albedo": "small_aod_atlas.png",
+    "surface": "small_aod_surface.png",
+    "metallic": "small_aod_metallic.png",
+    "roughness": "small_aod_roughness.png",
+    "specular": "small_aod_specular.png",
+    "neutral": "small_aod_neutral.png",
+    "tint_mask": "small_aod_tint_mask.png",
+    "neutral_surface": "small_aod_neutral_surface.png",
+    "surface_channels": {
+      "R": "metalness",
+      "G": "roughness",
+      "B": "emission"
+    },
+    "albedo_color_space": "sRGB",
+    "parameter_color_space": "linear"
+  },
+  "variants": [
+    {
+      "id": "steel",
+      "material": "Steel",
+      "label": "钢",
+      "color": "#828282",
+      "metalness": 0.8,
+      "roughness": 0.46,
+      "source_file": "CompoundMaterials.java",
+      "source_field": "Steel",
+      "tint_rgb": [
+        147,
+        147,
+        147
+      ],
+      "machine_type": "aod_converter_steel",
+      "path": "variants/steel",
+      "model": "small_aod_steel.obj",
+      "open_model": "small_aod_steel_open.obj"
+    },
+    {
+      "id": "stainless_steel",
+      "material": "StainlessSteel",
+      "label": "不锈钢",
+      "color": "#C8C8DC",
+      "metalness": 0.85,
+      "roughness": 0.28,
+      "source_file": "CompoundMaterials.java",
+      "source_field": "StainlessSteel",
+      "tint_rgb": [
+        196,
+        196,
+        210
+      ],
+      "machine_type": "aod_converter_stainless_steel",
+      "path": "variants/stainless_steel",
+      "model": "small_aod_stainless_steel.obj",
+      "open_model": "small_aod_stainless_steel_open.obj"
+    },
+    {
+      "id": "niobium_titanium",
+      "material": "NiobiumTitanium",
+      "label": "铌钛合金",
+      "color": "#1D1D29",
+      "metalness": 0.65,
+      "roughness": 0.65,
+      "source_file": "CompoundMaterials.java",
+      "source_field": "NiobiumTitanium",
+      "tint_rgb": [
+        76,
+        76,
+        85
+      ],
+      "machine_type": "aod_converter_niobium_titanium",
+      "path": "variants/niobium_titanium",
+      "model": "small_aod_niobium_titanium.obj",
+      "open_model": "small_aod_niobium_titanium_open.obj"
+    },
+    {
+      "id": "tungsten_steel",
+      "material": "TungstenSteel",
+      "label": "钨钢",
+      "color": "#6464A0",
+      "metalness": 0.82,
+      "roughness": 0.4,
+      "source_file": "CompoundMaterials.java",
+      "source_field": "Tungstensteel",
+      "tint_rgb": [
+        126,
+        126,
+        168
+      ],
+      "machine_type": "aod_converter_tungsten_steel",
+      "path": "variants/tungsten_steel",
+      "model": "small_aod_tungsten_steel.obj",
+      "open_model": "small_aod_tungsten_steel_open.obj"
+    },
+    {
+      "id": "tungsten",
+      "material": "Tungsten",
+      "label": "钨",
+      "color": "#323232",
+      "metalness": 0.9,
+      "roughness": 0.48,
+      "source_file": "ElementMaterials.java",
+      "source_field": "Tungsten",
+      "tint_rgb": [
+        91,
+        91,
+        91
+      ],
+      "machine_type": "aod_converter_tungsten",
+      "path": "variants/tungsten",
+      "model": "small_aod_tungsten.obj",
+      "open_model": "small_aod_tungsten_open.obj"
+    },
+    {
+      "id": "ta4hfc5",
+      "material": "TantalumHafniumCarbide",
+      "label": "碳化钽铪 · Ta₄HfC₅",
+      "color": "#208020",
+      "metalness": 0.65,
+      "roughness": 0.44,
+      "source_file": "CompoundMaterials.java",
+      "source_field": "TantalumHafniumCarbide",
+      "tint_rgb": [
+        78,
+        146,
+        78
+      ],
+      "machine_type": "aod_converter_ta4hfc5",
+      "path": "variants/ta4hfc5",
+      "model": "small_aod_ta4hfc5.obj",
+      "open_model": "small_aod_ta4hfc5_open.obj"
+    }
+  ],
+  "side_contact_width": 0.75,
+  "corner_cut": 0.125,
+  "square_sole_height": 0.03125,
+  "front_mark": {
+    "source": "User-supplied GT6CE reference",
+    "variant": "heat",
+    "file": "gt6ce_aod_mark.svg",
+    "surface": "texture_only"
+  },
+  "ports": [
+    {
+      "id": "bottom",
+      "label": "底面完整面",
+      "normal": [
+        0,
+        -1,
+        0
+      ],
+      "bounds": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ]
+      ],
+      "plane": "Y = 0",
+      "size": "1 × 1",
+      "area": 1,
+      "code": "底面 100%",
+      "groups": [
+        "contact_bottom"
+      ],
+      "surface": "solid",
+      "connection_cells": [
+        [
+          0,
+          -1,
+          0
+        ]
+      ],
+      "media": "AOD：HU / KU 能源连接"
+    },
+    {
+      "id": "north",
+      "label": "北面平整连接区",
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "bounds": [
+        [
+          0.125,
+          0,
+          0
+        ],
+        [
+          0.875,
+          1,
+          0
+        ]
+      ],
+      "plane": "Z = 0",
+      "size": "宽 0.75 × 高 1",
+      "area": 0.75,
+      "code": "北面 75%",
+      "groups": [
+        "contact_north"
+      ],
+      "surface": "solid",
+      "connection_cells": [
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "media": "气管、浇铸口、仪表可贴合；此处保留几何空间，不限定该面的功能"
+    },
+    {
+      "id": "east",
+      "label": "东面平整连接区",
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "bounds": [
+        [
+          1,
+          0,
+          0.125
+        ],
+        [
+          1,
+          1,
+          0.875
+        ]
+      ],
+      "plane": "X = 1",
+      "size": "宽 0.75 × 高 1",
+      "area": 0.75,
+      "code": "东面 75%",
+      "groups": [
+        "contact_east"
+      ],
+      "surface": "solid",
+      "connection_cells": [
+        [
+          1,
+          0,
+          0
+        ]
+      ],
+      "media": "气管、浇铸口、仪表可贴合；此处保留几何空间，不限定该面的功能"
+    },
+    {
+      "id": "south",
+      "label": "南面平整连接区",
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "bounds": [
+        [
+          0.125,
+          0,
+          1
+        ],
+        [
+          0.875,
+          1,
+          1
+        ]
+      ],
+      "plane": "Z = 1",
+      "size": "宽 0.75 × 高 1",
+      "area": 0.75,
+      "code": "南面 75%",
+      "groups": [
+        "contact_south"
+      ],
+      "surface": "solid",
+      "connection_cells": [
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "media": "气管、浇铸口、仪表可贴合；此处保留几何空间，不限定该面的功能"
+    },
+    {
+      "id": "west",
+      "label": "西面平整连接区",
+      "normal": [
+        -1,
+        0,
+        0
+      ],
+      "bounds": [
+        [
+          0,
+          0,
+          0.125
+        ],
+        [
+          0,
+          1,
+          0.875
+        ]
+      ],
+      "plane": "X = 0",
+      "size": "宽 0.75 × 高 1",
+      "area": 0.75,
+      "code": "西面 75%",
+      "groups": [
+        "contact_west"
+      ],
+      "surface": "solid",
+      "connection_cells": [
+        [
+          -1,
+          0,
+          0
+        ]
+      ],
+      "media": "气管、浇铸口、仪表可贴合；此处保留几何空间，不限定该面的功能"
+    },
+    {
+      "id": "feed",
+      "label": "开盖投料通道",
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "bounds": [
+        [
+          0.34,
+          1.025,
+          0.34
+        ],
+        [
+          0.66,
+          1.025,
+          0.66
+        ]
+      ],
+      "plane": "Y = 1.025",
+      "size": "0.32 × 0.32",
+      "area": 0.1024,
+      "code": "投料",
+      "groups": [],
+      "surface": "opening",
+      "connection_cells": [],
+      "media": "开盖后中央通道畅通；VAR 先提起并移开电极"
+    }
+  ],
+  "stats": {
+    "closed_bounds": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1.262321,
+        1
+      ]
+    ],
+    "open_bounds": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1.889552,
+        1
+      ]
+    ],
+    "triangles": 806,
+    "groups": 14,
+    "contact_areas": {
+      "bottom": 1.0,
+      "north": 0.75,
+      "east": 0.75,
+      "south": 0.75,
+      "west": 0.75
+    },
+    "side_width": 0.75,
+    "side_height": 1,
+    "corner_cut": 0.125,
+    "square_sole_height": 0.03125,
+    "animation_samples": 41,
+    "within_1x1x2": true,
+    "open_feed_clear": true
+  },
+  "lid": {
+    "group": "lid",
+    "pivot": [
+      0.5,
+      1.16,
+      0.86
+    ],
+    "open_angle_degrees": 90
+  },
+  "runtime_integrated": false,
+  "motion": {
+    "type": "hinge",
+    "electrode_group": null,
+    "suspension_group": null,
+    "carriage_group": null,
+    "lift": 0,
+    "park": [
+      0,
+      0,
+      0
+    ],
+    "stages": [
+      1
+    ]
+  }
+}

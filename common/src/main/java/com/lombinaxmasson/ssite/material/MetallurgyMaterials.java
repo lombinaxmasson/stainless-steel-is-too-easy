@@ -1,6 +1,6 @@
 package com.lombinaxmasson.ssite.material;
 
-import com.gregtech.gregtech.api.addon.MaterialDeclaration;
+import gregtech.api.addon.material.MaterialDeclaration;
 
 import java.util.List;
 

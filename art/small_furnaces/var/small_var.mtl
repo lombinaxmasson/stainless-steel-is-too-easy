@@ -1,0 +1,149 @@
+newmtl furnace_bottom
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 42.67
+d 1
+illum 2
+map_Kd small_var_atlas.png
+map_Ks small_var_specular.png
+
+newmtl furnace_north
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 374.34
+d 1
+illum 2
+map_Kd small_var_atlas.png
+map_Ks small_var_specular.png
+
+newmtl furnace_chamfer
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 42.67
+d 1
+illum 2
+map_Kd small_var_atlas.png
+map_Ks small_var_specular.png
+
+newmtl furnace_dark
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 42.67
+d 1
+illum 2
+map_Kd small_var_atlas.png
+map_Ks small_var_specular.png
+
+newmtl furnace_west
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 374.34
+d 1
+illum 2
+map_Kd small_var_atlas.png
+map_Ks small_var_specular.png
+
+newmtl furnace_south
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 374.34
+d 1
+illum 2
+map_Kd small_var_atlas.png
+map_Ks small_var_specular.png
+
+newmtl furnace_east
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 374.34
+d 1
+illum 2
+map_Kd small_var_atlas.png
+map_Ks small_var_specular.png
+
+newmtl furnace_copper
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 374.34
+d 1
+illum 2
+map_Kd small_var_atlas.png
+map_Ks small_var_specular.png
+
+newmtl furnace_edge
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 280.77
+d 1
+illum 2
+map_Kd small_var_atlas.png
+map_Ks small_var_specular.png
+
+newmtl furnace_molten
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 0.00
+d 1
+illum 2
+map_Kd small_var_atlas.png
+map_Ks small_var_specular.png
+
+newmtl furnace_ceramic
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 147.66
+d 1
+illum 2
+map_Kd small_var_atlas.png
+map_Ks small_var_specular.png
+
+newmtl furnace_plate
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 42.67
+d 1
+illum 2
+map_Kd small_var_atlas.png
+map_Ks small_var_specular.png
+
+newmtl furnace_graphite
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 5.44
+d 1
+illum 2
+map_Kd small_var_atlas.png
+map_Ks small_var_specular.png
+
+newmtl furnace_bus
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 374.34
+d 1
+illum 2
+map_Kd small_var_atlas.png
+map_Ks small_var_specular.png
+
+newmtl furnace_pipe
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 1 1 1
+Ns 280.77
+d 1
+illum 2
+map_Kd small_var_atlas.png
+map_Ks small_var_specular.png

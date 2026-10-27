@@ -1,19 +1,19 @@
 package com.lombinaxmasson.ssite.machine;
 
-import com.gregtech.gregtech.api.addon.AddonMachine;
-import com.gregtech.gregtech.api.addon.AddonMachineContributor;
-import com.gregtech.gregtech.api.addon.BehaviorMachine;
-import com.gregtech.gregtech.api.addon.CellMatch;
-import com.gregtech.gregtech.api.addon.EnergyInput;
-import com.gregtech.gregtech.api.addon.FluidPipeDeclaration;
-import com.gregtech.gregtech.api.addon.LayoutPart;
-import com.gregtech.gregtech.api.addon.MachineCasing;
-import com.gregtech.gregtech.api.addon.MachineFace;
-import com.gregtech.gregtech.api.addon.MachineIo;
-import com.gregtech.gregtech.api.addon.PartSlots;
-import com.gregtech.gregtech.api.addon.RecipeTable;
-import com.gregtech.gregtech.api.addon.StructureLayout;
-import com.gregtech.gregtech.api.addon.StructureRole;
+import gregtech.api.addon.machine.AddonMachine;
+import gregtech.api.addon.machine.AddonMachineContributor;
+import gregtech.api.addon.machine.BehaviorMachine;
+import gregtech.api.multiblock.CellMatch;
+import gregtech.api.energy.EnergyInput;
+import gregtech.api.addon.pipe.FluidPipeDeclaration;
+import gregtech.api.addon.machine.LayoutPart;
+import gregtech.api.machine.MachineCasing;
+import gregtech.api.machine.MachineFace;
+import gregtech.api.machine.MachineIo;
+import gregtech.api.addon.machine.PartSlots;
+import gregtech.api.addon.recipe.RecipeTable;
+import gregtech.api.multiblock.StructureLayout;
+import gregtech.api.multiblock.StructureRole;
 import com.lombinaxmasson.ssite.SsiteAddon;
 
 import java.util.ArrayList;

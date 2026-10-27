@@ -1,64 +1,52 @@
 {
   "variants": {
-    "facing=north,lit=false,running=false": {
-      "model": "ssite:block/machine/basic/aod_converter_tungsten"
-    },
-    "facing=north,lit=false,running=true": {
-      "model": "ssite:block/machine/basic/aod_converter_tungsten_running"
+    "facing=north,lit=true,running=true": {
+      "model": "ssite:block/machine/hidden/aod_converter_tungsten"
     },
     "facing=north,lit=true,running=false": {
-      "model": "ssite:block/machine/basic/aod_converter_tungsten_active"
+      "model": "ssite:block/machine/hidden/aod_converter_tungsten"
     },
-    "facing=north,lit=true,running=true": {
-      "model": "ssite:block/machine/basic/aod_converter_tungsten_active"
+    "facing=north,lit=false,running=true": {
+      "model": "ssite:block/machine/hidden/aod_converter_tungsten"
     },
-    "facing=east,lit=false,running=false": {
-      "model": "ssite:block/machine/basic/aod_converter_tungsten",
-      "y": 90
-    },
-    "facing=east,lit=false,running=true": {
-      "model": "ssite:block/machine/basic/aod_converter_tungsten_running",
-      "y": 90
-    },
-    "facing=east,lit=true,running=false": {
-      "model": "ssite:block/machine/basic/aod_converter_tungsten_active",
-      "y": 90
+    "facing=north,lit=false,running=false": {
+      "model": "ssite:block/machine/hidden/aod_converter_tungsten"
     },
     "facing=east,lit=true,running=true": {
-      "model": "ssite:block/machine/basic/aod_converter_tungsten_active",
-      "y": 90
+      "model": "ssite:block/machine/hidden/aod_converter_tungsten"
     },
-    "facing=south,lit=false,running=false": {
-      "model": "ssite:block/machine/basic/aod_converter_tungsten",
-      "y": 180
+    "facing=east,lit=true,running=false": {
+      "model": "ssite:block/machine/hidden/aod_converter_tungsten"
     },
-    "facing=south,lit=false,running=true": {
-      "model": "ssite:block/machine/basic/aod_converter_tungsten_running",
-      "y": 180
+    "facing=east,lit=false,running=true": {
+      "model": "ssite:block/machine/hidden/aod_converter_tungsten"
     },
-    "facing=south,lit=true,running=false": {
-      "model": "ssite:block/machine/basic/aod_converter_tungsten_active",
-      "y": 180
+    "facing=east,lit=false,running=false": {
+      "model": "ssite:block/machine/hidden/aod_converter_tungsten"
     },
     "facing=south,lit=true,running=true": {
-      "model": "ssite:block/machine/basic/aod_converter_tungsten_active",
-      "y": 180
+      "model": "ssite:block/machine/hidden/aod_converter_tungsten"
     },
-    "facing=west,lit=false,running=false": {
-      "model": "ssite:block/machine/basic/aod_converter_tungsten",
-      "y": 270
+    "facing=south,lit=true,running=false": {
+      "model": "ssite:block/machine/hidden/aod_converter_tungsten"
     },
-    "facing=west,lit=false,running=true": {
-      "model": "ssite:block/machine/basic/aod_converter_tungsten_running",
-      "y": 270
+    "facing=south,lit=false,running=true": {
+      "model": "ssite:block/machine/hidden/aod_converter_tungsten"
     },
-    "facing=west,lit=true,running=false": {
-      "model": "ssite:block/machine/basic/aod_converter_tungsten_active",
-      "y": 270
+    "facing=south,lit=false,running=false": {
+      "model": "ssite:block/machine/hidden/aod_converter_tungsten"
     },
     "facing=west,lit=true,running=true": {
-      "model": "ssite:block/machine/basic/aod_converter_tungsten_active",
-      "y": 270
+      "model": "ssite:block/machine/hidden/aod_converter_tungsten"
+    },
+    "facing=west,lit=true,running=false": {
+      "model": "ssite:block/machine/hidden/aod_converter_tungsten"
+    },
+    "facing=west,lit=false,running=true": {
+      "model": "ssite:block/machine/hidden/aod_converter_tungsten"
+    },
+    "facing=west,lit=false,running=false": {
+      "model": "ssite:block/machine/hidden/aod_converter_tungsten"
     }
   }
 }
