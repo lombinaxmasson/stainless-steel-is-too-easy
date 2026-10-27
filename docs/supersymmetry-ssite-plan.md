@@ -266,13 +266,13 @@
 > **设计目标**：原版 GT6CE 中所有硫化矿（黄铜矿、镍黄铁矿、闪锌矿、方铅矿、辉钼矿、硫铂矿、砷铂矿、辉锑矿）不仅能用电解机（64 EU/t）常温直接拆出纯金属+硫粉，还能直接丢进普通坩埚化出金属单质，或者在焙烧炉里一步烧成纯金属；`PlatinumGroupSludge`（铂族泥）更是离心机一步甩出六种铂族金属。本章节把这些捷径全部砍掉，建立 **「主金属精炼顺带捞出贵金属与稀散元素」** 的真实伴生渣网。
 
 ### 7.1 砍掉硫化矿与铂族泥直拆捷径
-- [ ] **移除硫化矿常温电解 (`gt.recipe.electrolyzer`)**：移除 `Chalcopyrite`、`Pentlandite`、`Sphalerite`、`Galena`、`Molybdenite`、`Cooperite`、`Sperrylite`、`Cobaltite`、`Arsenopyrite`、`Stibnite`、`Tetrahedrite` 的电解直拆配方。
-- [ ] **移除一步焙烧出金属 (`gt.recipe.roasting`) 与铂族泥离心 (`gt.recipe.centrifuge`)**：移除上述硫化矿一步焙烧直接出金属单质的行，以及 `PlatinumGroupSludge` 的离心直拆行。
+- [x] **移除硫化矿常温电解 (`gt.recipe.electrolyzer`)**：移除 `Chalcopyrite`、`Pentlandite`、`Sphalerite`、`Galena`、`Molybdenite`、`Cooperite`、`Sperrylite`、`Cobaltite`、`Arsenopyrite`、`Stibnite`、`Tetrahedrite` 的电解直拆配方。
+- [x] **移除一步焙烧出金属 (`gt.recipe.roasting`) 与铂族泥离心 (`gt.recipe.centrifuge`)**：移除上述硫化矿一步焙烧直接出金属单质的行，以及 `PlatinumGroupSludge` 的离心直拆行。
 
 ### 7.2 铜镍钴造锍、铜阳极泥与铂族六兄弟分离
-- [ ] **造锍与镍钴分离**：黄铜矿 / 镍黄铁矿熔炼造 **绿锍 (`GreenMatte`)** $\rightarrow$ 吹炼除铁得 **白锍 (`WhiteMatte`)**；白锍氧化酸浸分离出粗铜与硫酸镍钴母液（经 `P204` 萃取拆分镍与钴）。
-- [ ] **粗铜电解与铜阳极泥 (`CopperAnodeSlime`)**：粗铜电解产出高纯阴极铜 + **铜阳极泥**；阳极泥焙烧蒸出二氧化硒/二氧化碲（$\text{SO}_2$ 还原得半导体级 **硒 `Selenium`** 与 **碲 `Tellurium`**），脱铜铅后分金银得 **银 (`Silver`)**、**金 (`Gold`)** 与 **铂族精矿**。
-- [ ] **铂族六兄弟氯络合分离（Pt / Pd / Rh / Ir / Ru / Os）**：铂族精矿（及焙烧后的硫铂矿 `Cooperite`、砷铂矿 `Sperrylite`）经王水溶解为氯铂族酸母液 $\rightarrow$ 氧化蒸馏优先分离四氧化锇/四氧化钌（氢还原得 **锇 `Osmium`**、**钌 `Ruthenium`**） $\rightarrow$ 氯化铵沉淀氯铂酸铵（煅烧得海绵 **铂 `Platinum`**） $\rightarrow$ 氨络合沉淀得 **钯 `Palladium`** $\rightarrow$ 拆出六氯铱酸铵与氯铑酸铵（氢还原得 **铱 `Iridium`** 与 **铑 `Rhodium`**）。
+- [x] **造锍与镍钴分离**：黄铜矿 / 镍黄铁矿熔炼造 **绿锍 (`GreenMatte`)** $\rightarrow$ 吹炼除铁得 **白锍 (`WhiteMatte`)**；白锍氧化酸浸分离出粗铜与硫酸镍钴母液（经 `P204` 萃取拆分镍与钴）。
+- [x] **粗铜电解与铜阳极泥 (`CopperAnodeSlime`)**：粗铜电解产出高纯阴极铜 + **铜阳极泥**；阳极泥焙烧蒸出二氧化硒/二氧化碲（$\text{SO}_2$ 还原得半导体级 **硒 `Selenium`** 与 **碲 `Tellurium`**），脱铜铅后分金银得 **银 (`Silver`)**、**金 (`Gold`)** 与 **铂族精矿**。
+- [x] **铂族六兄弟氯络合分离（Pt / Pd / Rh / Ir / Ru / Os）**：铂族精矿（及焙烧后的硫铂矿 `Cooperite`、砷铂矿 `Sperrylite`）经王水溶解为氯铂族酸母液 $\rightarrow$ 氧化蒸馏优先分离四氧化锇/四氧化钌（氢还原得 **锇 `Osmium`**、**钌 `Ruthenium`**） $\rightarrow$ 氯化铵沉淀氯铂酸铵（煅烧得海绵 **铂 `Platinum`**） $\rightarrow$ 氨络合沉淀得 **钯 `Palladium`** $\rightarrow$ 拆出六氯铱酸铵与氯铑酸铵（氢还原得 **铱 `Iridium`** 与 **铑 `Rhodium`**）。
 
 ### 7.3 湿法炼锌与镉、铊、铟、锗伴生回收
 - [ ] **闪锌矿焙烧与烟尘提镉铊**：闪锌矿（`Sphalerite`）氧化焙烧产出氧化锌焙砂（`Zincite`）+ $\text{SO}_2$ + **富镉铊烟尘 (`CadmiumThalliumFlueDust`)**；烟尘酸浸后用锌粉置换拆分出 **镉 (`Cadmium`)** 与 **铊 (`Thallium`)**。

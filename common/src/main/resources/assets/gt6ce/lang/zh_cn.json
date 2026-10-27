@@ -289,5 +289,22 @@
   "material.gt6ce.nickelcobaltsulfate": "镍钴硫酸盐溶液",
   "material.gt6ce.nickelsulfatesolution": "硫酸镍溶液",
   "material.gt6ce.cobaltsulfatesolution": "硫酸钴溶液",
-  "material.gt6ce.cobaltp204extract": "钴负载 P204 有机相"
+  "material.gt6ce.cobaltp204extract": "钴负载 P204 有机相",
+  "material.gt6ce.seleniumdioxide": "二氧化硒",
+  "material.gt6ce.telluriumdioxide": "二氧化碲",
+  "material.gt6ce.silvergoldresidue": "金银渣",
+  "material.gt6ce.silvernitratesolution": "硝酸银溶液",
+  "material.gt6ce.crudegold": "粗金",
+  "material.gt6ce.ammoniumchloridesolution": "氯化铵溶液",
+  "material.gt6ce.pgmchlorideliquor": "铂族氯络合物母液",
+  "material.gt6ce.osmiumtetroxide": "四氧化锇",
+  "material.gt6ce.rutheniumtetroxide": "四氧化钌",
+  "material.gt6ce.osmiumfreepgmliquor": "除锇铂族母液",
+  "material.gt6ce.pgmpreciousliquor": "除钌铂族母液",
+  "material.gt6ce.palladiumliquor": "钯富集母液",
+  "material.gt6ce.rhodiumiridiumliquor": "铑铱母液",
+  "material.gt6ce.ammoniumchloroplatinate": "氯铂酸铵",
+  "material.gt6ce.diamminepalladiumchloride": "二氨合氯化钯",
+  "material.gt6ce.ammoniumhexachloroiridate": "六氯铱酸铵",
+  "material.gt6ce.rhodiumchloridesolution": "氯化铑溶液"
 }

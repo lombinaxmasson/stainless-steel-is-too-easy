@@ -289,5 +289,22 @@
   "material.gt6ce.nickelcobaltsulfate": "Nickel-Cobalt Sulfate Solution",
   "material.gt6ce.nickelsulfatesolution": "Nickel Sulfate Solution",
   "material.gt6ce.cobaltsulfatesolution": "Cobalt Sulfate Solution",
-  "material.gt6ce.cobaltp204extract": "Cobalt-Loaded P204 Organic"
+  "material.gt6ce.cobaltp204extract": "Cobalt-Loaded P204 Organic",
+  "material.gt6ce.seleniumdioxide": "Selenium Dioxide",
+  "material.gt6ce.telluriumdioxide": "Tellurium Dioxide",
+  "material.gt6ce.silvergoldresidue": "Silver-Gold Residue",
+  "material.gt6ce.silvernitratesolution": "Silver Nitrate Solution",
+  "material.gt6ce.crudegold": "Crude Gold",
+  "material.gt6ce.ammoniumchloridesolution": "Ammonium Chloride Solution",
+  "material.gt6ce.pgmchlorideliquor": "Platinum-Group Chloride Liquor",
+  "material.gt6ce.osmiumtetroxide": "Osmium Tetroxide",
+  "material.gt6ce.rutheniumtetroxide": "Ruthenium Tetroxide",
+  "material.gt6ce.osmiumfreepgmliquor": "Osmium-Free Platinum-Group Liquor",
+  "material.gt6ce.pgmpreciousliquor": "Ruthenium-Free Platinum-Group Liquor",
+  "material.gt6ce.palladiumliquor": "Palladium-Rich Liquor",
+  "material.gt6ce.rhodiumiridiumliquor": "Rhodium-Iridium Liquor",
+  "material.gt6ce.ammoniumchloroplatinate": "Ammonium Hexachloroplatinate",
+  "material.gt6ce.diamminepalladiumchloride": "Diammine Palladium(II) Chloride",
+  "material.gt6ce.ammoniumhexachloroiridate": "Ammonium Hexachloroiridate",
+  "material.gt6ce.rhodiumchloridesolution": "Rhodium Chloride Solution"
 }

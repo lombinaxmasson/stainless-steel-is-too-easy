@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import gregtech.api.addon.GregTechAddon;
+import gregtech.api.addon.GregTechAddons;
 import gregtech.api.addon.platform.AddonItems;
 import gregtech.api.addon.platform.AddonRecipes;
 import net.minecraft.world.item.ItemStack;
@@ -21,8 +22,9 @@ public final class ChemistryRecipes {
     private ChemistryRecipes() {}
 
     public static void add(GregTechAddon.Context context) {
-        if (context.apiVersion() != 0) {
-            throw new IllegalStateException("ssite expects GregTech addon API 0, found " + context.apiVersion());
+        if (context.apiVersion() != GregTechAddons.apiVersion()) {
+            throw new IllegalStateException("ssite expects GregTech addon API "
+                    + GregTechAddons.apiVersion() + ", found " + context.apiVersion());
         }
         REJECTED.clear();
         MISSING.clear();

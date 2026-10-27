@@ -1,9 +1,10 @@
 package com.lombinaxmasson.ssite.chemistry;
 
+import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.circuit;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.dust;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.row;
 
-/** M7 base-metal matte, leaching, P204 split and electrorefining chain. */
+/** M7 base-metal matte, leaching, P204 split, electrorefining and precious-metal chains. */
 public final class BaseMetalRecipes {
     private BaseMetalRecipes() {}
 
@@ -12,6 +13,8 @@ public final class BaseMetalRecipes {
         matteLeaching();
         nickelCobaltSplit();
         electrowinning();
+        slimeRefining();
+        platinumGroupSeparation();
     }
 
     private static void matteSmelting() {
@@ -77,5 +80,138 @@ public final class BaseMetalRecipes {
                 .fluidIn("GenLiquid_SulfuricAcid", 1000)
                 .fluidOut("GenLiquid_SulfuricAcid", 950)
                 .add(300, 128);
+    }
+
+    /** Anode slime roast drives off selenium and tellurium; the silver-gold residue is parted with nitric acid. */
+    private static void slimeRefining() {
+        row("gt.recipe.calciner", "m7/slime-roast")
+                .in(dust("CopperAnodeSlime", 2))
+                .out(dust("SilverGoldResidue", 1), dust("TelluriumDioxide", 1))
+                .fluidIn("Oxygen", 2500)
+                .fluidOut("GenGas_SeleniumDioxide", 2000, "GenGas_SulfurDioxide", 1000)
+                .add(240, 64);
+        row("gt.recipe.mixer", "m7/selenium-reduction")
+                .out(dust("Selenium", 1))
+                .fluidIn("GenGas_SeleniumDioxide", 1000,
+                        "GenGas_SulfurDioxide", 2000, "DistW", 2000)
+                .fluidOut("GenLiquid_SulfuricAcid", 2000)
+                .add(200, 48);
+        row("gt.recipe.mixer", "m7/tellurium-reduction")
+                .in(dust("TelluriumDioxide", 1))
+                .out(dust("Tellurium", 1))
+                .fluidIn("GenGas_SulfurDioxide", 2000, "DistW", 2000)
+                .fluidOut("GenLiquid_SulfuricAcid", 2000)
+                .add(200, 48);
+        row("gt.recipe.mixer", "m7/silver-parting")
+                .in(dust("SilverGoldResidue", 2))
+                .out(dust("CrudeGold", 1))
+                .fluidIn("GenLiquid_NitricAcid", 3000)
+                .fluidOut("GenLiquid_SilverNitrateSolution", 2000, "GenGas_NitrogenMonoxide", 1000)
+                .add(200, 64);
+        row("gt.recipe.mixer", "m7/silver-cementation")
+                .in(dust("Copper", 1))
+                .out(dust("Silver", 2))
+                .fluidIn("GenLiquid_SilverNitrateSolution", 2000)
+                .fluidOut("Dirty_Water", 1000)
+                .add(160, 48);
+        row("gt.recipe.mixer", "m7/gold-dissolve")
+                .in(dust("CrudeGold", 2))
+                .out(dust("ChloroauricAcid", 2))
+                .fluidIn("GenLiquid_NitricAcid", 2000, "GenGas_HydrochloricAcid", 6000)
+                .fluidOut("GenGas_NitrogenMonoxide", 1000, "DistW", 2000)
+                .add(240, 64);
+        row("gt.recipe.mixer", "m7/gold-reduction")
+                .in(dust("ChloroauricAcid", 2))
+                .out(dust("Gold", 2))
+                .fluidIn("GenGas_SulfurDioxide", 3000, "DistW", 6000)
+                .fluidOut("GenLiquid_SulfuricAcid", 3000, "GenGas_HydrochloricAcid", 8000)
+                .add(240, 64);
+    }
+
+    /** Aqua regia is fed as its nitric and hydrochloric components; this port has no aqua regia fluid. */
+    private static void platinumGroupSeparation() {
+        row("gt.recipe.mixer", "m7/pgm-dissolve-concentrate")
+                .in(dust("PlatinumGroupConcentrate", 1))
+                .fluidIn("GenLiquid_NitricAcid", 2000, "GenGas_HydrochloricAcid", 6000)
+                .fluidOut("GenLiquid_PGMChlorideLiquor", 1000, "GenGas_NitrogenMonoxide", 1000)
+                .add(240, 64);
+        row("gt.recipe.mixer", "m7/pgm-dissolve-cooperite")
+                .in(dust("Cooperite", 1))
+                .out(dust("Sulfur", 1))
+                .fluidIn("GenLiquid_NitricAcid", 2000, "GenGas_HydrochloricAcid", 6000)
+                .fluidOut("GenLiquid_PGMChlorideLiquor", 1000, "GenGas_NitrogenMonoxide", 1000)
+                .add(240, 64);
+        row("gt.recipe.mixer", "m7/pgm-dissolve-sperrylite")
+                .in(dust("Sperrylite", 1))
+                .out(dust("Arsenic", 1))
+                .fluidIn("GenLiquid_NitricAcid", 2000, "GenGas_HydrochloricAcid", 6000)
+                .fluidOut("GenLiquid_PGMChlorideLiquor", 1000, "GenGas_NitrogenMonoxide", 1000)
+                .add(240, 64);
+        row("gt.recipe.distillery", "m7/osmium-distill")
+                .in(circuit(1))
+                .keep(0)
+                .fluidIn("GenLiquid_PGMChlorideLiquor", 1000)
+                .fluidOut("GenLiquid_OsmiumTetroxide", 250, "GenLiquid_OsmiumFreePGMLiquor", 750)
+                .add(240, 64);
+        row("gt.recipe.distillery", "m7/ruthenium-distill")
+                .in(circuit(2))
+                .keep(0)
+                .fluidIn("GenLiquid_OsmiumFreePGMLiquor", 750)
+                .fluidOut("GenLiquid_RutheniumTetroxide", 250, "GenLiquid_PGMPreciousLiquor", 500)
+                .add(240, 64);
+        row("gt.recipe.calciner", "m7/osmium-reduction")
+                .out(dust("Osmium", 1))
+                .fluidIn("GenLiquid_OsmiumTetroxide", 250, "GenGas_Hydrogen", 1000)
+                .fluidOut("DistW", 1000)
+                .add(200, 64);
+        row("gt.recipe.calciner", "m7/ruthenium-reduction")
+                .out(dust("Ruthenium", 1))
+                .fluidIn("GenLiquid_RutheniumTetroxide", 250, "GenGas_Hydrogen", 1000)
+                .fluidOut("DistW", 1000)
+                .add(200, 64);
+        row("gt.recipe.mixer", "m7/ammonium-chloride")
+                .fluidIn("GenGas_Ammonia", 1000, "GenGas_HydrochloricAcid", 1000)
+                .fluidOut("GenLiquid_AmmoniumChlorideSolution", 1000)
+                .add(100, 32);
+        row("gt.recipe.mixer", "m7/platinum-precipitate")
+                .out(dust("AmmoniumChloroplatinate", 1))
+                .fluidIn("GenLiquid_PGMPreciousLiquor", 500,
+                        "GenLiquid_AmmoniumChlorideSolution", 500)
+                .fluidOut("GenLiquid_PalladiumLiquor", 500, "GenGas_HydrochloricAcid", 500)
+                .add(160, 48);
+        row("gt.recipe.calciner", "m7/platinum-reduction")
+                .in(dust("AmmoniumChloroplatinate", 1))
+                .out(dust("Platinum", 1))
+                .fluidIn("GenGas_Hydrogen", 1000)
+                .fluidOut("GenLiquid_AmmoniumChlorideSolution", 500, "GenGas_HydrochloricAcid", 2000)
+                .add(200, 64);
+        row("gt.recipe.mixer", "m7/palladium-precipitate")
+                .out(dust("DiamminePalladiumChloride", 1))
+                .fluidIn("GenLiquid_PalladiumLiquor", 500, "GenGas_Ammonia", 500)
+                .fluidOut("GenLiquid_RhodiumIridiumLiquor", 500, "Dirty_Water", 500)
+                .add(160, 48);
+        row("gt.recipe.calciner", "m7/palladium-reduction")
+                .in(dust("DiamminePalladiumChloride", 1))
+                .out(dust("Palladium", 1))
+                .fluidIn("GenGas_Hydrogen", 1000)
+                .fluidOut("GenGas_Ammonia", 1000, "GenGas_HydrochloricAcid", 1000)
+                .add(200, 64);
+        row("gt.recipe.mixer", "m7/iridium-precipitate")
+                .out(dust("AmmoniumHexachloroiridate", 1))
+                .fluidIn("GenLiquid_RhodiumIridiumLiquor", 500,
+                        "GenLiquid_AmmoniumChlorideSolution", 500, "GenGas_Chlorine", 250)
+                .fluidOut("GenLiquid_RhodiumChlorideSolution", 500, "GenGas_HydrochloricAcid", 500)
+                .add(160, 48);
+        row("gt.recipe.calciner", "m7/iridium-reduction")
+                .in(dust("AmmoniumHexachloroiridate", 1))
+                .out(dust("Iridium", 1))
+                .fluidIn("GenGas_Hydrogen", 1000)
+                .fluidOut("GenLiquid_AmmoniumChlorideSolution", 500, "GenGas_HydrochloricAcid", 2000)
+                .add(200, 64);
+        row("gt.recipe.calciner", "m7/rhodium-reduction")
+                .out(dust("Rhodium", 1))
+                .fluidIn("GenLiquid_RhodiumChlorideSolution", 500, "GenGas_Hydrogen", 750)
+                .fluidOut("GenGas_HydrochloricAcid", 1500)
+                .add(200, 64);
     }
 }
