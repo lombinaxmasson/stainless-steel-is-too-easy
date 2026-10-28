@@ -2,3 +2,6 @@
 *.bat text eol=crlf
 *.jar binary
 gradlew text eol=lf
+# Generated model assets: keep them in the repo but out of GitHub's language bar.
+*.obj linguist-vendored linguist-generated
+*.mtl linguist-vendored linguist-generated

@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/block",
-  "textures": {
-    "particle": "ssite:block/machine/aod_converter/tungsten_steel_side"
-  },
-  "elements": []
-}

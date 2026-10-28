@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "ssite:block/machine/hidden/large_aod_oxygen"
+      "model": "ssite:block/machine/parts/large_aod_oxygen"
     }
   }
 }

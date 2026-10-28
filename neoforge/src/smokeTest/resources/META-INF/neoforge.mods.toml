@@ -1,0 +1,7 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="LGPL-3.0-or-later"
+[[mods]]
+modId="ssite_aod_smoke"
+version="1"
+displayName="SSITE AOD integration fixture"

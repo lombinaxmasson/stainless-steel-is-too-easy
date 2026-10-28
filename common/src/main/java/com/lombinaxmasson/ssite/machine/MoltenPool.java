@@ -51,6 +51,9 @@ public abstract class MoltenPool {
     /** A pool a faucet can pour, or a solid leftover a spade rakes back out as dust. */
     protected record Pool(String material, String poolKey) {}
 
+    /** One non-empty pool, in GT units, for inspection tooltips and sensors. */
+    public record Content(String material, long amount) {}
+
     private final List<Charge> charges;
     private final List<Pool> pours;
     private final List<Pool> skims;
@@ -98,7 +101,7 @@ public abstract class MoltenPool {
         return temperature(context.state());
     }
 
-    static long temperature(BehaviorState state) {
+    public static long temperature(BehaviorState state) {
         long temperature = state.getLong(K_TEMP);
         return temperature > 0 ? temperature : AMBIENT_K;
     }
@@ -109,6 +112,39 @@ public abstract class MoltenPool {
         for (Pool pool : pours) amount += state.getLong(pool.poolKey());
         for (Pool pool : skims) amount += state.getLong(pool.poolKey());
         return amount;
+    }
+
+    /** Non-empty pools in declaration order: products first, then skimmed leftovers and charges. */
+    public List<Content> contents(BehaviorState state) {
+        List<Content> rows = new ArrayList<>();
+        List<String> seen = new ArrayList<>();
+        for (Pool pool : pours) addContent(rows, seen, state, pool.poolKey(), pool.material());
+        for (Pool pool : skims) addContent(rows, seen, state, pool.poolKey(), pool.material());
+        for (Charge charge : charges) addContent(rows, seen, state, charge.poolKey(), charge.material());
+        return rows;
+    }
+
+    private static void addContent(List<Content> rows, List<String> seen, BehaviorState state,
+                                   String key, String material) {
+        if (seen.contains(key)) return;
+        seen.add(key);
+        long amount = state.getLong(key);
+        if (amount > 0) rows.add(new Content(material, amount));
+    }
+
+    /** Whole argon units buffered in the vessel. */
+    public long argon(BehaviorState state) {
+        return state.getLong(K_ARGON);
+    }
+
+    /** Whole oxygen/air units buffered in the vessel; furnaces without air blowing keep zero. */
+    public long air(BehaviorState state) {
+        return 0L;
+    }
+
+    /** Temperature that triggers the failure check, or 0 when this pool has none. */
+    public long temperatureLimitK() {
+        return 0L;
     }
 
     /** Offers the pool to a faucet or mold, one material at a time. */

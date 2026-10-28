@@ -55,6 +55,10 @@ public class AodConverterCore extends MoltenPool {
         state.setLong(K_AIR, 0L);
     }
 
+    @Override public long air(BehaviorState state) { return state.getLong(K_AIR); }
+
+    @Override public long temperatureLimitK() { return tier.meltDownK(); }
+
     @Override
     public void tick(MachineBehaviorContext context, ArgonTank argon) {
         if (overheat(context, tier.meltDownK())) return;

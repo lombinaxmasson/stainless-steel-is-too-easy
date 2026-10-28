@@ -10,6 +10,7 @@ import gregtech.api.addon.platform.BehaviorMachineClientView;
 import gregtech.api.addon.platform.PartClientView;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,9 +26,8 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 /**
- * Draws the small AOD and VAR OBJ models. The machine block itself and the lid part ship
- * hidden block models; this renderer replaces both, reading the part's synced {@code open}
- * flag so the lid animation needs no behaviour-side changes.
+ * Draws small AOD/VAR models and the formed large AOD. The lid's synced {@code open}
+ * flag drives animation; an incomplete large AOD keeps its ordinary baked block models.
  */
 public final class SmallFurnaceRenderer implements BlockEntityRenderer<BlockEntity> {
     private static final float LID_PIVOT_X = 0.5F;
@@ -49,12 +49,20 @@ public final class SmallFurnaceRenderer implements BlockEntityRenderer<BlockEnti
         if (!(blockEntity instanceof BehaviorMachineClientView view)) return;
         FurnaceModel model = FurnaceModel.of(view.machineType());
         if (model == null) return;
+        if (model.kind() == Kind.LARGE_AOD && !view.getBoolean("structure.formed")) {
+            animations.remove(blockEntity);
+            return;
+        }
         Level level = blockEntity.getLevel();
         if (level == null) return;
         ObjMesh mesh = ObjMesh.load(model.mesh());
         if (mesh.groups().isEmpty()) return;
 
         Direction facing = blockEntity.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
+        // The opaque controller cell has no skylight. Sample its exposed front, where the
+        // casting port is visible, instead of shading the entire vessel from inside a cube.
+        if (model.kind() == Kind.LARGE_AOD)
+            packedLight = LevelRenderer.getLightColor(level, blockEntity.getBlockPos().relative(facing));
         BlockPos lidPos = model.kind() == Kind.LARGE_AOD
                 ? LargeAodStructure.world(blockEntity.getBlockPos(), facing, 0, 3, 2)
                 : blockEntity.getBlockPos().above();

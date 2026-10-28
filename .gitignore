@@ -13,4 +13,5 @@ out/
 .settings/
 bin/
 libs/*.jar
+logs/
 __pycache__/

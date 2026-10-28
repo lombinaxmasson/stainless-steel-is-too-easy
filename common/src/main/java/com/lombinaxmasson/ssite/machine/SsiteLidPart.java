@@ -9,8 +9,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.AABB;
 
 import java.util.List;
 import java.util.Set;
@@ -41,9 +43,13 @@ public final class SsiteLidPart implements LayoutPartContributor {
     }
 
     public static final class LidBehavior implements PartBehavior {
+        /** How far below the open lid a thrown stack is still caught. */
+        private static final int SUCTION_DEPTH = 1;
+
         @Override public void tick(PartContext context) {
             int mode = context.state().getInt(MODE);
             if (mode != 0) setOpen(context, redstoneOpen(mode, context.level().hasNeighborSignal(context.pos()), false));
+            absorb(context);
         }
 
         static boolean redstoneOpen(int mode, boolean signal, boolean manualOpen) {
@@ -72,19 +78,31 @@ public final class SsiteLidPart implements LayoutPartContributor {
                 player.displayClientMessage(Component.translatable("ssite.aod.lid.mode." + mode), true);
                 return true;
             }
-            ItemStack held = player.getItemInHand(hand);
-            if (!held.isEmpty() && canInsert(context, 0, held)) {
-                ItemStack stored = context.item(0);
-                if (stored.isEmpty()) {
-                    context.setItem(0, held.copy());
-                    player.setItemInHand(hand, ItemStack.EMPTY);
-                }
-                return true;
-            }
             int mode = context.state().getInt(MODE);
             if (mode == 0) setOpen(context, !context.state().getBoolean(OPEN));
             else player.displayClientMessage(Component.translatable("ssite.aod.lid.mode." + mode), true);
             return true;
+        }
+
+        /**
+         * GT6 crucible intake: a dropped stack falls through the open lid and waits in the charge
+         * slot. A closed or unbound lid takes nothing, so a hopper cannot bypass the seal either.
+         */
+        private static void absorb(PartContext context) {
+            if (context.level().isClientSide || !context.state().getBoolean(OPEN)) return;
+            if (context.slots() < 1 || !context.item(0).isEmpty()) return;
+            if (!(context.controller() instanceof MoltenPool.Holder holder)) return;
+            var pos = context.pos();
+            AABB area = new AABB(pos.getX(), pos.getY() - SUCTION_DEPTH, pos.getZ(),
+                    pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1);
+            for (ItemEntity entity : context.level().getEntitiesOfClass(ItemEntity.class, area)) {
+                if (entity.isRemoved()) continue;
+                ItemStack stack = entity.getItem();
+                if (stack.isEmpty() || !holder.pool().isCharge(stack)) continue;
+                context.setItem(0, stack.copy());
+                entity.discard();
+                return;
+            }
         }
 
         private static void setOpen(PartContext context, boolean open) {

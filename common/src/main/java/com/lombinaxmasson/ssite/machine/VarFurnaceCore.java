@@ -48,6 +48,8 @@ public final class VarFurnaceCore extends MoltenPool {
         super(CHARGES, POURS, SKIMS, MAX_TEMP_K);
     }
 
+    @Override public long temperatureLimitK() { return MAX_TEMP_K; }
+
     @Override
     public void tick(MachineBehaviorContext context, ArgonTank argon) {
         if (overheat(context, MAX_TEMP_K)) return;

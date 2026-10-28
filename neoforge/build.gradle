@@ -20,6 +20,13 @@ sourceSets.test {
     java.srcDir rootProject.file('common/src/test/java')
     compileClasspath += sourceSets.main.compileClasspath
 }
+// Optional integration fixture; never included in the release jar.
+sourceSets {
+    smokeTest {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
+}
 
 apply from: rootProject.file('gradle/gt6ce-sdk.gradle')
 
@@ -49,13 +56,28 @@ neoForge {
         "${mod_id}" {
             sourceSet sourceSets.main
         }
+        if (providers.gradleProperty('ssiteSmokeTest').isPresent()) {
+            ssite_aod_smoke { sourceSet sourceSets.smokeTest }
+        }
+    }
+}
+
+repositories {
+    maven {
+        url = 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
     }
 }
 
 dependencies {
     compileOnly files(neoApi, neoSdk)
     testImplementation files(neoApi, neoSdk)
+    // Optional Jade integration: the plugin class is only loaded when Jade is installed.
+    compileOnly "maven.modrinth:jade:${neoforge_jade_version}"
+    runtimeOnly "maven.modrinth:jade:${neoforge_jade_version}"
     if (neoRuntime.isFile()) {
+        // Native structure preview/tool adapters are not exposed by the addon SDK yet.
+        compileOnly files(neoRuntime)
         runtimeOnly files(neoRuntime)
     }
 }
@@ -70,6 +92,7 @@ tasks.register('requireSdk') {
     }
 }
 tasks.named('compileJava').configure { dependsOn 'requireSdk' }
+tasks.named('compileJava').configure { dependsOn 'requireRuntime' }
 tasks.named('compileTestJava').configure { dependsOn 'requireSdk' }
 
 def unitTest = tasks.register('unitTest', JavaExec) {

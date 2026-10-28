@@ -28,7 +28,24 @@ public final class MoltenPoolTests {
         redstoneOnlyMovesTheLid();
         largeGasNeedsOxygen();
         largeLayoutMatchesPorts();
-        System.out.println("MoltenPoolTests: all 11 checks passed.");
+        inspectionReportsPools();
+        System.out.println("MoltenPoolTests: all 12 checks passed.");
+    }
+
+    private static void inspectionReportsPools() {
+        State state = new State();
+        state.setLong("pool.titanium", 2 * U);
+        state.setLong("pool.carbon", U);
+        state.setLong("pool.niobium_titanium", 3 * U);
+        state.setLong(MoltenPool.K_ARGON, 4);
+        var rows = VarFurnaceCore.INSTANCE.contents(state);
+        check(rows.size() == 3, "only non-empty pools are inspected");
+        check(rows.get(0).material().equals("NiobiumTitanium"), "products are listed first");
+        check(rows.get(1).material().equals("Titanium"), "the pour order is kept");
+        check(rows.get(2).material().equals("Carbon"), "skimmed leftovers close the list without duplicates");
+        check(VarFurnaceCore.INSTANCE.argon(state) == 4, "argon units are inspected");
+        check(VarFurnaceCore.INSTANCE.air(state) == 0, "the VAR has no air buffer");
+        check(VarFurnaceCore.INSTANCE.temperatureLimitK() == VarFurnaceCore.MAX_TEMP_K, "VAR reports its limit");
     }
 
     private static void overtemperatureAndResidualHeat() {
@@ -89,6 +106,8 @@ public final class MoltenPoolTests {
             var layout = LargeAodStructure.layout(tier);
             long heat = layout.cells().stream().filter(c -> c.role() == gregtech.api.multiblock.StructureRole.ENERGY_INPUT).count();
             check(heat == 9, "all nine HU cells accept energy");
+            check(layout.cells().stream().filter(c -> c.match().toString().equals(tier.largeCasing())).count() == 21,
+                    "twelve wall cells and nine sole cells share the tier casing");
             for (var cell : layout.cells()) if (cell.role() == gregtech.api.multiblock.StructureRole.ENERGY_INPUT)
                 check(cell.up() == -1 && Math.abs(cell.right()) <= 1 && cell.back() >= 1 && cell.back() <= 3, "3x3 sole under vessel");
             check(layout.cells().stream().anyMatch(c -> c.right() == 2 && c.up() == 0 && c.back() == 1
@@ -96,6 +115,8 @@ public final class MoltenPoolTests {
             check(layout.cells().stream().anyMatch(c -> c.right() == 0 && c.up() == 3 && c.back() == 2
                     && c.match().toString().equals(LargeAodStructure.LID)), "feed at model owner (0,4,0)");
         }
+        check(new SsiteMachines().layoutParts().stream().noneMatch(p -> p.name().equals("large_aod_heat")),
+                "dedicated heat block is no longer registered");
     }
 
     private static final class Gases implements LargeAodCore.GasSupply {

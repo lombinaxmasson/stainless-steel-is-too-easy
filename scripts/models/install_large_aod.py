@@ -13,13 +13,10 @@ def write(path, data):
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
 def block(name, texture, item_parent=None):
-    write(ASSETS / f'blockstates/{name}.json', {'variants': {'': {'model': f'ssite:block/machine/hidden/{name}'}}})
-    write(ASSETS / f'models/block/machine/hidden/{name}.json', {
-        'parent':'minecraft:block/block', 'textures':{'particle':texture}, 'elements':[]})
+    write(ASSETS / f'blockstates/{name}.json', {'variants': {'': {'model': f'ssite:block/machine/parts/{name}'}}})
+    write(ASSETS / f'models/block/machine/parts/{name}.json', {
+        'parent':'minecraft:block/cube_all', 'textures':{'all':texture}})
     write(ASSETS / f'models/item/{name}.json', {'parent': item_parent or f'ssite:block/machine/parts/{name}'})
-    if not item_parent:
-        write(ASSETS / f'models/block/machine/parts/{name}.json', {
-            'parent':'minecraft:block/cube_all', 'textures':{'all':texture}})
 
 def recipe(name, pattern, keys, count=1):
     write(RECIPES / f'{name}.json', {'type':'minecraft:crafting_shaped', 'pattern':pattern,
@@ -48,10 +45,9 @@ def main():
         recipe(casing,['PFP','FMF','PFP'],{'P':small['key']['P']['item'],'M':small['key']['M']['item'],
                 'F':'gt6ce:fire_bricks'},4)
         recipe(controller,['CMC','OHA','CLC'],{'C':'ssite:'+casing,'M':'ssite:aod_converter_'+name,
-                'O':'ssite:large_aod_oxygen','A':'ssite:large_aod_argon','H':'ssite:large_aod_heat','L':'ssite:aod_lid'})
-    for part in ('heat','oxygen','argon','lid'):
+                'O':'ssite:large_aod_oxygen','A':'ssite:large_aod_argon','H':'ssite:'+casing,'L':'ssite:aod_lid'})
+    for part in ('oxygen','argon','lid'):
         block('large_aod_'+part,'ssite:block/aod_lid', 'ssite:block/machine/basic/aod_lid_item')
-    recipe('large_aod_heat',['FFF','PPP','FFF'],{'F':'gt6ce:fire_bricks','P':'gt6ce:plate_double_steel'},3)
     for gas in ('oxygen','argon'):
         recipe('large_aod_'+gas,['PPP','PSP','PPP'],{'P':'gt6ce:plate_stainlesssteel',
                 'S':'gt6ce:pipe_small_'+('steel' if gas == 'oxygen' else 'copper')})
@@ -64,13 +60,16 @@ def main():
             label=mat['label'] if cn else mat['material']
             strings['block.ssite.large_aod_'+mat['id']]=f'{label}大型 AOD 浇铸控制器' if cn else f'{label} Large AOD Casting Controller'
             strings['block.ssite.large_aod_casing_'+mat['id']]=f'{label}大型 AOD 炉壁' if cn else f'{label} Large AOD Wall'
-        for name,zh,en in [('heat','HU 受热块','HU Heat Receiver'),('oxygen','氧气口','Oxygen Inlet'),
+        strings.pop('block.ssite.large_aod_heat', None)
+        strings['ssite.aod.build'] = '大型 AOD：已放置 %s 个方块，仍有 %s 处未完成（检查材料或障碍物）' if cn else 'Large AOD: placed %s blocks; %s cells still incomplete (check materials or obstructions)'
+        strings['ssite.aod.inspect'] = '大型 AOD：%s 处结构不匹配' if cn else 'Large AOD: %s structure cells do not match'
+        for name,zh,en in [('oxygen','氧气口','Oxygen Inlet'),
                            ('argon','氩气口','Argon Inlet'),('lid','投料炉盖','Charging Lid')]:
             strings['block.ssite.large_aod_'+name]=('大型 AOD '+zh) if cn else ('Large AOD '+en)
         for mode,zh,en in [(0,'手动','Manual'),(1,'有信号开盖','Signal opens lid'),(2,'无信号开盖','Signal closes lid')]:
             strings[f'ssite.aod.lid.mode.{mode}']=f'炉盖：{zh}（潜行右键切换模式）' if cn else f'Lid: {en} (sneak-use to change mode)'
         strings['ssite.recipe.large_aod']='大型 AOD 精炼' if cn else 'Large AOD Refining'
         write(path,strings)
-    print('Installed large AOD OBJ, six palettes, 16 blocks and crafting recipes.')
+    print('Installed large AOD OBJ, six palettes, 15 blocks and crafting recipes.')
 
 if __name__=='__main__': main()

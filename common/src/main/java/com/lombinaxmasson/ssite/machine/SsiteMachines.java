@@ -16,9 +16,16 @@ import gregtech.api.addon.recipe.RecipeTable;
 import gregtech.api.multiblock.StructureLayout;
 import gregtech.api.multiblock.StructureRole;
 import com.lombinaxmasson.ssite.SsiteAddon;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /** AOD converter machines, their one-block lid layout and the acid-proof 316L pipe. */
 public final class SsiteMachines implements AddonMachineContributor {
@@ -80,6 +87,27 @@ public final class SsiteMachines implements AddonMachineContributor {
         return List.copyOf(machines);
     }
 
+    /** Machine items first (small AOD, large AOD, VAR), then every other item in the addon namespace. */
+    public static List<ItemStack> creativeStacks() {
+        List<ItemStack> stacks = new ArrayList<>();
+        Set<Item> added = new LinkedHashSet<>();
+        List<String> machines = new ArrayList<>();
+        for (AodTier tier : AodTier.values()) {
+            machines.add(tier.machineType());
+            machines.add(tier.largeMachineType());
+        }
+        machines.add(VarFurnaceCore.MACHINE_TYPE);
+        for (String path : machines) {
+            Item item = BuiltInRegistries.ITEM.get(ResourceLocation.tryBuild(SsiteAddon.MOD_ID, path));
+            if (item != Items.AIR && added.add(item)) stacks.add(new ItemStack(item));
+        }
+        for (Item item : BuiltInRegistries.ITEM) {
+            if (SsiteAddon.MOD_ID.equals(BuiltInRegistries.ITEM.getKey(item).getNamespace()) && added.add(item))
+                stacks.add(new ItemStack(item));
+        }
+        return stacks;
+    }
+
     @Override
     public List<StructureLayout> structureLayouts() {
         List<StructureLayout> layouts = new ArrayList<>();
@@ -100,8 +128,6 @@ public final class SsiteMachines implements AddonMachineContributor {
         List<LayoutPart> parts = new ArrayList<>();
         parts.add(lid(MoltenPool.LID_PART));
         parts.add(lid(LargeAodStructure.LID));
-        parts.add(LayoutPart.builder(LargeAodStructure.HEAT, "Steel")
-                .hardness(8).texture("block/aod_lid").build());
         for (AodTier tier : AodTier.values()) parts.add(LayoutPart.builder(tier.largeCasing(), tier.material())
                 .hardness(8).texture("block/machine/aod_converter/" + tier.suffix() + "_side").build());
         for (String gas : List.of(LargeAodStructure.OXYGEN, LargeAodStructure.ARGON))

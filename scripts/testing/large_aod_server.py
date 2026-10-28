@@ -53,9 +53,21 @@ class Rcon:
 
 def textpos(pos): return ' '.join(map(str,pos))
 
+def building_suite(r):
+    result=r.command('ssite_aod_smoke')
+    assert 'PASS: AOD preview and wand integration' in result, result
+    r.step(25)
+    for index in range(24):
+        origin=f'{128+index*16} 100 0'
+        value=r.command(f'data get block {origin} "gt.behavior".b."structure.formed"')
+        assert value.endswith('1b'), (origin,value)
+    print('PASS: six tiers x four facings: preview, survival/creative wand, inventory, canceled placements, obstacles, formation',flush=True)
+
 def suite(r):
     r.command('forceload add -16 -16 64 16')
     r.command('gamerule doMobSpawning false')
+    # Leftovers from an interrupted run would be sucked up by the hoppers below.
+    r.command('kill @e[type=item]')
     r.command('tick freeze')
     r.step(5)
     for index, facing in enumerate(('north','east','south','west')):
@@ -68,8 +80,11 @@ def suite(r):
         r.command(f'fill {ox-5} 97 -7 {ox+5} 110 7 air')
         tier='ta4hfc5'
         block(0,0,0,'ssite:large_aod_'+tier,f'[facing={facing}]')
+        r.step(3)
+        value=r.command(f'data get block {ox} {oy} {oz} "gt.behavior".b."structure.formed"')
+        assert value.endswith('0b'), ('single controller must remain unformed',value)
         for x in (-1,0,1):
-            for z in (1,2,3): block(x,-1,z,'ssite:large_aod_heat')
+            for z in (1,2,3): block(x,-1,z,'ssite:large_aod_casing_'+tier)
         for y in (0,1,2):
             for x,z in ((-1,2),(1,2),(0,1),(0,3)): block(x,y,z,'ssite:large_aod_casing_'+tier)
         block(2,0,1,'ssite:large_aod_oxygen')
@@ -78,6 +93,18 @@ def suite(r):
         r.step(25)
         value=r.command(f'data get block {ox} {oy} {oz} "gt.behavior".b."structure.formed"')
         assert value.endswith('1b'), (facing,value)
+        wall=textpos(pos(1,0,2))
+        assert r.command(f'data get block {wall} "gt.design"').endswith('1b'), 'formed walls hide their cubes'
+        block(-1,-1,1,'air')
+        r.step(3)
+        assert r.command(f'data get block {ox} {oy} {oz} "gt.behavior".b."structure.formed"').endswith('0b'), 'break unforms'
+        assert not r.command(f'data get block {wall} "gt.design"').endswith('1b'), 'unformed walls restore their cubes'
+        block(-1,-1,1,'ssite:large_aod_casing_steel')
+        r.step(3)
+        assert r.command(f'data get block {ox} {oy} {oz} "gt.behavior".b."structure.formed"').endswith('0b'), 'wrong tier floor rejected'
+        block(-1,-1,1,'ssite:large_aod_casing_'+tier)
+        r.step(3)
+        assert r.command(f'data get block {ox} {oy} {oz} "gt.behavior".b."structure.formed"').endswith('1b'), 'repair reforms'
         print(f'PASS: {facing} structure forms with world-aligned port cells',flush=True)
     # Every sole cell must relay real HU from the original GT6CE burning box.
     r.command('fill -1 98 1 1 98 3 air')
@@ -160,6 +187,18 @@ def suite(r):
     r.command('setblock 0 104 2 air')
     print('PASS: already charged material melts after closing the lid with no processing switch',flush=True)
 
+    # GT6 crucible intake: a thrown stack falls through the open lid, no right click involved.
+    r.command('data merge block 0 100 0 {"gt.behavior":{l:{"temp.k":293L,"pool.carburized":0L}}}')
+    fields(0,True)
+    r.command('summon item 0 104.5 2 {Item:{id:"ssite:dust_carburizedstainlesssteel",count:1}}')
+    r.step(10)
+    value=r.command('data get block 0 103 2 "gt.part_slots"[0].id')
+    assert 'ssite:dust_carburizedstainlesssteel' in value, 'thrown charge was not caught: '+value
+    value=r.command('execute if entity @e[type=item,nbt={Item:{id:"ssite:dust_carburizedstainlesssteel"}},'
+                    'x=0,y=102,z=2,dx=1,dy=3,dz=1]')
+    assert 'Test failed' in value, 'thrown charge entity survived: '+value
+    print('PASS: a thrown charge falls through the open lid into the charging slot',flush=True)
+
     # Explosion and meltdown affect only this disposable world, well above the ground.
     for x,open,lid,marker in ((16,False,(14,103,0),(17,100,0)),(32,True,(32,103,-2),(32,100,1))):
         r.command(f'setblock {textpos(marker)} glass')
@@ -191,7 +230,9 @@ def suite(r):
 if __name__=='__main__':
     parser=argparse.ArgumentParser()
     parser.add_argument('--command')
+    parser.add_argument('--building', action='store_true', help='requires -PssiteSmokeTest')
     args=parser.parse_args()
     remote=Rcon()
     if args.command: print(remote.command(args.command))
+    elif args.building: building_suite(remote)
     else: suite(remote)
