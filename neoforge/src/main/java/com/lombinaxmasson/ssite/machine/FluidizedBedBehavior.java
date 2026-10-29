@@ -1,5 +1,6 @@
 package com.lombinaxmasson.ssite.machine;
 
+import gregtech.api.energy.EnergyType;
 import gregtech.api.addon.platform.AddonTool;
 import gregtech.api.addon.platform.MachineBehavior;
 import gregtech.api.addon.platform.MachineBehaviorContext;
@@ -21,8 +22,8 @@ public final class FluidizedBedBehavior implements MachineBehavior {
         return slot == FluidizedBedCore.FUEL_SLOT && resolve(stack) != null;
     }
     @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
-    @Override public boolean acceptsEnergy(MachineBehaviorContext context, String type, MachineFace face, long size, long amount) {
-        return "KU".equalsIgnoreCase(type) && size > 0 && amount > 0;
+    @Override public boolean acceptsEnergy(MachineBehaviorContext context, EnergyType type, MachineFace face, long size, long amount) {
+        return EnergyType.KU.equals(type) && size > 0 && amount > 0;
     }
     @Override public boolean onTool(MachineBehaviorContext context, AddonTool tool, Player player,
                                     InteractionHand hand, MachineFace face) {

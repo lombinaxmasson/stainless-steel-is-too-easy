@@ -1,5 +1,6 @@
 package com.lombinaxmasson.ssite.machine;
 
+import gregtech.api.energy.EnergyType;
 import gregtech.api.addon.machine.AddonMachine;
 import gregtech.api.addon.machine.AddonMachineContributor;
 import gregtech.api.addon.machine.BehaviorMachine;
@@ -49,12 +50,12 @@ public final class SsiteMachines implements AddonMachineContributor {
         return List.of(
                 RecipeTable.machine(LARGE_AOD_MAP)
                         .title("Large AOD Refining")
-                        .gui("ssite:textures/gui/recipes/aod")
+                        .gui("ssite:textures/gui/recipes/aod.png")
                         .inputItems(4).outputItems(2).minimalInputItems(1)
                         .inputFluids(2).minimalInputFluids(1).minimalInputs(2).needsOutputs(true).build(),
                 RecipeTable.machine(AOD_MAP)
                         .title("AOD Refining")
-                        .gui("ssite:textures/gui/recipes/aod")
+                        .gui("ssite:textures/gui/recipes/aod.png")
                         .inputItems(4)
                         .outputItems(2)
                         .minimalInputItems(1)
@@ -65,7 +66,7 @@ public final class SsiteMachines implements AddonMachineContributor {
                         .build(),
                 RecipeTable.machine(VAR_MAP)
                         .title("VAR Arc Remelting")
-                        .gui("ssite:textures/gui/recipes/aod")
+                        .gui("ssite:textures/gui/recipes/aod.png")
                         .inputItems(3)
                         .outputItems(1)
                         .minimalInputItems(1)
@@ -160,7 +161,7 @@ public final class SsiteMachines implements AddonMachineContributor {
         return BehaviorMachine.builder(MachineCasing.builder(tier.largeMachineType(), tier.material())
                         .machineType(tier.largeMachineType()).tier(3).build())
                 // SDK requires one local face. BACK is buried against a mandatory wall; real HU enters via the sole.
-                .energy(EnergyInput.builder("HU", 2304).anyPacket().capacity(9_000_000L).faces(MachineFace.BACK).build())
+                .energy(EnergyInput.builder(EnergyType.HU, 2304).anyPacket().capacity(9_000_000L).faces(MachineFace.BACK).build())
                 .gui("ssite:textures/gui/aod_converter.png")
                 .recipeMaps(LARGE_AOD_MAP)
                 .clientState("structure.formed", "temp.k", "pool.amount")
@@ -184,7 +185,7 @@ public final class SsiteMachines implements AddonMachineContributor {
                         .machineType(VarFurnaceCore.MACHINE_TYPE)
                         .tier(3)
                         .build())
-                .energy(EnergyInput.builder("EU", 512).anyPacket().capacity(1_000_000L)
+                .energy(EnergyInput.builder(EnergyType.EU, 512).anyPacket().capacity(1_000_000L)
                         .faces(HOT_FACES).build())
                 .gui("ssite:textures/gui/aod_converter.png")
                 .recipeMaps(VAR_MAP)
@@ -203,9 +204,9 @@ public final class SsiteMachines implements AddonMachineContributor {
                         .machineType(tier.machineType())
                         .tier(2)
                         .build())
-                .energy(EnergyInput.builder("HU", 256).anyPacket().capacity(1_000_000L)
+                .energy(EnergyInput.builder(EnergyType.HU, 256).anyPacket().capacity(1_000_000L)
                         .faces(HOT_FACES).build())
-                .auxiliaryEnergy(EnergyInput.builder("KU", 64).anyPacket().capacity(64_000L)
+                .auxiliaryEnergy(EnergyInput.builder(EnergyType.KU, 64).anyPacket().capacity(64_000L)
                         .faces(HOT_FACES).build())
                 .gui("ssite:textures/gui/aod_converter.png")
                 .recipeMaps(AOD_MAP)

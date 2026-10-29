@@ -1,5 +1,6 @@
 package com.lombinaxmasson.ssite.machine;
 
+import gregtech.api.energy.EnergyType;
 import gregtech.api.addon.platform.AddonItems;
 import gregtech.api.addon.platform.BehaviorState;
 import gregtech.api.addon.platform.MachineBehaviorContext;
@@ -110,38 +111,38 @@ public final class FluidizedBedCore {
         BehaviorState state = context.state(); initialize(state);
         int power = power(state.getLong(K_POWER));
         Tick result = advance(new Access() {
-            public boolean formed() { return context.structureFormed(); }
-            public boolean enabled() { return context.toggle(ENABLE_TOGGLE); }
+            public boolean formed() { return context.structure().formed(); }
+            public boolean enabled() { return context.panel().toggle(ENABLE_TOGGLE); }
             public boolean redstone() { return context.level().hasNeighborSignal(context.pos()); }
             public int power() { return power; }
-            public long stored() { return context.energy(); }
+            public long stored() { return context.energy().mainStored(); }
             public long pending() { return Math.max(0, state.getLong(K_PENDING)); }
             public void pending(long value) { state.setLong(K_PENDING, Math.max(0, value)); }
-            public long ku() { return context.energy("KU"); }
-            public boolean consumeKu(long amount) { return context.consume("KU", amount); }
-            public boolean consumeHeat(long amount) { return context.consume(amount); }
-            public long generate(long amount) { return context.generate(amount); }
+            public long ku() { return context.energy().auxiliaryStored(EnergyType.KU); }
+            public boolean consumeKu(long amount) { return context.energy().consumeAuxiliary(EnergyType.KU, amount); }
+            public boolean consumeHeat(long amount) { return context.energy().consumeMain(amount); }
+            public long generate(long amount) { return context.energy().generateMain(amount); }
             public long emit(int plate, long amount) {
                 // Only the real adjacent block above each validated plate is queried; no arbitrary remote target.
-                return context.emitTo(FluidizedBedStructure.heatTarget(context.pos(), context.facing(), plate), Direction.DOWN, 1, amount);
+                return context.energy().emitTo(FluidizedBedStructure.heatTarget(context.pos(), context.facing(), plate), Direction.DOWN, 1, amount).transferredUnits();
             }
             public long takeFuel() { return consumeOne(context, fuelResolver); }
         });
-        state.setBoolean(K_FORMED, context.structureFormed());
-        state.setBoolean(K_ENABLED, context.toggle(ENABLE_TOGGLE));
+        state.setBoolean(K_FORMED, context.structure().formed());
+        state.setBoolean(K_ENABLED, context.panel().toggle(ENABLE_TOGGLE));
         state.setLong(K_POWER, power); state.setLong(K_RATE, outputRate(power));
-        state.setLong(K_STORED, context.energy()); state.setLong(K_KU, context.energy("KU"));
+        state.setLong(K_STORED, context.energy().mainStored()); state.setLong(K_KU, context.energy().auxiliaryStored(EnergyType.KU));
         state.setLong(K_GENERATED, result.generated()); state.setLong(K_OUTPUT, result.output());
         state.setLong(K_LOSS, result.loss()); state.setLong(K_STATUS, result.status());
-        context.progress((float) context.energy() / HEAT_CAPACITY);
-        context.working(result.generated() > 0 || result.output() > 0);
+        context.panel().setProgress((float) context.energy().mainStored() / HEAT_CAPACITY);
+        context.panel().working(result.generated() > 0 || result.output() > 0);
     }
 
     private static long consumeOne(MachineBehaviorContext context, FuelResolver resolver) {
-        ItemStack input = context.item(FUEL_SLOT).copy();
+        ItemStack input = context.inventory().snapshot(FUEL_SLOT).copy();
         Fuel fuel = resolver.resolve(input);
         if (fuel == null || fuel.heat() <= 0 || fuel.ash().isEmpty()) return 0;
-        ItemStack ash = context.item(ASH_SLOT).copy();
+        ItemStack ash = context.inventory().snapshot(ASH_SLOT).copy();
         ItemStack product = fuel.ash();
         // Products are generated plain material items; require exact item plus no custom data on the destination.
         if (!ash.isEmpty() && (!sameStack(ash, product) || ash.getCount() + product.getCount() > ash.getMaxStackSize())) return -1;
@@ -149,8 +150,8 @@ public final class FluidizedBedCore {
         if (!ash.isEmpty()) merged.grow(product.getCount());
         if (merged.getCount() > merged.getMaxStackSize()) return -1;
         input.shrink(1);
-        context.setItem(ASH_SLOT, merged);
-        context.setItem(FUEL_SLOT, input);
+        context.inventory().set(ASH_SLOT, merged);
+        context.inventory().set(FUEL_SLOT, input);
         return fuel.heat();
     }
 

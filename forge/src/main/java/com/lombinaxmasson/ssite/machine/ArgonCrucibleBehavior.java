@@ -1,5 +1,6 @@
 package com.lombinaxmasson.ssite.machine;
 
+import gregtech.api.addon.recipe.CrucibleContent;
 import gregtech.api.addon.recipe.CrucibleMold;
 import gregtech.api.machine.MachineFace;
 import gregtech.api.addon.platform.AddonFluids;
@@ -45,19 +46,19 @@ public final class ArgonCrucibleBehavior implements MachineBehavior, MoltenPool.
     private MoltenPool.ArgonTank tank(MachineBehaviorContext context, String name, String fluidName) {
         PartContext found = null;
         if (pool instanceof LargeAodCore) {
-            for (var part : context.parts()) if (part.name().equals(name)) { found = part.context(); break; }
+            for (var part : context.structure().parts()) if (part.name().equals(name)) { found = part.context(); break; }
         }
         PartContext port = found;
         boolean large = pool instanceof LargeAodCore;
         return new MoltenPool.ArgonTank() {
             public int availableMillibuckets() {
                 if (large && port == null) return 0;
-                FluidStack stack = port == null ? context.fluid(0) : port.fluid(0);
+                FluidStack stack = port == null ? context.fluids().snapshot(0) : port.fluids().snapshot(0);
                 return matches(stack, fluidName) ? stack.getAmount() : 0;
             }
             public boolean drainMillibuckets(int amount) {
                 if (amount <= 0 || availableMillibuckets() < amount) return false;
-                FluidStack drained = port == null ? context.drain(0, amount, false) : port.drain(0, amount, false);
+                FluidStack drained = port == null ? context.fluids().drain(0, amount, false) : port.fluids().drain(0, amount, false);
                 return matches(drained, fluidName) && drained.getAmount() == amount;
             }
         };
@@ -105,19 +106,16 @@ public final class ArgonCrucibleBehavior implements MachineBehavior, MoltenPool.
     }
 
     @Override
-    public long getCrucibleTemperature(MachineBehaviorContext context) {
-        return pool.temperature(context);
-    }
-
-    @Override
-    public long getCrucibleContentAmount(MachineBehaviorContext context) {
-        return pool.contentAmount(context);
+    public CrucibleContent crucibleContent(MachineBehaviorContext context) {
+        var contents = pool.contents(context.state());
+        if (contents.isEmpty()) return CrucibleContent.EMPTY;
+        return new CrucibleContent(contents.get(0).material(), pool.contentAmount(context), pool.temperature(context));
     }
 
     @Override
     public boolean fillMoldAtSide(MachineBehaviorContext context, CrucibleMold mold,
                                   Direction crucibleSide, Direction moldSide) {
-        if (pool instanceof LargeAodCore && (!context.structureFormed() || crucibleSide != context.facing())) return false;
+        if (pool instanceof LargeAodCore && (!context.structure().formed() || crucibleSide != context.facing())) return false;
         return pool.pour(context, mold, moldSide.ordinal());
     }
 

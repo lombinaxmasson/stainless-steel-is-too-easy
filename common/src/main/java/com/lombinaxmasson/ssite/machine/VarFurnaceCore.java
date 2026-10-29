@@ -64,12 +64,12 @@ public final class VarFurnaceCore extends MoltenPool {
 
         autoArgon(state, lidOpen, temperature, heated, argon);
 
-        if (meltCharge(context, temperature)) context.working(true);
-        if (!lidOpen && react(state, temperature)) context.working(true);
+        if (meltCharge(context, temperature)) context.panel().working(true);
+        if (!lidOpen && react(state, temperature)) context.panel().working(true);
 
         if (lidOpen || temperature <= AMBIENT_K) vent(state);
 
-        context.progress((float) (Math.max(0L, temperature - AMBIENT_K) / (double) (MAX_TEMP_K - AMBIENT_K)));
+        context.panel().setProgress((float) (Math.max(0L, temperature - AMBIENT_K) / (double) (MAX_TEMP_K - AMBIENT_K)));
     }
 
     /** Keeps the closed, live furnace topped up with argon from the tank. */

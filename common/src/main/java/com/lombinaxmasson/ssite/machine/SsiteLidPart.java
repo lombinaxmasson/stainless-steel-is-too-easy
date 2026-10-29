@@ -90,7 +90,7 @@ public final class SsiteLidPart implements LayoutPartContributor {
          */
         private static void absorb(PartContext context) {
             if (context.level().isClientSide || !context.state().getBoolean(OPEN)) return;
-            if (context.slots() < 1 || !context.item(0).isEmpty()) return;
+            if (context.inventory().slots() < 1 || !context.inventory().snapshot(0).isEmpty()) return;
             if (!(context.controller() instanceof MoltenPool.Holder holder)) return;
             var pos = context.pos();
             AABB area = new AABB(pos.getX(), pos.getY() - SUCTION_DEPTH, pos.getZ(),
@@ -99,7 +99,7 @@ public final class SsiteLidPart implements LayoutPartContributor {
                 if (entity.isRemoved()) continue;
                 ItemStack stack = entity.getItem();
                 if (stack.isEmpty() || !holder.pool().isCharge(stack)) continue;
-                context.setItem(0, stack.copy());
+                context.inventory().set(0, stack.copy());
                 entity.discard();
                 return;
             }

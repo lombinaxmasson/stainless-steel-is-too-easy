@@ -1,5 +1,6 @@
 package com.lombinaxmasson.ssite.machine;
 
+import gregtech.api.energy.EnergyType;
 import com.lombinaxmasson.ssite.SsiteAddon;
 import gregtech.api.addon.machine.AddonMachine;
 import gregtech.api.addon.machine.AddonMachineContributor;
@@ -20,11 +21,11 @@ public final class FluidizedBedMachines implements AddonMachineContributor {
         return List.of(BehaviorMachine.builder(MachineCasing.builder(FluidizedBedCore.MACHINE_TYPE, "Steel")
                         .machineType(FluidizedBedCore.MACHINE_TYPE).tier(3).build())
                 // This buffer stores internally generated HU. The behavior refuses all external HU packets.
-                .energy(EnergyInput.builder("HU", FluidizedBedCore.MAX_OUTPUT).anyPacket()
+                .energy(EnergyInput.builder(EnergyType.HU, FluidizedBedCore.MAX_OUTPUT).anyPacket()
                         .capacity(FluidizedBedCore.HEAT_CAPACITY).faces(MachineFace.BACK).build())
-                .auxiliaryEnergy(EnergyInput.builder("KU", 32).anyPacket().capacity(FluidizedBedCore.KU_CAPACITY)
+                .auxiliaryEnergy(EnergyInput.builder(EnergyType.KU, 32).anyPacket().capacity(FluidizedBedCore.KU_CAPACITY)
                         .faces(MachineFace.FRONT, MachineFace.TOP).build())
-                .energyOutput(EnergyOutput.builder("HU", 1, FluidizedBedCore.MAX_OUTPUT).remote().build())
+                .energyOutput(EnergyOutput.builder(EnergyType.HU, 1, FluidizedBedCore.MAX_OUTPUT).remote().build())
                 .gui("ssite:textures/gui/aod_converter.png")
                 .item(44, 26, BehaviorMachine.SlotRole.INPUT)
                 .item(116, 26, BehaviorMachine.SlotRole.OUTPUT)

@@ -1,5 +1,6 @@
 package com.lombinaxmasson.ssite.machine;
 
+import gregtech.api.machine.BlockFace;
 import gregtech.api.addon.recipe.CrucibleMold;
 import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.platform.AddonItems;
@@ -157,7 +158,7 @@ public abstract class MoltenPool {
             if (amount <= 0) continue;
             GregTechMaterials.Material material = material(target.material());
             if (!material.valid()) continue;
-            long accepted = mold.fillMold(material, amount, temperature, moldSide);
+            long accepted = mold.fillMold(material, amount, temperature, BlockFace.of(moldSide));
             if (accepted > 0) {
                 state.setLong(target.poolKey(), amount - accepted);
                 return true;
@@ -200,7 +201,7 @@ public abstract class MoltenPool {
     }
 
     private static BoundPart lidPart(MachineBehaviorContext context) {
-        for (BoundPart part : context.parts()) {
+        for (BoundPart part : context.structure().parts()) {
             if (LID_PART.equals(part.name()) || LargeAodStructure.LID.equals(part.name())) return part;
         }
         return null;
@@ -211,9 +212,9 @@ public abstract class MoltenPool {
      * Returns false when the structure is not formed and the rest of the tick should not run.
      */
     protected boolean formed(MachineBehaviorContext context) {
-        if (context.structureFormed()) return true;
+        if (context.structure().formed()) return true;
         unformed(context.state());
-        context.working(false);
+        context.panel().working(false);
         return false;
     }
 
@@ -225,12 +226,12 @@ public abstract class MoltenPool {
 
     /** Turns the main energy buffer into kelvin. Returns true when any heat arrived. */
     protected static boolean heat(MachineBehaviorContext context, long perKelvin, long maxK) {
-        long heat = context.energy();
+        long heat = context.energy().mainStored();
         if (heat <= 0) return false;
         BehaviorState state = context.state();
-        if (!context.consume(heat)) return false;
+        if (!context.energy().consumeMain(heat)) return false;
         addHeat(state, heat, perKelvin, maxK);
-        context.working(true);
+        context.panel().working(true);
         return true;
     }
 
@@ -258,7 +259,7 @@ public abstract class MoltenPool {
         if (failure == Failure.NONE) return false;
         if (context.level().isClientSide) return true;
         List<BlockPos> positions = new ArrayList<>(failurePositions(context));
-        context.working(false);
+        context.panel().working(false);
         for (BlockPos pos : positions) context.level().destroyBlock(pos, false);
         context.level().destroyBlock(context.pos(), false);
         if (failure == Failure.EXPLOSION) {
@@ -272,7 +273,7 @@ public abstract class MoltenPool {
     protected float explosionPower() { return 2.0F; }
 
     protected List<BlockPos> failurePositions(MachineBehaviorContext context) {
-        return context.parts().stream().map(BoundPart::pos).toList();
+        return context.structure().parts().stream().map(BoundPart::pos).toList();
     }
 
     /** Loses one kelvin every 10 ticks, or every 5 with the lid open. */
@@ -304,14 +305,14 @@ public abstract class MoltenPool {
     /** Already charged items keep melting after the lid closes; only new insertion needs an open lid. */
     protected boolean meltCharge(MachineBehaviorContext context, long temperature) {
         BehaviorState state = context.state();
-        if (meltFrom(state, temperature, context.item(CHARGE_SLOT),
-                stack -> context.setItem(CHARGE_SLOT, stack))) {
+        if (meltFrom(state, temperature, context.inventory().snapshot(CHARGE_SLOT),
+                stack -> context.inventory().set(CHARGE_SLOT, stack))) {
             return true;
         }
         BoundPart lid = lidPart(context);
         if (lid == null || lid.context() == null || lid.slots() <= 0) return false;
         var lidContext = lid.context();
-        return meltFrom(state, temperature, lid.item(0), stack -> lidContext.setItem(0, stack));
+        return meltFrom(state, temperature, lid.item(0), stack -> lidContext.inventory().set(0, stack));
     }
 
     private boolean meltFrom(BehaviorState state, long temperature, ItemStack stack, SlotSink sink) {

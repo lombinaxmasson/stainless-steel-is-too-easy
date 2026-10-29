@@ -19,7 +19,7 @@ public final class LargeAodCore extends AodConverterCore {
     public LargeAodCore(AodTier tier) { super(tier); }
 
     @Override public void tick(MachineBehaviorContext context, ArgonTank argon) {
-        context.state().setBoolean("structure.formed", context.structureFormed());
+        context.state().setBoolean("structure.formed", context.structure().formed());
         context.state().setLong("pool.amount", contentAmount(context));
         super.tick(context, argon);
     }
@@ -29,13 +29,13 @@ public final class LargeAodCore extends AodConverterCore {
 
     @Override protected void flushSlag(MachineBehaviorContext context, BehaviorState state) {
         super.flushSlag(context, state);
-        ItemStack output = context.item(1);
+        ItemStack output = context.inventory().snapshot(1);
         if (output.isEmpty()) return;
-        for (var part : context.parts()) {
+        for (var part : context.structure().parts()) {
             var lid = part.context();
-            if (!part.name().equals(LargeAodStructure.LID) || lid == null || part.slots() < 2 || !lid.item(1).isEmpty()) continue;
-            lid.setItem(1, output.copy());
-            context.setItem(1, ItemStack.EMPTY);
+            if (!part.name().equals(LargeAodStructure.LID) || lid == null || part.slots() < 2 || !lid.inventory().snapshot(1).isEmpty()) continue;
+            lid.inventory().set(1, output.copy());
+            context.inventory().set(1, ItemStack.EMPTY);
             break;
         }
     }
@@ -64,7 +64,7 @@ public final class LargeAodCore extends AodConverterCore {
 
     @Override protected List<BlockPos> failurePositions(MachineBehaviorContext context) {
         List<BlockPos> positions = new ArrayList<>();
-        // Casings and native HU relay parts are not returned by context.parts(). Snapshot all owned cells.
+        // Casings and native HU relay parts are not returned by context.structure().parts(). Snapshot all owned cells.
         for (var cell : LargeAodStructure.layout(tier).cells()) {
             if (!(cell.match() instanceof gregtech.api.multiblock.CellMatch.Part part)) continue;
             BlockPos pos = LargeAodStructure.world(context.pos(), context.facing(), cell.right(), cell.up(), cell.back());

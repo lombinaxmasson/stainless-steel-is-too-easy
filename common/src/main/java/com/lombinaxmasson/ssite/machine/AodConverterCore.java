@@ -1,5 +1,6 @@
 package com.lombinaxmasson.ssite.machine;
 
+import gregtech.api.energy.EnergyType;
 import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.platform.AddonItems;
 import gregtech.api.addon.platform.BehaviorState;
@@ -73,22 +74,22 @@ public class AodConverterCore extends MoltenPool {
 
         supplyGas(context, argon, lidOpen, temperature);
 
-        if (meltCharge(context, temperature)) context.working(true);
-        if (refine(state, temperature, lidOpen)) context.working(true);
+        if (meltCharge(context, temperature)) context.panel().working(true);
+        if (refine(state, temperature, lidOpen)) context.panel().working(true);
         flushSlag(context, state);
 
         if (lidOpen || temperature < AOD_K) vent(state);
 
-        context.progress((float) Math.min(1, Math.max(0L, temperature - AMBIENT_K) / (double) (3200L - AMBIENT_K)));
+        context.panel().setProgress((float) Math.min(1, Math.max(0L, temperature - AMBIENT_K) / (double) (3200L - AMBIENT_K)));
     }
 
     protected long heatPerKelvin() { return tier.heatPerKelvin(); }
 
     protected void supplyGas(MachineBehaviorContext context, ArgonTank argon, boolean open, long temperature) {
-        long ku = context.energy("KU");
-        if (ku > 0 && context.consume("KU", ku)) {
+        long ku = context.energy().auxiliaryStored(EnergyType.KU);
+        if (ku > 0 && context.energy().consumeAuxiliary(EnergyType.KU, ku)) {
             injectGas(context.state(), ku, open, temperature, argon);
-            context.working(true);
+            context.panel().working(true);
         }
     }
 
@@ -173,7 +174,7 @@ public class AodConverterCore extends MoltenPool {
             int count = (int) Math.min(pending / U, 64L);
             ItemStack slag = AddonItems.stack("dust", "AodSlag", count);
             if (slag.isEmpty()) return;
-            ItemStack left = context.insertOutput(slag);
+            ItemStack left = context.inventory().insertOutput(slag);
             long accepted = (count - (left.isEmpty() ? 0 : left.getCount())) * U;
             if (accepted <= 0) return;
             pending -= accepted;
