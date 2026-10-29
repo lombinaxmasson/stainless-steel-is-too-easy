@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "ssite:block/machine/fluidized_bed/dark",
+    "up": "ssite:block/machine/fluidized_bed/ceramic",
+    "north": "ssite:block/machine/fluidized_bed/refractory",
+    "south": "ssite:block/machine/fluidized_bed/refractory",
+    "west": "ssite:block/machine/fluidized_bed/refractory",
+    "east": "ssite:block/machine/fluidized_bed/refractory",
+    "particle": "ssite:block/machine/fluidized_bed/refractory"
+  }
+}

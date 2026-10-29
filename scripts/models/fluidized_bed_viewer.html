@@ -1,0 +1,173 @@
+<div id="ssite-fluidized-bed-preview">
+  <div class="fb-heading"><strong data-title>流化床燃烧室</strong><span class="fb-muted">拖动旋转 · 滚轮缩放</span></div>
+  <div class="fb-stage"><canvas aria-label="流化床燃烧室三维模型，可拖动旋转和滚轮缩放"></canvas><div class="fb-error" role="status"></div></div>
+  <div class="fb-controls">
+    <div class="fb-views" aria-label="模型视角"><button type="button" data-view="iso">全貌</button><button type="button" data-view="front">正面</button><button type="button" data-view="back">背面</button><button type="button" data-view="top">俯视</button></div>
+    <label><input type="checkbox" data-cutaway>剖视</label><label><input type="checkbox" data-grid>方块网格</label>
+    <label class="fb-part">部件 <select data-part aria-label="高亮模型部件"><option value="">全部部件</option></select></label>
+  </div>
+  <div class="fb-caption" aria-live="polite"><span data-detail></span><span class="fb-muted" data-count></span></div>
+</div>
+<style>
+#ssite-fluidized-bed-preview { width:100%; color:var(--foreground,#dce2de); font:14px/1.5 system-ui,sans-serif; --fb-line:var(--border,#54625c); --fb-bg:var(--background,#242a28); }
+#ssite-fluidized-bed-preview * { box-sizing:border-box; }
+#ssite-fluidized-bed-preview .fb-heading, #ssite-fluidized-bed-preview .fb-caption { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 20px; align-items:center; }
+#ssite-fluidized-bed-preview .fb-heading { padding:8px 0; }
+#ssite-fluidized-bed-preview .fb-heading strong { font-size:16px; font-weight:600; }
+#ssite-fluidized-bed-preview .fb-stage { position:relative; height:clamp(420px,72vw,680px); width:100%; overflow:hidden; }
+#ssite-fluidized-bed-preview canvas { display:block; width:100%; height:100%; cursor:grab; touch-action:none; }
+#ssite-fluidized-bed-preview canvas:active { cursor:grabbing; }
+#ssite-fluidized-bed-preview .fb-error { position:absolute; inset:40% 10% auto; text-align:center; }
+#ssite-fluidized-bed-preview .fb-controls, #ssite-fluidized-bed-preview .fb-views { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+#ssite-fluidized-bed-preview .fb-controls { margin:10px 0; gap:12px 18px; }
+#ssite-fluidized-bed-preview button, #ssite-fluidized-bed-preview select { font:inherit; color:inherit; background:var(--fb-bg); border:1px solid var(--fb-line); border-radius:4px; padding:6px 10px; cursor:pointer; max-width:100%; }
+#ssite-fluidized-bed-preview button[aria-pressed="true"] { border-color:currentColor; box-shadow:inset 0 -2px currentColor; }
+#ssite-fluidized-bed-preview button:focus-visible, #ssite-fluidized-bed-preview select:focus-visible, #ssite-fluidized-bed-preview input:focus-visible { outline:2px solid currentColor; outline-offset:3px; }
+#ssite-fluidized-bed-preview label { display:inline-flex; gap:6px; align-items:center; }
+#ssite-fluidized-bed-preview input { accent-color:var(--primary,#b5c79c); }
+#ssite-fluidized-bed-preview .fb-part { min-width:0; max-width:100%; }
+#ssite-fluidized-bed-preview select { min-width:0; }
+#ssite-fluidized-bed-preview .fb-muted { opacity:.7; font-size:12px; }
+#ssite-fluidized-bed-preview .fb-caption { min-height:2.5em; font-size:12px; }
+@media(max-width:480px) { #ssite-fluidized-bed-preview .fb-stage { height:470px; } #ssite-fluidized-bed-preview .fb-heading { align-items:flex-start; } #ssite-fluidized-bed-preview .fb-heading strong { font-size:15px; } }
+</style>
+<script>
+(() => {
+  'use strict';
+  const root=document.getElementById('ssite-fluidized-bed-preview');
+  const data=/*__MODEL_DATA__*/;
+  const canvas=root.querySelector('canvas'),stage=root.querySelector('.fb-stage'),error=root.querySelector('.fb-error');
+  const picker=root.querySelector('[data-part]'),cutawayInput=root.querySelector('[data-cutaway]'),gridInput=root.querySelector('[data-grid]');
+  root.querySelector('[data-title]').textContent=data.title||'流化床燃烧室';
+  root.querySelector('[data-count]').textContent=`${data.stats.triangles.toLocaleString()} 三角面 · ${data.stats.groups} 部件`;
+  const gl=canvas.getContext('webgl2',{antialias:true,alpha:true,preserveDrawingBuffer:true});
+  if(!gl){error.textContent='当前浏览器未启用 WebGL 2，请在支持硬件加速的浏览器中打开预览。';return;}
+  const add=(a,b)=>a.map((v,i)=>v+b[i]),sub=(a,b)=>a.map((v,i)=>v-b[i]),scale=(a,s)=>a.map(v=>v*s);
+  const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+  const norm=a=>scale(a,1/Math.hypot(...a));
+  const mul=(a,b)=>{const out=new Float32Array(16);for(let j=0;j<4;j++)for(let i=0;i<4;i++)for(let k=0;k<4;k++)out[j*4+i]+=a[k*4+i]*b[j*4+k];return out;};
+  const ortho=(l,r,b,t,n,f)=>new Float32Array([2/(r-l),0,0,0,0,2/(t-b),0,0,0,0,-2/(f-n),0,-(r+l)/(r-l),-(t+b)/(t-b),-(f+n)/(f-n),1]);
+  const look=(eye,target)=>{const z=norm(sub(eye,target)),x=norm(cross([0,1,0],z)),y=cross(z,x);return new Float32Array([x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,-dot(x,eye),-dot(y,eye),-dot(z,eye),1]);};
+  function program(vs,fs){
+    const compile=(type,src)=>{const shader=gl.createShader(type);gl.shaderSource(shader,src);gl.compileShader(shader);if(!gl.getShaderParameter(shader,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(shader));return shader;};
+    const p=gl.createProgram();gl.attachShader(p,compile(gl.VERTEX_SHADER,vs));gl.attachShader(p,compile(gl.FRAGMENT_SHADER,fs));gl.linkProgram(p);if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(p));return p;
+  }
+  try {
+    const main=program(`#version 300 es
+      precision highp float;
+      layout(location=0) in vec3 aPos;layout(location=1) in vec3 aNormal;layout(location=2) in vec2 aUV;
+      uniform mat4 uVP;uniform mat4 uLightVP;out vec3 vNormal;out vec2 vUV;out vec4 vShadow;
+      void main(){vNormal=aNormal;vUV=aUV;vShadow=uLightVP*vec4(aPos,1.);gl_Position=uVP*vec4(aPos,1.);}
+    `,`#version 300 es
+      precision highp float;
+      in vec3 vNormal;in vec2 vUV;in vec4 vShadow;
+      uniform sampler2D uAtlas;uniform sampler2D uShadow;uniform float uSelected;uniform float uGround;uniform vec3 uGroundColor;
+      out vec4 frag;
+      void main(){
+        vec3 n=normalize(vNormal),l=normalize(vec3(-.55,1.,-.65));
+        vec3 p=vShadow.xyz/vShadow.w*.5+.5;float shade=0.;float bias=max(.0008*(1.-dot(n,l)),.00022);
+        for(int x=-1;x<=1;x++)for(int y=-1;y<=1;y++){float d=texture(uShadow,p.xy+vec2(x,y)/2048.).r;shade+=(p.z-bias<=d?1.:0.);}
+        shade/=9.;if(p.x<0.||p.x>1.||p.y<0.||p.y>1.||p.z>1.)shade=1.;
+        if(uGround>.5){frag=vec4(uGroundColor*mix(.83,1.,shade),1.);return;}
+        vec3 color=pow(texture(uAtlas,vUV).rgb,vec3(2.2));
+        float hemi=.47+.15*max(n.y,0.);
+        vec3 light=vec3(hemi)+vec3(1.12,1.05,.93)*max(dot(n,l),0.)*shade+vec3(.27,.31,.36)*max(dot(n,normalize(vec3(1.,.5,1.))),0.);
+        color*=light;color=mix(color,color*1.25+vec3(.12,.13,.04),uSelected*.65);
+        frag=vec4(pow(color,vec3(1./2.2)),1.);
+      }
+    `);
+    const depth=program(`#version 300 es
+      layout(location=0) in vec3 aPos;uniform mat4 uVP;void main(){gl_Position=uVP*vec4(aPos,1.);}
+    `,`#version 300 es
+      precision mediump float;out vec4 frag;void main(){frag=vec4(1.);}
+    `);
+    const line=program(`#version 300 es
+      layout(location=0) in vec3 aPos;uniform mat4 uVP;void main(){gl_Position=uVP*vec4(aPos,1.);}
+    `,`#version 300 es
+      precision mediump float;uniform vec4 uColor;out vec4 frag;void main(){frag=uColor;}
+    `);
+    const uniform=(p,n)=>gl.getUniformLocation(p,'u'+n),U={};
+    for(const k of ['VP','LightVP','Atlas','Shadow','Selected','Ground','GroundColor'])U[k]=uniform(main,k);
+    function buffers(d){
+      const vao=gl.createVertexArray();gl.bindVertexArray(vao);
+      for(const [key,slot,size] of [['v',0,3],['n',1,3],['uv',2,2]]){
+        if(!d[key])continue;
+        gl.bindBuffer(gl.ARRAY_BUFFER,gl.createBuffer());gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(d[key]),gl.STATIC_DRAW);gl.enableVertexAttribArray(slot);gl.vertexAttribPointer(slot,size,gl.FLOAT,false,0,0);
+      }
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,gl.createBuffer());gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint32Array(d.i),gl.STATIC_DRAW);
+      return {vao,count:d.i.length};
+    }
+    const meshes=Object.entries(data.meshes).map(([name,d])=>({name,...buffers(d)}));
+    const [lo,hi]=data.stats.bounds,target=scale(add(lo,hi),.5),extent=sub(hi,lo),radius=Math.hypot(...extent)/2;
+    const cameraDistance=radius*5+5,groundY=lo[1]-.015,pad=1.7;
+    const ground=buffers({v:[lo[0]-pad,groundY,lo[2]-pad,lo[0]-pad,groundY,hi[2]+pad,hi[0]+pad,groundY,hi[2]+pad,hi[0]+pad,groundY,lo[2]-pad],n:[0,1,0,0,1,0,0,1,0,0,1,0],uv:[0,0,0,0,0,0,0,0],i:[0,1,2,0,2,3]});
+    const atlasTex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,atlasTex);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array([95,99,94,255]));
+    for(const f of [gl.TEXTURE_MIN_FILTER,gl.TEXTURE_MAG_FILTER])gl.texParameteri(gl.TEXTURE_2D,f,gl.NEAREST);
+    for(const f of [gl.TEXTURE_WRAP_S,gl.TEXTURE_WRAP_T])gl.texParameteri(gl.TEXTURE_2D,f,gl.CLAMP_TO_EDGE);
+    const textureImage=new Image();
+    textureImage.onload=()=>{gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,atlasTex);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,textureImage);root.dataset.textureReady='true';requestRender();};
+    textureImage.onerror=()=>{error.textContent='贴图未能加载。';};
+    textureImage.src='data:image/png;base64,'+data.texture;
+    const shadowTex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,shadowTex);gl.texImage2D(gl.TEXTURE_2D,0,gl.DEPTH_COMPONENT24,2048,2048,0,gl.DEPTH_COMPONENT,gl.UNSIGNED_INT,null);
+    for(const f of [gl.TEXTURE_MIN_FILTER,gl.TEXTURE_MAG_FILTER])gl.texParameteri(gl.TEXTURE_2D,f,gl.NEAREST);
+    for(const f of [gl.TEXTURE_WRAP_S,gl.TEXTURE_WRAP_T])gl.texParameteri(gl.TEXTURE_2D,f,gl.CLAMP_TO_EDGE);
+    const shadowFbo=gl.createFramebuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,shadowFbo);gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.TEXTURE_2D,shadowTex,0);gl.drawBuffers([gl.NONE]);gl.readBuffer(gl.NONE);
+    if(gl.checkFramebufferStatus(gl.FRAMEBUFFER)!==gl.FRAMEBUFFER_COMPLETE)throw Error('阴影缓冲区无法创建');
+    gl.bindFramebuffer(gl.FRAMEBUFFER,null);
+    const lightVP=mul(ortho(-radius*1.5,radius*1.5,-radius*1.5,radius*1.5,.1,cameraDistance*3),look(add(target,scale(norm([-.55,1,-.65]),cameraDistance)),target));
+    const lineVao=gl.createVertexArray(),lineBuffer=gl.createBuffer();gl.bindVertexArray(lineVao);gl.bindBuffer(gl.ARRAY_BUFFER,lineBuffer);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,3,gl.FLOAT,false,0,0);
+    const grid=[];
+    for(let x=Math.floor(lo[0])-1;x<=Math.ceil(hi[0])+1;x++)grid.push(x,groundY+.005,Math.floor(lo[2])-1,x,groundY+.005,Math.ceil(hi[2])+1);
+    for(let z=Math.floor(lo[2])-1;z<=Math.ceil(hi[2])+1;z++)grid.push(Math.floor(lo[0])-1,groundY+.005,z,Math.ceil(hi[0])+1,groundY+.005,z);
+    let yaw=.68,pitch=.28,zoom=1,selected='',cutaway=false,showGrid=false,shadowDirty=true,queued=false,currentView='iso',fg=[.2,.25,.22],bg=[.93,.94,.91];
+    const hidden=new Set(data.cutaway_hide||[]),visible=m=>!(cutaway&&hidden.has(m.name));
+    const names=data.group_labels||{};
+    for(const m of meshes){const option=document.createElement('option');option.value=m.name;option.textContent=names[m.name]||m.name.replaceAll('_',' ');picker.appendChild(option);}
+    function detail(){root.querySelector('[data-detail]').textContent=selected?(names[selected]||selected.replaceAll('_',' '))+(cutaway&&hidden.has(selected)?' · 剖视中隐藏':''):(cutaway?'剖视 · 查看炉内床层与布风结构':(data.subtitle||'独立流化床燃烧室'));}
+    function requestRender(){if(!queued){queued=true;requestAnimationFrame(render);}}
+    function draw(m){gl.bindVertexArray(m.vao);gl.drawElements(gl.TRIANGLES,m.count,gl.UNSIGNED_INT,0);}
+    function render(){
+      queued=false;const rect=stage.getBoundingClientRect(),width=rect.width,height=rect.height;if(width<=0||height<=0)return;
+      const dpr=Math.min(devicePixelRatio,2);canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);
+      const aspect=width/height,eye=add(target,[Math.sin(yaw)*Math.cos(pitch)*cameraDistance,Math.sin(pitch)*cameraDistance,-Math.cos(yaw)*Math.cos(pitch)*cameraDistance]);
+      const forward=norm(sub(eye,target)),right=norm(cross([0,1,0],forward)),up=cross(forward,right);
+      // Project the bounding box rather than assuming a fixed chamber aspect ratio.
+      let halfW=0,halfH=0;
+      for(let i=0;i<8;i++){const p=sub([i&1?hi[0]:lo[0],i&2?hi[1]:lo[1],i&4?hi[2]:lo[2]],target);halfW=Math.max(halfW,Math.abs(dot(p,right)));halfH=Math.max(halfH,Math.abs(dot(p,up)));}
+      const span=Math.max(halfH,halfW/aspect)*2.22*zoom;
+      const VP=mul(ortho(-span*aspect/2,span*aspect/2,-span/2,span/2,.1,cameraDistance*3),look(eye,target));
+      gl.enable(gl.DEPTH_TEST);gl.enable(gl.CULL_FACE);gl.cullFace(gl.BACK);
+      if(shadowDirty){gl.bindFramebuffer(gl.FRAMEBUFFER,shadowFbo);gl.viewport(0,0,2048,2048);gl.clear(gl.DEPTH_BUFFER_BIT);gl.useProgram(depth);gl.uniformMatrix4fv(uniform(depth,'VP'),false,lightVP);gl.enable(gl.POLYGON_OFFSET_FILL);gl.polygonOffset(1.2,2);for(const m of meshes)if(visible(m))draw(m);gl.disable(gl.POLYGON_OFFSET_FILL);gl.bindFramebuffer(gl.FRAMEBUFFER,null);shadowDirty=false;}
+      gl.viewport(0,0,canvas.width,canvas.height);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(main);
+      gl.uniformMatrix4fv(U.VP,false,VP);gl.uniformMatrix4fv(U.LightVP,false,lightVP);gl.uniform3fv(U.GroundColor,bg);
+      gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,atlasTex);gl.uniform1i(U.Atlas,0);gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,shadowTex);gl.uniform1i(U.Shadow,1);
+      gl.uniform1f(U.Selected,0);gl.uniform1f(U.Ground,1);if(pitch>0)draw(ground);gl.uniform1f(U.Ground,0);
+      for(const m of meshes)if(visible(m)){gl.uniform1f(U.Selected,m.name===selected?1:0);draw(m);}
+      if(showGrid){gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.useProgram(line);gl.uniformMatrix4fv(uniform(line,'VP'),false,VP);gl.uniform4fv(uniform(line,'Color'),[...fg,.25]);gl.bindVertexArray(lineVao);gl.bindBuffer(gl.ARRAY_BUFFER,lineBuffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(grid),gl.DYNAMIC_DRAW);gl.drawArrays(gl.LINES,0,grid.length/3);gl.disable(gl.BLEND);}
+      root.dataset.ready='true';root.dataset.view=[yaw,pitch,zoom].map(v=>v.toFixed(4)).join(',');root.dataset.cutaway=String(cutaway);root.dataset.selected=selected;
+    }
+    function setView(name){
+      const views={iso:[.68,.28],front:[0,0],back:[Math.PI,0],top:[0,1.568]};if(!views[name])throw Error('Unknown view: '+name);
+      [yaw,pitch]=views[name];zoom=1;currentView=name;
+      for(const b of root.querySelectorAll('[data-view]'))b.setAttribute('aria-pressed',String(b.dataset.view===name));requestRender();
+    }
+    function setCutaway(value){cutaway=Boolean(value);cutawayInput.checked=cutaway;shadowDirty=true;detail();requestRender();}
+    function setSelected(value){selected=data.meshes[value]?value:'';picker.value=selected;detail();requestRender();}
+    function theme(){
+      const dark=matchMedia('(prefers-color-scheme: dark)').matches;
+      function rgb(variable,fallback){const probe=document.createElement('span');probe.style.color=`var(${variable},${fallback})`;root.appendChild(probe);const value=getComputedStyle(probe).color;probe.remove();const c=document.createElement('canvas');c.width=c.height=1;const ctx=c.getContext('2d');ctx.fillStyle=value;ctx.fillRect(0,0,1,1);return Array.from(ctx.getImageData(0,0,1,1).data).slice(0,3).map(v=>v/255);}
+      fg=rgb('--foreground',dark?'#e2e7df':'#26302d');bg=rgb('--background',dark?'#202524':'#eeeee8');requestRender();
+    }
+    let drag=null;
+    canvas.addEventListener('pointerdown',e=>{drag=[e.clientX,e.clientY];canvas.setPointerCapture(e.pointerId);});
+    canvas.addEventListener('pointermove',e=>{if(!drag)return;yaw-=(e.clientX-drag[0])*.009;pitch=Math.max(-1.5,Math.min(1.568,pitch+(e.clientY-drag[1])*.008));drag=[e.clientX,e.clientY];currentView='custom';for(const b of root.querySelectorAll('[data-view]'))b.setAttribute('aria-pressed','false');requestRender();});
+    for(const event of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(event,()=>drag=null);
+    canvas.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.35,Math.min(3,zoom*Math.exp(e.deltaY*.001)));requestRender();},{passive:false});
+    root.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
+    cutawayInput.addEventListener('change',()=>setCutaway(cutawayInput.checked));gridInput.addEventListener('change',()=>{showGrid=gridInput.checked;requestRender();});picker.addEventListener('change',()=>setSelected(picker.value));
+    new ResizeObserver(requestRender).observe(stage);new MutationObserver(theme).observe(document.documentElement,{attributes:true,attributeFilter:['class','style','data-theme']});matchMedia('(prefers-color-scheme: dark)').addEventListener('change',theme);
+    window.__fluidizedBedViewer={setView,setCutaway,setSelected,getState:()=>({yaw,pitch,zoom,selected,cutaway,showGrid,currentView,visibleGroups:meshes.filter(visible).map(m=>m.name),bounds:data.stats.bounds})};
+    setView('iso');detail();theme();
+  }catch(e){error.textContent='预览无法启动：'+e.message;console.error(e);}
+})();
+</script>

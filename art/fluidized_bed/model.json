@@ -1,0 +1,375 @@
+{
+  "schema_version": 2,
+  "name": "SSITE fluidized-bed combustor / circulating tower with fixed 3x3 heat bank",
+  "units": "blocks",
+  "up": "+Y",
+  "front": "-Z",
+  "origin": "Skid base at Y=0; main riser X/Z=(-0.85,0.15)",
+  "game_translation": [
+    0.5,
+    0,
+    2.5
+  ],
+  "nominal_envelope": [
+    11,
+    8,
+    5
+  ],
+  "heat_contact_bounds": [
+    [
+      4.5,
+      2,
+      -1.5
+    ],
+    [
+      7.5,
+      2,
+      1.5
+    ]
+  ],
+  "heat_owner_cells": [
+    [
+      5,
+      1,
+      1
+    ],
+    [
+      5,
+      1,
+      2
+    ],
+    [
+      5,
+      1,
+      3
+    ],
+    [
+      6,
+      1,
+      1
+    ],
+    [
+      6,
+      1,
+      2
+    ],
+    [
+      6,
+      1,
+      3
+    ],
+    [
+      7,
+      1,
+      1
+    ],
+    [
+      7,
+      1,
+      2
+    ],
+    [
+      7,
+      1,
+      3
+    ]
+  ],
+  "stats": {
+    "bounds": [
+      [
+        -3.45,
+        0,
+        -2.5
+      ],
+      [
+        7.5,
+        7.97,
+        2.18771
+      ]
+    ],
+    "groups": 50,
+    "triangles": 5968,
+    "faces": 3615,
+    "texture_size": [
+      512,
+      256
+    ],
+    "finite_vertices": true,
+    "unit_normals": true,
+    "uv_in_atlas": true,
+    "nondegenerate_triangles": true,
+    "consistent_winding": true,
+    "heat_contact_area": 9.0,
+    "heat_contact_cells": 9,
+    "heat_clearance": true
+  },
+  "groups": [
+    "skid",
+    "windbox",
+    "front_shell",
+    "riser_shell",
+    "crown",
+    "refractory_lining",
+    "front_lining",
+    "shell_bands",
+    "front_bands",
+    "shell_ribs",
+    "front_ribs",
+    "distributor",
+    "bed",
+    "bed_front",
+    "bed_particles",
+    "inspection_hatch",
+    "ash_outlet",
+    "front_instruments",
+    "fuel_hopper",
+    "fuel_screw",
+    "hopper_support",
+    "cyclone",
+    "cyclone_bands",
+    "crossover_flue",
+    "solids_return",
+    "loop_seal",
+    "aeration_line",
+    "flue_outlet",
+    "cyclone_frame",
+    "service_platform",
+    "guardrails",
+    "ladder",
+    "blower_base",
+    "blower",
+    "blower_motor",
+    "primary_air",
+    "secondary_air",
+    "lifting_lugs",
+    "controller",
+    "controller_mount",
+    "hot_gas_duct",
+    "duct_flanges",
+    "duct_supports",
+    "heat_bank_base",
+    "heat_bank_refractory",
+    "heat_bank_casing",
+    "heat_bank_bands",
+    "heat_bank_door",
+    "heat_roof_edges",
+    "heat_contact"
+  ],
+  "cutaway_hide": [
+    "front_shell",
+    "front_lining",
+    "front_bands",
+    "front_ribs",
+    "inspection_hatch",
+    "front_instruments",
+    "bed_front"
+  ],
+  "cutaway_triangles": 4880,
+  "ports": [
+    {
+      "id": "fuel",
+      "label": "燃料料斗 / 螺旋给料",
+      "code": "FUEL",
+      "bounds": [
+        [
+          -3.22,
+          3.37,
+          -0.66
+        ],
+        [
+          -2.22,
+          3.37,
+          0.3
+        ]
+      ],
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "groups": [
+        "fuel_hopper",
+        "fuel_screw"
+      ]
+    },
+    {
+      "id": "air",
+      "label": "一次风 / 鼓风机吸入口",
+      "code": "AIR",
+      "bounds": [
+        [
+          1.56,
+          0.58,
+          -1.88
+        ],
+        [
+          2.38,
+          1.4,
+          -1.88
+        ]
+      ],
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "groups": [
+        "blower",
+        "blower_motor",
+        "primary_air"
+      ]
+    },
+    {
+      "id": "ash",
+      "label": "底灰排出口",
+      "code": "ASH",
+      "bounds": [
+        [
+          -1.24,
+          0.37,
+          -1.66
+        ],
+        [
+          -0.46,
+          0.88,
+          -1.66
+        ]
+      ],
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "groups": [
+        "ash_outlet"
+      ]
+    },
+    {
+      "id": "flue",
+      "label": "旋风分离器净烟气出口",
+      "code": "FLUE",
+      "bounds": [
+        [
+          1.67,
+          7.97,
+          0.03
+        ],
+        [
+          2.57,
+          7.97,
+          0.93
+        ]
+      ],
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "groups": [
+        "flue_outlet"
+      ]
+    },
+    {
+      "id": "heat",
+      "label": "3×3 向上供热台",
+      "code": "HU",
+      "bounds": [
+        [
+          4.5,
+          2,
+          -1.5
+        ],
+        [
+          7.5,
+          2,
+          1.5
+        ]
+      ],
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "groups": [
+        "heat_contact"
+      ],
+      "connection_cells": [
+        [
+          5,
+          2,
+          1
+        ],
+        [
+          5,
+          2,
+          2
+        ],
+        [
+          5,
+          2,
+          3
+        ],
+        [
+          6,
+          2,
+          1
+        ],
+        [
+          6,
+          2,
+          2
+        ],
+        [
+          6,
+          2,
+          3
+        ],
+        [
+          7,
+          2,
+          1
+        ],
+        [
+          7,
+          2,
+          2
+        ],
+        [
+          7,
+          2,
+          3
+        ]
+      ],
+      "connection_coordinate_system": "controller-local after game_translation"
+    },
+    {
+      "id": "controller",
+      "label": "前侧控制面板",
+      "code": "FBC",
+      "bounds": [
+        [
+          -0.5,
+          0,
+          -2.5
+        ],
+        [
+          0.5,
+          1,
+          -2.5
+        ]
+      ],
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "groups": [
+        "controller"
+      ]
+    }
+  ],
+  "texture_filter": "nearest",
+  "runtime_obj": "ssite:obj/fluidized_bed_combustor.obj",
+  "runtime_texture": "ssite:textures/machine/fluidized_bed_combustor.png",
+  "engineering_note": "Stylized game asset; internal cutaway illustrates a bed, distributor, windbox and circulation loop, not a pressure-vessel design."
+}

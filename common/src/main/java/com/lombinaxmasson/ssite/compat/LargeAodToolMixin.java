@@ -2,6 +2,7 @@ package com.lombinaxmasson.ssite.compat;
 
 import com.lombinaxmasson.ssite.machine.LargeAodBuilding;
 import com.lombinaxmasson.ssite.machine.LargeAodStructure;
+import com.lombinaxmasson.ssite.machine.ObjMultiblocks;
 import gregtech.api.addon.platform.BehaviorMachineClientView;
 import gregtech.engine.multiblock.MultiblockToolTarget;
 import net.minecraft.core.BlockPos;
@@ -24,17 +25,17 @@ public abstract class LargeAodToolMixin extends BlockEntity implements Multibloc
 
     @Override public boolean containsToolPosition(BlockPos pos) {
         var view = (BehaviorMachineClientView) this;
-        var tier = view.addonId().equals("ssite") ? LargeAodStructure.tier(view.machineType()) : null;
-        if (tier == null) return false;
+        if (!view.addonId().equals("ssite") || !ObjMultiblocks.isMachine(view.machineType())) return false;
         if (worldPosition.equals(pos)) return true;
         var facing = getBlockState().getValue(HorizontalDirectionalBlock.FACING);
-        return LargeAodStructure.preview(tier).keySet().stream().anyMatch(cell ->
+        return ObjMultiblocks.preview(view.machineType()).keySet().stream().anyMatch(cell ->
                 LargeAodStructure.world(worldPosition, facing, cell.getX(), cell.getY(), cell.getZ()).equals(pos));
     }
 
     @Override public long useMultiblockTool(UseOnContext context, List<Component> messages) {
         var view = (BehaviorMachineClientView) this;
-        var tier = view.addonId().equals("ssite") ? LargeAodStructure.tier(view.machineType()) : null;
-        return tier == null ? 0 : LargeAodBuilding.use(this, tier, context, messages);
+        if (!view.addonId().equals("ssite") || !ObjMultiblocks.isMachine(view.machineType())) return 0;
+        return LargeAodBuilding.use(this, ObjMultiblocks.preview(view.machineType()),
+                ObjMultiblocks.messagePrefix(view.machineType()), context, messages);
     }
 }

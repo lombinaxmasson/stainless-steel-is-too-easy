@@ -6,6 +6,8 @@ tasks.register('compileBoth') {
     group = 'build'
     description = 'Compile and test the Forge 1.20.1 and NeoForge 1.21.1 projects.'
     dependsOn ':forge:compileJava', ':neoforge:compileJava', ':forge:unitTest', ':neoforge:unitTest'
+    dependsOn ':forge:fluidizedBedTest', ':neoforge:fluidizedBedTest',
+            ':forge:fluidizedBedRenderTest', ':neoforge:fluidizedBedRenderTest'
 }
 
 tasks.named('assemble').configure {

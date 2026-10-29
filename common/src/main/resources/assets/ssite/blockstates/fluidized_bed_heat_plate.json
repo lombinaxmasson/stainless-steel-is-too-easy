@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ssite:block/machine/parts/fluidized_bed_heat_plate"
+    }
+  }
+}

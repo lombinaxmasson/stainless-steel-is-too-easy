@@ -1,0 +1,21 @@
+def fluidizedBedTest = tasks.register('fluidizedBedTest', JavaExec) {
+    description = 'Checks fluidized-bed fuel, ash, power and heat accounting.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.machine.FluidizedBedTests'
+    jvmArgs '-ea'
+}
+
+def fluidizedBedRenderTest = tasks.register('fluidizedBedRenderTest', JavaExec) {
+    description = 'Checks the fluidized-bed renderer and its nine world-aligned heating tiles.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.client.FluidizedBedRenderTests'
+    jvmArgs '-ea'
+}
+
+tasks.named('check').configure { dependsOn fluidizedBedTest, fluidizedBedRenderTest }

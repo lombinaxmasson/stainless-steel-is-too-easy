@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["PPP", "BBB", "PPP"],
+  "key": {
+    "P": {"item": "gt6ce:plate_steel"},
+    "B": {"item": "minecraft:stone_bricks"}
+  },
+  "result": {
+    "item": "ssite:fluidized_bed_foundation",
+    "count": 4
+  }
+}

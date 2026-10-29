@@ -2,6 +2,8 @@ package com.lombinaxmasson.ssite.compat;
 
 import com.lombinaxmasson.ssite.machine.AodTier;
 import com.lombinaxmasson.ssite.machine.LargeAodStructure;
+import com.lombinaxmasson.ssite.machine.FluidizedBedCore;
+import com.lombinaxmasson.ssite.machine.FluidizedBedStructure;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -26,6 +28,9 @@ public abstract class LargeAodPreviewMixin {
             if (BuiltInRegistries.BLOCK.containsKey(id))
                 layouts.put(BuiltInRegistries.BLOCK.get(id), LargeAodStructure.preview(tier));
         }
+        var fluidizedBed = ResourceLocation.tryBuild("ssite", FluidizedBedCore.MACHINE_TYPE);
+        if (BuiltInRegistries.BLOCK.containsKey(fluidizedBed))
+            layouts.put(BuiltInRegistries.BLOCK.get(fluidizedBed), FluidizedBedStructure.preview());
         result.setReturnValue(Collections.unmodifiableMap(layouts));
     }
 }

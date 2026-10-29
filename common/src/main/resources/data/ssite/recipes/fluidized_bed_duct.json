@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["PFP", "F F", "PFP"],
+  "key": {
+    "P": {"item": "gt6ce:plate_steel"},
+    "F": {"item": "gt6ce:fire_bricks"}
+  },
+  "result": {
+    "item": "ssite:fluidized_bed_duct",
+    "count": 4
+  }
+}

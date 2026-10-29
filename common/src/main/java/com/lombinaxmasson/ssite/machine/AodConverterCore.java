@@ -79,13 +79,13 @@ public class AodConverterCore extends MoltenPool {
 
         if (lidOpen || temperature < AOD_K) vent(state);
 
-        context.setProgress((float) Math.min(1, Math.max(0L, temperature - AMBIENT_K) / (double) (3200L - AMBIENT_K)));
+        context.progress((float) Math.min(1, Math.max(0L, temperature - AMBIENT_K) / (double) (3200L - AMBIENT_K)));
     }
 
     protected long heatPerKelvin() { return tier.heatPerKelvin(); }
 
     protected void supplyGas(MachineBehaviorContext context, ArgonTank argon, boolean open, long temperature) {
-        long ku = context.auxiliaryStored("KU");
+        long ku = context.energy("KU");
         if (ku > 0 && context.consume("KU", ku)) {
             injectGas(context.state(), ku, open, temperature, argon);
             context.working(true);

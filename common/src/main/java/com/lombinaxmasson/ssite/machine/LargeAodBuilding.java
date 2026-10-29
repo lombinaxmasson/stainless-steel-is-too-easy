@@ -16,19 +16,25 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import java.util.Map;
 
 /** One click fills the fixed layout, consuming inventory through normal item placement. */
 public final class LargeAodBuilding {
     private LargeAodBuilding() {}
 
     public static long use(BlockEntity controller, AodTier tier, UseOnContext use, List<Component> messages) {
+        return use(controller, LargeAodStructure.preview(tier), "ssite.aod", use, messages);
+    }
+
+    public static long use(BlockEntity controller, Map<BlockPos, Block> layout, String prefix,
+                           UseOnContext use, List<Component> messages) {
         var level = use.getLevel();
         if (level.isClientSide || use.getPlayer() == null) return 0;
         boolean builder = GTToolHelper.matchesTool(use.getItemInHand(), GTToolType.BUILDER_WAND);
         if (!builder && !GTToolHelper.matchesTool(use.getItemInHand(), GTToolType.MAGNIFYING_GLASS)) return 0;
         var facing = controller.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         int placed = 0, missing = 0;
-        for (var cell : LargeAodStructure.preview(tier).entrySet()) {
+        for (var cell : layout.entrySet()) {
             BlockPos local = cell.getKey();
             BlockPos pos = LargeAodStructure.world(controller.getBlockPos(), facing,
                     local.getX(), local.getY(), local.getZ());
@@ -38,8 +44,8 @@ public final class LargeAodBuilding {
             if (builder && expected != Blocks.AIR && place(use, pos, expected)) placed++;
             else missing++;
         }
-        messages.add(builder ? Component.translatable("ssite.aod.build", placed, missing)
-                : Component.translatable("ssite.aod.inspect", missing));
+        messages.add(builder ? Component.translatable(prefix + ".build", placed, missing)
+                : Component.translatable(prefix + ".inspect", missing));
         // Consume even an empty-inventory click; never fall through to copying controllers.
         return builder ? MultiblockToolRules.BUILDER_COST : MultiblockToolRules.MAGNIFIER_COST;
     }

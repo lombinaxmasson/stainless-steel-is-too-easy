@@ -1,6 +1,7 @@
 package com.lombinaxmasson.ssite.compat;
 
 import com.lombinaxmasson.ssite.machine.LargeAodStructure;
+import com.lombinaxmasson.ssite.machine.ObjMultiblocks;
 import gregtech.api.addon.platform.BehaviorMachineClientView;
 import gregtech.engine.multiblock.MultiblockLayout;
 import net.minecraft.core.BlockPos;
@@ -29,14 +30,14 @@ public abstract class LargeAodPartMixin extends BlockEntity {
 
     @Unique private boolean ssite$largePart() {
         var id = BuiltInRegistries.BLOCK.getKey(getBlockState().getBlock());
-        return id.getNamespace().equals("ssite") && id.getPath().startsWith("large_aod_");
+        return id.getNamespace().equals("ssite") && ObjMultiblocks.isPart(id.getPath());
     }
 
     @Inject(method = "bind", at = @At("RETURN"))
     private void ssite$hideBoundPart(BlockPos owner, MultiblockLayout.Role role, CallbackInfo ci) {
         if (level == null || level.isClientSide || !ssite$largePart() || !isBoundTo(owner)) return;
         if (level.getBlockEntity(owner) instanceof BehaviorMachineClientView view
-                && view.addonId().equals("ssite") && LargeAodStructure.tier(view.machineType()) != null)
+                && view.addonId().equals("ssite") && ObjMultiblocks.isMachine(view.machineType()))
             applyStructureDesign(LargeAodStructure.FORMED_DESIGN);
     }
 

@@ -48,7 +48,11 @@
 
 大型 AOD 使用 `LargeAodStructure` 和 `LargeAodCore`。浇铸控制器位于 OBJ 的 (0,1,−2)，底部九个普通结构端口以 `ENERGY_INPUT` 角色转发 HU（行为机器宿主不支持用 `HEAT_INPUT` 角色转发）；两个功能端口各自储存气体。炉盖字段 `open` 与 `lid.mode` 负责手动/红石开盖，已投料后的熔炼不受盖子开关阻断。过温由共享熔池在冷却、反应之前处理：闭盖爆炸，开盖熔毁。详见 [大型 AOD 使用说明](large-aod.md)。
 
-`compat/CrucibleFaucetSignalMixin` 是唯一涉及宿主内部方法名的兼容点：GT6CE 0.1.0 龙头读取自身红石输出，SSITE 对连接本附属炉子的龙头改读邻接信号，保留原有自动取料开关。此注入不引用 GT 实现类型，方法注入允许宿主后续移除；升级 GT 时需复测并在上游修复后移除此补丁。
+`compat/CrucibleFaucetSignalMixin` 修正 GT6CE 0.1.0 龙头读取自身红石输出的问题：SSITE 对连接本附属炉子的龙头改读邻接信号，保留原有自动取料开关。此注入不引用 GT 实现类型，方法注入允许宿主后续移除；升级 GT 时需复测并在上游修复后移除此补丁。
+
+流化床工业供热使用 `FluidizedBedCore`、`FluidizedBedStructure` 和两平台 `FluidizedBedBehavior`。主机、短烟道与九格炉台属于同一固定结构；核心通过已成型炉台的正上方邻格发送 HU，九格共享一个总预算，宿主按实际接收量扣能量。煤族燃料的原生燃烧时间、一次预留的灰产物、待燃料热量和 HU 缓存分开核算；KU 单独驱动鼓风，预热与余热由蓄热量约束输出。声明由 `FluidizedBedMachines` 辅助类提供，再合入既有 `SsiteMachines` / `SsiteBehaviorMachines` 单一 SPI 入口，适配当前宿主每附属只能提交一次的约束。
+
+`FluidizedBedEnergyMixin` 仅取消这台机器的主 HU 主动抽取，保留 KU 辅助通道；宿主的 `pollEnergy` 不调用行为的 `acceptsEnergy`，只覆盖被动注入不足以使热库保持内部生成。`ObjMultiblocks` 让流化床与大型 AOD 复用装配预览、建筑之杖和成型零件隐藏桥接。`FluidizedBedRenderer` 保持单独的静态模型与坐标变换，Jade 集成在 `FluidizedBedJadeProvider`。玩法与坐标见[流化床工业供热](fluidized-bed.md)。
 
 AOD 与 VAR 配方表中的展示行不执行熔池反应；真实反应在行为核心中执行。修改工艺数值时，要核对行为、展示行和文档是否一致。气体单位也按设备区分：AOD 每内部单位 10 mB，VAR 为 100 mB。
 
@@ -62,10 +66,11 @@ Gradle 8.8 使用 JDK 17 启动，Forge 目标为 JDK 17，NeoForge 目标为 JD
 
 ## 验证边界
 
-- `scripts/build.ps1 compileBoth`：两端编译，并运行两端 `MoltenPoolTests`。
+- `scripts/build.ps1 compileBoth`：两端编译，运行两端 `MoltenPoolTests`、`FluidizedBedTests` 和流化床实际顶点流检查。
 - `scripts/build.ps1 build`：两端完整构建，覆盖资源处理与打包。
 - `scripts/build.ps1 :neoforge:furnaceRenderTest`（或 Forge 对应任务）：捕获实际渲染器的顶点输出，检查 QUADS 拼接、朝向、UV、光照、五个接触面，以及两台机器的四个朝向和七个开盖位置；不启动图形窗口。该检查也接入各端的 `check`。
 - 开发服务器启动：检查配方是否被拒绝、移除规则是否命中、运行时 API 是否匹配。
+- `scripts/testing/fluidized_bed_server.py`：在既有 NeoForge 隔离测试世界验证真实 HU 接收、九格总账、燃料/灰自动化与两种大型炉子升温；不随发行 JAR 打包。
 - 客户端人工验收：检查 EMI、贴图、交互和真实产线运行。
 
 JVM 测试通过不等于配方在 GT6CE 内完整加载；服务端启动通过也不能替代客户端验收。具体执行结果记录在计划卡或整理记录中。

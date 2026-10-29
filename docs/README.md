@@ -7,6 +7,7 @@
 | [项目 README](../README.md) | 项目简介、环境、SDK、构建和开发运行 |
 | [计划卡总览](card-plans/总览.md) | 当前实现进度、卡的状态和阶段依赖；进度入口 |
 | [架构说明](architecture.md) | 代码分层、注册路径、平台边界、验证方式 |
+| [流化床工业供热](fluidized-bed.md) | 固体燃料热源、短烟道、3×3 炉台、功率与冶炼设备连接 |
 | [整理记录](project-maintenance.md) | 本轮整理范围、已做调整和后续技术整理候选 |
 | [灵感池](inspiration.md) | 尚未承诺实施的构想、取舍和待讨论问题 |
 | [总体路线图](supersymmetry-ssite-plan.md) | M0–M9 的设计目标与工艺背景；不是独立维护的进度看板 |

@@ -1,5 +1,6 @@
 package com.lombinaxmasson.ssite.compat;
 
+import com.lombinaxmasson.ssite.client.MachineRenderBounds;
 import gregtech.api.addon.platform.BehaviorMachineClientView;
 import gregtech.client.BehaviorMachineClients;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;

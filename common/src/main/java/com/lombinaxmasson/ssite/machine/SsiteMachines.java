@@ -84,6 +84,7 @@ public final class SsiteMachines implements AddonMachineContributor {
             machines.add(largeConverter(tier));
         }
         machines.add(varFurnace());
+        machines.addAll(new FluidizedBedMachines().addonMachines());
         return List.copyOf(machines);
     }
 
@@ -97,6 +98,7 @@ public final class SsiteMachines implements AddonMachineContributor {
             machines.add(tier.largeMachineType());
         }
         machines.add(VarFurnaceCore.MACHINE_TYPE);
+        machines.add(FluidizedBedCore.MACHINE_TYPE);
         for (String path : machines) {
             Item item = BuiltInRegistries.ITEM.get(ResourceLocation.tryBuild(SsiteAddon.MOD_ID, path));
             if (item != Items.AIR && added.add(item)) stacks.add(new ItemStack(item));
@@ -120,6 +122,7 @@ public final class SsiteMachines implements AddonMachineContributor {
         layouts.add(StructureLayout.builder(VarFurnaceCore.MACHINE_TYPE)
                 .cell(0, 1, 0, CellMatch.part(MoltenPool.LID_PART), StructureRole.CASING)
                 .build());
+        layouts.addAll(new FluidizedBedMachines().structureLayouts());
         return List.copyOf(layouts);
     }
 
@@ -135,6 +138,7 @@ public final class SsiteMachines implements AddonMachineContributor {
                     .hardness(8).texture("block/aod_lid")
                     .tanks(PartTanks.builder(1).capacity(32000).insert(GAS_FACES).build())
                     .build());
+        parts.addAll(new FluidizedBedMachines().layoutParts());
         return List.copyOf(parts);
     }
 

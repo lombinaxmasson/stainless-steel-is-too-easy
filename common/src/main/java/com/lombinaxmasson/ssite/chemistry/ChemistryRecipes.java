@@ -141,7 +141,7 @@ public final class ChemistryRecipes {
                 REJECTED.add(label);
                 return;
             }
-            AddonRecipes.RecipeMap table = AddonRecipes.map(map);
+            var table = AddonRecipes.map(map);
             AddonRecipes.Line added = displayOnly ? table.addDisplay(built) : table.add(built);
             if (added == null) REJECTED.add(label);
         }

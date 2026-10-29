@@ -1,5 +1,6 @@
 package com.lombinaxmasson.ssite.compat;
 
+import com.lombinaxmasson.ssite.client.MachineRenderBounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;

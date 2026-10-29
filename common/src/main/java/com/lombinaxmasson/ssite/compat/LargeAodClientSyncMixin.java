@@ -1,6 +1,7 @@
 package com.lombinaxmasson.ssite.compat;
 
 import com.lombinaxmasson.ssite.machine.LargeAodStructure;
+import com.lombinaxmasson.ssite.machine.ObjMultiblocks;
 import gregtech.api.addon.platform.BehaviorMachineClientView;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -27,7 +28,7 @@ public abstract class LargeAodClientSyncMixin extends BlockEntity {
     private void ssite$refresh(CompoundTag tag, CallbackInfo ci) {
         if (level == null || !level.isClientSide) return;
         var view = (BehaviorMachineClientView) this;
-        if (!view.addonId().equals("ssite") || LargeAodStructure.tier(view.machineType()) == null) return;
+        if (!view.addonId().equals("ssite") || !ObjMultiblocks.isMachine(view.machineType())) return;
         boolean formed = view.getBoolean("structure.formed");
         if (formed == ssite$formed) return;
         ssite$formed = formed;

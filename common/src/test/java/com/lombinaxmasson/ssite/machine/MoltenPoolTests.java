@@ -82,7 +82,8 @@ public final class MoltenPoolTests {
             check(SsiteLidPart.LidBehavior.redstoneOpen(2, signal, manual) != signal, "low signal opens");
         }
         for (var machine : new SsiteMachines().addonMachines())
-            if (machine instanceof gregtech.api.addon.machine.BehaviorMachine behavior)
+            if (machine instanceof gregtech.api.addon.machine.BehaviorMachine behavior
+                    && !behavior.casing().machineType().equals(FluidizedBedCore.MACHINE_TYPE))
                 check(behavior.toggles().isEmpty(), "furnaces have no processing enable switch");
     }
 

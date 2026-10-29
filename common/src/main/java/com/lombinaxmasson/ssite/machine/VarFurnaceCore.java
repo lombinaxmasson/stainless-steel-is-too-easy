@@ -69,7 +69,7 @@ public final class VarFurnaceCore extends MoltenPool {
 
         if (lidOpen || temperature <= AMBIENT_K) vent(state);
 
-        context.setProgress((float) (Math.max(0L, temperature - AMBIENT_K) / (double) (MAX_TEMP_K - AMBIENT_K)));
+        context.progress((float) (Math.max(0L, temperature - AMBIENT_K) / (double) (MAX_TEMP_K - AMBIENT_K)));
     }
 
     /** Keeps the closed, live furnace topped up with argon from the tank. */

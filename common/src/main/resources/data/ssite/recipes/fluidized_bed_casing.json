@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["PPP", "FBF", "PPP"],
+  "key": {
+    "P": {"item": "gt6ce:plate_steel"},
+    "F": {"item": "gt6ce:fire_bricks"},
+    "B": {"item": "minecraft:iron_bars"}
+  },
+  "result": {
+    "item": "ssite:fluidized_bed_casing",
+    "count": 4
+  }
+}

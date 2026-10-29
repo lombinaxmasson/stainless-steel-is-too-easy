@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "ssite:block/machine/fluidized_bed/insulation",
+    "up": "ssite:block/machine/fluidized_bed/insulation",
+    "north": "ssite:block/machine/fluidized_bed/insulation",
+    "south": "ssite:block/machine/fluidized_bed/insulation",
+    "west": "ssite:block/machine/fluidized_bed/insulation",
+    "east": "ssite:block/machine/fluidized_bed/insulation",
+    "particle": "ssite:block/machine/fluidized_bed/insulation"
+  }
+}

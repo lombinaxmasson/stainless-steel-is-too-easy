@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "ssite:block/machine/parts/fluidized_bed_combustor",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "ssite:block/machine/parts/fluidized_bed_combustor",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "ssite:block/machine/parts/fluidized_bed_combustor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ssite:block/machine/parts/fluidized_bed_combustor",
+      "y": 270
+    }
+  }
+}

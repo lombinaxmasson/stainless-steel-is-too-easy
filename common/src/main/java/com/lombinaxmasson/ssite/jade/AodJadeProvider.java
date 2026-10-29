@@ -1,4 +1,4 @@
-package com.lombinaxmasson.ssite.compat;
+package com.lombinaxmasson.ssite.jade;
 
 import com.lombinaxmasson.ssite.SsiteAddon;
 import com.lombinaxmasson.ssite.machine.AodTier;

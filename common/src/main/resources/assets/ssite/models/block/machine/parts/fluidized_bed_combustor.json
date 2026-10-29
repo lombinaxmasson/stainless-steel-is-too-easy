@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "ssite:block/machine/fluidized_bed/dark",
+    "up": "ssite:block/machine/fluidized_bed/shell",
+    "north": "ssite:block/machine/fluidized_bed/panel",
+    "south": "ssite:block/machine/fluidized_bed/plate",
+    "west": "ssite:block/machine/fluidized_bed/plate",
+    "east": "ssite:block/machine/fluidized_bed/plate",
+    "particle": "ssite:block/machine/fluidized_bed/plate"
+  }
+}

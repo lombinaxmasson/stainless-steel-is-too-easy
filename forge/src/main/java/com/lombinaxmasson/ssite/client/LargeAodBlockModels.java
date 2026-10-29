@@ -1,6 +1,7 @@
 package com.lombinaxmasson.ssite.client;
 
 import com.lombinaxmasson.ssite.machine.LargeAodStructure;
+import com.lombinaxmasson.ssite.machine.ObjMultiblocks;
 import gregtech.api.addon.platform.BehaviorMachineClientView;
 import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
 import net.minecraft.client.renderer.RenderType;
@@ -31,7 +32,7 @@ public final class LargeAodBlockModels {
     public static void bake(ModelEvent.ModifyBakingResult event) {
         for (var block : BuiltInRegistries.BLOCK) {
             var id = BuiltInRegistries.BLOCK.getKey(block);
-            if (!id.getNamespace().equals("ssite") || !id.getPath().startsWith("large_aod_")) continue;
+            if (!id.getNamespace().equals("ssite") || !ObjMultiblocks.isPart(id.getPath())) continue;
             for (var state : block.getStateDefinition().getPossibleStates()) {
                 var key = BlockModelShaper.stateToModelLocation(id, state);
                 var original = event.getModels().get(key);
