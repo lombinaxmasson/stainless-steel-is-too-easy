@@ -29,7 +29,7 @@ public final class LargeAodCore extends AodConverterCore {
 
     @Override protected void flushSlag(MachineBehaviorContext context, BehaviorState state) {
         super.flushSlag(context, state);
-        ItemStack output = context.item(1);
+        ItemStack output = context.liveItem(1);
         if (output.isEmpty()) return;
         for (var part : context.parts()) {
             var lid = part.context();

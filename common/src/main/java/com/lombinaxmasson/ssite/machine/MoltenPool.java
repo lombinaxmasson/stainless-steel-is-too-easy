@@ -225,7 +225,7 @@ public abstract class MoltenPool {
 
     /** Turns the main energy buffer into kelvin. Returns true when any heat arrived. */
     protected static boolean heat(MachineBehaviorContext context, long perKelvin, long maxK) {
-        long heat = context.energy();
+        long heat = context.mainInputStored();
         if (heat <= 0) return false;
         BehaviorState state = context.state();
         if (!context.consume(heat)) return false;
@@ -304,7 +304,7 @@ public abstract class MoltenPool {
     /** Already charged items keep melting after the lid closes; only new insertion needs an open lid. */
     protected boolean meltCharge(MachineBehaviorContext context, long temperature) {
         BehaviorState state = context.state();
-        if (meltFrom(state, temperature, context.item(CHARGE_SLOT),
+        if (meltFrom(state, temperature, context.liveItem(CHARGE_SLOT),
                 stack -> context.setItem(CHARGE_SLOT, stack))) {
             return true;
         }
