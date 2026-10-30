@@ -15,3 +15,9 @@ bin/
 libs/*.jar
 logs/
 __pycache__/
+
+# Local-only notes and one-off development tooling.
+/docs/
+/scripts/models/
+/scripts/testing/
+/neoforge/src/smokeTest/

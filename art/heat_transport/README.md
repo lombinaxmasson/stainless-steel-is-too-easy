@@ -30,4 +30,4 @@ python scripts/models/inspect_fluidized_bed.py --smoke --input art/heat_transpor
 python scripts/models/inspect_fluidized_bed.py --smoke --input art/heat_transport/components.html --output art/heat_transport/components
 ```
 
-生成依赖 Python 3 与 Pillow；截图检查另需 Playwright 和 Chromium。生成器校验坐标、法线、UV、绕序、64 种连接开闭及单格加热面积。Java 渲染测试还检查真实 OBJ 的 QUADS 输出、光照传递、六向臂和九板接触面；游戏行为与最终测试状态见 [玩法文档](../../docs/fluidized-bed.md)。
+生成依赖 Python 3 与 Pillow；截图检查另需 Playwright 和 Chromium。生成器校验坐标、法线、UV、绕序、64 种连接开闭及单格加热面积。Java 渲染测试还检查真实 OBJ 的 QUADS 输出、光照传递、六向臂和九板接触面。
