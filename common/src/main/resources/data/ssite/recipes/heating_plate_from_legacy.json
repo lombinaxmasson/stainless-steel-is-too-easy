@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [{"item": "ssite:fluidized_bed_heat_plate"}],
+  "result": {
+    "item": "ssite:heating_plate",
+    "count": 1
+  }
+}

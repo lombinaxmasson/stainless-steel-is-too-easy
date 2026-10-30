@@ -86,6 +86,7 @@ public final class SsiteMachines implements AddonMachineContributor {
         }
         machines.add(varFurnace());
         machines.addAll(new FluidizedBedMachines().addonMachines());
+        machines.addAll(HeatTransportMachines.machines());
         return List.copyOf(machines);
     }
 
@@ -100,6 +101,8 @@ public final class SsiteMachines implements AddonMachineContributor {
         }
         machines.add(VarFurnaceCore.MACHINE_TYPE);
         machines.add(FluidizedBedCore.MACHINE_TYPE);
+        machines.add(HeatTransportMachines.DUCT);
+        machines.add(HeatTransportMachines.PLATE);
         for (String path : machines) {
             Item item = BuiltInRegistries.ITEM.get(ResourceLocation.tryBuild(SsiteAddon.MOD_ID, path));
             if (item != Items.AIR && added.add(item)) stacks.add(new ItemStack(item));

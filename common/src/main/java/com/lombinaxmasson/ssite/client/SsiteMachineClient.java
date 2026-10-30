@@ -4,6 +4,7 @@ import com.lombinaxmasson.ssite.SsiteAddon;
 import com.lombinaxmasson.ssite.machine.AodTier;
 import com.lombinaxmasson.ssite.machine.VarFurnaceCore;
 import com.lombinaxmasson.ssite.machine.FluidizedBedCore;
+import com.lombinaxmasson.ssite.machine.HeatTransportMachines;
 import com.mojang.logging.LogUtils;
 import gregtech.api.addon.platform.BehaviorMachineClient;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -22,11 +23,14 @@ public final class SsiteMachineClient implements BehaviorMachineClient {
         for (AodTier tier : AodTier.values()) { types.add(tier.machineType()); types.add(tier.largeMachineType()); }
         types.add(VarFurnaceCore.MACHINE_TYPE);
         types.add(FluidizedBedCore.MACHINE_TYPE);
+        types.add(HeatTransportMachines.DUCT);
+        types.add(HeatTransportMachines.PLATE);
         TYPES = Set.copyOf(types);
     }
 
     private final SmallFurnaceRenderer renderer;
     private final FluidizedBedRenderer fluidizedBedRenderer;
+    private final HeatTransportRenderer heatTransportRenderer;
 
     public SsiteMachineClient() {
         MeshSink sink = null;
@@ -38,6 +42,7 @@ public final class SsiteMachineClient implements BehaviorMachineClient {
         LogUtils.getLogger().info("[ssite] OBJ machine renderer using {}", sink.getClass().getName());
         renderer = new SmallFurnaceRenderer(sink);
         fluidizedBedRenderer = new FluidizedBedRenderer(sink);
+        heatTransportRenderer = new HeatTransportRenderer(sink);
     }
 
     @Override
@@ -53,6 +58,7 @@ public final class SsiteMachineClient implements BehaviorMachineClient {
     @Override
     public BlockEntityRenderer<BlockEntity> renderer(String machineType) {
         if (FluidizedBedCore.MACHINE_TYPE.equals(machineType)) return fluidizedBedRenderer;
+        if (HeatTransportMachines.isMachine(machineType)) return heatTransportRenderer;
         return TYPES.contains(machineType) ? renderer : null;
     }
 }

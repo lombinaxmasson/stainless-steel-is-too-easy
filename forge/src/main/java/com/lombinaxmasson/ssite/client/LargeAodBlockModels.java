@@ -2,6 +2,7 @@ package com.lombinaxmasson.ssite.client;
 
 import com.lombinaxmasson.ssite.machine.LargeAodStructure;
 import com.lombinaxmasson.ssite.machine.ObjMultiblocks;
+import com.lombinaxmasson.ssite.machine.HeatTransportMachines;
 import gregtech.api.addon.platform.BehaviorMachineClientView;
 import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
 import net.minecraft.client.renderer.RenderType;
@@ -32,7 +33,8 @@ public final class LargeAodBlockModels {
     public static void bake(ModelEvent.ModifyBakingResult event) {
         for (var block : BuiltInRegistries.BLOCK) {
             var id = BuiltInRegistries.BLOCK.getKey(block);
-            if (!id.getNamespace().equals("ssite") || !ObjMultiblocks.isPart(id.getPath())) continue;
+            if (!id.getNamespace().equals("ssite") || !(ObjMultiblocks.isPart(id.getPath())
+                    || HeatTransportMachines.isMachine(id.getPath()))) continue;
             for (var state : block.getStateDefinition().getPossibleStates()) {
                 var key = BlockModelShaper.stateToModelLocation(id, state);
                 var original = event.getModels().get(key);
@@ -52,7 +54,7 @@ public final class LargeAodBlockModels {
             boolean formed = Integer.valueOf(LargeAodStructure.FORMED_DESIGN)
                     .equals(result.get(MultiblockPortBlockEntity.DESIGN));
             if (level.getBlockEntity(pos) instanceof BehaviorMachineClientView view)
-                formed = view.getBoolean("structure.formed");
+                formed = HeatTransportMachines.isMachine(view.machineType()) || view.getBoolean("structure.formed");
             return result.derive().with(FORMED, formed).build();
         }
 

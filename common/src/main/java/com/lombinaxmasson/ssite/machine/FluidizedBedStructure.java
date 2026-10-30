@@ -12,19 +12,19 @@ import net.minecraft.world.level.block.Blocks;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.List;
 import java.util.ArrayList;
 
-/** Fixed, continuous combustor + short hot-gas duct + nine-cell heating table. */
+/** Combustion tower, cyclone and rear HU outlet; external heat transport is independently placed. */
 public final class FluidizedBedStructure {
     public static final int FORMED_DESIGN = 1;
     public static final String CASING = "fluidized_bed_casing";
     public static final String DUCT = "fluidized_bed_duct";
     public static final String HEAT_PLATE = "fluidized_bed_heat_plate";
     public static final String FOUNDATION = "fluidized_bed_foundation";
+    public static final BlockPos HEAT_OUTLET = new BlockPos(0, 0, 4);
     private static final Map<BlockPos, String> PARTS = createParts();
-    private static final List<BlockPos> HEAT_CELLS = heatCells();
 
     private FluidizedBedStructure() {}
 
@@ -42,13 +42,8 @@ public final class FluidizedBedStructure {
         for (int y = 1; y <= 6; y++) put(cells, 2, y, 3, CASING);
         for (int z = 2; z <= 3; z++) put(cells, 2, 4, z, CASING);
         put(cells, 1, 6, 3, DUCT);
-        // The declared short duct turns from the back of the combustor toward the table.
-        for (int x = 0; x <= 4; x++) put(cells, x, 0, 4, DUCT);
-        for (int z = 2; z <= 3; z++) put(cells, 4, 0, z, DUCT);
-        for (int x = 5; x <= 7; x++) for (int z = 1; z <= 3; z++) {
-            put(cells, x, 0, z, FOUNDATION);
-            put(cells, x, 1, z, HEAT_PLATE);
-        }
+        // The rear outlet replaces one skid cell. Pipes beyond this face are not structure cells.
+        put(cells, HEAT_OUTLET.getX(), HEAT_OUTLET.getY(), HEAT_OUTLET.getZ(), DUCT);
         return Collections.unmodifiableMap(cells);
     }
 
@@ -56,19 +51,10 @@ public final class FluidizedBedStructure {
         cells.put(new BlockPos(x, y, z), part);
     }
 
-    private static List<BlockPos> heatCells() {
-        List<BlockPos> result = new ArrayList<>();
-        for (int x = 5; x <= 7; x++) for (int z = 1; z <= 3; z++) result.add(new BlockPos(x, 1, z));
-        return List.copyOf(result);
-    }
-
-    /** Local offsets of the nine emitting plates; their top neighbors are the only HU targets. */
-    public static List<BlockPos> heatPlates() { return HEAT_CELLS; }
-
     public static StructureLayout layout() {
         var builder = StructureLayout.builder(FluidizedBedCore.MACHINE_TYPE);
         PARTS.forEach((p, name) -> builder.cell(p.getX(), p.getY(), p.getZ(), CellMatch.part(name), StructureRole.CASING));
-        // Preserve the open combustion chamber. No cells above the heating table are claimed.
+        // Preserve the open combustion chamber. No external transport cells are claimed.
         for (int y = 1; y <= 6; y++) builder.cell(-1, y, 2, CellMatch.air(), StructureRole.AIR);
         return builder.build();
     }
@@ -87,8 +73,23 @@ public final class FluidizedBedStructure {
         return controller.relative(facing.getClockWise(), right).above(up).relative(facing.getOpposite(), back);
     }
 
-    public static BlockPos heatTarget(BlockPos controller, Direction facing, int index) {
-        BlockPos p = HEAT_CELLS.get(index);
+    public static BlockPos heatOutlet(BlockPos controller, Direction facing) {
+        return world(controller, facing, HEAT_OUTLET.getX(), HEAT_OUTLET.getY(), HEAT_OUTLET.getZ());
+    }
+
+    public static BlockPos heatOutletTarget(BlockPos controller, Direction facing) {
+        return heatOutlet(controller, facing).relative(facing.getOpposite());
+    }
+
+    /** Legacy placement helper only; these cells are no longer claimed by the tower structure. */
+    @Deprecated public static List<BlockPos> heatPlates() {
+        List<BlockPos> result = new ArrayList<>();
+        for (int x = 5; x <= 7; x++) for (int z = 1; z <= 3; z++) result.add(new BlockPos(x, 1, z));
+        return List.copyOf(result);
+    }
+
+    @Deprecated public static BlockPos heatTarget(BlockPos controller, Direction facing, int index) {
+        BlockPos p = heatPlates().get(index);
         return world(controller, facing, p.getX(), p.getY() + 1, p.getZ());
     }
 }

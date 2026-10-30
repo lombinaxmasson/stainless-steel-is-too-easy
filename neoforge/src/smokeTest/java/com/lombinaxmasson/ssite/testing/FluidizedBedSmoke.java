@@ -7,8 +7,10 @@ import com.lombinaxmasson.ssite.machine.LargeAodStructure;
 import gregtech.api.machine.MachineFace;
 import gregtech.api.addon.platform.AddonItems;
 import gregtech.api.addon.platform.AddonTool;
+import gregtech.api.energy.EnergyType;
 import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
 import gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity;
+import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
 import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.material.Materials;
@@ -58,7 +60,7 @@ public final class FluidizedBedSmoke {
     public static void commands(RegisterCommandsEvent event) {
         var root = Commands.literal("ssite_fluidized_bed_smoke").requires(source -> source.hasPermission(4));
         for (String stage : List.of("prepare", "break", "repair", "structure", "energy", "energy_gate", "fuels", "controls",
-                "automation_start", "automation_check", "receivers_start", "receivers_check", "persistence")) {
+                "automation_start", "automation_air", "automation_check", "receivers_start", "receivers_check", "persistence")) {
             root.then(Commands.literal(stage).executes(context -> {
                 var level = context.getSource().getLevel();
                 guard(level);
@@ -73,6 +75,7 @@ public final class FluidizedBedSmoke {
                     case "fuels" -> fuels(level);
                     case "controls" -> controls(level);
                     case "automation_start" -> startAutomation(level);
+                    case "automation_air" -> refillAutomationAir(level);
                     case "automation_check" -> verifyAutomation(level);
                     case "receivers_start" -> startReceivers(level);
                     case "receivers_check" -> verifyReceivers(level);
@@ -119,7 +122,7 @@ public final class FluidizedBedSmoke {
 
     private static void prepare(ServerLevel level) {
         for (String recipe : List.of("fluidized_bed_combustor", "fluidized_bed_casing", "fluidized_bed_duct",
-                "fluidized_bed_heat_plate", "fluidized_bed_foundation")) {
+                "fluidized_bed_heat_plate", "fluidized_bed_foundation", "heat_duct", "heating_plate")) {
             block("ssite:" + recipe);
             check(level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("ssite", recipe)).isPresent(),
                     "crafting recipe was not loaded from the NeoForge resource conversion: " + recipe);
@@ -135,6 +138,13 @@ public final class FluidizedBedSmoke {
                 BlockPos local = cell.getKey();
                 level.setBlockAndUpdate(pos(index, local.getX(), local.getY(), local.getZ()), cell.getValue().defaultBlockState());
             }
+            // Independent transport, deliberately absent from the source's structure layout.
+            for (int[] duct : new int[][]{{0,0,5},{1,0,5},{2,0,5},{3,0,5},{4,0,5},{4,1,5},{4,1,4},{4,1,3}})
+                level.setBlockAndUpdate(pos(index, duct[0], duct[1], duct[2]), block("ssite:heat_duct").defaultBlockState());
+            for (int x = 5; x <= 7; x++) for (int z = 1; z <= 3; z++) {
+                level.setBlockAndUpdate(pos(index, x, 0, z), block("ssite:fluidized_bed_foundation").defaultBlockState());
+                level.setBlockAndUpdate(pos(index, x, 1, z), block("ssite:heating_plate").defaultBlockState());
+            }
             if (index <= AUTOMATION) for (BlockPos target : targets(index))
                 level.setBlockAndUpdate(target, block("gt6ce:smelting_crucible_steel").defaultBlockState());
         }
@@ -148,20 +158,23 @@ public final class FluidizedBedSmoke {
             verifyShapes(level, index, true);
             // Store residual heat before breaking. A broken hot source must not keep feeding the platform.
             setEnergy(level, source, 12000, 0);
-            level.setBlockAndUpdate(pos(index, 5, 1, 1), Blocks.AIR.defaultBlockState());
+            level.setBlockAndUpdate(pos(index, -1, 1, 1), Blocks.AIR.defaultBlockState());
         }
     }
 
     private static void repairStructures(ServerLevel level) {
         for (int index = 0; index < 4; index++) {
             var source = machine(level, index);
-            check(!source.structureFormed(), facing(index) + " missing heat plate remained formed");
+            check(!source.structureFormed(), facing(index) + " missing body column remained formed");
             verifyShapes(level, index, false);
+            check(level.getBlockEntity(pos(index, -1, 0, 0)) instanceof MultiblockPortBlockEntity part
+                            && part.isBoundTo(origin(index)),
+                    "restoring an incomplete shell's normal shape discarded its building-tool binding");
             check(source.state().getLong("heat.output") == 0, "broken source emitted HU");
             for (BlockPos target : targets(index))
                 check(receiver(level, target).getTemperature() <= 293 && receiver(level, target).getEnergyBuffer() == 0,
                         "broken structure heated a native receiver");
-            level.setBlockAndUpdate(pos(index, 5, 1, 1), block("ssite:fluidized_bed_heat_plate").defaultBlockState());
+            level.setBlockAndUpdate(pos(index, -1, 1, 1), block("ssite:fluidized_bed_casing").defaultBlockState());
         }
     }
 
@@ -224,27 +237,20 @@ public final class FluidizedBedSmoke {
         setEnergy(level, source, heat, air);
     }
 
-    /** Freeze ordinary ticks, then tick only the real source: receiver HU remains directly measurable. */
-    private static long tickAccounting(ServerLevel level, int index, boolean requireEveryCell) {
+    /** Tick only the real source: external inlet HU remains measurable without faking network game time. */
+    private static long tickAccounting(ServerLevel level, int index, boolean requireOutput) {
         var source = machine(level, index);
         long before = source.storedEnergy();
-        List<SmeltingCrucibleEntity> receivers = new ArrayList<>();
-        List<Long> buffers = new ArrayList<>();
-        for (BlockPos target : targets(index)) if (level.getBlockEntity(target) instanceof SmeltingCrucibleEntity crucible) {
-            receivers.add(crucible); buffers.add(crucible.getEnergyBuffer());
-        }
+        var inlet = level.getBlockEntity(pos(index, 0, 0, 5)) instanceof BehaviorMachineBlockEntity host ? host : null;
+        long inletBefore = inlet == null ? 0 : inlet.storedEnergy();
         BehaviorMachineBlockEntity.serverTick(level, origin(index), source.getBlockState(), source);
-        long delivered = 0;
-        for (int i = 0; i < receivers.size(); i++) {
-            long received = receivers.get(i).getEnergyBuffer() - buffers.get(i);
-            check(received >= 0 && (!requireEveryCell || received > 0), "HU failed to reach a platform cell");
-            delivered += received;
-        }
+        long delivered = inlet == null ? 0 : inlet.storedEnergy() - inletBefore;
+        check(delivered >= 0 && (!requireOutput || delivered > 0), "HU failed to reach the physical inlet");
         long generated = source.state().getLong("heat.generated");
         long output = source.state().getLong("heat.output");
         long loss = source.state().getLong("heat.loss");
-        check(delivered == output, "reported HU differs from nine actual receiver buffers");
-        check(output >= 0 && output <= MAX_HU, "nine outputs multiplied the total power budget");
+        check(delivered == output, "reported HU differs from the actual pipe inlet buffer");
+        check(output >= 0 && output <= MAX_HU, "outlet exceeded the total power budget");
         check(before + generated - output - loss == source.storedEnergy(), "source/receivers violate HU conservation");
         check(source.storedEnergy() >= 0 && source.storedEnergy() <= source.energyCapacity(), "heat buffer outside capacity");
         return delivered;
@@ -255,14 +261,15 @@ public final class FluidizedBedSmoke {
             configure(level, index, true, 0, 10000);
             var source = machine(level, index);
             for (Direction side : Direction.values())
-                check(source.doEnergyInjection("HU", side, 1, 100, true) == 0, "external HU may not be converted into fuel heat");
+                check(source.doEnergyInjection(EnergyType.HU, side, 1, 100, true) == 0, "external HU may not be converted into fuel heat");
             tickAccounting(level, index, false); // New heat becomes available on the next tick.
             check(source.state().getLong("heat.generated") > 0, "fuel plus KU did not generate HU");
-            check(tickAccounting(level, index, true) > 0, "all nine cells must supply real HU");
-            BlockPos blocked = targets(index).get(8);
+            check(tickAccounting(level, index, true) > 0, "source must supply real HU to its external pipe");
+            BlockPos blocked = pos(index, 2, 0, 5);
             level.setBlockAndUpdate(blocked, Blocks.AIR.defaultBlockState());
-            tickAccounting(level, index, false);
-            level.setBlockAndUpdate(blocked, block("gt6ce:smelting_crucible_steel").defaultBlockState());
+            check(tickAccounting(level, index, false) == 0, "disconnected pipe accepted more source heat");
+            check(source.structureFormed(), "external pipe was incorrectly claimed by the source structure");
+            level.setBlockAndUpdate(blocked, block("ssite:heat_duct").defaultBlockState());
             enabled(source, false);
         }
     }
@@ -276,7 +283,8 @@ public final class FluidizedBedSmoke {
         // Current heaters/engines push only. Exercise native pull accounting with a test-only specification,
         // rather than falsely passing a rejection check against a source that can never offer energy.
         node.setSpec(EnergyNodeSpec.builder("ssite_smoke_pull_" + output.getShortName().toLowerCase(), Materials.Steel)
-                .kind(EnergyNodeSpec.Kind.CONVERTER).input(GregTechTags.Energy.EU, packet)
+                .kind(EnergyNodeSpec.Kind.CONVERTER).texture(node.spec().textureFolder())
+                .name("SSITE smoke pull " + output.getShortName()).input(GregTechTags.Energy.EU, packet)
                 .output(output, packet).capacity(packet * 10).build());
         check(node.doEnergyInjection(GregTechTags.Energy.EU, outputFace.getOpposite(), packet, 4, true) == 4,
                 "native pull fixture could not receive its input energy");
@@ -373,7 +381,7 @@ public final class FluidizedBedSmoke {
         check(source.inventory().getStackInSlot(0).getCount() == 16 && source.state().getLong("heat.generated") == 0,
                 "source burns without KU air");
         check(level.getBlockState(origin(CONTROL).above()).isAir(), "KU input is buried inside required structure");
-        long accepted = source.doEnergyInjection("KU", Direction.UP, 32, 100, true);
+        long accepted = source.doEnergyInjection(EnergyType.KU, Direction.UP, 32, 100, true);
         check(accepted > 0, "native KU injection did not charge the blower");
         var player = FakePlayerFactory.getMinecraft(level);
         player.setShiftKeyDown(false);
@@ -436,6 +444,14 @@ public final class FluidizedBedSmoke {
                         && targets(AUTOMATION).stream().anyMatch(p -> receiver(level, p).getTemperature() > 293),
                 "automatically fed fuel did not heat the native receivers");
         enabled(source, false);
+    }
+
+    private static void refillAutomationAir(ServerLevel level) {
+        var source = machine(level, AUTOMATION);
+        long before = snapshot(level, source).getLong("gt.aux_energy");
+        long accepted = source.doEnergyInjection(EnergyType.KU, Direction.UP, 32, 200, true);
+        check(accepted > 0 && snapshot(level, source).getLong("gt.aux_energy") == before + accepted * 32,
+                "native KU top-up did not preserve exact auxiliary energy accounting");
     }
 
     private static void startReceivers(ServerLevel level) {

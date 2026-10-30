@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ssite:block/machine/parts/heat_duct"
+    }
+  }
+}

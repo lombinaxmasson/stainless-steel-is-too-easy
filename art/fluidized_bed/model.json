@@ -1,6 +1,6 @@
 {
-  "schema_version": 2,
-  "name": "SSITE fluidized-bed combustor / circulating tower with fixed 3x3 heat bank",
+  "schema_version": 3,
+  "name": "SSITE fluidized-bed combustor / independent circulating tower",
   "units": "blocks",
   "up": "+Y",
   "front": "-Z",
@@ -11,68 +11,26 @@
     2.5
   ],
   "nominal_envelope": [
-    11,
+    7,
     8,
     5
   ],
-  "heat_contact_bounds": [
+  "heat_outlet_bounds": [
     [
-      4.5,
-      2,
-      -1.5
+      -0.25,
+      0.25,
+      2.5
     ],
     [
-      7.5,
-      2,
-      1.5
+      0.25,
+      0.75,
+      2.5
     ]
   ],
-  "heat_owner_cells": [
-    [
-      5,
-      1,
-      1
-    ],
-    [
-      5,
-      1,
-      2
-    ],
-    [
-      5,
-      1,
-      3
-    ],
-    [
-      6,
-      1,
-      1
-    ],
-    [
-      6,
-      1,
-      2
-    ],
-    [
-      6,
-      1,
-      3
-    ],
-    [
-      7,
-      1,
-      1
-    ],
-    [
-      7,
-      1,
-      2
-    ],
-    [
-      7,
-      1,
-      3
-    ]
+  "heat_owner_cell": [
+    0,
+    0,
+    4
   ],
   "stats": {
     "bounds": [
@@ -82,14 +40,14 @@
         -2.5
       ],
       [
-        7.5,
+        3.45,
         7.97,
-        2.18771
+        2.5
       ]
     ],
-    "groups": 50,
-    "triangles": 5968,
-    "faces": 3615,
+    "groups": 42,
+    "triangles": 5348,
+    "faces": 3305,
     "texture_size": [
       512,
       256
@@ -98,10 +56,7 @@
     "unit_normals": true,
     "uv_in_atlas": true,
     "nondegenerate_triangles": true,
-    "consistent_winding": true,
-    "heat_contact_area": 9.0,
-    "heat_contact_cells": 9,
-    "heat_clearance": true
+    "consistent_winding": true
   },
   "groups": [
     "skid",
@@ -144,16 +99,8 @@
     "lifting_lugs",
     "controller",
     "controller_mount",
-    "hot_gas_duct",
-    "duct_flanges",
-    "duct_supports",
-    "heat_bank_base",
-    "heat_bank_refractory",
-    "heat_bank_casing",
-    "heat_bank_bands",
-    "heat_bank_door",
-    "heat_roof_edges",
-    "heat_contact"
+    "heat_outlet",
+    "heat_outlet_flange"
   ],
   "cutaway_hide": [
     "front_shell",
@@ -164,7 +111,7 @@
     "front_instruments",
     "bed_front"
   ],
-  "cutaway_triangles": 4880,
+  "cutaway_triangles": 4260,
   "ports": [
     {
       "id": "fuel",
@@ -271,73 +218,34 @@
     },
     {
       "id": "heat",
-      "label": "3×3 向上供热台",
+      "label": "后侧 HU 管道接口",
       "code": "HU",
       "bounds": [
         [
-          4.5,
-          2,
-          -1.5
+          -0.25,
+          0.25,
+          2.5
         ],
         [
-          7.5,
-          2,
-          1.5
+          0.25,
+          0.75,
+          2.5
         ]
       ],
       "normal": [
         0,
-        1,
-        0
+        0,
+        1
       ],
       "groups": [
-        "heat_contact"
+        "heat_outlet",
+        "heat_outlet_flange"
       ],
       "connection_cells": [
         [
-          5,
-          2,
-          1
-        ],
-        [
-          5,
-          2,
-          2
-        ],
-        [
-          5,
-          2,
-          3
-        ],
-        [
-          6,
-          2,
-          1
-        ],
-        [
-          6,
-          2,
-          2
-        ],
-        [
-          6,
-          2,
-          3
-        ],
-        [
-          7,
-          2,
-          1
-        ],
-        [
-          7,
-          2,
-          2
-        ],
-        [
-          7,
-          2,
-          3
+          0,
+          0,
+          5
         ]
       ],
       "connection_coordinate_system": "controller-local after game_translation"

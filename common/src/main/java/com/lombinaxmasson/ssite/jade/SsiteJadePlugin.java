@@ -13,10 +13,12 @@ public final class SsiteJadePlugin implements IWailaPlugin {
     @Override public void register(IWailaCommonRegistration registration) {
         registration.registerBlockDataProvider(AodJadeProvider.INSTANCE, BlockEntity.class);
         registration.registerBlockDataProvider(FluidizedBedJadeProvider.INSTANCE, BlockEntity.class);
+        registration.registerBlockDataProvider(HeatTransportJadeProvider.INSTANCE, BlockEntity.class);
     }
 
     @Override public void registerClient(IWailaClientRegistration registration) {
         registration.registerBlockComponent(AodJadeProvider.INSTANCE, Block.class);
         registration.registerBlockComponent(FluidizedBedJadeProvider.INSTANCE, Block.class);
+        registration.registerBlockComponent(HeatTransportJadeProvider.INSTANCE, Block.class);
     }
 }

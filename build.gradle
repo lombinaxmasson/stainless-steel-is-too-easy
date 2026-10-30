@@ -8,6 +8,7 @@ tasks.register('compileBoth') {
     dependsOn ':forge:compileJava', ':neoforge:compileJava', ':forge:unitTest', ':neoforge:unitTest'
     dependsOn ':forge:fluidizedBedTest', ':neoforge:fluidizedBedTest',
             ':forge:fluidizedBedRenderTest', ':neoforge:fluidizedBedRenderTest'
+    dependsOn ':forge:heatTransportTest', ':neoforge:heatTransportTest'
 }
 
 tasks.named('assemble').configure {

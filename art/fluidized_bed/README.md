@@ -1,8 +1,8 @@
 # 流化床燃烧室 · FBC–01
 
-循环流化床燃烧室游戏模型：保留高主炉筒、侧置旋风分离器、外露回料管和独立鼓风机，增加固定低位保温烟道、旁侧 3×3 供热台及前侧控制面板。造型参照 HBM 机器的低多边形轮廓、棕灰钢板、分节带箍、铆钉与像素贴图语言。供热台顶面保持完整平坦，可直接承托大型坩埚或 AOD。
+循环流化床燃烧室游戏模型：高主炉筒、侧置旋风分离器、外露回料管、独立鼓风机与前侧控制面板共同组成独立塔体。造型参照 HBM 机器的低多边形轮廓、棕灰钢板、分节带箍、铆钉与像素贴图语言。塔后设 HU 接口，由玩家另行放置输热管和加热板连接大型坩埚或 AOD。
 
-几何、UV、材质与像素贴图均为本项目原创。HBM 的 OBJ 和贴图仅用于理解风格；生成脚本不读取、复制或拼接 HBM 资源。本目录保留建模源资产与离线预览，安装脚本将完整 OBJ、图集及五类方块/物品资源写入游戏资源目录；机器行为由 Java 实现。
+几何、UV、材质与像素贴图均为本项目原创。HBM 的 OBJ 和贴图仅用于理解风格；生成脚本不读取、复制或拼接 HBM 资源。本目录保留建模源资产与离线预览，安装脚本将塔体、独立输热组件及图集写入游戏资源目录；机器行为已接入 Java 实现。玩法入口见 [流化床说明](../../docs/fluidized-bed.md)，独立组件见 [输热管与加热板](../heat_transport/README.md)。
 
 ## 文件
 
@@ -24,16 +24,18 @@
 
 - **1 模型单位 = 1 方块**；`+Y` 向上，正面朝 `-Z`。
 - 底座落在 `Y=0`；主炉筒轴线位于 `X=-0.85、Z=0.15`。
-- 包围盒最小值为 `(-3.45, 0, -2.5)`，最大值为 `(7.5, 7.97, 2.18771)`。
-- 实际外包尺寸按 `X×Y×Z` 为 **10.95×7.97×4.68771**；在游戏控制器局部坐标中，包络为 **11×8×5 方块**。
+- 包围盒最小值为 `(-3.45, 0, -2.5)`，最大值为 `(3.45, 7.97, 2.5)`。
+- 实际外包尺寸按 `X×Y×Z` 为 **6.9×7.97×5**；在游戏控制器局部坐标中，包络为 **7×8×5 方块**。
 - 游戏渲染以控制器为基准，将 OBJ 平移 **`(+0.5, 0, +2.5)`**，再按控制器朝向旋转。模型正面板 `X[-0.5,0.5] / Y[0,1] / Z=-2.5` 与控制器正面相接。
-- 完整模型当前有 **5,968 三角面、50 个命名部件**；剖视模型有 **4,880 三角面**。准确统计以同目录 `model.json` 为准。
+- 完整模型当前有 **5,348 三角面、42 个命名部件**；剖视模型有 **4,260 三角面**。准确统计以同目录 `model.json` 为准。
 
-### 供热面与净空
+### 后侧输热接口与独立布置
 
-供热台模型范围为 `X[4.5,7.5] / Y[0,2] / Z[-1.5,1.5]`。`heat_contact` 对象**只包含 9 个 `Y=2` 的朝上四边形**，共 18 个三角面、面积 9；顶板侧面与底面属于 `heat_roof_edges`。顶面无围栏、螺栓或其他突出件，整个 3×3 上方竖直空间无本机模型遮挡。
+塔体已移除旧版固定地面烟道和旁侧 3×3 炉台。主塔与旋风分离器之间的高位 `crossover_flue` 保留，塔底只保留伸到后侧边界的短接口。
 
-在控制器局部方块坐标中，供热板为 `right=5..7 / up=1 / back=1..3`，顶面落在 `Y=2 / X[5,8] / Z[1,4]` 的整数边界；上接设备从 `up=2` 开始。固定烟道由主塔后下方沿 `Z≈1.75` 横向经过低位支座，再转入供热台左侧。
+接口端面为 OBJ 坐标 `X[-0.25,0.25] / Y[0.25,0.75] / Z=2.5`，中心经游戏平移后为 `(0.5,0.5,5)`。接口所属结构格是控制器局部 **`right=0 / up=0 / back=4`**；第一段独立 `ssite:heat_duct` 放在 **`(0,0,5)`**。控制器转向时，接口与管道目标一起转动。
+
+当前成型结构共 **71 块**：控制器 1、外壳 35、基础 33、内部/出口烟道 2，另留炉内 6 格空气。独立热管和 `ssite:heating_plate` 不属于塔体成型条件。加热板侧面进热、顶面出热，可并排形成 3×3 平坦供热面；详见独立组件目录。
 
 材质采用平面明暗与像素细节。贴图采样应设为 **Nearest / 最近邻**；Blender 的 Image Texture 节点可选择 **Closest**。生成时以 32px 逻辑网格绘制每块材质，再最近邻放大为 64px，因此细节以 2px 为单位。UV 已留出图块内缘，不宜重新自动展开或对整张 atlas 做模糊滤波。
 
@@ -57,13 +59,11 @@
 | 一次风与二次风 | `primary_air`、`secondary_air` | 连接下部风室的一次风管与炉身二次风支管 |
 | 起吊构件 | `lifting_lugs` | 炉顶起吊耳的低多边形外形 |
 | 前侧控制器 | `controller`、`controller_mount` | 贴合控制器方块正面的仪表面板与支架 |
-| 固定热烟道 | `hot_gas_duct`、`duct_flanges`、`duct_supports` | 后绕方形保温管、连接法兰与落地支座 |
-| 供热台 | `heat_bank_base`、`heat_bank_refractory`、`heat_bank_casing`、`heat_bank_bands`、`heat_bank_door` | 低位耐火核心、外护板、加强框与清灰门 |
-| 供热顶板 | `heat_contact`、`heat_roof_edges` | 九格平坦向上接触面与顶板侧壁 |
+| 后侧输热口 | `heat_outlet`、`heat_outlet_flange` | 塔内短保温接管与朝后的方形法兰 |
 
 工艺关系按“固体燃料进入床层 → 炉筒内燃烧 → 上部烟气进入旋风分离器 → 固体经回料腿返回炉体 → 净烟气向上排出”的循环路径组织。内部结构用于游戏美术的工艺示意，未定义实际压力容器的壁厚、耐温参数或运行工况。
 
-`model.json` 的 `ports` 记录 `fuel`、`air`、`ash`、`flue`、`heat`、`controller` 的包围范围与朝向。面边界使用 OBJ 坐标，供热连接格及 `heat_owner_cells` 使用平移后的控制器局部方块坐标；这些清单用于资源检查，实际接口行为由机器代码决定。
+`model.json` 的 `ports` 记录 `fuel`、`air`、`ash`、`flue`、`heat`、`controller` 的包围范围与朝向。面边界使用 OBJ 坐标，外接管道格及 `heat_owner_cell` 使用平移后的控制器局部方块坐标；这些清单用于资源检查，实际接口行为由机器代码决定。
 
 ## 查看与剖视
 
@@ -79,7 +79,7 @@
 python scripts/models/build_fluidized_bed.py
 ```
 
-几何与导出源为 `scripts/models/build_fluidized_bed.py`，贴图源为 `scripts/models/fluidized_bed_materials.py`，交互预览模板为 `scripts/models/fluidized_bed_viewer.html`。脚本会重新生成本目录的两份 OBJ、MTL、atlas、`model.json` 和 `preview.html`，并校验有限坐标、单位法线、UV 范围、退化面、三角形朝向、九格供热面积、整数边界及上方净空。预览 PNG 是另行截取的展示图片，几何修改后应重新截图。
+几何与导出源为 `scripts/models/build_fluidized_bed.py`，贴图源为 `scripts/models/fluidized_bed_materials.py`，交互预览模板为 `scripts/models/fluidized_bed_viewer.html`。脚本会重新生成本目录的两份 OBJ、MTL、atlas、`model.json` 和 `preview.html`，并校验有限坐标、单位法线、UV 范围、退化面、三角形朝向、塔体范围与后侧接口位置。预览 PNG 是另行截取的展示图片，几何修改后应重新截图。
 
 同步游戏资源时运行：
 
@@ -87,7 +87,7 @@ python scripts/models/build_fluidized_bed.py
 python scripts/models/install_fluidized_bed.py
 ```
 
-安装脚本先重新生成模型，再写入 `assets/ssite/obj/fluidized_bed_combustor.obj` 和 `assets/ssite/textures/machine/fluidized_bed_combustor.png`，并生成 `fluidized_bed_combustor`、`fluidized_bed_casing`、`fluidized_bed_duct`、`fluidized_bed_heat_plate`、`fluidized_bed_foundation` 的 blockstate、方块/物品模型和从图集提取的像素贴图。配方、语言文本与 Java 注册不由美术安装脚本维护。
+安装脚本先重新生成塔体与独立组件，再写入 `assets/ssite/obj/` 和 `assets/ssite/textures/machine/fluidized_bed_combustor.png`，并生成五种原结构资源及 `heat_duct`、`heating_plate` 的 blockstate、方块/物品模型和从图集提取的像素贴图。旧 `fluidized_bed_heat_plate` 资源保留供兼容，当前塔体不再需要它。配方、语言文本与 Java 注册不由美术安装脚本维护。
 
 交互检查另需 Python Playwright 与其 Chromium。完整检查覆盖旋转、缩放、四视角、剖视、部件高亮、网格及 736/360 像素下的明暗主题；结果保存到 `build/fluidized-bed-qa`：
 

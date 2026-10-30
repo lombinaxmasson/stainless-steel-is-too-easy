@@ -5,7 +5,6 @@ import gregtech.api.material.GTValues;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +16,7 @@ public final class FluidizedBedTests {
     private FluidizedBedTests() {}
     public static void main(String[] args) {
         fuelScale(); materialFuelScale(); noFormationNoFuelOrOutput(); noBlowerNoFuel(); fullAshDoesNotConsume();
-        outputsShareOneBudget(); rejectionDoesNotStarveOtherPlates(); residualHeatAndStop();
+        outletUsesOneBudget(); rejectedHeatIsRetained(); residualHeatAndStop();
         pendingFuelResumesWithoutDoubleAsh(); fullHeatStopsNewCharges(); longRunConservation();
         finiteFuelDeliveredYield(); reconstructionPreservesEnergy(); structureCoordinates();
         System.out.println("FluidizedBedTests: all 14 checks passed.");
@@ -70,20 +69,20 @@ public final class FluidizedBedTests {
         check(tick.status() == FluidizedBedCore.ASH_FULL, "full ash stops charging");
         check(rig.fuel == 20 && rig.pending == 0 && tick.generated() == 0, "full ash cannot eat a fuel item");
     }
-    private static void outputsShareOneBudget() {
+    private static void outletUsesOneBudget() {
         Rig rig = new Rig(); rig.heat = 150_000; rig.enabled = false; rig.power = 4;
         var tick = conserved(rig);
-        check(tick.output() == 2304, "one budget across nine plates");
-        for (long received : rig.received) check(received == 256, "equal per-plate heat share");
-        check(Arrays.stream(rig.received).sum() == tick.output(), "meter equals real accepted heat");
+        check(tick.output() == 2304, "one budget through the physical rear outlet");
+        check(rig.received == tick.output(), "meter equals real accepted heat");
     }
-    private static void rejectionDoesNotStarveOtherPlates() {
+    private static void rejectedHeatIsRetained() {
         Rig rig = new Rig(); rig.heat = 150_000; rig.enabled = false; rig.power = 4;
-        rig.limits[0] = 0; rig.limits[1] = 3;
+        rig.limit = 0;
         var tick = conserved(rig);
-        check(rig.received[0] == 0 && rig.received[1] == 3, "reject and partial accept are honored");
-        for (int i = 2; i < 9; i++) check(rig.received[i] == 256, "later plates always get their share");
-        check(tick.output() == 7 * 256 + 3, "unaccepted heat remains in reservoir");
+        check(tick.output() == 0 && rig.received == 0, "disconnected outlet accepts nothing");
+        rig.limit = 3;
+        tick = conserved(rig);
+        check(tick.output() == 3 && rig.received == 3, "only accepted outlet heat is debited");
     }
     private static void residualHeatAndStop() {
         Rig rig = new Rig(); rig.heat = 100_000; rig.pending = 20_000; rig.enabled = false;
@@ -109,7 +108,7 @@ public final class FluidizedBedTests {
         check(rig.pending < pending && rig.fuel == fuel && rig.ash == ash, "resume burns existing charge without duplicating products");
     }
     private static void fullHeatStopsNewCharges() {
-        Rig rig = new Rig(); Arrays.fill(rig.limits, 0); rig.heat = FluidizedBedCore.HEAT_CAPACITY;
+        Rig rig = new Rig(); rig.limit = 0; rig.heat = FluidizedBedCore.HEAT_CAPACITY;
         var tick = conserved(rig);
         check(tick.status() == FluidizedBedCore.HEAT_FULL && rig.fuel == 20, "back-pressure stops fuel at reservoir capacity");
     }
@@ -117,14 +116,14 @@ public final class FluidizedBedTests {
         Rig rig = new Rig(); rig.fuel = 1000; rig.ashLimit = 10_000; rig.ku = 1_000_000;
         long initialKu = rig.ku, output = 0, loss = 0, generated = 0, blowerUse = 0;
         for (int i = 0; i < 1500; i++) {
-            rig.power = i % 4 + 1; rig.limits[i % 9] = i % 3 == 0 ? 0 : Long.MAX_VALUE;
+            rig.power = i % 4 + 1; rig.limit = i % 3 == 0 ? 0 : Long.MAX_VALUE;
             var tick = conserved(rig); output += tick.output(); loss += tick.loss();
             generated += tick.generated();
             if (tick.status() == FluidizedBedCore.BURNING) blowerUse += FluidizedBedCore.kuPerTick(rig.power);
         }
         check((1000L-rig.fuel) * COAL_HEAT == rig.heat + rig.pending + output + loss, "aggregate fuel ledger closes across throttling");
         check(generated == rig.heat + output + loss, "generated heat is stored, delivered or explicitly lost");
-        check(Arrays.stream(rig.received).sum() == output, "all nine receivers agree with the aggregate output meter");
+        check(rig.received == output, "outlet receipt agrees with the aggregate output meter");
         check(rig.ash == 1000-rig.fuel, "one ash per consumed charge, independent of ticks and nine outputs");
         check(initialKu - rig.ku == blowerUse && blowerUse > 0, "KU ledger closes across power changes and partial fuel ticks");
         check(output > 0 && loss > 0, "long run exercises useful output and thermal loss");
@@ -148,7 +147,7 @@ public final class FluidizedBedTests {
             check(draining && rig.fuel == 0 && rig.pending == 0 && rig.heat == 0, "finite fuel finishes and residual heat drains within the tick budget");
             check(rig.ash == charges && generated == charges * COAL_HEAT, "all finite fuel is burned once with one ash per charge");
             check(output + loss == charges * COAL_HEAT && loss > 0, "delivered yield accounts for all startup and cooldown losses");
-            check(Arrays.stream(rig.received).sum() == output, "finite-fuel delivery is the sum of actual receiver receipts");
+            check(rig.received == output, "finite-fuel delivery agrees with actual outlet receipts");
             check(initialKu - rig.ku == blowerUse, "cooldown consumes no additional blower KU");
             check(output > charges * ORIGINAL_COAL_HEAT && output < charges * COAL_HEAT,
                     "net delivered heat exceeds the original recipe while remaining below the gross 150 percent yield");
@@ -173,16 +172,17 @@ public final class FluidizedBedTests {
             check(seen.add(p), "layout has unique cells");
             check(!p.equals(BlockPos.ZERO), "controller is not a claimed part");
             if (cell.match() instanceof CellMatch.Part part && part.name().equals(FluidizedBedStructure.HEAT_PLATE)) {
-                check(p.getY() == 1 && p.getX() >= 5 && p.getX() <= 7 && p.getZ() >= 1 && p.getZ() <= 3, "plates occupy one exact plane");
                 plates++;
             }
             check(!(p.getX() >= 5 && p.getY() >= 2), "structure leaves furnace mounting space free");
         }
-        check(plates == 9, "exactly nine plate positions");
+        check(plates == 0, "external heating plates are not claimed by the tower");
+        check(seen.size() == 76, "tower has seventy solid parts and six air cells, excluding its controller");
         for (Direction facing : new Direction[]{Direction.NORTH,Direction.SOUTH,Direction.EAST,Direction.WEST}) {
-            Set<BlockPos> targets = new HashSet<>();
-            for (int i = 0; i < 9; i++) targets.add(FluidizedBedStructure.heatTarget(BlockPos.ZERO,facing,i));
-            check(targets.size() == 9 && targets.stream().allMatch(p -> p.getY() == 2), "four orientations keep unique adjacent targets");
+            BlockPos outlet = FluidizedBedStructure.heatOutlet(BlockPos.ZERO, facing);
+            BlockPos target = FluidizedBedStructure.heatOutletTarget(BlockPos.ZERO, facing);
+            check(outlet.equals(BlockPos.ZERO.relative(facing.getOpposite(), 4)), "outlet stays on the tower rear face");
+            check(target.equals(outlet.relative(facing.getOpposite())), "outlet only reaches its immediate outer neighbor");
         }
     }
 
@@ -203,12 +203,12 @@ public final class FluidizedBedTests {
         boolean formed = true, enabled = true, redstone;
         int power = 2, fuel = 20, ash, ashLimit = 64;
         long heat, pending, ku = 100_000;
-        long[] limits = new long[9], received = new long[9];
-        Rig() { Arrays.fill(limits, Long.MAX_VALUE); }
+        long limit = Long.MAX_VALUE, received;
+        Rig() {}
         Rig(Rig other) {
             formed=other.formed; enabled=other.enabled; redstone=other.redstone; power=other.power;
             fuel=other.fuel; ash=other.ash; ashLimit=other.ashLimit; heat=other.heat; pending=other.pending; ku=other.ku;
-            limits=other.limits.clone(); received=other.received.clone();
+            limit=other.limit; received=other.received;
         }
         public boolean formed() { return formed; } public boolean enabled() { return enabled; }
         public boolean redstone() { return redstone; } public int power() { return power; }
@@ -217,7 +217,7 @@ public final class FluidizedBedTests {
         public boolean consumeKu(long value) { if (value>ku) return false; ku-=value; return true; }
         public boolean consumeHeat(long value) { if (value>heat) return false; heat-=value; return true; }
         public long generate(long value) { long add=Math.min(value,FluidizedBedCore.HEAT_CAPACITY-heat); heat+=add; return add; }
-        public long emit(int plate,long amount) { long out=Math.min(amount,Math.min(heat,limits[plate])); heat-=out; received[plate]+=out; return out; }
+        public long emit(long amount) { long out=Math.min(amount,Math.min(heat,limit)); heat-=out; received+=out; return out; }
         public long takeFuel() { if (fuel<=0) return 0; if (ash>=ashLimit) return -1; fuel--; ash++; return COAL_HEAT; }
     }
 }

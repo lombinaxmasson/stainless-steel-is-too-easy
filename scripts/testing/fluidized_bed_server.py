@@ -21,7 +21,8 @@ STAGES = (
     ('energy_gate', 5),
     ('fuels', 0),
     ('controls', 0),
-    ('automation_start', 100),
+    ('automation_start', 160),
+    ('automation_air', 100),
     ('automation_check', 0),
     ('receivers_start', 100),
     ('receivers_check', 0),
@@ -59,6 +60,7 @@ def main():
                         help='Run one fixture stage for targeted diagnosis; prepare is required first.')
     args = parser.parse_args()
     remote = Rcon()
+    remote.socket.settimeout(90)  # Allow initial chunk/structure preparation in the disposable world.
     try:
         fixture_guard(remote)
         remote.command('tick freeze')

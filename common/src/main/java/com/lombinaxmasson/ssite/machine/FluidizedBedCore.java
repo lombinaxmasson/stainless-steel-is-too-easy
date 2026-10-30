@@ -5,13 +5,13 @@ import gregtech.api.addon.platform.AddonItems;
 import gregtech.api.addon.platform.BehaviorState;
 import gregtech.api.addon.platform.MachineBehaviorContext;
 import gregtech.api.material.GTValues;
-import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 import java.util.Set;
 
-/** One conserved heat reservoir feeds all nine table cells; fuel and ash are centralized. */
+/** One conserved heat reservoir supplies the tower's physical rear HU outlet. */
 public final class FluidizedBedCore {
     public static final String MACHINE_TYPE = "fluidized_bed_combustor";
     public static final int FUEL_SLOT = 0, ASH_SLOT = 1, ENABLE_TOGGLE = 0;
@@ -38,7 +38,7 @@ public final class FluidizedBedCore {
         long stored(); long pending(); void pending(long value);
         long ku(); boolean consumeKu(long amount);
         boolean consumeHeat(long amount); long generate(long amount);
-        long emit(int plate, long amount);
+        long emit(long amount);
         /** Atomically reserves ash and consumes one fuel, or 0 / -1 for no fuel / full ash. */
         long takeFuel();
     }
@@ -73,10 +73,7 @@ public final class FluidizedBedCore {
         long rate = outputRate(access.power()), sent = 0;
         if (access.formed()) {
             long budget = Math.min(rate, Math.max(0, access.stored()) / TRANSFER_TIME);
-            for (int i = 0; i < 9; i++) {
-                long offer = budget / 9 + (i < budget % 9 ? 1 : 0);
-                if (offer > 0) sent += access.emit(i, offer);
-            }
+            if (budget > 0) sent = access.emit(budget);
         }
         long loss = Math.min(Math.max(0, access.stored()), Math.max(1, access.stored() / 20_000));
         if (loss > 0 && !access.consumeHeat(loss)) throw new IllegalStateException("Heat store refused a bounded loss");
@@ -122,9 +119,12 @@ public final class FluidizedBedCore {
             public boolean consumeKu(long amount) { return context.energy().consumeAuxiliary(EnergyType.KU, amount); }
             public boolean consumeHeat(long amount) { return context.energy().consumeMain(amount); }
             public long generate(long amount) { return context.energy().generateMain(amount); }
-            public long emit(int plate, long amount) {
-                // Only the real adjacent block above each validated plate is queried; no arbitrary remote target.
-                return context.energy().emitTo(FluidizedBedStructure.heatTarget(context.pos(), context.facing(), plate), Direction.DOWN, 1, amount).transferredUnits();
+            public long emit(long amount) {
+                BlockPos target = FluidizedBedStructure.heatOutletTarget(context.pos(), context.facing());
+                if (!context.level().hasChunkAt(target)
+                        || !HeatTransportConnections.isType(context.level().getBlockState(target).getBlock(), HeatTransportMachines.DUCT)) return 0;
+                // The target is immediately beyond the formed tower's rear outlet, not a remote furnace.
+                return context.energy().emitTo(target, context.facing(), 1, amount).transferredUnits();
             }
             public long takeFuel() { return consumeOne(context, fuelResolver); }
         });

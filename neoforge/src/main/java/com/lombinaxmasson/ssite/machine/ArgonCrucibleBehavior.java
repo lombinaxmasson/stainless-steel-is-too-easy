@@ -108,7 +108,7 @@ public final class ArgonCrucibleBehavior implements MachineBehavior, MoltenPool.
     @Override
     public CrucibleContent crucibleContent(MachineBehaviorContext context) {
         var contents = pool.contents(context.state());
-        if (contents.isEmpty()) return CrucibleContent.EMPTY;
+        if (contents.isEmpty()) return new CrucibleContent("", 0, pool.temperature(context));
         return new CrucibleContent(contents.get(0).material(), pool.contentAmount(context), pool.temperature(context));
     }
 

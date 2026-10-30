@@ -6,7 +6,7 @@
     "D": {"item": "minecraft:comparator"},
     "P": {"item": "minecraft:piston"},
     "B": {"item": "gt6ce:burning_box_solid_tungsten"},
-    "H": {"item": "ssite:fluidized_bed_heat_plate"}
+    "H": {"item": "ssite:heating_plate"}
   },
   "result": {
     "item": "ssite:fluidized_bed_combustor",

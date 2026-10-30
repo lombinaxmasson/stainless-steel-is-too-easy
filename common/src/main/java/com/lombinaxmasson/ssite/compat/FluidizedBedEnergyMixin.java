@@ -1,6 +1,7 @@
 package com.lombinaxmasson.ssite.compat;
 
 import com.lombinaxmasson.ssite.machine.FluidizedBedCore;
+import com.lombinaxmasson.ssite.machine.HeatTransportMachines;
 import gregtech.api.addon.platform.BehaviorMachineClientView;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -16,7 +17,8 @@ public abstract class FluidizedBedEnergyMixin {
     private void ssite$preventExternalHeatPull(Level level, BlockPos pos, CallbackInfo ci) {
         var machine = (BehaviorMachineClientView) this;
         if ("ssite".equals(machine.addonId())
-                && FluidizedBedCore.MACHINE_TYPE.equals(machine.machineType())) {
+                && (FluidizedBedCore.MACHINE_TYPE.equals(machine.machineType())
+                    || HeatTransportMachines.isMachine(machine.machineType()))) {
             // pollEnergy bypasses MachineBehavior.acceptsEnergy. The separate pollAuxiliary
             // method still pulls KU for the blower; every other machine keeps its normal input.
             ci.cancel();

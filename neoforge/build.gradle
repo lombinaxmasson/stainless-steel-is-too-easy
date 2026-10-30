@@ -107,6 +107,7 @@ def unitTest = tasks.register('unitTest', JavaExec) {
 tasks.named('check').configure { dependsOn unitTest }
 apply from: rootProject.file('gradle/furnace-render-test.gradle')
 apply from: rootProject.file('gradle/fluidized-bed-test.gradle')
+apply from: rootProject.file('gradle/heat-transport-test.gradle')
 
 tasks.register('requireRuntime') {
     description = 'Fail with the jar command when the dev game has no GregTech mod jar.'

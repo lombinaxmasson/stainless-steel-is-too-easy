@@ -19,6 +19,7 @@ VIEWER = "#ssite-fluidized-bed-preview"
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=ROOT / "build" / "fluidized-bed-qa")
+    parser.add_argument("--input", type=Path, default=ROOT / "art" / "fluidized_bed" / "preview.html")
     parser.add_argument("--smoke", action="store_true", help="Check loading and cutaway; capture three views only.")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
@@ -34,7 +35,7 @@ def main():
                 color_scheme="light",
             )
             page.on("pageerror", lambda error: errors.append(str(error)))
-            page.goto((ROOT / "art" / "fluidized_bed" / "preview.html").as_uri())
+            page.goto(args.input.resolve().as_uri())
             page.locator(VIEWER + '[data-ready="true"][data-texture-ready="true"]').wait_for()
 
             def frame():

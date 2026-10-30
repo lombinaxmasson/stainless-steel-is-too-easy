@@ -18,7 +18,7 @@ OUT = ROOT / "art" / "fluidized_bed"
 STEM = "fluidized_bed_combustor"
 CENTER = (-.85, .15)
 GAME_TRANSLATION = (.5, 0, 2.5)
-HEAT_BOUNDS = [(4.5, 2, -1.5), (7.5, 2, 1.5)]
+HEAT_BOUNDS = [(-.25, .25, 2.5), (.25, .75, 2.5)]
 CUTAWAY_HIDE = ["front_shell", "front_lining", "front_bands", "front_ribs", "inspection_hatch", "front_instruments", "bed_front"]
 GROUP_LABELS = {
     "skid":"钢制底架", "windbox":"底部风箱", "front_shell":"前侧炉壳", "riser_shell":"主燃烧筒",
@@ -33,10 +33,7 @@ GROUP_LABELS = {
     "guardrails":"黄色护栏", "ladder":"检修爬梯", "blower_base":"风机底座", "blower":"鼓风机",
     "blower_motor":"风机电机", "primary_air":"一次风管", "secondary_air":"二次风管", "lifting_lugs":"炉顶吊耳",
     "controller":"燃烧室控制面板", "controller_mount":"控制面板支架",
-    "hot_gas_duct":"固定保温热烟道", "duct_flanges":"烟道连接法兰", "duct_supports":"烟道支座",
-    "heat_bank_base":"供热台底座", "heat_bank_refractory":"供热台耐火核心",
-    "heat_bank_casing":"供热台钢制护板", "heat_bank_bands":"供热台加强框",
-    "heat_bank_door":"供热台清灰门", "heat_roof_edges":"供热顶板侧壁", "heat_contact":"3×3 向上供热面",
+    "heat_outlet":"后侧 HU 输热接口", "heat_outlet_flange":"输热接口法兰",
 }
 
 
@@ -124,7 +121,7 @@ class Mesh:
             self.face([points[0],rings[0][j],rings[0][i]],material,group)
             self.face([points[-1],rings[-1][i],rings[-1][j]],material,group)
 
-    def export(self, stem, hidden=()):
+    def export(self, stem, hidden=(), out=OUT):
         faces=[f for f in self.faces if f[0] not in hidden]
         order=list(dict.fromkeys(f[0] for f in faces))
         faces.sort(key=lambda f:order.index(f[0]))
@@ -150,7 +147,7 @@ class Mesh:
                 lines.extend(["o "+group,"g "+group]); last=group
             for i in range(1,count-1):
                 lines.append("f "+" ".join(f"{v}/{v}/{v}" for v in (start,start+i,start+i+1)))
-        (OUT/(stem+".obj")).write_text("\n".join(lines)+"\n",encoding="utf-8")
+        (out/(stem+".obj")).write_text("\n".join(lines)+"\n",encoding="utf-8")
         return compact
 
 
@@ -300,61 +297,22 @@ def build_machine():
     for x in (-1.43,-.27):
         m.box((x-.055,7.27,-.09),(x+.055,7.56,.15),"edge","lifting_lugs")
         m.box((x-.057,7.36,-.04),(x+.057,7.48,.10),"black","lifting_lugs")
-    add_heat_bank(m)
+    add_heat_outlet(m)
     return m
 
 
-def add_heat_bank(m):
-    """Fixed hot-gas duct and 3x3 heat roof; coordinates match the runtime layout."""
+def add_heat_outlet(m):
+    """Rear local (0,0,4) outlet meets a separately placed pipe at local (0,0,5)."""
     # Controller front maps exactly to the controller's north face in game.
     m.box((-.5,0,-2.5),(.5,1,-2.3),"plate","controller",{"-z":"panel"})
     m.box((-.4,.12,-2.3),(.4,.89,-1.89),"dark","controller_mount")
-    # A square mitered duct runs behind the tower, clear of the blower and return leg.
-    path=[(-.85,.65,1.4),(-.85,.65,1.75),(4,.65,1.75),(4,.65,0),(4.62,.65,0)]
-    m.pipe(path,math.sqrt(2)*.25,"insulation","hot_gas_duct",4,phase=math.pi/4)
-    # Four-piece flanges surround the duct without capping the passage.
-    for axis,value,centre in ((0,.65,1.75),(0,2.85,1.75),(0,4.45,0),(2,.75,4)):
-        low,high=value-.05,value+.05
-        if axis==0:
-            for z0,z1 in ((centre-.34,centre-.25),(centre+.25,centre+.34)):
-                m.box((low,.31,z0),(high,.99,z1),"edge","duct_flanges")
-            for y0,y1 in ((.31,.40),(.90,.99)):
-                m.box((low,y0,centre-.25),(high,y1,centre+.25),"edge","duct_flanges")
-        else:
-            for x0,x1 in ((centre-.34,centre-.25),(centre+.25,centre+.34)):
-                m.box((x0,.31,low),(x1,.99,high),"edge","duct_flanges")
-            for y0,y1 in ((.31,.40),(.90,.99)):
-                m.box((centre-.25,y0,low),(centre+.25,y1,high),"edge","duct_flanges")
-    for x,z in ((.65,1.75),(2.85,1.75),(4,.75)):
-        m.box((x-.23,0,z-.23),(x+.23,.11,z+.23),"plate","duct_supports")
-        m.box((x-.09,.11,z-.09),(x+.09,.4,z+.09),"dark","duct_supports")
-    # Heavy refractory core, a low plinth and separate bolted jacket panels.
-    m.box((4.5,0,-1.5),(7.5,.22,1.5),"dark","heat_bank_base")
-    m.box((4.53,.22,-1.47),(7.47,1.76,1.47),"refractory","heat_bank_refractory")
-    for i in range(3):
-        x=4.5+i
-        for z0,z1 in ((-1.5,-1.46),(1.46,1.5)):
-            m.box((x+.05,.44,z0),(x+.95,1.52,z1),"plate","heat_bank_casing")
-        z=-1.5+i
-        for x0,x1 in ((4.5,4.54),(7.46,7.5)):
-            if x0==4.5 and i==1:
-                m.box((x0,.99,z+.05),(x1,1.52,z+.95),"plate","heat_bank_casing")
-            else:
-                m.box((x0,.44,z+.05),(x1,1.52,z+.95),"plate","heat_bank_casing")
-    for y0,y1 in ((.22,.40),(1.54,1.76)):
-        m.box((4.5,y0,-1.5),(7.5,y1,-1.45),"edge","heat_bank_bands")
-        m.box((4.5,y0,1.45),(7.5,y1,1.5),"edge","heat_bank_bands")
-        m.box((4.5,y0,-1.45),(4.55,y1,1.45),"edge","heat_bank_bands")
-        m.box((7.45,y0,-1.45),(7.5,y1,1.45),"edge","heat_bank_bands")
-    m.box((5.67,.57,-1.53),(6.33,1.30,-1.501),"dark","heat_bank_door",{"-z":"door"})
-    m.box((5.54,1.36,-1.53),(6.46,1.50,-1.501),"dark","heat_bank_door",{"-z":"hazard"})
-    # Nine contiguous horizontal faces. No rim or fastener extends above y=2.
-    for x in (4.5,5.5,6.5):
-        for z in (-1.5,-.5,.5):
-            m.box((x,1.76,z),(x+1,2,z+1),"ceramic","heat_contact")
-    for index,(group,ps,n,uv,material) in enumerate(m.faces):
-        if group=="heat_contact" and n[1]<.999:
-            m.faces[index]=("heat_roof_edges",ps,n,uv,material)
+    # Only the short connection within the original skid remains part of the tower.
+    m.pipe([(-.85,.5,1.25),(-.85,.5,1.7),(0,.5,1.7),(0,.5,2.5)],
+           math.sqrt(2)*.25,"insulation","heat_outlet",4,phase=math.pi/4)
+    for x0,x1 in ((-.32,-.25),(.25,.32)):
+        m.box((x0,.18,2.4),(x1,.82,2.5),"edge","heat_outlet_flange")
+    for y0,y1 in ((.18,.25),(.75,.82)):
+        m.box((-.25,y0,2.4),(.25,y1,2.5),"edge","heat_outlet_flange")
 
 
 def validate(mesh, compact):
@@ -376,21 +334,9 @@ def validate(mesh, compact):
     assert set(compact)==set(GROUP_LABELS)
     assert triangles==sum(len(d["i"])//3 for d in compact.values())
     assert triangles<12000,triangles
-    # Half-unit OBJ coordinates map to exact world block boundaries in the renderer.
-    low,high=HEAT_BOUNDS
-    assert all(float(v).is_integer() for p in (add(low,GAME_TRANSLATION),add(high,GAME_TRANSLATION)) for v in p)
-    contact=[]; area=0
-    for group,ps,n,_,_ in mesh.faces:
-        if group=="heat_contact" and n[1]>.999:
-            assert all(abs(p[1]-2)<1e-7 for p in ps)
-            assert all(low[i]-1e-7<=p[i]<=high[i]+1e-7 for p in ps for i in range(3))
-            contact.append(tuple(round(sum(p[i] for p in ps)/len(ps),5) for i in (0,2)))
-            for i in range(1,len(ps)-1):
-                av=cross(sub(ps[i],ps[0]),sub(ps[i+1],ps[0]));area+=math.sqrt(dot(av,av))/2
-        in_prism=all(max(p[i] for p in ps)>low[i]+1e-6 and min(p[i] for p in ps)<high[i]-1e-6 for i in (0,2))
-        assert not(in_prism and max(p[1] for p in ps)>2+1e-6),(group,"obstructs heat roof")
-    assert len(set(contact))==9 and abs(area-9)<1e-7,(contact,area)
-    return dict(bounds=bounds,groups=len(compact),triangles=triangles,faces=len(mesh.faces),texture_size=[512,256],finite_vertices=True,unit_normals=True,uv_in_atlas=True,nondegenerate_triangles=True,consistent_winding=True,heat_contact_area=area,heat_contact_cells=9,heat_clearance=True)
+    assert bounds[1][0] < 3.5 and bounds[1][2] == 2.5, "No fixed exterior heat bank or duct"
+    assert add((0,.5,2.5),GAME_TRANSLATION)==(.5,.5,5), "Rear HU outlet center"
+    return dict(bounds=bounds,groups=len(compact),triangles=triangles,faces=len(mesh.faces),texture_size=[512,256],finite_vertices=True,unit_normals=True,uv_in_atlas=True,nondegenerate_triangles=True,consistent_winding=True)
 
 
 def main():
@@ -404,12 +350,12 @@ def main():
         dict(id="air",label="一次风 / 鼓风机吸入口",code="AIR",bounds=[[1.56,.58,-1.88],[2.38,1.4,-1.88]],normal=[0,0,-1],groups=["blower","blower_motor","primary_air"]),
         dict(id="ash",label="底灰排出口",code="ASH",bounds=[[-1.24,.37,-1.66],[-.46,.88,-1.66]],normal=[0,0,-1],groups=["ash_outlet"]),
         dict(id="flue",label="旋风分离器净烟气出口",code="FLUE",bounds=[[1.67,7.97,.03],[2.57,7.97,.93]],normal=[0,1,0],groups=["flue_outlet"]),
-        dict(id="heat",label="3×3 向上供热台",code="HU",bounds=HEAT_BOUNDS,normal=[0,1,0],groups=["heat_contact"],connection_cells=[[x,2,z] for x in range(5,8) for z in range(1,4)],connection_coordinate_system="controller-local after game_translation"),
+        dict(id="heat",label="后侧 HU 管道接口",code="HU",bounds=HEAT_BOUNDS,normal=[0,0,1],groups=["heat_outlet","heat_outlet_flange"],connection_cells=[[0,0,5]],connection_coordinate_system="controller-local after game_translation"),
         dict(id="controller",label="前侧控制面板",code="FBC",bounds=[[-.5,0,-2.5],[.5,1,-2.5]],normal=[0,0,-1],groups=["controller"]),
     ]
-    manifest=dict(schema_version=2,name="SSITE fluidized-bed combustor / circulating tower with fixed 3x3 heat bank",units="blocks",up="+Y",front="-Z",origin="Skid base at Y=0; main riser X/Z=(-0.85,0.15)",game_translation=GAME_TRANSLATION,nominal_envelope=[11,8,5],heat_contact_bounds=HEAT_BOUNDS,heat_owner_cells=[[x,1,z] for x in range(5,8) for z in range(1,4)],stats=stats,groups=list(compact),cutaway_hide=CUTAWAY_HIDE,cutaway_triangles=sum(len(d["i"])//3 for d in cutaway.values()),ports=ports,texture_filter="nearest",runtime_obj="ssite:obj/fluidized_bed_combustor.obj",runtime_texture="ssite:textures/machine/fluidized_bed_combustor.png",engineering_note="Stylized game asset; internal cutaway illustrates a bed, distributor, windbox and circulation loop, not a pressure-vessel design.")
+    manifest=dict(schema_version=3,name="SSITE fluidized-bed combustor / independent circulating tower",units="blocks",up="+Y",front="-Z",origin="Skid base at Y=0; main riser X/Z=(-0.85,0.15)",game_translation=GAME_TRANSLATION,nominal_envelope=[7,8,5],heat_outlet_bounds=HEAT_BOUNDS,heat_owner_cell=[0,0,4],stats=stats,groups=list(compact),cutaway_hide=CUTAWAY_HIDE,cutaway_triangles=sum(len(d["i"])//3 for d in cutaway.values()),ports=ports,texture_filter="nearest",runtime_obj="ssite:obj/fluidized_bed_combustor.obj",runtime_texture="ssite:textures/machine/fluidized_bed_combustor.png",engineering_note="Stylized game asset; internal cutaway illustrates a bed, distributor, windbox and circulation loop, not a pressure-vessel design.")
     (OUT/"model.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    data=dict(meshes=compact,texture=base64.b64encode((OUT/(STEM+"_atlas.png")).read_bytes()).decode(),stats=stats,cutaway_hide=CUTAWAY_HIDE,ports=ports,group_labels=GROUP_LABELS,title="流化床燃烧室 · FBC–01",subtitle="循环流化床 / 固定保温烟道 / 3×3 向上供热台")
+    data=dict(meshes=compact,texture=base64.b64encode((OUT/(STEM+"_atlas.png")).read_bytes()).decode(),stats=stats,cutaway_hide=CUTAWAY_HIDE,ports=ports,group_labels=GROUP_LABELS,title="流化床燃烧室 · FBC–01",subtitle="独立循环流化床 / 后侧 HU 接口 / 外接管道与加热板")
     template=Path(__file__).with_name("fluidized_bed_viewer.html").read_text(encoding="utf-8")
     assert template.count("/*__MODEL_DATA__*/")==1
     fragment=template.replace("/*__MODEL_DATA__*/",json.dumps(data,ensure_ascii=False,separators=(",",":")))

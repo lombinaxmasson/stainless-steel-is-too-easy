@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["PPP", "FCF", "SSS"],
+  "key": {
+    "P": {"item": "gt6ce:plate_tungstensteel"},
+    "F": {"item": "gt6ce:fire_bricks"},
+    "C": {"item": "gt6ce:plate_copper"},
+    "S": {"item": "gt6ce:plate_steel"}
+  },
+  "result": {
+    "item": "ssite:heating_plate",
+    "count": 1
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "units": "blocks",
+  "models": {
+    "heat_duct": {
+      "bounds": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "triangles": 804,
+      "groups": 13,
+      "heat_contact_area": 0
+    },
+    "heating_plate": {
+      "bounds": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "triangles": 180,
+      "groups": 6,
+      "heat_contact_area": 1.0
+    }
+  },
+  "direction_bits": {
+    "down": 0,
+    "up": 1,
+    "north": 2,
+    "south": 3,
+    "west": 4,
+    "east": 5
+  },
+  "runtime_texture": "ssite:textures/machine/fluidized_bed_combustor.png"
+}

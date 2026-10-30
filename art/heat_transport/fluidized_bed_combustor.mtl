@@ -1,0 +1,3 @@
+newmtl fluidized_bed_atlas
+Kd 1 1 1
+map_Kd heat_transport_atlas.png

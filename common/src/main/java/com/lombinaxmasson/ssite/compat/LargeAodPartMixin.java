@@ -2,7 +2,7 @@ package com.lombinaxmasson.ssite.compat;
 
 import com.lombinaxmasson.ssite.machine.LargeAodStructure;
 import com.lombinaxmasson.ssite.machine.ObjMultiblocks;
-import gregtech.api.addon.platform.BehaviorMachineClientView;
+import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
 import gregtech.engine.multiblock.MultiblockLayout;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -36,8 +36,11 @@ public abstract class LargeAodPartMixin extends BlockEntity {
     @Inject(method = "bind", at = @At("RETURN"))
     private void ssite$hideBoundPart(BlockPos owner, MultiblockLayout.Role role, CallbackInfo ci) {
         if (level == null || level.isClientSide || !ssite$largePart() || !isBoundTo(owner)) return;
-        if (level.getBlockEntity(owner) instanceof BehaviorMachineClientView view
-                && view.addonId().equals("ssite") && ObjMultiblocks.isMachine(view.machineType()))
+        // GT6CE 1.0.2 also binds incomplete shells for tool routing. Binding alone no longer
+        // means that the controller's OBJ is visible; the formation hook handles that edge.
+        if (level.getBlockEntity(owner) instanceof BehaviorMachineBlockEntity machine
+                && machine.addonId().equals("ssite") && ObjMultiblocks.isMachine(machine.machineType())
+                && machine.structureFormed())
             applyStructureDesign(LargeAodStructure.FORMED_DESIGN);
     }
 

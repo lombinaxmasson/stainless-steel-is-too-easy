@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.joml.Vector3f;
 
-/** Fixed tower, flue and heat table, rendered from the front control panel. */
+/** Independent combustion tower and rear outlet, rendered from the front control panel. */
 public final class FluidizedBedRenderer implements BlockEntityRenderer<BlockEntity> {
     public static final String MODEL = "/assets/ssite/obj/fluidized_bed_combustor.obj";
     private static final ResourceLocation TEXTURE = ResourceLocation.tryBuild("ssite", "textures/machine/fluidized_bed_combustor.png");
