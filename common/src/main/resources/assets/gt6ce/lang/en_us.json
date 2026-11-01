@@ -375,5 +375,12 @@
   "material.gt6ce.aramidfelt": "Aramid Felt",
   "material.gt6ce.multilayerinsulation": "Multilayer Insulation",
   "material.gt6ce.carbonfiberprepreg": "Carbon Fiber Prepreg",
-  "material.gt6ce.carbonfibercomposite": "Carbon Fiber Composite"
+  "material.gt6ce.carbonfibercomposite": "Carbon Fiber Composite",
+  "material.gt6ce.patternwax": "Pattern Wax",
+  "material.gt6ce.waxpattern": "Wax Pattern",
+  "material.gt6ce.ceramicshellslurry": "Ceramic Shell Slurry",
+  "material.gt6ce.ceramicshell": "Ceramic Shell",
+  "material.gt6ce.firedceramicshell": "Fired Ceramic Shell",
+  "material.gt6ce.ascastpart": "As-Cast Part",
+  "material.gt6ce.precisioncasting": "Precision Casting"
 }

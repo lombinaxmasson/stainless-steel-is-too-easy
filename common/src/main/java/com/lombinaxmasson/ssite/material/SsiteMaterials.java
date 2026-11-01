@@ -233,6 +233,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         materials.addAll(PackagingMaterials.MATERIALS);
         materials.addAll(ElectrochemistryMaterials.MATERIALS);
         materials.addAll(FunctionalTextileMaterials.MATERIALS);
+        materials.addAll(InvestmentCastingMaterials.MATERIALS);
         return List.copyOf(materials);
     }
 
@@ -246,6 +247,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         forms.addAll(PackagingMaterials.FORMS);
         forms.addAll(ElectrochemistryMaterials.FORMS);
         forms.addAll(FunctionalTextileMaterials.FORMS);
+        forms.addAll(InvestmentCastingMaterials.FORMS);
         return List.copyOf(forms);
     }
 

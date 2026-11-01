@@ -60,6 +60,7 @@ public final class ChemistryRecipes {
             PackagingRecipes.add();
             ElectrochemistryRecipes.add();
             TextileRecipes.add();
+            InvestmentCastingRecipes.add();
             return List.copyOf(declarations);
         } finally {
             if (previous == null) COLLECTOR.remove();
