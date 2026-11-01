@@ -97,6 +97,8 @@
   "jade.ssite.fluidized_bed.status.7": "Stopped by redstone; residual heat can still flow",
   "item.ssite.crystal_boule": "%s Boule",
   "item.ssite.wafer": "%s Wafer",
+  "item.ssite.die": "%s Die",
+  "item.ssite.chip": "%s Package",
   "config.jade.plugin_ssite.aod_furnace": "AOD Converter",
   "config.jade.plugin_ssite.fluidized_bed": "Fluidized-Bed Industrial Heater",
   "config.jade.plugin_ssite.heat_transport": "Insulated HU Duct"

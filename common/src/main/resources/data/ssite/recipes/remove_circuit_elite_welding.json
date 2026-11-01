@@ -1,0 +1,6 @@
+{
+  "_comment": "M9-06: elite circuits are assembled from packaged dies on an elite board. Drop every host bath row that consumes the elite board, so the board can no longer be soldered straight into elite, master or ultimate circuits.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.bath",
+  "item_inputs": [{ "item": "gt6ce:circuit_board_elite" }]
+}

@@ -67,7 +67,8 @@ public final class MaterialReportTests {
         check(List.copyOf(modules).equals(List.of("StainlessSteelRecipes.java", "WaterRecipes.java",
                 "PetrochemRecipes.java", "PolymerRecipes.java", "MetallurgyRecipes.java",
                 "RareEarthRecipes.java", "NuclearRecipes.java", "BaseMetalRecipes.java",
-                "CircuitRecipes.java", "WaferRecipes.java", "LithographyRecipes.java")),
+                "CircuitRecipes.java", "WaferRecipes.java", "LithographyRecipes.java",
+                "PackagingRecipes.java")),
                 "all central recipe modules retain runtime registration order");
     }
 

@@ -352,5 +352,11 @@
   "material.gt6ce.potassiumhydroxidesolution": "氢氧化钾刻蚀液",
   "material.gt6ce.borontrioxide": "三氧化二硼",
   "material.gt6ce.photomaskplate": "光掩模",
-  "material.gt6ce.processedwafer": "加工后"
+  "material.gt6ce.processedwafer": "加工后",
+  "material.gt6ce.moldingcompound": "环氧塑封料",
+  "material.gt6ce.leadframe": "引线框架",
+  "material.gt6ce.dieattachedframe": "装片框架",
+  "material.gt6ce.bondedframe": "键合框架",
+  "material.gt6ce.chipdieelite": "精密集成电路",
+  "material.gt6ce.chipelite": "精密集成电路"
 }

@@ -352,5 +352,11 @@
   "material.gt6ce.potassiumhydroxidesolution": "Potassium Hydroxide Solution",
   "material.gt6ce.borontrioxide": "Boron Trioxide",
   "material.gt6ce.photomaskplate": "Photomask",
-  "material.gt6ce.processedwafer": "Processed"
+  "material.gt6ce.processedwafer": "Processed",
+  "material.gt6ce.moldingcompound": "Molding Compound",
+  "material.gt6ce.leadframe": "Lead Frame",
+  "material.gt6ce.dieattachedframe": "Die-Attached Frame",
+  "material.gt6ce.bondedframe": "Bonded Frame",
+  "material.gt6ce.chipdieelite": "Elite IC",
+  "material.gt6ce.chipelite": "Elite IC"
 }

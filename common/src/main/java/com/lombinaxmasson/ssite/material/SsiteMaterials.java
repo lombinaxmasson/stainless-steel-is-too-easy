@@ -18,7 +18,8 @@ import java.util.List;
 /** Material declarations. GregTech loads this through ServiceLoader while materials are still open. */
 public final class SsiteMaterials implements AddonMaterialContributor {
     private static final String[] CREATIVE_PREFIXES = {
-            "dust", "dustSmall", "dustTiny", "plate", "foil", "wireFine", "ingot", "crystalBoule", "wafer"};
+            "dust", "dustSmall", "dustTiny", "plate", "foil", "wireFine", "ingot", "crystalBoule", "wafer",
+            "die", "chip"};
 
     public static final List<MaterialDeclaration> MATERIALS = buildMaterials();
 
@@ -229,6 +230,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         materials.addAll(NuclearMaterials.MATERIALS);
         materials.addAll(BaseMetalMaterials.MATERIALS);
         materials.addAll(SemiconductorMaterials.MATERIALS);
+        materials.addAll(PackagingMaterials.MATERIALS);
         return List.copyOf(materials);
     }
 
@@ -239,12 +241,15 @@ public final class SsiteMaterials implements AddonMaterialContributor {
                 new MaterialFormRequest("CelluloseAcetate", "foil"),
                 new MaterialFormRequest("PhotomaskPlate", "plate")));
         forms.addAll(PolymerMaterials.FORMS);
+        forms.addAll(PackagingMaterials.FORMS);
         return List.copyOf(forms);
     }
 
     @Override
     public List<PrefixDeclaration> prefixes() {
-        return SemiconductorMaterials.PREFIXES;
+        var prefixes = new ArrayList<>(SemiconductorMaterials.PREFIXES);
+        prefixes.addAll(PackagingMaterials.PREFIXES);
+        return List.copyOf(prefixes);
     }
 
     /** These ores melt into a metal in the built-in crucible table; the cards replace them with real routes. */
