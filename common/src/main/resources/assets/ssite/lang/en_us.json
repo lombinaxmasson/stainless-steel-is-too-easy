@@ -100,6 +100,8 @@
   "item.ssite.die": "%s Die",
   "item.ssite.chip": "%s Package",
   "item.ssite.hose": "%s Hose",
+  "item.ssite.laser_rod": "%s Laser Rod",
+  "item.ssite.optical_lens": "%s Lens",
   "config.jade.plugin_ssite.aod_furnace": "AOD Converter",
   "config.jade.plugin_ssite.fluidized_bed": "Fluidized-Bed Industrial Heater",
   "config.jade.plugin_ssite.heat_transport": "Insulated HU Duct"

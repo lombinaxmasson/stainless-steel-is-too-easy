@@ -382,5 +382,6 @@
   "material.gt6ce.ceramicshell": "Ceramic Shell",
   "material.gt6ce.firedceramicshell": "Fired Ceramic Shell",
   "material.gt6ce.ascastpart": "As-Cast Part",
-  "material.gt6ce.precisioncasting": "Precision Casting"
+  "material.gt6ce.precisioncasting": "Precision Casting",
+  "material.gt6ce.neodymiumyag": "Neodymium-Doped YAG (Nd:YAG)"
 }

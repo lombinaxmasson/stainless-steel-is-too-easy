@@ -15,6 +15,9 @@ import java.util.Set;
  * Addon declarations cannot set those properties, so crystal boules and wafers use addon prefixes.
  * Silicon keeps the host {@code bouleGt} boule because the host material already has one.</p>
  *
+ * <p>The {@code crystalBoule} prefix is shared with the M9-10 Nd:YAG crystal, so its material list
+ * is not limited to the semiconductors declared here.</p>
+ *
  * <p>{@code PhotomaskPlate} declares {@code polymer()} only to unlock the generated {@code plate}
  * form: {@code explicitPlateOrFoil} accepts plate/foil requests for polymer-flagged addon materials,
  * and the feature has no other effect. The mask is a glass blank with a chromium film.</p>
@@ -58,7 +61,8 @@ public final class SemiconductorMaterials {
     /** One boule keeps the host boule weight (four material units); one wafer is half a unit. */
     public static final List<PrefixDeclaration> PREFIXES = List.of(
             new PrefixDeclaration("crystalBoule", "", " Boule", GTValues.U * 4,
-                    "item/crystal_boule", List.of("GalliumArsenide", "IndiumPhosphide"), Set.of()),
+                    "item/crystal_boule",
+                    List.of("GalliumArsenide", "IndiumPhosphide", "NeodymiumYAG"), Set.of()),
             new PrefixDeclaration("wafer", "", " Wafer", GTValues.U / 2,
                     "item/wafer", List.of("Silicon", "GalliumArsenide", "IndiumPhosphide", "ProcessedWafer"),
                     Set.of()));

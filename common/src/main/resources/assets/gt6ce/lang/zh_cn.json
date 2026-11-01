@@ -382,5 +382,6 @@
   "material.gt6ce.ceramicshell": "陶瓷模壳",
   "material.gt6ce.firedceramicshell": "焙烧陶瓷模壳",
   "material.gt6ce.ascastpart": "浇铸毛坯",
-  "material.gt6ce.precisioncasting": "精密铸件"
+  "material.gt6ce.precisioncasting": "精密铸件",
+  "material.gt6ce.neodymiumyag": "掺钕钇铝石榴石（Nd:YAG）"
 }
