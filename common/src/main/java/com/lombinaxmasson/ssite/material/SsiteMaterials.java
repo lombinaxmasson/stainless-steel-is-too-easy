@@ -236,7 +236,8 @@ public final class SsiteMaterials implements AddonMaterialContributor {
     public List<MaterialFormRequest> forms() {
         var forms = new ArrayList<>(List.of(
                 new MaterialFormRequest("CelluloseAcetate", "plate"),
-                new MaterialFormRequest("CelluloseAcetate", "foil")));
+                new MaterialFormRequest("CelluloseAcetate", "foil"),
+                new MaterialFormRequest("PhotomaskPlate", "plate")));
         forms.addAll(PolymerMaterials.FORMS);
         return List.copyOf(forms);
     }

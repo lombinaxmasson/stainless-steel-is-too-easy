@@ -345,5 +345,12 @@
   "material.gt6ce.trichlorosilane": "三氯氢硅",
   "material.gt6ce.electronicgradesilicon": "电子级多晶硅",
   "material.gt6ce.galliumarsenide": "砷化镓",
-  "material.gt6ce.indiumphosphide": "磷化铟"
+  "material.gt6ce.indiumphosphide": "磷化铟",
+  "material.gt6ce.photoresist": "光刻胶",
+  "material.gt6ce.photoresistdeveloper": "显影液",
+  "material.gt6ce.bufferedhydrofluoricacid": "缓冲氢氟酸",
+  "material.gt6ce.potassiumhydroxidesolution": "氢氧化钾刻蚀液",
+  "material.gt6ce.borontrioxide": "三氧化二硼",
+  "material.gt6ce.photomaskplate": "光掩模",
+  "material.gt6ce.processedwafer": "加工后"
 }

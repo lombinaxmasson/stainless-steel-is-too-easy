@@ -345,5 +345,12 @@
   "material.gt6ce.trichlorosilane": "Trichlorosilane",
   "material.gt6ce.electronicgradesilicon": "Electronic-Grade Polysilicon",
   "material.gt6ce.galliumarsenide": "Gallium Arsenide",
-  "material.gt6ce.indiumphosphide": "Indium Phosphide"
+  "material.gt6ce.indiumphosphide": "Indium Phosphide",
+  "material.gt6ce.photoresist": "Photoresist",
+  "material.gt6ce.photoresistdeveloper": "Photoresist Developer",
+  "material.gt6ce.bufferedhydrofluoricacid": "Buffered Hydrofluoric Acid",
+  "material.gt6ce.potassiumhydroxidesolution": "Potassium Hydroxide Solution",
+  "material.gt6ce.borontrioxide": "Boron Trioxide",
+  "material.gt6ce.photomaskplate": "Photomask",
+  "material.gt6ce.processedwafer": "Processed"
 }
