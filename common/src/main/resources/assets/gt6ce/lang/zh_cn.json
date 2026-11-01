@@ -358,5 +358,18 @@
   "material.gt6ce.dieattachedframe": "装片框架",
   "material.gt6ce.bondedframe": "键合框架",
   "material.gt6ce.chipdieelite": "精密集成电路",
-  "material.gt6ce.chipelite": "精密集成电路"
+  "material.gt6ce.chipelite": "精密集成电路",
+  "material.gt6ce.lithiumcobaltoxide": "钴酸锂",
+  "material.gt6ce.cathodemix": "正极混合料",
+  "material.gt6ce.cathodesheet": "正极片",
+  "material.gt6ce.anodemix": "负极混合料",
+  "material.gt6ce.anodesheet": "负极片",
+  "material.gt6ce.polyolefinseparator": "聚烯烃隔膜",
+  "material.gt6ce.lithiumhexafluorophosphate": "六氟磷酸锂",
+  "material.gt6ce.ethylenecarbonate": "碳酸乙烯酯",
+  "material.gt6ce.lithiumelectrolyte": "锂电解液",
+  "material.gt6ce.carbonpaper": "碳纸",
+  "material.gt6ce.membraneelectrodeassembly": "膜电极",
+  "material.gt6ce.bipolarplate": "双极板",
+  "material.gt6ce.vanadiumelectrolyte": "钒电解液"
 }

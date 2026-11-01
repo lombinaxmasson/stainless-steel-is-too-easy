@@ -231,6 +231,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         materials.addAll(BaseMetalMaterials.MATERIALS);
         materials.addAll(SemiconductorMaterials.MATERIALS);
         materials.addAll(PackagingMaterials.MATERIALS);
+        materials.addAll(ElectrochemistryMaterials.MATERIALS);
         return List.copyOf(materials);
     }
 
@@ -242,6 +243,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
                 new MaterialFormRequest("PhotomaskPlate", "plate")));
         forms.addAll(PolymerMaterials.FORMS);
         forms.addAll(PackagingMaterials.FORMS);
+        forms.addAll(ElectrochemistryMaterials.FORMS);
         return List.copyOf(forms);
     }
 

@@ -68,7 +68,7 @@ public final class MaterialReportTests {
                 "PetrochemRecipes.java", "PolymerRecipes.java", "MetallurgyRecipes.java",
                 "RareEarthRecipes.java", "NuclearRecipes.java", "BaseMetalRecipes.java",
                 "CircuitRecipes.java", "WaferRecipes.java", "LithographyRecipes.java",
-                "PackagingRecipes.java")),
+                "PackagingRecipes.java", "ElectrochemistryRecipes.java")),
                 "all central recipe modules retain runtime registration order");
     }
 

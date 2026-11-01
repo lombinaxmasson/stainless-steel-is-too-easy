@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PCP",
+    "SAS",
+    "PBP"
+  ],
+  "key": {
+    "P": { "item": "gt6ce:dust_pyrolusite" },
+    "C": { "item": "ssite:foil_cathodesheet" },
+    "A": { "item": "ssite:foil_anodesheet" },
+    "S": { "item": "ssite:foil_polyolefinseparator" },
+    "B": { "item": "gt6ce:plate_batteryalloy" }
+  },
+  "result": {
+    "item": "gt6ce:alkaline_button_cell_empty"
+  }
+}

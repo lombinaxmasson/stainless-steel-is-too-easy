@@ -58,6 +58,7 @@ public final class ChemistryRecipes {
             WaferRecipes.add();
             LithographyRecipes.add();
             PackagingRecipes.add();
+            ElectrochemistryRecipes.add();
             return List.copyOf(declarations);
         } finally {
             if (previous == null) COLLECTOR.remove();

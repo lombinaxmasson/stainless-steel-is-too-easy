@@ -358,5 +358,18 @@
   "material.gt6ce.dieattachedframe": "Die-Attached Frame",
   "material.gt6ce.bondedframe": "Bonded Frame",
   "material.gt6ce.chipdieelite": "Elite IC",
-  "material.gt6ce.chipelite": "Elite IC"
+  "material.gt6ce.chipelite": "Elite IC",
+  "material.gt6ce.lithiumcobaltoxide": "Lithium Cobalt Oxide",
+  "material.gt6ce.cathodemix": "Cathode Mix",
+  "material.gt6ce.cathodesheet": "Cathode Sheet",
+  "material.gt6ce.anodemix": "Anode Mix",
+  "material.gt6ce.anodesheet": "Anode Sheet",
+  "material.gt6ce.polyolefinseparator": "Polyolefin Separator",
+  "material.gt6ce.lithiumhexafluorophosphate": "Lithium Hexafluorophosphate",
+  "material.gt6ce.ethylenecarbonate": "Ethylene Carbonate",
+  "material.gt6ce.lithiumelectrolyte": "Lithium Electrolyte",
+  "material.gt6ce.carbonpaper": "Carbon Paper",
+  "material.gt6ce.membraneelectrodeassembly": "Membrane Electrode Assembly",
+  "material.gt6ce.bipolarplate": "Bipolar Plate",
+  "material.gt6ce.vanadiumelectrolyte": "Vanadium Electrolyte"
 }
