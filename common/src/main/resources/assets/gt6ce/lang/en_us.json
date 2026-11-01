@@ -371,5 +371,9 @@
   "material.gt6ce.carbonpaper": "Carbon Paper",
   "material.gt6ce.membraneelectrodeassembly": "Membrane Electrode Assembly",
   "material.gt6ce.bipolarplate": "Bipolar Plate",
-  "material.gt6ce.vanadiumelectrolyte": "Vanadium Electrolyte"
+  "material.gt6ce.vanadiumelectrolyte": "Vanadium Electrolyte",
+  "material.gt6ce.aramidfelt": "Aramid Felt",
+  "material.gt6ce.multilayerinsulation": "Multilayer Insulation",
+  "material.gt6ce.carbonfiberprepreg": "Carbon Fiber Prepreg",
+  "material.gt6ce.carbonfibercomposite": "Carbon Fiber Composite"
 }

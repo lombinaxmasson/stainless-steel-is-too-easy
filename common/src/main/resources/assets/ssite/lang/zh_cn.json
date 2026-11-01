@@ -99,6 +99,7 @@
   "item.ssite.wafer": "%s晶圆",
   "item.ssite.die": "%s裸片",
   "item.ssite.chip": "%s封装件",
+  "item.ssite.hose": "%s软管",
   "config.jade.plugin_ssite.aod_furnace": "AOD 转炉",
   "config.jade.plugin_ssite.fluidized_bed": "流化床工业供热",
   "config.jade.plugin_ssite.heat_transport": "保温 HU 烟道"

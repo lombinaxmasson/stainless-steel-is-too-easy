@@ -99,6 +99,7 @@
   "item.ssite.wafer": "%s Wafer",
   "item.ssite.die": "%s Die",
   "item.ssite.chip": "%s Package",
+  "item.ssite.hose": "%s Hose",
   "config.jade.plugin_ssite.aod_furnace": "AOD Converter",
   "config.jade.plugin_ssite.fluidized_bed": "Fluidized-Bed Industrial Heater",
   "config.jade.plugin_ssite.heat_transport": "Insulated HU Duct"

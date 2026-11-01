@@ -19,7 +19,7 @@ import java.util.List;
 public final class SsiteMaterials implements AddonMaterialContributor {
     private static final String[] CREATIVE_PREFIXES = {
             "dust", "dustSmall", "dustTiny", "plate", "foil", "wireFine", "ingot", "crystalBoule", "wafer",
-            "die", "chip"};
+            "die", "chip", "hose"};
 
     public static final List<MaterialDeclaration> MATERIALS = buildMaterials();
 
@@ -232,6 +232,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         materials.addAll(SemiconductorMaterials.MATERIALS);
         materials.addAll(PackagingMaterials.MATERIALS);
         materials.addAll(ElectrochemistryMaterials.MATERIALS);
+        materials.addAll(FunctionalTextileMaterials.MATERIALS);
         return List.copyOf(materials);
     }
 
@@ -244,6 +245,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         forms.addAll(PolymerMaterials.FORMS);
         forms.addAll(PackagingMaterials.FORMS);
         forms.addAll(ElectrochemistryMaterials.FORMS);
+        forms.addAll(FunctionalTextileMaterials.FORMS);
         return List.copyOf(forms);
     }
 
@@ -251,6 +253,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
     public List<PrefixDeclaration> prefixes() {
         var prefixes = new ArrayList<>(SemiconductorMaterials.PREFIXES);
         prefixes.addAll(PackagingMaterials.PREFIXES);
+        prefixes.addAll(FunctionalTextileMaterials.PREFIXES);
         return List.copyOf(prefixes);
     }
 

@@ -371,5 +371,9 @@
   "material.gt6ce.carbonpaper": "碳纸",
   "material.gt6ce.membraneelectrodeassembly": "膜电极",
   "material.gt6ce.bipolarplate": "双极板",
-  "material.gt6ce.vanadiumelectrolyte": "钒电解液"
+  "material.gt6ce.vanadiumelectrolyte": "钒电解液",
+  "material.gt6ce.aramidfelt": "芳纶针刺毡",
+  "material.gt6ce.multilayerinsulation": "多层隔热层",
+  "material.gt6ce.carbonfiberprepreg": "碳纤维预浸料",
+  "material.gt6ce.carbonfibercomposite": "碳纤维复合材料"
 }
