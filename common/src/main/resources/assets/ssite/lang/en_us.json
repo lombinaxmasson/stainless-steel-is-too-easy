@@ -94,5 +94,10 @@
   "jade.ssite.fluidized_bed.status.4": "Waiting for solid fuel",
   "jade.ssite.fluidized_bed.status.5": "Combustion active",
   "jade.ssite.fluidized_bed.status.6": "Heat storage full",
-  "jade.ssite.fluidized_bed.status.7": "Stopped by redstone; residual heat can still flow"
+  "jade.ssite.fluidized_bed.status.7": "Stopped by redstone; residual heat can still flow",
+  "item.ssite.crystal_boule": "%s Boule",
+  "item.ssite.wafer": "%s Wafer",
+  "config.jade.plugin_ssite.aod_furnace": "AOD Converter",
+  "config.jade.plugin_ssite.fluidized_bed": "Fluidized-Bed Industrial Heater",
+  "config.jade.plugin_ssite.heat_transport": "Insulated HU Duct"
 }

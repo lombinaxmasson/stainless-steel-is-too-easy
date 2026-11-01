@@ -94,5 +94,10 @@
   "jade.ssite.fluidized_bed.status.4": "等待固体燃料",
   "jade.ssite.fluidized_bed.status.5": "燃烧供热中",
   "jade.ssite.fluidized_bed.status.6": "蓄热已满",
-  "jade.ssite.fluidized_bed.status.7": "红石停料，余热继续输出"
+  "jade.ssite.fluidized_bed.status.7": "红石停料，余热继续输出",
+  "item.ssite.crystal_boule": "%s晶锭",
+  "item.ssite.wafer": "%s晶圆",
+  "config.jade.plugin_ssite.aod_furnace": "AOD 转炉",
+  "config.jade.plugin_ssite.fluidized_bed": "流化床工业供热",
+  "config.jade.plugin_ssite.heat_transport": "保温 HU 烟道"
 }

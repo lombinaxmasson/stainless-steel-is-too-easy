@@ -9,6 +9,7 @@ GregTech 6 Community Edition 的化工向附属。模组 id 是 `ssite`，依赖
 - **不锈钢与 AOD**：铬铁、铬、硅铁，坩埚化 AOD 转炉，以及 25 方块、六档材料的大型 AOD。
 - **水净化与卤水**：五级水净化、海水淡化与卤水综合利用。
 - **石化与高分子**：原油蒸馏、芳烃与 C1–C5 平台化学品、聚烯烃、工程塑料与合成橡胶。
+- **工业挂载**：合成橡胶与 PVC/Teflon 绝缘线缆、泵与喷嘴密封件，以及 PAO/PIB 调合润滑油接入 GT6CE 的切割与锯切冷却。
 - **活泼与难熔金属**：VAR 电弧炉、钛钒氯化、锆铪分离、铌钽萃取。
 - **稀土与铀钍**：P204 / Aliquat 336 分级萃取、TBP 核纯与黄饼。
 - **基础金属**：铜镍钴锍前段。
@@ -66,6 +67,16 @@ $env:JAVA_HOME = $env:JAVA17_HOME
 ```
 
 `compileBoth` 会编译两端并运行共用的 JVM 检查：熔池反应与坩埚行为（`unitTest`）、流化床燃料与热账（`fluidizedBedTest`）、HU 运输拓扑（`heatTransportTest`），以及不启动图形窗口的 OBJ 渲染顶点检查（`furnaceRenderTest`、`fluidizedBedRenderTest`）。
+
+`compileBoth` 和两端的 `build` 还会生成材料用途报告，并运行 `materialReportTest`。只更新报告可以执行：
+
+```powershell
+.\scripts\build.ps1 materialReport
+# 只生成一端：
+.\scripts\build.ps1 :neoforge:materialReport
+```
+
+报告分别在 `forge/build/reports/material-uses/` 与 `neoforge/build/reports/material-uses/`，包含可搜索的 `index.html`、表格 `materials.md` 和结构化数据 `catalog.json`。材料、形态、配方与实际引用关系来自当前代码；可选的本地 `docs/material-uses.json` 只补充规划用途。报告区分同材料成型、催化剂、条件配方和行为展示行，不把“本次扫描未发现用途”当成材料在整个游戏中没有用途。宿主自动生成配方、其他模组与机器 tick 行为未全量扫描，生成报告不替代游戏内验证。
 
 Forge 的可安装 jar 在 `forge/build/libs/`，NeoForge 的在 `neoforge/build/libs/`，安装时选和加载器对应的那一个。
 

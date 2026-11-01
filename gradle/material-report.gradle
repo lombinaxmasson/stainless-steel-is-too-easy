@@ -1,0 +1,40 @@
+// Build tooling stays outside the mod's production source set and distribution jar.
+sourceSets {
+    materialReport {
+        java.srcDir rootProject.file('scripts/material-report/java')
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+    }
+}
+
+sourceSets.test.compileClasspath += sourceSets.materialReport.output
+
+def reportDirectory = layout.buildDirectory.dir('reports/material-uses')
+def materialReport = tasks.register('materialReport', JavaExec) {
+    description = 'Generates material-use tables from the current material and recipe declarations.'
+    group = 'documentation'
+    dependsOn 'materialReportClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = sourceSets.materialReport.runtimeClasspath
+    mainClass = 'com.lombinaxmasson.ssite.report.MaterialReport'
+    args rootProject.projectDir.absolutePath, reportDirectory.get().asFile.absolutePath, project.name
+    inputs.files(sourceSets.main.allSource)
+    inputs.files(rootProject.fileTree('docs') { include 'material-uses.json' })
+    inputs.property('platform', project.name)
+    outputs.files(['index.html', 'materials.md', 'catalog.json'].collect {
+        reportDirectory.get().file(it)
+    })
+}
+
+def materialReportTest = tasks.register('materialReportTest', JavaExec) {
+    description = 'Checks declaration capture and material-use report coverage and classification.'
+    group = 'verification'
+    dependsOn 'testClasses', 'materialReportClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.materialReport.runtimeClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.report.MaterialReportTests'
+    args rootProject.projectDir.absolutePath
+    jvmArgs '-ea'
+}
+
+tasks.named('check').configure { dependsOn materialReport, materialReportTest }

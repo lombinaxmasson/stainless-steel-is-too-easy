@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "ssite:plate_styrenebutadienerubber",
+    "ssite:plate_nitrilerubber",
+    "ssite:plate_neoprene",
+    "ssite:plate_siliconerubber",
+    "ssite:plate_viton"
+  ]
+}

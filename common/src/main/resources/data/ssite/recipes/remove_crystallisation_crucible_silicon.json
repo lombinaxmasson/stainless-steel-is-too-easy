@@ -1,0 +1,6 @@
+{
+  "_comment": "M9-04: silicon boules now grow from electronic-grade polysilicon. Drops the host rows that grow a boule from any silicon dust, while leaving germanium and the sapphire family alone.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.crystallisationcrucible",
+  "item_inputs": [{ "tag": "gt6ce:material/silicon" }]
+}

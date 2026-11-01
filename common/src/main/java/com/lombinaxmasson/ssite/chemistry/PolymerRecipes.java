@@ -1,14 +1,12 @@
 package com.lombinaxmasson.ssite.chemistry;
 
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.amounts;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.circuit;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.dust;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.fields;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.item;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.row;
+import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.vanillaItem;
 
 /** M4 polymer recipes. Each M4 card adds one method; {@link #add()} wires them all. */
 public final class PolymerRecipes {
@@ -343,14 +341,13 @@ public final class PolymerRecipes {
                 .fluidIn("BioEthanol", 1000)
                 .fluidOut("GenLiquid_EthylAcetate", 1000)
                 .add(160, 32);
-        if (FluidBridge.distinct("GenLiquid_Ethanol", "BioEthanol")) {
-            row("gt.recipe.bath", "c3/pva-pure")
-                    .in(dust("PolyvinylAcetate", 1), item("dustTiny", "SodiumHydroxide", 1))
-                    .out(dust("PolyvinylAlcohol", 1))
-                    .fluidIn("GenLiquid_Ethanol", 1000)
-                    .fluidOut("GenLiquid_EthylAcetate", 1000)
-                    .add(160, 32);
-        }
+        row("gt.recipe.bath", "c3/pva-pure")
+                .requiresDistinctFluids("GenLiquid_Ethanol", "BioEthanol")
+                .in(dust("PolyvinylAcetate", 1), item("dustTiny", "SodiumHydroxide", 1))
+                .out(dust("PolyvinylAlcohol", 1))
+                .fluidIn("GenLiquid_Ethanol", 1000)
+                .fluidOut("GenLiquid_EthylAcetate", 1000)
+                .add(160, 32);
     }
 
     private static void pvb() {
@@ -751,8 +748,8 @@ public final class PolymerRecipes {
 
     private static void sponge() {
         row("gt.recipe.mixer", "c7/sponge")
-                .in(new ItemStack(Items.YELLOW_DYE, 1))
-                .out(new ItemStack(Items.SPONGE, 1))
+                .in(vanillaItem("minecraft:yellow_dye", 1))
+                .out(vanillaItem("minecraft:sponge", 1))
                 .fluidIn("GenLiquid_MethyleneDiphenylDiisocyanate", 250, "GenLiquid_PolyetherPolyol", 250, "CarbonDioxide", 500)
                 .add(100, 32);
     }
@@ -1378,6 +1375,11 @@ public final class PolymerRecipes {
                 .fluidOut("GenLiquid_Polyisobutylene", 1000)
                 .keep(0)
                 .add(200, 48);
+        // PAO base stock plus PIB viscosity modifier; the host consumes Lubricant as a cutter and saw coolant.
+        row("gt.recipe.mixer", "m9/blended-lubricant")
+                .fluidIn("GenLiquid_Polyalphaolefin", 800, "GenLiquid_Polyisobutylene", 200)
+                .fluidOut("Lubricant", 1000)
+                .add(200, 32);
     }
 
     // ── Card 14: deferred fill (TDI, propylene oxide, adipic acid/nylon 66, PPO, PEI, dicyandiamide) ──

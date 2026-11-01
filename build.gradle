@@ -9,6 +9,14 @@ tasks.register('compileBoth') {
     dependsOn ':forge:fluidizedBedTest', ':neoforge:fluidizedBedTest',
             ':forge:fluidizedBedRenderTest', ':neoforge:fluidizedBedRenderTest'
     dependsOn ':forge:heatTransportTest', ':neoforge:heatTransportTest'
+    dependsOn ':forge:materialReport', ':neoforge:materialReport'
+    dependsOn ':forge:materialReportTest', ':neoforge:materialReportTest'
+}
+
+tasks.register('materialReport') {
+    group = 'documentation'
+    description = 'Generate material-use reports for both loaders without starting Minecraft.'
+    dependsOn ':forge:materialReport', ':neoforge:materialReport'
 }
 
 tasks.named('assemble').configure {

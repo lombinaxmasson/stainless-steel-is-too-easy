@@ -5,6 +5,7 @@ import gregtech.api.addon.recipe.CrucibleReactionDeclaration;
 import gregtech.api.addon.recipe.CrucibleReactionRemoval;
 import gregtech.api.addon.material.MaterialDeclaration;
 import gregtech.api.addon.material.MaterialFormRequest;
+import gregtech.api.addon.material.PrefixDeclaration;
 import gregtech.api.addon.worldgen.OreVeinDeclaration;
 import gregtech.api.addon.material.SmeltingTargetRemoval;
 import gregtech.api.addon.platform.AddonItems;
@@ -17,7 +18,7 @@ import java.util.List;
 /** Material declarations. GregTech loads this through ServiceLoader while materials are still open. */
 public final class SsiteMaterials implements AddonMaterialContributor {
     private static final String[] CREATIVE_PREFIXES = {
-            "dust", "dustSmall", "dustTiny", "plate", "foil", "wireFine", "ingot"};
+            "dust", "dustSmall", "dustTiny", "plate", "foil", "wireFine", "ingot", "crystalBoule", "wafer"};
 
     public static final List<MaterialDeclaration> MATERIALS = buildMaterials();
 
@@ -227,6 +228,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         materials.addAll(RareEarthMaterials.MATERIALS);
         materials.addAll(NuclearMaterials.MATERIALS);
         materials.addAll(BaseMetalMaterials.MATERIALS);
+        materials.addAll(SemiconductorMaterials.MATERIALS);
         return List.copyOf(materials);
     }
 
@@ -237,6 +239,11 @@ public final class SsiteMaterials implements AddonMaterialContributor {
                 new MaterialFormRequest("CelluloseAcetate", "foil")));
         forms.addAll(PolymerMaterials.FORMS);
         return List.copyOf(forms);
+    }
+
+    @Override
+    public List<PrefixDeclaration> prefixes() {
+        return SemiconductorMaterials.PREFIXES;
     }
 
     /** These ores melt into a metal in the built-in crucible table; the cards replace them with real routes. */

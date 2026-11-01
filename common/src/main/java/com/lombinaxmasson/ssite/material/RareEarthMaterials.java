@@ -142,6 +142,32 @@ public final class RareEarthMaterials {
             MaterialDeclaration.builder("SamariumCobalt")
                     .displayName("Samarium-Cobalt").color(0x9098A0).chemicalFormula("SmCo5")
                     .meltingPointKelvin(1600).boilingPointKelvin(3000).density(8.30F).metal().build(),
+            // Pressed, sintered and tempered bodies stay dust-only so they cannot be cast or
+            // rolled as ordinary metal; the magnet forms below are the only usable product.
+            MaterialDeclaration.builder("NeodymiumIronBoronCompact")
+                    .displayName("NdFeB Green Compact").color(0x707880).chemicalFormula("Nd2Fe14B")
+                    .meltingPointKelvin(1600).boilingPointKelvin(3000).density(7.50F).dust().build(),
+            MaterialDeclaration.builder("NeodymiumIronBoronSintered")
+                    .displayName("NdFeB Sintered Body").color(0x5E6874).chemicalFormula("Nd2Fe14B")
+                    .meltingPointKelvin(1600).boilingPointKelvin(3000).density(7.50F).dust().build(),
+            MaterialDeclaration.builder("NeodymiumIronBoronTempered")
+                    .displayName("NdFeB Tempered Body").color(0x4E5866).chemicalFormula("Nd2Fe14B")
+                    .meltingPointKelvin(1600).boilingPointKelvin(3000).density(7.50F).dust().build(),
+            MaterialDeclaration.builder("NeodymiumIronBoronMagnet")
+                    .displayName("NdFeB Magnet").color(0x4A6080).chemicalFormula("Nd2Fe14B")
+                    .meltingPointKelvin(1600).boilingPointKelvin(3000).density(7.55F).metal().build(),
+            MaterialDeclaration.builder("SamariumCobaltCompact")
+                    .displayName("SmCo Green Compact").color(0x847C72).chemicalFormula("SmCo5")
+                    .meltingPointKelvin(1600).boilingPointKelvin(3000).density(8.30F).dust().build(),
+            MaterialDeclaration.builder("SamariumCobaltSintered")
+                    .displayName("SmCo Sintered Body").color(0x706860).chemicalFormula("SmCo5")
+                    .meltingPointKelvin(1600).boilingPointKelvin(3000).density(8.30F).dust().build(),
+            MaterialDeclaration.builder("SamariumCobaltTempered")
+                    .displayName("SmCo Tempered Body").color(0x5C544C).chemicalFormula("SmCo5")
+                    .meltingPointKelvin(1600).boilingPointKelvin(3000).density(8.30F).dust().build(),
+            MaterialDeclaration.builder("SamariumCobaltMagnet")
+                    .displayName("SmCo Magnet").color(0x8A7050).chemicalFormula("SmCo5")
+                    .meltingPointKelvin(1600).boilingPointKelvin(3000).density(8.35F).metal().build(),
             MaterialDeclaration.builder("YttriumAluminiumGarnet")
                     .displayName("Yttrium Aluminium Garnet (YAG)").color(0xF0F0E0)
                     .chemicalFormula("Y3Al5O12")

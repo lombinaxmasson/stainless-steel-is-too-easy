@@ -1,6 +1,8 @@
 package com.lombinaxmasson.ssite.chemistry;
 
+import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.circuit;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.dust;
+import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.item;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.row;
 
 /** M6 rare-earth recipes. Cards 2 and 3 append their own methods here. */
@@ -11,6 +13,7 @@ public final class RareEarthRecipes {
         oreLeaching();
         rareEarthExtraction();
         rareEarthMetals();
+        rareEarthMagnets();
     }
 
     /** Three ore routes converge on MixedRareEarthSolution; monazite also yields Th and U. */
@@ -200,5 +203,49 @@ public final class RareEarthRecipes {
                 .in(dust("YttriumOxide", 3), dust("Alumina", 5))
                 .out(dust("YttriumAluminiumGarnet", 2))
                 .add(240, 64);
+    }
+
+    /**
+     * Press → sinter → temper → magnetize. Powdering is the host's generic shredder row, so the
+     * chain starts from alloy dust. The press has no fluid slots, so graphite stands in for a
+     * die-wall lubricant; the circuit selects the aligning press stroke.
+     */
+    private static void rareEarthMagnets() {
+        String[][] families = {
+                {"NeodymiumIronBoron", "NeodymiumIronBoronCompact", "NeodymiumIronBoronSintered",
+                        "NeodymiumIronBoronTempered", "NeodymiumIronBoronMagnet"},
+                {"SamariumCobalt", "SamariumCobaltCompact", "SamariumCobaltSintered",
+                        "SamariumCobaltTempered", "SamariumCobaltMagnet"}
+        };
+        for (String[] family : families) {
+            String alloy = family[0];
+            String compact = family[1];
+            String sintered = family[2];
+            String tempered = family[3];
+            String magnet = family[4];
+
+            row("gt.recipe.press", "magnets/" + alloy + "/align-press")
+                    .in(dust(alloy, 1), circuit(1), item("dustTiny", "Graphite", 1))
+                    .out(dust(compact, 1))
+                    .add(120, 32);
+
+            // The calciner needs at least two inputs; argon is the protective atmosphere.
+            row("gt.recipe.calciner", "magnets/" + alloy + "/sinter")
+                    .in(dust(compact, 1))
+                    .out(dust(sintered, 1))
+                    .fluidIn("GenGas_Argon", 1000)
+                    .add(240, 96);
+
+            row("gt.recipe.calciner", "magnets/" + alloy + "/temper")
+                    .in(dust(sintered, 1))
+                    .out(dust(tempered, 1))
+                    .fluidIn("GenGas_Argon", 500)
+                    .add(160, 64);
+
+            row("gt.recipe.polarizer", "magnets/" + alloy + "/magnetize")
+                    .in(dust(tempered, 1))
+                    .out(item("ingot", magnet, 1))
+                    .add(120, 64);
+        }
     }
 }

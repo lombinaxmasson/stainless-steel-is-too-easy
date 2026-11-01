@@ -1,0 +1,6 @@
+{
+  "_comment": "Drops every polarizer row that turns a Neodymium form into NeodymiumMagnetic. The host's per-material tag covers all item and block forms, so this does not need one file per prefix.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.polarizer",
+  "item_inputs": [{ "tag": "gt6ce:material/neodymium" }]
+}

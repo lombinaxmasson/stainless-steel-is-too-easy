@@ -271,6 +271,14 @@
   "material.gt6ce.lutetiumfluoride": "氟化镥",
   "material.gt6ce.neodymiumironboron": "钕铁硼",
   "material.gt6ce.samariumcobalt": "钐钴",
+  "material.gt6ce.neodymiumironboroncompact": "钕铁硼压坯",
+  "material.gt6ce.neodymiumironboronsintered": "钕铁硼烧结坯",
+  "material.gt6ce.neodymiumironborontempered": "钕铁硼回火坯",
+  "material.gt6ce.neodymiumironboronmagnet": "钕铁硼磁体",
+  "material.gt6ce.samariumcobaltcompact": "钐钴压坯",
+  "material.gt6ce.samariumcobaltsintered": "钐钴烧结坯",
+  "material.gt6ce.samariumcobalttempered": "钐钴回火坯",
+  "material.gt6ce.samariumcobaltmagnet": "钐钴磁体",
   "material.gt6ce.yttriumaluminiumgarnet": "钇铝石榴石",
   "material.gt6ce.yellowcake": "黄饼（重铀酸铵）",
   "material.gt6ce.uranylnitratesolution": "硝酸铀酰粗液",
@@ -333,5 +341,9 @@
   "material.gt6ce.rheniumscrubsolution": "铼水洗液",
   "material.gt6ce.rheniumloadedresin": "载铼树脂",
   "material.gt6ce.ammoniumperrhenate": "高铼酸铵",
-  "material.gt6ce.ammoniummolybdatesolution": "钼酸铵溶液"
+  "material.gt6ce.ammoniummolybdatesolution": "钼酸铵溶液",
+  "material.gt6ce.trichlorosilane": "三氯氢硅",
+  "material.gt6ce.electronicgradesilicon": "电子级多晶硅",
+  "material.gt6ce.galliumarsenide": "砷化镓",
+  "material.gt6ce.indiumphosphide": "磷化铟"
 }

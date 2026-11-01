@@ -104,10 +104,7 @@ public final class PetrochemRecipes {
         oxydehydro("OneButene");
         oxydehydro("TwoButene");
         ethanolDehydro("", "BioEthanol");
-        // Card 1 backfill: GT6CE also has a distinct industrial ethanol, so offer it as a second feedstock.
-        if (FluidBridge.distinct("GenLiquid_Ethanol", "BioEthanol")) {
-            ethanolDehydro("-pure", "GenLiquid_Ethanol");
-        }
+        ethanolDehydro("-pure", "GenLiquid_Ethanol");
         row("gt.recipe.mixer", "c4/sulfolane")
                 .in(dust("Nickel", 1))
                 .fluidIn("GenGas_Butadiene", 1000, "GenGas_SulfurDioxide", 1000, "Hydrogen", 2000)
@@ -124,13 +121,17 @@ public final class PetrochemRecipes {
     }
 
     private static void ethanolDehydro(String suffix, String ethanol) {
-        row("gt.recipe.catalyticcracking", "c4/ethanol-dehydro" + suffix)
+        var dehydrogenation = row("gt.recipe.catalyticcracking", "c4/ethanol-dehydro" + suffix);
+        if (!suffix.isEmpty()) dehydrogenation.requiresDistinctFluids(ethanol, "BioEthanol");
+        dehydrogenation
                 .in(dust("Copper", 1))
                 .fluidIn(ethanol, 1000)
                 .fluidOut("GenLiquid_Acetaldehyde", 900, "Hydrogen", 900)
                 .keep(0)
                 .add(120, 32);
-        row("gt.recipe.mixer", "c4/ethanol-condense" + suffix)
+        var condensation = row("gt.recipe.mixer", "c4/ethanol-condense" + suffix);
+        if (!suffix.isEmpty()) condensation.requiresDistinctFluids(ethanol, "BioEthanol");
+        condensation
                 .in(dust("Tantalum", 1))
                 .fluidIn(ethanol, 1000, "GenLiquid_Acetaldehyde", 1000)
                 .fluidOut("GenGas_Butadiene", 800, "DistW", 1600)

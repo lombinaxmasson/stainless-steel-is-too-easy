@@ -1,0 +1,6 @@
+{
+  "_comment": "M9-02: master boards are laminated from FR-4 in the bath; drop the press rows that took any conductor plate.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.press",
+  "item_outputs": [{ "item": "gt6ce:circuit_board_master" }]
+}

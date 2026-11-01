@@ -271,6 +271,14 @@
   "material.gt6ce.lutetiumfluoride": "Lutetium Fluoride",
   "material.gt6ce.neodymiumironboron": "Neodymium-Iron-Boron",
   "material.gt6ce.samariumcobalt": "Samarium-Cobalt",
+  "material.gt6ce.neodymiumironboroncompact": "NdFeB Green Compact",
+  "material.gt6ce.neodymiumironboronsintered": "NdFeB Sintered Body",
+  "material.gt6ce.neodymiumironborontempered": "NdFeB Tempered Body",
+  "material.gt6ce.neodymiumironboronmagnet": "NdFeB Magnet",
+  "material.gt6ce.samariumcobaltcompact": "SmCo Green Compact",
+  "material.gt6ce.samariumcobaltsintered": "SmCo Sintered Body",
+  "material.gt6ce.samariumcobalttempered": "SmCo Tempered Body",
+  "material.gt6ce.samariumcobaltmagnet": "SmCo Magnet",
   "material.gt6ce.yttriumaluminiumgarnet": "Yttrium Aluminium Garnet (YAG)",
   "material.gt6ce.yellowcake": "Yellowcake (Ammonium Diuranate)",
   "material.gt6ce.uranylnitratesolution": "Crude Uranyl Nitrate Solution",
@@ -333,5 +341,9 @@
   "material.gt6ce.rheniumscrubsolution": "Rhenium Scrub Solution",
   "material.gt6ce.rheniumloadedresin": "Rhenium-Loaded Resin",
   "material.gt6ce.ammoniumperrhenate": "Ammonium Perrhenate",
-  "material.gt6ce.ammoniummolybdatesolution": "Ammonium Molybdate Solution"
+  "material.gt6ce.ammoniummolybdatesolution": "Ammonium Molybdate Solution",
+  "material.gt6ce.trichlorosilane": "Trichlorosilane",
+  "material.gt6ce.electronicgradesilicon": "Electronic-Grade Polysilicon",
+  "material.gt6ce.galliumarsenide": "Gallium Arsenide",
+  "material.gt6ce.indiumphosphide": "Indium Phosphide"
 }
