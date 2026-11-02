@@ -44,13 +44,14 @@ public final class MaterialReportTests {
         recyclingAndConditionalEvidence(rows);
         fuelAndDisplayEvidence(rows);
         thoriumFuelChain(rows);
+        spentFuelChain(rows);
         craftingInputsAndRemovalRules();
         shapelessAlternativesAndUnsupportedTypes();
         optionalNotesAndUnknownTargets();
         malformedNotesFail();
         contributorCoverage(repo);
         renderingAndDeterministicOutput(repo);
-        System.out.println("MaterialReportTests: all 20 checks passed.");
+        System.out.println("MaterialReportTests: all 21 checks passed.");
     }
 
     private static void moduleOrderAndSourceLocations(Path repo, List<RecipeDeclaration> rows) throws IOException {
@@ -255,6 +256,44 @@ public final class MaterialReportTests {
                         new ItemRef(ItemKind.VANILLA, "", "", "gt6ce:fuel_rod_th_232", 1, -1)))
                 && encapsulate.duration() == 16 && encapsulate.perTick() == 16,
                 "the sintered pellet enters the host thorium rod through the canner");
+    }
+
+    private static void spentFuelChain(List<RecipeDeclaration> rows) {
+        RecipeDeclaration disassemble = row(rows, "nuclear/spent-disassemble");
+        check(disassemble.map().equals("gt.recipe.shredder")
+                && disassemble.itemInputs().equals(List.of(
+                        new ItemRef(ItemKind.VANILLA, "", "", "gt6ce:reactor_rod_9310", 1, -1)))
+                && disassemble.itemOutputs().equals(List.of(
+                        material("scrapGt", "Zirconium", 9), material("dust", "SpentThoriumFuel", 1)))
+                && disassemble.fluidInputs().isEmpty() && disassemble.fluidOutputs().isEmpty(),
+                "disassembly accepts only the independent depleted rod item and a fuel-free shredder row");
+        RecipeDeclaration separate = row(rows, "nuclear/spent-separate");
+        check(separate.map().equals("gt.recipe.centrifuge")
+                && separate.itemInputs().equals(List.of(material("dust", "SpentThoriumFuel", 1)))
+                && separate.itemOutputs().equals(List.of(
+                        material("dustTiny", "Thorium", 1), material("dustDiv72", "Uranium", 6),
+                        material("dustDiv72", "FissionProductResidue", 58)))
+                && separate.fluidInputs().isEmpty(),
+                "separation consumes one spent batch and returns the host thorium and uranium units");
+        check(separate.itemOutputs().get(0).count() * 8
+                + separate.itemOutputs().get(1).count()
+                + separate.itemOutputs().get(2).count() == 72,
+                "separation balances the 72-unit dust batch without creating nuclear material");
+        RecipeDeclaration solidify = row(rows, "nuclear/spent-solidify");
+        check(solidify.map().equals("gt.recipe.press")
+                && solidify.itemInputs().equals(List.of(
+                        material("dustDiv72", "FissionProductResidue", 58),
+                        material("dust", "Glass", 3), material("dust", "Borax", 1)))
+                && solidify.itemOutputs().equals(List.of(material("dust", "SolidifiedFissionResidue", 1))),
+                "solidification consumes the residue with the glass matrix and emits a separate storage item");
+        check(rows.stream().noneMatch(r -> !r.label().startsWith("nuclear/spent-")
+                        && (r.itemInputs().stream().anyMatch(i -> i.material().equals("SpentThoriumFuel")
+                                || i.material().equals("FissionProductResidue"))
+                        || r.itemOutputs().stream().anyMatch(i -> i.material().equals("FissionProductResidue")))),
+                "spent batches and residues have no route outside the spent-fuel group");
+        check(rows.stream().noneMatch(r -> r.itemOutputs().stream().anyMatch(i ->
+                        i.kind() == ItemKind.VANILLA && i.itemId().equals("gt6ce:reactor_rod_9310"))),
+                "no addon recipe manufactures a depleted rod");
     }
 
     private static void craftingInputsAndRemovalRules() throws Exception {

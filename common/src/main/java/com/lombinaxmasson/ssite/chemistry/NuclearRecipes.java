@@ -5,13 +5,14 @@ import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.item;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.row;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.vanillaItem;
 
-/** M6 nuclear hydrometallurgy and the N-01 thorium fuel fabrication route. */
+/** M6 nuclear hydrometallurgy, the N-01 thorium fuel route and the N-02 spent-fuel route. */
 public final class NuclearRecipes {
     private NuclearRecipes() {}
 
     static void add() {
         uraniumThoriumTbp();
         thoriumFuel();
+        spentFuel();
     }
 
     private static void uraniumThoriumTbp() {
@@ -121,5 +122,30 @@ public final class NuclearRecipes {
                 .in(dust("ThoriumFuelPellet", 1), vanillaItem("gt6ce:reactor_rod_9201", 1))
                 .out(vanillaItem("gt6ce:fuel_rod_th_232", 1))
                 .add(16, 16);
+    }
+
+    private static void spentFuel() {
+        // The host centrifuge row already consumes 9310, so opening the rod runs in the
+        // shredder; a second centrifuge row with the same input would shadow that route.
+        row("gt.recipe.shredder", "nuclear/spent-disassemble")
+                .in(vanillaItem("gt6ce:reactor_rod_9310", 1))
+                .out(item("scrapGt", "Zirconium", 9), dust("SpentThoriumFuel", 1))
+                .add(128, 32);
+
+        // One dust batch is 72/72 units. 8/72 thorium and 6/72 uranium equal the host
+        // centrifuge's recovered amounts, so the new route adds no usable nuclear material;
+        // the remaining 58/72 is the fission-product fraction the host row leaves unrepresented.
+        row("gt.recipe.centrifuge", "nuclear/spent-separate")
+                .in(dust("SpentThoriumFuel", 1))
+                .out(item("dustTiny", "Thorium", 1), item("dustDiv72", "Uranium", 6),
+                        item("dustDiv72", "FissionProductResidue", 58))
+                .add(256, 64);
+
+        // The press is the reachable map with three item inputs and one item output; the port
+        // has no placeable Calciner. Glass and borax form the immobilization matrix.
+        row("gt.recipe.press", "nuclear/spent-solidify")
+                .in(item("dustDiv72", "FissionProductResidue", 58), dust("Glass", 3), dust("Borax", 1))
+                .out(dust("SolidifiedFissionResidue", 1))
+                .add(120, 32);
     }
 }

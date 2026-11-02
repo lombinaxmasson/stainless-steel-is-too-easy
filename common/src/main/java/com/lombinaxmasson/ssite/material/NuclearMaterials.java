@@ -4,7 +4,7 @@ import gregtech.api.addon.material.MaterialDeclaration;
 
 import java.util.List;
 
-/** M6 nuclear hydrometallurgy materials and the N-01 thorium fuel intermediates. */
+/** M6 nuclear hydrometallurgy materials, the N-01 thorium fuel intermediates and the N-02 spent batches. */
 public final class NuclearMaterials {
     public static final List<MaterialDeclaration> MATERIALS = List.of(
             MaterialDeclaration.builder("ThoriumConcentrate")
@@ -56,7 +56,18 @@ public final class NuclearMaterials {
                     .meltingPointKelvin(3390).boilingPointKelvin(4400).density(10.00F).dust().build(),
             MaterialDeclaration.builder("ThoriumFuelPellet")
                     .displayName("Sintered Thorium Fuel Pellet").color(0x484840).chemicalFormula("ThO2")
-                    .meltingPointKelvin(3390).boilingPointKelvin(4400).density(10.00F).dust().build()
+                    .meltingPointKelvin(3390).boilingPointKelvin(4400).density(10.00F).dust().build(),
+            // Spent and residue materials stay dust-only and opt out of host decomposition:
+            // without a smelting target or CENTRIFUGE/ELECTROLYZER they cannot return to fuel.
+            MaterialDeclaration.builder("SpentThoriumFuel")
+                    .displayName("Spent Thorium-232 Fuel Batch").color(0x4A4438).chemicalFormula("ThO2+FP")
+                    .meltingPointKelvin(3390).boilingPointKelvin(4400).density(9.60F).dust().build(),
+            MaterialDeclaration.builder("FissionProductResidue")
+                    .displayName("Fission Product Residue").color(0x5C4530).chemicalFormula("FP")
+                    .meltingPointKelvin(1200).boilingPointKelvin(2400).density(4.60F).dust().build(),
+            MaterialDeclaration.builder("SolidifiedFissionResidue")
+                    .displayName("Solidified Fission Product Residue").color(0x34342E).chemicalFormula("FP·SiO2")
+                    .meltingPointKelvin(1200).boilingPointKelvin(2400).density(2.60F).dust().build()
     );
 
     private NuclearMaterials() {}
