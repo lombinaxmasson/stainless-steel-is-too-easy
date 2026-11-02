@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["PPP", "PFP", "PPP"],
+  "key": {
+    "P": {"item": "gt6ce:plate_stainlesssteel"},
+    "F": {"item": "gt6ce:fire_bricks"}
+  },
+  "result": {
+    "item": "ssite:irradiation_reactor_casing",
+    "count": 4
+  }
+}

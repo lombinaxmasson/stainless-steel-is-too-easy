@@ -9,6 +9,7 @@ tasks.register('compileBoth') {
     dependsOn ':forge:fluidizedBedTest', ':neoforge:fluidizedBedTest',
             ':forge:fluidizedBedRenderTest', ':neoforge:fluidizedBedRenderTest'
     dependsOn ':forge:heatTransportTest', ':neoforge:heatTransportTest'
+    dependsOn ':forge:irradiationReactorTest', ':neoforge:irradiationReactorTest'
     dependsOn ':forge:materialReport', ':neoforge:materialReport'
     dependsOn ':forge:materialReportTest', ':neoforge:materialReportTest'
 }

@@ -20,6 +20,7 @@ public final class SsiteBehaviorMachines implements BehaviorMachineContributor {
         for (AodTier tier : AodTier.values()) { types.add(tier.machineType()); types.add(tier.largeMachineType()); }
         types.add(VarFurnaceCore.MACHINE_TYPE);
         types.add(FluidizedBedCore.MACHINE_TYPE);
+        types.add(IrradiationReactorCore.MACHINE_TYPE);
         types.add(HeatTransportMachines.DUCT);
         types.add(HeatTransportMachines.PLATE);
         return types;
@@ -28,6 +29,7 @@ public final class SsiteBehaviorMachines implements BehaviorMachineContributor {
     @Override
     public MachineBehavior create(String machineType) {
         if (FluidizedBedCore.MACHINE_TYPE.equals(machineType)) return new FluidizedBedBehavior();
+        if (IrradiationReactorCore.MACHINE_TYPE.equals(machineType)) return new IrradiationReactorBehavior();
         if (HeatTransportMachines.isMachine(machineType)) return new HeatTransportBehavior();
         AodTier large = LargeAodStructure.tier(machineType);
         if (large != null) return new ArgonCrucibleBehavior(new LargeAodCore(large));

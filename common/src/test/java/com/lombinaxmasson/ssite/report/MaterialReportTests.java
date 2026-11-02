@@ -45,6 +45,7 @@ public final class MaterialReportTests {
         fuelAndDisplayEvidence(rows);
         thoriumFuelChain(rows);
         spentFuelChain(rows);
+        blanketBreedingChain(rows);
         craftingInputsAndRemovalRules();
         shapelessAlternativesAndUnsupportedTypes();
         optionalNotesAndUnknownTargets();
@@ -127,11 +128,47 @@ public final class MaterialReportTests {
         check(viton.duration() == 240 && viton.perTick() == 64, "helper retains duration and energy");
     }
 
+    private static void blanketBreedingChain(List<RecipeDeclaration> rows) {
+        RecipeDeclaration irradiate = row(rows, "ssite.recipe.blanket", "nuclear/blanket-irradiate");
+        check(irradiate.displayOnly()
+                        && irradiate.itemInputs().equals(List.of(material("dust", "ThoriumFuelPellet", 4)))
+                        && irradiate.itemOutputs().equals(List.of(material("dust", "IrradiatedThoriumBlanket", 4))),
+                "the vessel's display row documents one four-pellet batch");
+        RecipeDeclaration separate = row(rows, "nuclear/blanket-separate");
+        check(separate.map().equals("gt.recipe.centrifuge")
+                        && separate.itemInputs().equals(List.of(material("dust", "IrradiatedThoriumBlanket", 4))),
+                "blanket separation runs in the centrifuge on the whole batch");
+        long units = separate.itemOutputs().stream().mapToLong(i -> i.count() * weight(i.prefix())).sum();
+        check(units == 4L * weight("dust"), "blanket separation balances the 288-unit batch");
+        check(separate.itemOutputs().stream().anyMatch(i -> i.material().equals("Uranium233")),
+                "blanket separation returns the bred uranium");
+        RecipeDeclaration encapsulate = row(rows, "nuclear/fuel-u233-encapsulate");
+        check(encapsulate.map().equals("gt.recipe.canner")
+                        && encapsulate.itemInputs().equals(List.of(material("dustTiny", "Uranium233", 8),
+                        new ItemRef(ItemKind.VANILLA, "", "", "gt6ce:reactor_rod_9201", 1, -1)))
+                        && encapsulate.itemOutputs().equals(List.of(
+                        new ItemRef(ItemKind.VANILLA, "", "", "gt6ce:reactor_rod_9222", 1, -1))),
+                "the bred charge is encapsulated into the host U-233 fuel rod");
+        check(rows.stream().noneMatch(r -> r.itemOutputs().stream().anyMatch(i ->
+                        i.material().equals("Uranium233") && !i.prefix().equals("dustTiny"))),
+                "no addon row manufactures a higher U-233 form than the bred tiny charge");
+    }
+
+    private static long weight(String prefix) {
+        return switch (prefix) {
+            case "dust" -> 72;
+            case "dustTiny" -> 8;
+            case "dustDiv72" -> 1;
+            default -> throw new AssertionError("unexpected dust prefix: " + prefix);
+        };
+    }
+
     private static void displayRowsRemainSeparate(List<RecipeDeclaration> rows) {
         Map<String, Long> counts = rows.stream().filter(RecipeDeclaration::displayOnly)
                 .collect(Collectors.groupingBy(RecipeDeclaration::map, Collectors.counting()));
-        check(counts.equals(Map.of("ssite.recipe.aod", 3L, "ssite.recipe.large_aod", 3L, "ssite.recipe.var", 5L)),
-                "the two AOD sizes and VAR remain display-only groups");
+        check(counts.equals(Map.of("ssite.recipe.aod", 3L, "ssite.recipe.large_aod", 3L, "ssite.recipe.var", 5L,
+                        "ssite.recipe.blanket", 1L)),
+                "the two AOD sizes, VAR and the blanket vessel remain display-only groups");
         RecipeDeclaration var = row(rows, "var/ta4hfc5");
         check(var.itemOutputs().equals(List.of(material("dust", "TantalumHafniumCarbide", 10)))
                 && var.fluidInputs().equals(List.of(new FluidRef("GenGas_Argon", 200))), "VAR display retains alloy and argon quantities");
@@ -287,10 +324,11 @@ public final class MaterialReportTests {
                 && solidify.itemOutputs().equals(List.of(material("dust", "SolidifiedFissionResidue", 1))),
                 "solidification consumes the residue with the glass matrix and emits a separate storage item");
         check(rows.stream().noneMatch(r -> !r.label().startsWith("nuclear/spent-")
+                        && !r.label().startsWith("nuclear/blanket-")
                         && (r.itemInputs().stream().anyMatch(i -> i.material().equals("SpentThoriumFuel")
                                 || i.material().equals("FissionProductResidue"))
                         || r.itemOutputs().stream().anyMatch(i -> i.material().equals("FissionProductResidue")))),
-                "spent batches and residues have no route outside the spent-fuel group");
+                "spent batches and residues have no route outside the spent-fuel and blanket groups");
         check(rows.stream().noneMatch(r -> r.itemOutputs().stream().anyMatch(i ->
                         i.kind() == ItemKind.VANILLA && i.itemId().equals("gt6ce:reactor_rod_9310"))),
                 "no addon recipe manufactures a depleted rod");

@@ -57,6 +57,11 @@ public final class NuclearMaterials {
             MaterialDeclaration.builder("ThoriumFuelPellet")
                     .displayName("Sintered Thorium Fuel Pellet").color(0x484840).chemicalFormula("ThO2")
                     .meltingPointKelvin(3390).boilingPointKelvin(4400).density(10.00F).dust().build(),
+            // Hot blanket batch: it stays dust-only and has no decomposition target, so the bred
+            // uranium is only released by the addon's own separation row.
+            MaterialDeclaration.builder("IrradiatedThoriumBlanket")
+                    .displayName("Irradiated Thorium Blanket Batch").color(0x41503A).chemicalFormula("ThO2+U-233")
+                    .meltingPointKelvin(3390).boilingPointKelvin(4400).density(9.80F).dust().build(),
             // Spent and residue materials stay dust-only and opt out of host decomposition:
             // without a smelting target or CENTRIFUGE/ELECTROLYZER they cannot return to fuel.
             MaterialDeclaration.builder("SpentThoriumFuel")

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ssite:block/machine/parts/irradiation_reactor_heat_port"
+    }
+  }
+}

@@ -69,7 +69,7 @@ $env:JAVA_HOME = $env:JAVA17_HOME
 .\scripts\build.ps1 :neoforge:build
 ```
 
-`compileBoth` 会编译两端并运行共用的 JVM 检查：熔池反应与坩埚行为（`unitTest`）、流化床燃料与热账（`fluidizedBedTest`）、HU 运输拓扑（`heatTransportTest`），以及不启动图形窗口的 OBJ 渲染顶点检查（`furnaceRenderTest`、`fluidizedBedRenderTest`）。
+`compileBoth` 会编译两端并运行共用的 JVM 检查：熔池反应与坩埚行为（`unitTest`）、流化床燃料与热账（`fluidizedBedTest`）、HU 运输拓扑（`heatTransportTest`）、批次照射堆的批次与热量账（`irradiationReactorTest`），以及不启动图形窗口的 OBJ 渲染顶点检查（`furnaceRenderTest`、`fluidizedBedRenderTest`）。
 
 `compileBoth` 和两端的 `build` 还会生成材料用途报告，并运行 `materialReportTest`。只更新报告可以执行：
 

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["PFP", "FCF", "PFP"],
+  "key": {
+    "P": {"item": "gt6ce:plate_stainlesssteel"},
+    "F": {"item": "gt6ce:fire_bricks"},
+    "C": {"item": "ssite:heat_duct"}
+  },
+  "result": {
+    "item": "ssite:irradiation_reactor_heat_port",
+    "count": 1
+  }
+}

@@ -1,0 +1,10 @@
+def irradiationReactorTest = tasks.register('irradiationReactorTest', JavaExec) {
+    description = 'Checks the batch irradiation ledger, heat budget and fault transitions.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.machine.IrradiationReactorTests'
+    jvmArgs '-ea'
+}
+tasks.named('check').configure { dependsOn irradiationReactorTest }

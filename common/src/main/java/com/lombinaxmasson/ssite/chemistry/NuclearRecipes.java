@@ -1,5 +1,8 @@
 package com.lombinaxmasson.ssite.chemistry;
 
+import com.lombinaxmasson.ssite.machine.IrradiationReactorCore;
+import com.lombinaxmasson.ssite.machine.IrradiationReactorMachines;
+
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.dust;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.item;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.row;
@@ -13,6 +16,7 @@ public final class NuclearRecipes {
         uraniumThoriumTbp();
         thoriumFuel();
         spentFuel();
+        blanketBreeding();
     }
 
     private static void uraniumThoriumTbp() {
@@ -121,6 +125,29 @@ public final class NuclearRecipes {
         row("gt.recipe.canner", "nuclear/fuel-thorium-encapsulate")
                 .in(dust("ThoriumFuelPellet", 1), vanillaItem("gt6ce:reactor_rod_9201", 1))
                 .out(vanillaItem("gt6ce:fuel_rod_th_232", 1))
+                .add(16, 16);
+    }
+
+    private static void blanketBreeding() {
+        // The vessel breeds in its behavior; this row only documents one batch for EMI.
+        row(IrradiationReactorMachines.MAP, "nuclear/blanket-irradiate")
+                .in(dust("ThoriumFuelPellet", IrradiationReactorCore.BATCH_TARGETS))
+                .out(dust("IrradiatedThoriumBlanket", IrradiationReactorCore.BATCH_TARGETS))
+                .display(IrradiationReactorCore.BATCH_TICKS, IrradiationReactorCore.KU_PER_TICK);
+
+        // One dust of blanket is 72/72 units: 54 recovered as dioxide, 16 as bred uranium and
+        // 2 left as fission products. Four blankets therefore separate into the batch below.
+        row("gt.recipe.centrifuge", "nuclear/blanket-separate")
+                .in(dust("IrradiatedThoriumBlanket", 4))
+                .out(dust("ThoriumDioxide", 3), item("dustTiny", "Uranium233", 8),
+                        item("dustDiv72", "FissionProductResidue", 8))
+                .add(256, 64);
+
+        // The host cans its uranium fuels from metal sticks and has no furnace route for
+        // U-233 dust; the bred charge is encapsulated directly, as the N-01 pellet route does.
+        row("gt.recipe.canner", "nuclear/fuel-u233-encapsulate")
+                .in(item("dustTiny", "Uranium233", 8), vanillaItem("gt6ce:reactor_rod_9201", 1))
+                .out(vanillaItem("gt6ce:reactor_rod_9222", 1))
                 .add(16, 16);
     }
 

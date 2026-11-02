@@ -104,5 +104,21 @@
   "item.ssite.optical_lens": "%s Lens",
   "config.jade.plugin_ssite.aod_furnace": "AOD Converter",
   "config.jade.plugin_ssite.fluidized_bed": "Fluidized-Bed Industrial Heater",
-  "config.jade.plugin_ssite.heat_transport": "Insulated HU Duct"
+  "config.jade.plugin_ssite.heat_transport": "Insulated HU Duct",
+  "config.jade.plugin_ssite.irradiation_reactor": "Blanket Irradiation Reactor",
+  "block.ssite.irradiation_reactor": "Blanket Irradiation Reactor Controller",
+  "block.ssite.irradiation_reactor_casing": "Reactor Shield Casing",
+  "block.ssite.irradiation_reactor_heat_port": "Reactor Heat Outlet",
+  "jade.ssite.irradiation_reactor.status.0": "Idle: waiting for a pellet batch",
+  "jade.ssite.irradiation_reactor.status.1": "Irradiating",
+  "jade.ssite.irradiation_reactor.status.2": "Stopped: circulation KU insufficient",
+  "jade.ssite.irradiation_reactor.status.3": "Stopped: heat buffer full, connect an HU duct",
+  "jade.ssite.irradiation_reactor.status.4": "Batch complete: take the blanket batch",
+  "jade.ssite.irradiation_reactor.status.5": "Fault: shield damaged, replace the casing",
+  "jade.ssite.irradiation_reactor.status.6": "Structure incomplete",
+  "jade.ssite.irradiation_reactor.status.7": "Waiting for input pellets or output room",
+  "jade.ssite.irradiation_reactor.status.8": "Output blocked",
+  "jade.ssite.irradiation_reactor.progress": "Batch progress: %s / %s t",
+  "jade.ssite.irradiation_reactor.temperature": "Vessel temperature: %s K (limit %s K)",
+  "jade.ssite.irradiation_reactor.heat": "Heat: generated %s HU/t, sent %s HU/t, buffered %s HU"
 }

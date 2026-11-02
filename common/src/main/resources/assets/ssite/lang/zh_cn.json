@@ -104,5 +104,21 @@
   "item.ssite.optical_lens": "%s透镜",
   "config.jade.plugin_ssite.aod_furnace": "AOD 转炉",
   "config.jade.plugin_ssite.fluidized_bed": "流化床工业供热",
-  "config.jade.plugin_ssite.heat_transport": "保温 HU 烟道"
+  "config.jade.plugin_ssite.heat_transport": "保温 HU 烟道",
+  "config.jade.plugin_ssite.irradiation_reactor": "靶件照射反应堆",
+  "block.ssite.irradiation_reactor": "靶件照射反应堆控制器",
+  "block.ssite.irradiation_reactor_casing": "反应堆屏蔽外壳",
+  "block.ssite.irradiation_reactor_heat_port": "反应堆热出口",
+  "jade.ssite.irradiation_reactor.status.0": "空闲：等待芯块批次",
+  "jade.ssite.irradiation_reactor.status.1": "照射中",
+  "jade.ssite.irradiation_reactor.status.2": "停机：循环 KU 不足",
+  "jade.ssite.irradiation_reactor.status.3": "停机：热量缓冲已满，请接 HU 烟道",
+  "jade.ssite.irradiation_reactor.status.4": "批次完成：取出靶件批",
+  "jade.ssite.irradiation_reactor.status.5": "故障：屏蔽损坏，请更换外壳",
+  "jade.ssite.irradiation_reactor.status.6": "结构不完整",
+  "jade.ssite.irradiation_reactor.status.7": "等待芯块输入或输出空间",
+  "jade.ssite.irradiation_reactor.status.8": "输出堵塞",
+  "jade.ssite.irradiation_reactor.progress": "批次进度：%s / %s t",
+  "jade.ssite.irradiation_reactor.temperature": "容器温度：%s K（上限 %s K）",
+  "jade.ssite.irradiation_reactor.heat": "热量：生成 %s HU/t，送出 %s HU/t，缓存 %s HU"
 }

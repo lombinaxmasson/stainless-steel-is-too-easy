@@ -397,5 +397,6 @@
   "material.gt6ce.developedwafer": "Developed",
   "material.gt6ce.etchedwafer": "Etched",
   "material.gt6ce.strippedwafer": "Stripped",
-  "material.gt6ce.dopedwafer": "Doped"
+  "material.gt6ce.dopedwafer": "Doped",
+  "material.gt6ce.irradiatedthoriumblanket": "Irradiated Thorium Blanket Batch"
 }

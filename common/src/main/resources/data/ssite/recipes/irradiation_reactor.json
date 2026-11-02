@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["CEC", "PMP", "CSC"],
+  "key": {
+    "C": {"item": "ssite:irradiation_reactor_casing"},
+    "E": {"item": "ssite:chip_chipelite"},
+    "P": {"item": "ssite:plate_precisioncasting"},
+    "M": {"item": "ssite:irradiation_reactor_heat_port"},
+    "S": {"item": "gt6ce:plate_stainlesssteel"}
+  },
+  "result": {
+    "item": "ssite:irradiation_reactor",
+    "count": 1
+  }
+}

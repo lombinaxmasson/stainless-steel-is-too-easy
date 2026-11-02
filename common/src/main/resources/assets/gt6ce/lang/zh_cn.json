@@ -397,5 +397,6 @@
   "material.gt6ce.developedwafer": "显影",
   "material.gt6ce.etchedwafer": "刻蚀",
   "material.gt6ce.strippedwafer": "去胶",
-  "material.gt6ce.dopedwafer": "掺杂"
+  "material.gt6ce.dopedwafer": "掺杂",
+  "material.gt6ce.irradiatedthoriumblanket": "辐照钍靶件批"
 }

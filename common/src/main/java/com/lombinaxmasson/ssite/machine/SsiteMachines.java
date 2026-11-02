@@ -74,6 +74,14 @@ public final class SsiteMachines implements AddonMachineContributor {
                         .minimalInputFluids(1)
                         .minimalInputs(1)
                         .needsOutputs(true)
+                        .build(),
+                RecipeTable.machine(IrradiationReactorMachines.MAP)
+                        .title("Thorium Blanket Irradiation")
+                        .gui("ssite:textures/gui/recipes/aod.png")
+                        .inputItems(1)
+                        .outputItems(1)
+                        .minimalInputItems(1)
+                        .minimalInputs(1)
                         .build());
     }
 
@@ -86,6 +94,7 @@ public final class SsiteMachines implements AddonMachineContributor {
         }
         machines.add(varFurnace());
         machines.addAll(new FluidizedBedMachines().addonMachines());
+        machines.addAll(new IrradiationReactorMachines().addonMachines());
         machines.addAll(HeatTransportMachines.machines());
         return List.copyOf(machines);
     }
@@ -101,6 +110,7 @@ public final class SsiteMachines implements AddonMachineContributor {
         }
         machines.add(VarFurnaceCore.MACHINE_TYPE);
         machines.add(FluidizedBedCore.MACHINE_TYPE);
+        machines.add(IrradiationReactorCore.MACHINE_TYPE);
         machines.add(HeatTransportMachines.DUCT);
         machines.add(HeatTransportMachines.PLATE);
         for (String path : machines) {
@@ -127,6 +137,7 @@ public final class SsiteMachines implements AddonMachineContributor {
                 .cell(0, 1, 0, CellMatch.part(MoltenPool.LID_PART), StructureRole.CASING)
                 .build());
         layouts.addAll(new FluidizedBedMachines().structureLayouts());
+        layouts.addAll(new IrradiationReactorMachines().structureLayouts());
         return List.copyOf(layouts);
     }
 
@@ -143,6 +154,7 @@ public final class SsiteMachines implements AddonMachineContributor {
                     .tanks(PartTanks.builder(1).capacity(32000).insert(GAS_FACES).build())
                     .build());
         parts.addAll(new FluidizedBedMachines().layoutParts());
+        parts.addAll(new IrradiationReactorMachines().layoutParts());
         return List.copyOf(parts);
     }
 
