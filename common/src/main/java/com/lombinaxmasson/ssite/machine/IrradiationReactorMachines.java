@@ -33,14 +33,14 @@ public final class IrradiationReactorMachines implements AddonMachineContributor
                         .capacity(IrradiationReactorCore.KU_CAPACITY)
                         .faces(MachineFace.FRONT, MachineFace.BACK).build())
                 .energyOutput(EnergyOutput.builder(EnergyType.HU, 1, IrradiationReactorCore.EMIT_PER_TICK).remote().build())
-                .gui("ssite:textures/gui/aod_converter.png")
                 .progress(80, 40)
                 .item(44, 26, BehaviorMachine.SlotRole.INPUT)
                 .item(116, 26, BehaviorMachine.SlotRole.OUTPUT)
                 .clientState(IrradiationReactorCore.K_FORMED, IrradiationReactorCore.K_STATE,
                         IrradiationReactorCore.K_PROGRESS, IrradiationReactorCore.K_TEMPERATURE,
                         IrradiationReactorCore.K_STATUS, IrradiationReactorCore.K_STORED,
-                        IrradiationReactorCore.K_GENERATED, IrradiationReactorCore.K_EMITTED)
+                        IrradiationReactorCore.K_GENERATED, IrradiationReactorCore.K_EMITTED,
+                        IrradiationReactorCore.K_DOOR_OPEN, IrradiationReactorCore.K_PAUSED)
                 .io(MachineIo.builder().itemInputs(MachineFace.FRONT).itemOutputs(MachineFace.BOTTOM).build())
                 .build());
     }

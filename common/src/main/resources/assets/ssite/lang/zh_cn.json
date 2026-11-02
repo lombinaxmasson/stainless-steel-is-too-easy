@@ -132,5 +132,9 @@
   "jade.ssite.irradiation_reactor.status.8": "输出堵塞",
   "jade.ssite.irradiation_reactor.progress": "批次进度：%s / %s t",
   "jade.ssite.irradiation_reactor.temperature": "容器温度：%s K（上限 %s K）",
-  "jade.ssite.irradiation_reactor.heat": "热量：生成 %s HU/t，送出 %s HU/t，缓存 %s HU"
+  "jade.ssite.irradiation_reactor.heat": "热量：生成 %s HU/t，送出 %s HU/t，缓存 %s HU",
+  "ssite.irradiation_reactor.paused": "靶件照射反应堆已暂停",
+  "ssite.irradiation_reactor.resumed": "靶件照射反应堆已恢复",
+  "ssite.irradiation_reactor.door_open": "装料门已打开",
+  "ssite.irradiation_reactor.door_closed": "装料门已关闭"
 }

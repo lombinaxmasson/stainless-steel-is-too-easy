@@ -10,6 +10,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.chat.Component;
 
 /** Batch irradiation: a shielded vessel that converts sintered thorium pellets into a bred blanket batch. */
 public final class IrradiationReactorCore {
@@ -27,7 +30,8 @@ public final class IrradiationReactorCore {
             K_PROGRESS = "reactor.progress", K_TEMPERATURE = "reactor.temperature",
             K_STATUS = "reactor.status", K_DOWN = "reactor.down", K_STORED = "reactor.stored",
             K_GENERATED = "reactor.generated", K_EMITTED = "reactor.emitted",
-            K_INITIALIZED = "reactor.initialized", K_FORMAT = "reactor.format";
+            K_INITIALIZED = "reactor.initialized", K_FORMAT = "reactor.format",
+            K_DOOR_OPEN = "reactor.door_open", K_PAUSED = "reactor.paused";
 
     /** Machine states; the transient loading check always resolves inside one server tick. */
     public static final int IDLE = 0, WORK = 1, DONE = 2, FAULT = 3;
@@ -153,6 +157,11 @@ public final class IrradiationReactorCore {
     public static void tick(MachineBehaviorContext context) {
         BehaviorState state = context.state();
         initialize(state);
+        if (state.getBoolean(K_DOOR_OPEN) || state.getBoolean(K_PAUSED)) {
+            state.setLong(K_STATUS, ST_IDLE);
+            context.panel().working(false);
+            return;
+        }
         Tick result = advance(new ContextAccess(context));
         state.setBoolean(K_FORMED, context.structure().formed());
         state.setLong(K_STATUS, result.status());
@@ -162,6 +171,52 @@ public final class IrradiationReactorCore {
         state.setLong(K_TEMPERATURE, result.temperature());
         context.panel().setProgress(Math.min(1F, state.getLong(K_PROGRESS) / (float) BATCH_TICKS));
         context.panel().working(result.generated() > 0);
+    }
+
+    /**
+     * Controller interaction fallback for the narrow physical loading opening. The player never
+     * has to target an internal capsule: pellets are inserted into the first controller slot in
+     * order, while an empty-hand click acts as the yellow door switch and sneak-click acts as the
+     * red/green pause switch.
+     */
+    public static boolean onUse(MachineBehaviorContext context, Player player, InteractionHand hand) {
+        BehaviorState state = context.state();
+        initialize(state);
+        ItemStack held = player.getItemInHand(hand);
+        if (player.isShiftKeyDown() && held.isEmpty()) {
+            boolean paused = !state.getBoolean(K_PAUSED);
+            state.setBoolean(K_PAUSED, paused);
+            if (!paused) state.setBoolean(K_DOOR_OPEN, false);
+            if (!context.level().isClientSide) player.displayClientMessage(
+                    Component.translatable(paused ? "ssite.irradiation_reactor.paused" : "ssite.irradiation_reactor.resumed"), true);
+            return true;
+        }
+        if (!held.isEmpty() && isTarget(held)) {
+            if (!state.getBoolean(K_DOOR_OPEN) || context.inventory().snapshot(TARGET_SLOT).getCount() >= BATCH_TARGETS)
+                return true;
+            if (!context.level().isClientSide) {
+                ItemStack one = held.copy();
+                one.setCount(1);
+                ItemStack existing = context.inventory().snapshot(TARGET_SLOT);
+                if (existing.isEmpty()) context.inventory().set(TARGET_SLOT, one);
+                else if (sameStack(existing, one)) {
+                    ItemStack merged = existing.copy();
+                    merged.grow(1);
+                    context.inventory().set(TARGET_SLOT, merged);
+                }
+                held.shrink(1);
+            }
+            return true;
+        }
+        if (held.isEmpty()) {
+            boolean open = !state.getBoolean(K_DOOR_OPEN);
+            state.setBoolean(K_DOOR_OPEN, open);
+            if (open) state.setBoolean(K_PAUSED, true);
+            if (!context.level().isClientSide) player.displayClientMessage(
+                    Component.translatable(open ? "ssite.irradiation_reactor.door_open" : "ssite.irradiation_reactor.door_closed"), true);
+            return true;
+        }
+        return false;
     }
 
     public static ItemStack product() {

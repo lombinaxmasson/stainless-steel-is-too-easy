@@ -13,6 +13,11 @@ public final class IrradiationReactorBehavior implements MachineBehavior {
 
     @Override public void tick(MachineBehaviorContext context) { IrradiationReactorCore.tick(context); }
 
+    @Override public boolean onUse(MachineBehaviorContext context, net.minecraft.world.entity.player.Player player,
+                                   net.minecraft.world.InteractionHand hand) {
+        return IrradiationReactorCore.onUse(context, player, hand);
+    }
+
     @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) {
         return IrradiationReactorCore.canInsert(slot, stack);
     }

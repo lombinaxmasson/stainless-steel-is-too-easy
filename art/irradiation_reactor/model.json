@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "name": "SSITE irradiation reactor / IR-03",
   "units": "blocks",
   "up": "+Y",
@@ -7,21 +7,211 @@
   "design": "Independent octagonal shielded drum with transfer lock and side cooling column",
   "integrated_in_game": false,
   "structure_bound": false,
+  "nominal_envelope": [
+    4,
+    4,
+    4
+  ],
+  "envelope_bounds": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      4,
+      4,
+      4
+    ]
+  ],
+  "grid_aligned": true,
+  "ports": [
+    {
+      "id": "loading",
+      "label": "装料 / 取料",
+      "cell": [
+        1,
+        1,
+        0
+      ],
+      "position": [
+        1.5,
+        1.5,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "group": "door_panel",
+      "groups": [
+        "door_panel",
+        "handwheel",
+        "loading_lock"
+      ]
+    },
+    {
+      "id": "controller",
+      "label": "控制面板",
+      "cell": [
+        3,
+        1,
+        0
+      ],
+      "position": [
+        3.5,
+        1.5,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "group": "control_screen"
+    },
+    {
+      "id": "ku",
+      "label": "KU 输入",
+      "cell": [
+        3,
+        0,
+        3
+      ],
+      "position": [
+        3.5,
+        0.5,
+        4
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "group": "ku_port"
+    },
+    {
+      "id": "hu",
+      "label": "HU 输出",
+      "cell": [
+        3,
+        3,
+        2
+      ],
+      "position": [
+        3.5,
+        4,
+        2.5
+      ],
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "group": "heat_port"
+    }
+  ],
+  "animation": {
+    "rotating_groups": [
+      "sample_carousel",
+      "target_capsules",
+      "drive_shaft"
+    ],
+    "pivot": [
+      1.5,
+      0,
+      2.5
+    ],
+    "axis": [
+      0,
+      1,
+      0
+    ],
+    "max_rpm": 5,
+    "spin_up_seconds": 2.2,
+    "spin_down_seconds": 3,
+    "door_groups": [
+      "door_panel",
+      "locking_dogs",
+      "handwheel"
+    ],
+    "door_translation": [
+      0,
+      1.24,
+      0
+    ],
+    "door_seconds": 1.6,
+    "wheel_group": "handwheel",
+    "wheel_pivot": [
+      1.5,
+      1.5,
+      0.06
+    ],
+    "wheel_axis": [
+      0,
+      0,
+      1
+    ],
+    "wheel_turns": 0.5,
+    "light_groups": [
+      "chamber_lights"
+    ],
+    "light_color": [
+      0.2,
+      0.65,
+      1.0
+    ],
+    "light_position": [
+      1.5,
+      1.9,
+      2.5
+    ],
+    "light_radius": 1.15,
+    "interior_groups": [
+      "source_capsule",
+      "target_capsules",
+      "sample_carousel",
+      "interior_liner"
+    ],
+    "status_groups": {
+      "running": "status_green",
+      "transition": "status_amber",
+      "stopped": "status_red"
+    },
+    "screen_group": "control_screen",
+    "preview_only": true
+  },
+  "controller_cell": [
+    3,
+    1,
+    0
+  ],
+  "controller_center": [
+    3.5,
+    1.5,
+    0.5
+  ],
+  "game_translation": [
+    -3,
+    -1,
+    0
+  ],
   "stats": {
     "bounds": [
       [
-        -2.6,
         0,
-        -2.65
+        0,
+        0
       ],
       [
-        2.48,
-        4.98,
-        2.43
+        4,
+        4,
+        4
       ]
     ],
-    "triangles": 8736,
-    "groups": 31,
+    "triangles": 9144,
+    "groups": 41,
     "texture_size": [
       512,
       256
@@ -30,17 +220,11 @@
     "unit_normals": true,
     "uv_in_atlas": true,
     "nondegenerate_triangles": true,
-    "consistent_winding": true
+    "consistent_winding": true,
+    "within_grid_envelope": true,
+    "ports_at_cell_face_centers": true
   },
   "groups": [
-    "foundation",
-    "base_frame",
-    "control_cabinet",
-    "control_face",
-    "cable_conduit",
-    "service_deck",
-    "handrails",
-    "access_ladder",
     "vessel_floor",
     "shield_rear",
     "shield_front",
@@ -52,18 +236,36 @@
     "vessel_lid",
     "lid_bolts",
     "top_drive",
+    "drive_shaft",
     "lifting_eyes",
-    "loading_lock",
-    "locking_dogs",
-    "warning_plates",
     "sample_carousel",
     "source_capsule",
     "target_capsules",
+    "foundation",
+    "base_frame",
+    "control_cabinet",
+    "control_screen",
+    "control_face",
+    "status_green",
+    "status_amber",
+    "status_red",
+    "ku_port",
+    "cable_conduit",
+    "service_deck",
+    "handrails",
+    "access_ladder",
+    "loading_lock",
+    "door_panel",
+    "locking_dogs",
+    "handwheel",
+    "door_guides",
+    "warning_plates",
     "cooling_tower",
     "cooling_fins",
     "coolant_pipes",
     "heat_port",
-    "valves"
+    "valves",
+    "chamber_lights"
   ],
   "group_labels": {
     "foundation": "分层混凝土与钢底座",
@@ -77,9 +279,13 @@
     "vessel_floor": "舱底屏蔽板",
     "vessel_lid": "可拆屏蔽顶盖",
     "lid_bolts": "顶盖拉紧螺栓",
-    "top_drive": "顶部索引驱动与吊耳",
+    "top_drive": "顶部驱动机壳",
+    "drive_shaft": "顶部传动轴",
     "loading_lock": "前部厚壁装料锁",
-    "locking_dogs": "舱门锁紧轮与压爪",
+    "door_panel": "滑升屏蔽门",
+    "door_guides": "屏蔽门导轨",
+    "handwheel": "解锁手轮",
+    "locking_dogs": "舱门压爪",
     "warning_plates": "放射性警示与铭牌",
     "source_capsule": "中央密封源柱",
     "sample_carousel": "四联靶匣转台",
@@ -91,7 +297,13 @@
     "heat_port": "顶部热接口",
     "valves": "阀门与压力表",
     "control_cabinet": "独立仪表柜",
-    "control_face": "仪表屏与按钮",
+    "control_face": "按钮与铭牌",
+    "control_screen": "控制面板",
+    "status_green": "运行指示灯",
+    "status_amber": "动作指示灯",
+    "status_red": "待机指示灯",
+    "chamber_lights": "舱内工作灯",
+    "ku_port": "背面 KU 输入",
     "cable_conduit": "底部电缆管",
     "service_deck": "防滑检修踏台",
     "handrails": "检修护栏",
@@ -103,19 +315,26 @@
     "bands_front",
     "ribs_front",
     "loading_lock",
+    "door_panel",
+    "door_guides",
+    "handwheel",
     "locking_dogs",
     "warning_plates",
     "vessel_lid",
     "lid_bolts",
     "top_drive",
+    "drive_shaft",
     "lifting_eyes"
   ],
-  "cutaway_triangles": 5552,
+  "cutaway_triangles": 5992,
   "texture_filter": "nearest",
-  "origin": "Ground plane at Y=0; vessel axis at X=-0.60, Z=0.35",
+  "origin": "Minimum corner of 4 x 4 x 4 placement envelope; vessel axis at X=1.5, Z=2.5",
+  "transform_note": "For NORTH-facing placement, subtract [3,1,0] from mesh coordinates relative to controller block minimum; rotate around controller center for other facings.",
   "notes": [
     "Original geometry and textures; no imported HBM assets.",
-    "Independent art dimensions; no five-block structure or game port coordinates assumed.",
+    "Four-block footprint and cell-aligned art ports; game structure and interaction routing are not implemented.",
+    "Blue interior work lamps indicate operation; no water volume or Cherenkov emission is assumed.",
+    "OBJ stores the closed, stopped bind pose. Runtime transforms and emissive groups are recorded in animation.",
     "Internal components are illustrative game art, not engineering specifications."
   ]
 }
