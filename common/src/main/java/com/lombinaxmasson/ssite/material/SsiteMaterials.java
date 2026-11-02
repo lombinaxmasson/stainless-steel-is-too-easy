@@ -22,7 +22,8 @@ public final class SsiteMaterials implements AddonMaterialContributor {
             "die", "chip", "hose", "laserRodBlank", "laserRodPolished", "laserRod",
             "opticalLensBlank", "opticalLensPolished", "opticalLens", "laserModule",
             "laserCuttingHead", "laserDrillingHead", "laserWeldingHead", "precisionNozzle",
-            "precisionFixture", "instrumentShell"};
+            "precisionFixture", "instrumentShell", "fiberPreform", "bareFiber", "coatedFiber",
+            "fiberSpool"};
 
     public static final List<MaterialDeclaration> MATERIALS = buildMaterials();
 
@@ -245,6 +246,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         materials.addAll(InvestmentCastingMaterials.MATERIALS);
         materials.addAll(OpticsMaterials.MATERIALS);
         materials.addAll(PrecisionMaterials.MATERIALS);
+        materials.addAll(FiberOpticMaterials.MATERIALS);
         return List.copyOf(materials);
     }
 
@@ -269,6 +271,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         prefixes.addAll(FunctionalTextileMaterials.PREFIXES);
         prefixes.addAll(OpticsMaterials.PREFIXES);
         prefixes.addAll(PrecisionMaterials.PREFIXES);
+        prefixes.addAll(FiberOpticMaterials.PREFIXES);
         return List.copyOf(prefixes);
     }
 

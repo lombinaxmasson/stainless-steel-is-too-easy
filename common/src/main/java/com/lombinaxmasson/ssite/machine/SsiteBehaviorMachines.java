@@ -7,7 +7,7 @@ import com.lombinaxmasson.ssite.SsiteAddon;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-/** Creates the AOD behavior for a placed block. The platform class holds the argon tank. */
+/** Creates the behavior for a placed addon machine; platform classes hold the loader-specific fluid stacks. */
 public final class SsiteBehaviorMachines implements BehaviorMachineContributor {
     @Override
     public String addonId() {
@@ -21,6 +21,7 @@ public final class SsiteBehaviorMachines implements BehaviorMachineContributor {
         types.add(VarFurnaceCore.MACHINE_TYPE);
         types.add(FluidizedBedCore.MACHINE_TYPE);
         types.add(IrradiationReactorCore.MACHINE_TYPE);
+        types.add(FiberOpticMachines.PROBE_TYPE);
         types.add(HeatTransportMachines.DUCT);
         types.add(HeatTransportMachines.PLATE);
         return types;
@@ -30,6 +31,7 @@ public final class SsiteBehaviorMachines implements BehaviorMachineContributor {
     public MachineBehavior create(String machineType) {
         if (FluidizedBedCore.MACHINE_TYPE.equals(machineType)) return new FluidizedBedBehavior();
         if (IrradiationReactorCore.MACHINE_TYPE.equals(machineType)) return new IrradiationReactorBehavior();
+        if (FiberOpticMachines.PROBE_TYPE.equals(machineType)) return new FiberProbeBehavior();
         if (HeatTransportMachines.isMachine(machineType)) return new HeatTransportBehavior();
         AodTier large = LargeAodStructure.tier(machineType);
         if (large != null) return new ArgonCrucibleBehavior(new LargeAodCore(large));

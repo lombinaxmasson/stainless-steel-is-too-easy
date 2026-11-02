@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FSC",
+    "GMC",
+    "PPP"
+  ],
+  "key": {
+    "F": {"item": "ssite:fiber_spool_opticalfiber"},
+    "S": {"item": "ssite:instrument_shell_stainlesssteel316l"},
+    "C": {"item": "gt6ce:cable_01_copper"},
+    "G": {"item": "ssite:chip_chipelite"},
+    "M": {"item": "gt6ce:casing_machine_stainlesssteel"},
+    "P": {"item": "ssite:plate_precisioncasting"}
+  },
+  "result": {
+    "item": "ssite:fiber_status_probe"
+  }
+}

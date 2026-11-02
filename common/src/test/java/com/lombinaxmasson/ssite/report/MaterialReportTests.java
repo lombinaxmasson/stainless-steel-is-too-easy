@@ -47,13 +47,14 @@ public final class MaterialReportTests {
         spentFuelChain(rows);
         blanketBreedingChain(rows);
         precisionLaserChain(rows);
+        fiberOpticChain(rows);
         craftingInputsAndRemovalRules();
         shapelessAlternativesAndUnsupportedTypes();
         optionalNotesAndUnknownTargets();
         malformedNotesFail();
         contributorCoverage(repo);
         renderingAndDeterministicOutput(repo);
-        System.out.println("MaterialReportTests: all 22 checks passed.");
+        System.out.println("MaterialReportTests: all 23 checks passed.");
     }
 
     private static void moduleOrderAndSourceLocations(Path repo, List<RecipeDeclaration> rows) throws IOException {
@@ -73,7 +74,8 @@ public final class MaterialReportTests {
                 "RareEarthRecipes.java", "NuclearRecipes.java", "BaseMetalRecipes.java",
                 "CircuitRecipes.java", "WaferRecipes.java", "LithographyRecipes.java",
                 "PackagingRecipes.java", "ElectrochemistryRecipes.java", "TextileRecipes.java",
-                "InvestmentCastingRecipes.java", "OpticsRecipes.java", "PrecisionRecipes.java")),
+                "InvestmentCastingRecipes.java", "OpticsRecipes.java", "PrecisionRecipes.java",
+                "FiberOpticRecipes.java")),
                 "all central recipe modules retain runtime registration order");
     }
 
@@ -189,6 +191,46 @@ public final class MaterialReportTests {
                         .filter(i -> !i.prefix().endsWith("Head"))
                         .allMatch(i -> i.prefix().equals("plate") && i.material().equals("StainlessSteel316L"))),
                 "the first batch uses one alloy already supplied by AOD");
+    }
+
+    private static void fiberOpticChain(List<RecipeDeclaration> rows) {
+        RecipeDeclaration frit = row(rows, "gt.recipe.mixer", "p02/optical-glass-frit");
+        check(frit.itemInputs().equals(List.of(material("dust", "SiliconDioxide", 8),
+                        material("dust", "GermaniumDioxide", 2)))
+                        && frit.itemOutputs().equals(List.of(material("dust", "OpticalGlassFrit", 10))),
+                "the glass batch conserves eight silica and two germania units");
+        RecipeDeclaration preform = row(rows, "gt.recipe.calciner", "p02/preform");
+        check(preform.itemInputs().equals(List.of(material("dust", "OpticalGlassFrit", 10)))
+                        && preform.itemOutputs().equals(List.of(material("fiberPreform", "OpticalFiber", 1))),
+                "one preform carries the full ten-unit batch");
+        RecipeDeclaration draw = row(rows, "ssite.recipe.fiber_drawing", "p02/draw-fiber");
+        check(draw.itemInputs().equals(List.of(material("fiberPreform", "OpticalFiber", 1),
+                        material("precisionNozzle", "StainlessSteel316L", 1)))
+                        && draw.keptInputs().equals(List.of(1)),
+                "the drawing row keeps the P-01 nozzle instead of consuming it");
+        check(draw.itemOutputs().equals(List.of(material("bareFiber", "OpticalFiber", 8),
+                        material("dust", "OpticalGlassScrap", 2))),
+                "drawing reports eighty percent fiber and twenty percent scrap");
+        check(draw.fluidInputs().equals(List.of(new FluidRef("GenGas_Argon", 1000))),
+                "drawing uses an argon medium");
+        RecipeDeclaration coat = row(rows, "ssite.recipe.fiber_drawing", "p02/coat-fiber");
+        check(coat.itemInputs().equals(List.of(material("bareFiber", "OpticalFiber", 8),
+                        material("ingot", "SiliconeRubber", 1)))
+                        && coat.itemOutputs().equals(List.of(material("coatedFiber", "OpticalFiber", 8))),
+                "coating consumes the existing silicone rubber");
+        RecipeDeclaration spool = row(rows, "ssite.recipe.fiber_drawing", "p02/spool-fiber");
+        check(spool.itemInputs().equals(List.of(material("coatedFiber", "OpticalFiber", 8),
+                        material("plate", "StainlessSteel316L", 1)))
+                        && spool.itemOutputs().equals(List.of(material("fiberSpool", "OpticalFiber", 1))),
+                "spooling keeps the eight-unit glass core");
+        RecipeDeclaration scrap = row(rows, "gt.recipe.calciner", "p02/scrap-recovery");
+        check(scrap.itemInputs().equals(List.of(material("dust", "OpticalGlassScrap", 2)))
+                        && scrap.itemOutputs().equals(List.of(material("dust", "OpticalGlassFrit", 1))),
+                "scrap recovery returns half a unit and cannot multiply germanium");
+        List<RecipeDeclaration> drawing = rows.stream()
+                .filter(r -> r.map().equals("ssite.recipe.fiber_drawing")).toList();
+        check(drawing.size() == 3 && drawing.stream().allMatch(r -> r.itemInputs().size() == 2),
+                "the drawing table holds the three two-input fiber steps");
     }
 
     private static long weight(String prefix) {
@@ -454,6 +496,16 @@ public final class MaterialReportTests {
                 "repository crafting recipes contribute machine-building evidence");
         check(catalog.craftingRecipes().stream().anyMatch(r -> r.output().equals("ssite:precision_laser_workstation")),
                 "the P-01 workstation recipe makes the machine reachable without its own workpieces");
+        check(catalog.craftingRecipes().stream().anyMatch(r -> r.output().equals("ssite:fiber_drawing_machine")),
+                "the drawing machine is craftable without its own fiber output");
+        MaterialReport.CraftingRecipe probe = catalog.craftingRecipes().stream()
+                .filter(r -> r.output().equals("ssite:fiber_status_probe")).findFirst()
+                .orElseThrow(() -> new AssertionError("missing probe crafting recipe"));
+        Set<String> probeInputs = probe.inputs().stream()
+                .flatMap(input -> input.alternatives().stream()).collect(Collectors.toSet());
+        check(probeInputs.containsAll(List.of("ssite:fiber_spool_opticalfiber",
+                        "ssite:instrument_shell_stainlesssteel316l", "ssite:chip_chipelite")),
+                "the probe consumes the spool, the P-01 shell and the Elite circuit");
     }
 
     private static void malformedNotesFail() throws Exception {
