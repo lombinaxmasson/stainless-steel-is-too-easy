@@ -17,8 +17,8 @@ import java.util.Set;
  *
  * <p>The host has no rod or lens prefix an addon material can be valid for: {@code stick}
  * needs the metal flags and {@code lens} needs GEM plus GENERATE_LENS. Both optical forms
- * therefore get their own prefix. Their grayscale sprites are the existing boule and wafer
- * textures, so this card adds no art; dedicated icons are left to M9-V.</p>
+ * therefore get their own prefix. Cutting yields rough blanks, polishing is a separate state and
+ * the final rod and lens are only produced by coating. The final forms keep their M9-10 ids.</p>
  */
 public final class OpticsMaterials {
     public static final List<MaterialDeclaration> MATERIALS = List.of(
@@ -29,10 +29,18 @@ public final class OpticsMaterials {
 
     /** One rod is half an ingot like the host rod; one lens weighs three quarters. */
     public static final List<PrefixDeclaration> PREFIXES = List.of(
-            new PrefixDeclaration("laserRod", "", " Laser Rod", GTValues.U2,
+            new PrefixDeclaration("laserRodBlank", "", " Laser Rod Blank", GTValues.U2,
                     "item/crystal_boule", List.of("NeodymiumYAG"), Set.of()),
+            new PrefixDeclaration("laserRodPolished", "", " Polished Laser Rod", GTValues.U2,
+                    "item/laser_rod", List.of("NeodymiumYAG"), Set.of()),
+            new PrefixDeclaration("laserRod", "", " Laser Rod", GTValues.U2,
+                    "item/laser_rod", List.of("NeodymiumYAG"), Set.of()),
+            new PrefixDeclaration("opticalLensBlank", "", " Lens Blank", GTValues.U * 3 / 4,
+                    "item/wafer", List.of("NeodymiumYAG"), Set.of()),
+            new PrefixDeclaration("opticalLensPolished", "", " Polished Lens", GTValues.U * 3 / 4,
+                    "item/optical_lens", List.of("NeodymiumYAG"), Set.of()),
             new PrefixDeclaration("opticalLens", "", " Lens", GTValues.U * 3 / 4,
-                    "item/wafer", List.of("NeodymiumYAG"), Set.of()));
+                    "item/optical_lens", List.of("NeodymiumYAG"), Set.of()));
 
     private OpticsMaterials() {}
 }

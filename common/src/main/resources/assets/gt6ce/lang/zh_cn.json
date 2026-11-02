@@ -383,5 +383,14 @@
   "material.gt6ce.firedceramicshell": "焙烧陶瓷模壳",
   "material.gt6ce.ascastpart": "浇铸毛坯",
   "material.gt6ce.precisioncasting": "精密铸件",
-  "material.gt6ce.neodymiumyag": "掺钕钇铝石榴石（Nd:YAG）"
+  "material.gt6ce.neodymiumyag": "掺钕钇铝石榴石（Nd:YAG）",
+  "material.gt6ce.alkalinecleanedwafer": "碱洗",
+  "material.gt6ce.cleanedwafer": "清洗",
+  "material.gt6ce.oxidizedwafer": "氧化",
+  "material.gt6ce.coatedwafer": "涂胶",
+  "material.gt6ce.exposedwafer": "曝光",
+  "material.gt6ce.developedwafer": "显影",
+  "material.gt6ce.etchedwafer": "刻蚀",
+  "material.gt6ce.strippedwafer": "去胶",
+  "material.gt6ce.dopedwafer": "掺杂"
 }

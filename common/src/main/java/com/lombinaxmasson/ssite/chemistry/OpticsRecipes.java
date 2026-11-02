@@ -12,14 +12,22 @@ import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.row;
  * <p>The card expected host {@code bouleGt} and {@code rod}/{@code lens}; addon materials cannot
  * carry the BOULE, GEM or GENERATE_LENS properties those prefixes require, so the doped crystal
  * uses the existing {@code crystalBoule} prefix and the rod and lens use the addon prefixes in
- * {@code OpticsMaterials}. Cutting a boule yields both gain rods and lens blanks; the polishing
- * and coating passes are gates on the same item, the same way M9-04 polishes wafers.</p>
+ * {@code OpticsMaterials}. Cutting a boule yields rough rod and lens blanks; polishing produces
+ * the polished states, and coating produces the final rod and lens ids. The stages are distinct
+ * items rather than a gate on the same item.</p>
  *
  * <p>The parts have no consumer in this mod: M8 disc recording and the P laser workshop are not
  * implemented, and the host laser engraver keeps its lenses and masks as catalysts. They are
  * shipped as a downstream interface, and no solid-state emitter item is registered.</p>
  */
 public final class OpticsRecipes {
+    private static final String ROD = "laserRod";
+    private static final String ROD_BLANK = "laserRodBlank";
+    private static final String ROD_POLISHED = "laserRodPolished";
+    private static final String LENS = "opticalLens";
+    private static final String LENS_BLANK = "opticalLensBlank";
+    private static final String LENS_POLISHED = "opticalLensPolished";
+
     private OpticsRecipes() {}
 
     static void add() {
@@ -49,26 +57,30 @@ public final class OpticsRecipes {
         row("gt.recipe.cutter", "m9-10/cut-neodymium-yag")
                 .in(item("crystalBoule", "NeodymiumYAG", 1))
                 .fluidIn("GenLiquid_UltrapureWater", 1000)
-                .out(item("laserRod", "NeodymiumYAG", 4), item("opticalLens", "NeodymiumYAG", 1))
+                .out(item(ROD_BLANK, "NeodymiumYAG", 4), item(LENS_BLANK, "NeodymiumYAG", 1))
                 .add(240, 64);
         for (String abrasive : new String[]{"Alumina", "CeriumOxide"}) {
             String slug = abrasive.toLowerCase(Locale.ROOT);
-            polish("m9-10/polish-rod/" + slug, "laserRod", abrasive);
-            polish("m9-10/polish-lens/" + slug, "opticalLens", abrasive);
+            polish("m9-10/polish-rod/" + slug, ROD_BLANK, ROD_POLISHED, abrasive);
+            polish("m9-10/polish-lens/" + slug, LENS_BLANK, LENS_POLISHED, abrasive);
         }
-        // Antireflection coating on the rod end faces; silica is an existing host film material.
-        row("gt.recipe.calciner", "m9-10/ar-coating")
-                .in(item("laserRod", "NeodymiumYAG", 1), item("dustTiny", "SiliconDioxide", 1))
-                .out(item("laserRod", "NeodymiumYAG", 1))
+        // Antireflection coating turns the polished parts into the final optical ids.
+        row("gt.recipe.calciner", "m9-10/ar-coating/rod")
+                .in(item(ROD_POLISHED, "NeodymiumYAG", 1), item("dustTiny", "SiliconDioxide", 1))
+                .out(item(ROD, "NeodymiumYAG", 1))
+                .add(240, 48);
+        row("gt.recipe.calciner", "m9-10/ar-coating/lens")
+                .in(item(LENS_POLISHED, "NeodymiumYAG", 1), item("dustTiny", "SiliconDioxide", 1))
+                .out(item(LENS, "NeodymiumYAG", 1))
                 .add(240, 48);
     }
 
-    private static void polish(String label, String prefix, String abrasive) {
+    private static void polish(String label, String input, String output, String abrasive) {
         row("gt.recipe.bath", label)
-                .in(item(prefix, "NeodymiumYAG", 1), dust(abrasive, 1))
+                .in(item(input, "NeodymiumYAG", 1), dust(abrasive, 1))
                 .fluidIn("GenLiquid_UltrapureWater", 1000)
                 .fluidOut("Dirty_Water", 800)
-                .out(item(prefix, "NeodymiumYAG", 1))
+                .out(item(output, "NeodymiumYAG", 1))
                 .add(120, 32);
     }
 }

@@ -56,7 +56,18 @@ public final class SemiconductorMaterials {
                     .meltingPointKelvin(1983).boilingPointKelvin(2500).density(2.65F).polymer().build(),
             MaterialDeclaration.builder("ProcessedWafer")
                     .displayName("Processed").color(0x7A8A96).chemicalFormula("Si")
-                    .meltingPointKelvin(1687).boilingPointKelvin(3538).density(2.33F).build());
+                    .meltingPointKelvin(1687).boilingPointKelvin(3538).density(2.33F).build(),
+            // Lithography stages carry distinct items so the final metallisation cannot be reached
+            // from a raw silicon wafer. The host has no per-item NBT state for these steps.
+            waferStage("AlkalineCleanedWafer", "Alkaline-Cleaned", 0x8A9CC8),
+            waferStage("CleanedWafer", "Cleaned", 0x9AC8E8),
+            waferStage("OxidizedWafer", "Oxidized", 0xC8B8A0),
+            waferStage("CoatedWafer", "Photoresist-Coated", 0xB07A3A),
+            waferStage("ExposedWafer", "Exposed", 0x8A6AA8),
+            waferStage("DevelopedWafer", "Developed", 0xC87898),
+            waferStage("EtchedWafer", "Etched", 0x70A890),
+            waferStage("StrippedWafer", "Stripped", 0xA8A8C0),
+            waferStage("DopedWafer", "Doped", 0xE8C850));
 
     /** One boule keeps the host boule weight (four material units); one wafer is half a unit. */
     public static final List<PrefixDeclaration> PREFIXES = List.of(
@@ -64,8 +75,16 @@ public final class SemiconductorMaterials {
                     "item/crystal_boule",
                     List.of("GalliumArsenide", "IndiumPhosphide", "NeodymiumYAG"), Set.of()),
             new PrefixDeclaration("wafer", "", " Wafer", GTValues.U / 2,
-                    "item/wafer", List.of("Silicon", "GalliumArsenide", "IndiumPhosphide", "ProcessedWafer"),
-                    Set.of()));
+                    "item/wafer", List.of("Silicon", "AlkalineCleanedWafer", "CleanedWafer",
+                            "OxidizedWafer", "CoatedWafer", "ExposedWafer", "DevelopedWafer",
+                            "EtchedWafer", "StrippedWafer", "DopedWafer",
+                            "GalliumArsenide", "IndiumPhosphide", "ProcessedWafer"), Set.of()));
+
+    private static MaterialDeclaration waferStage(String name, String display, int color) {
+        return MaterialDeclaration.builder(name)
+                .displayName(display).color(color).chemicalFormula("Si")
+                .meltingPointKelvin(1687).boilingPointKelvin(3538).density(2.33F).build();
+    }
 
     private SemiconductorMaterials() {}
 }

@@ -19,7 +19,8 @@ import java.util.List;
 public final class SsiteMaterials implements AddonMaterialContributor {
     private static final String[] CREATIVE_PREFIXES = {
             "dust", "dustSmall", "dustTiny", "plate", "foil", "wireFine", "ingot", "crystalBoule", "wafer",
-            "die", "chip", "hose", "laserRod", "opticalLens"};
+            "die", "chip", "hose", "laserRodBlank", "laserRodPolished", "laserRod",
+            "opticalLensBlank", "opticalLensPolished", "opticalLens"};
 
     public static final List<MaterialDeclaration> MATERIALS = buildMaterials();
 

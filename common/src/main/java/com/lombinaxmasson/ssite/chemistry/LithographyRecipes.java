@@ -13,11 +13,10 @@ import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.vanillaItem;
  * oxidation, coating, exposure, development, etching, resist stripping, doping and metallization
  * on existing machines and comes out as {@code wafer ProcessedWafer}.</p>
  *
- * <p>Every intermediate stage keeps the wafer item; the wet and furnace stages are selected by a
- * kept programming circuit, and exposure is selected by the mask. That follows the card's
- * "distinguish layers with a programming circuit" rule and avoids one material per process stage.
- * The item itself carries no per-stage state, so the rows are a linear process recipe, not a
- * state machine.</p>
+ * <p>Every stage has its own item id. The final metallisation consumes {@code DopedWafer}, so a
+ * raw or polished silicon wafer cannot skip cleaning, exposure, etching or doping. The dry and wet
+ * oxidation branches converge on {@code OxidizedWafer}; the two etch and the two doping branches
+ * converge the same way. Programming circuits are not used as stage state.</p>
  *
  * <p>The host {@code Bath} exposes a single fluid input tank, so the wet stages name their active
  * medium and leave the ultrapure-water carrier implicit; M9-04 already consumes ultrapure water
@@ -26,6 +25,15 @@ import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.vanillaItem;
  */
 public final class LithographyRecipes {
     private static final String WAFER = "Silicon";
+    private static final String ALKALINE_CLEANED = "AlkalineCleanedWafer";
+    private static final String CLEANED = "CleanedWafer";
+    private static final String OXIDIZED = "OxidizedWafer";
+    private static final String COATED = "CoatedWafer";
+    private static final String EXPOSED = "ExposedWafer";
+    private static final String DEVELOPED = "DevelopedWafer";
+    private static final String ETCHED = "EtchedWafer";
+    private static final String STRIPPED = "StrippedWafer";
+    private static final String DOPED = "DopedWafer";
     private static final String PROCESSED = "ProcessedWafer";
 
     private LithographyRecipes() {}
@@ -84,115 +92,102 @@ public final class LithographyRecipes {
     /** RCA-style clean: alkaline bath, then acid bath. The water carrier is implicit. */
     private static void clean() {
         row("gt.recipe.bath", "m9-05/clean/sc1")
-                .in(item("wafer", WAFER, 1), circuit(1))
+                .in(item("wafer", WAFER, 1))
                 .fluidIn("GenGas_Ammonia", 1000)
-                .out(item("wafer", WAFER, 1))
+                .out(item("wafer", ALKALINE_CLEANED, 1))
                 .fluidOut("Dirty_Water", 1000)
-                .keep(1)
                 .add(200, 32);
         row("gt.recipe.bath", "m9-05/clean/sc2")
-                .in(item("wafer", WAFER, 1), circuit(1))
+                .in(item("wafer", ALKALINE_CLEANED, 1))
                 .fluidIn("GenGas_HydrochloricAcid", 1000)
-                .out(item("wafer", WAFER, 1))
+                .out(item("wafer", CLEANED, 1))
                 .fluidOut("Dirty_Water", 1000)
-                .keep(1)
                 .add(200, 32);
     }
 
     private static void oxidize() {
-        // Nitrogen keeps the dry row from being a subset of the wet row, which the engine would
-        // treat as the same input offer and reject.
+        // Both rows start from the cleaned wafer and converge on one oxidized state.
         row("gt.recipe.calciner", "m9-05/oxidize/dry")
-                .in(item("wafer", WAFER, 1), circuit(1))
+                .in(item("wafer", CLEANED, 1))
                 .fluidIn("Oxygen", 1000, "Nitrogen", 1000)
-                .out(item("wafer", WAFER, 1))
-                .keep(1)
+                .out(item("wafer", OXIDIZED, 1))
                 .add(600, 64);
         row("gt.recipe.calciner", "m9-05/oxidize/wet")
-                .in(item("wafer", WAFER, 1), circuit(1))
+                .in(item("wafer", CLEANED, 1))
                 .fluidIn("Oxygen", 1000, "Steam", 1000)
-                .out(item("wafer", WAFER, 1))
-                .keep(1)
+                .out(item("wafer", OXIDIZED, 1))
                 .add(400, 64);
     }
 
     private static void coat() {
         row("gt.recipe.bath", "m9-05/coat")
-                .in(item("wafer", WAFER, 1), circuit(2))
+                .in(item("wafer", OXIDIZED, 1))
                 .fluidIn("GenLiquid_Photoresist", 1000)
-                .out(item("wafer", WAFER, 1))
-                .keep(1)
+                .out(item("wafer", COATED, 1))
                 .add(200, 32);
     }
 
     /** The laser engraver has exactly two item slots, so the mask occupies the kept second slot. */
     private static void expose() {
         row("gt.recipe.laserengraver", "m9-05/expose")
-                .in(item("wafer", WAFER, 1), item("plate", "PhotomaskPlate", 1))
-                .out(item("wafer", WAFER, 1))
+                .in(item("wafer", COATED, 1), item("plate", "PhotomaskPlate", 1))
+                .out(item("wafer", EXPOSED, 1))
                 .keep(1)
                 .add(600, 256);
     }
 
     private static void develop() {
         row("gt.recipe.bath", "m9-05/develop")
-                .in(item("wafer", WAFER, 1), circuit(2))
+                .in(item("wafer", EXPOSED, 1))
                 .fluidIn("GenLiquid_PhotoresistDeveloper", 1000)
-                .out(item("wafer", WAFER, 1))
+                .out(item("wafer", DEVELOPED, 1))
                 .fluidOut("Dirty_Water", 1000)
-                .keep(1)
                 .add(200, 32);
     }
 
     private static void etch() {
         row("gt.recipe.bath", "m9-05/etch/oxide")
-                .in(item("wafer", WAFER, 1), circuit(2))
+                .in(item("wafer", DEVELOPED, 1))
                 .fluidIn("GenLiquid_BufferedHydrofluoricAcid", 1000)
-                .out(item("wafer", WAFER, 1))
+                .out(item("wafer", ETCHED, 1))
                 .fluidOut("Dirty_Water", 1000)
-                .keep(1)
                 .add(300, 48);
         row("gt.recipe.bath", "m9-05/etch/silicon")
-                .in(item("wafer", WAFER, 1), circuit(2))
+                .in(item("wafer", DEVELOPED, 1))
                 .fluidIn("GenLiquid_PotassiumHydroxideSolution", 1000)
-                .out(item("wafer", WAFER, 1))
+                .out(item("wafer", ETCHED, 1))
                 .fluidOut("Dirty_Water", 1000)
-                .keep(1)
                 .add(600, 48);
     }
 
     private static void strip() {
         row("gt.recipe.bath", "m9-05/strip")
-                .in(item("wafer", WAFER, 1), circuit(3))
+                .in(item("wafer", ETCHED, 1))
                 .fluidIn("GenLiquid_SulfuricAcid", 1000)
-                .out(item("wafer", WAFER, 1))
+                .out(item("wafer", STRIPPED, 1))
                 .fluidOut("Dirty_Water", 1000)
-                .keep(1)
                 .add(300, 48);
     }
 
     private static void dope() {
         row("gt.recipe.calciner", "m9-05/dope/phosphorus")
-                .in(item("wafer", WAFER, 1), circuit(3))
+                .in(item("wafer", STRIPPED, 1))
                 .fluidIn("GenLiquid_PhosphorylChloride", 1000, "Oxygen", 1000)
-                .out(item("wafer", WAFER, 1))
-                .keep(1)
+                .out(item("wafer", DOPED, 1))
                 .add(1200, 96);
         row("gt.recipe.calciner", "m9-05/dope/boron")
-                .in(item("wafer", WAFER, 1), dust("BoronTrioxide", 1), circuit(3))
+                .in(item("wafer", STRIPPED, 1), dust("BoronTrioxide", 1))
                 .fluidIn("Nitrogen", 1000)
-                .out(item("wafer", WAFER, 1))
-                .keep(2)
+                .out(item("wafer", DOPED, 1))
                 .add(1200, 96);
     }
 
     /** Vacuum aluminium evaporation is abstracted as one calciner row. */
     private static void metalize() {
         row("gt.recipe.calciner", "m9-05/metalize")
-                .in(item("wafer", WAFER, 1), dust("Aluminium", 1), circuit(4))
+                .in(item("wafer", DOPED, 1), dust("Aluminium", 1))
                 .fluidIn("GenGas_Argon", 1000)
                 .out(item("wafer", PROCESSED, 1))
-                .keep(2)
                 .add(900, 96);
     }
 }

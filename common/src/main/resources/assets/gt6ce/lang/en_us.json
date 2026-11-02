@@ -383,5 +383,14 @@
   "material.gt6ce.firedceramicshell": "Fired Ceramic Shell",
   "material.gt6ce.ascastpart": "As-Cast Part",
   "material.gt6ce.precisioncasting": "Precision Casting",
-  "material.gt6ce.neodymiumyag": "Neodymium-Doped YAG (Nd:YAG)"
+  "material.gt6ce.neodymiumyag": "Neodymium-Doped YAG (Nd:YAG)",
+  "material.gt6ce.alkalinecleanedwafer": "Alkaline-Cleaned",
+  "material.gt6ce.cleanedwafer": "Cleaned",
+  "material.gt6ce.oxidizedwafer": "Oxidized",
+  "material.gt6ce.coatedwafer": "Photoresist-Coated",
+  "material.gt6ce.exposedwafer": "Exposed",
+  "material.gt6ce.developedwafer": "Developed",
+  "material.gt6ce.etchedwafer": "Etched",
+  "material.gt6ce.strippedwafer": "Stripped",
+  "material.gt6ce.dopedwafer": "Doped"
 }
