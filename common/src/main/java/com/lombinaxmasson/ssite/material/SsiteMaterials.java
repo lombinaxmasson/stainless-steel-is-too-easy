@@ -84,6 +84,12 @@ public final class SsiteMaterials implements AddonMaterialContributor {
                 MaterialDeclaration.builder("UltrapureWater")
                         .displayName("Ultrapure Water").color(0xC8ECFF).chemicalFormula("H2O")
                         .meltingPointKelvin(273).boilingPointKelvin(373).density(1.0F).liquid().build(),
+                MaterialDeclaration.builder("Brine")
+                        .displayName("Brine").color(0xC8D8A0).chemicalFormula("NaCl·MgBr2")
+                        .meltingPointKelvin(250).boilingPointKelvin(380).density(1.20F).liquid().build(),
+                MaterialDeclaration.builder("Sludge")
+                        .displayName("Waste Sludge").color(0x4A3B2A).chemicalFormula("WasteSlurry")
+                        .meltingPointKelvin(270).boilingPointKelvin(380).density(1.15F).liquid().build(),
                 MaterialDeclaration.builder("Alum")
                         .displayName("Potassium Alum").color(0xE8EEF2).chemicalFormula("KAl(SO4)2·12H2O")
                         .meltingPointKelvin(365).boilingPointKelvin(473).density(1.72F).dust().build(),

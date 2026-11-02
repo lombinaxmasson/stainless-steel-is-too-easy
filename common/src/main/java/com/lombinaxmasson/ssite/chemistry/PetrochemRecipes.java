@@ -34,7 +34,7 @@ public final class PetrochemRecipes {
         row("gt.recipe.catalyticcracking", "reform/petrol")
                 .in(dust("Platinum", 1))
                 .fluidIn("Petrol", 1000)
-                .fluidOut("GenLiquid_Reformate", 800, "Hydrogen", 300, "LPG", 100)
+                .fluidOut("GenLiquid_Reformate", 800, "Hydrogen", 300, "Propane", 100)
                 .keep(0)
                 .add(160, 48);
     }

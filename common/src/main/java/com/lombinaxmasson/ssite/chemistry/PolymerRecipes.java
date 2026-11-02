@@ -90,7 +90,7 @@ public final class PolymerRecipes {
                 .fluidOut("GenLiquid_AceticAcid", 1000)
                 .keep(0)
                 .add(160, 32);
-        for (String vinegar : new String[]{"Vinegar_Grape", "Vinegar_Apple", "Vinegar_Cane", "Vinegar_Rice"}) {
+        for (String vinegar : new String[]{"Vinegar_Grape", "Vinegar_Apple", "Vinegar_Cane"}) {
             row("gt.recipe.distillery", "c1/acetic-acid-" + vinegar.toLowerCase())
                     .in(circuit(3))
                     .fluidIn(vinegar, 1000)

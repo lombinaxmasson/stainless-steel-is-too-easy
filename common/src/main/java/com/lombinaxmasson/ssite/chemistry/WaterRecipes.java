@@ -70,31 +70,26 @@ public final class WaterRecipes {
     }
 
     private static void clarifiedWater() {
-        for (String source : new String[]{"Water", "River_Water", "Dirty_Water", "Stagnant_Water", "Swampwater"}) {
+        for (String source : new String[]{"Water", "River_Water", "Dirty_Water"}) {
             for (String flocculant : new String[]{"Alum", "VitriolOfClay"}) {
                 row("gt.recipe.bath", "clarified/" + source + "/" + flocculant)
                         .in(dust(flocculant, 1))
                         .fluidIn(source, 4000)
-                        .fluidOut("GenLiquid_ClarifiedWater", 3600, "Sludge", 400)
+                        .fluidOut("GenLiquid_ClarifiedWater", 3600, "GenLiquid_Sludge", 400)
                         .add(100, 16);
             }
         }
-        row("gt.recipe.bath", "clarified/sewage")
-                .in(dust("Alum", 2))
-                .fluidIn("Sewage", 4000)
-                .fluidOut("GenLiquid_ClarifiedWater", 3000, "Sludge", 1000)
-                .add(160, 16);
     }
 
     private static void sludgeRecovery() {
         row("gt.recipe.drying", "sludge/dry")
                 .out(dust("Clay", 1))
-                .fluidIn("Sludge", 1000)
+                .fluidIn("GenLiquid_Sludge", 1000)
                 .fluidOut("Biomass", 250, "Dirty_Water", 500)
                 .add(120, 16);
         row("gt.recipe.centrifuge", "sludge/centrifuge")
                 .out(dust("Clay", 2), dust("Sand", 1), item("dustTiny", "RareEarth", 1))
-                .fluidIn("Sludge", 2000)
+                .fluidIn("GenLiquid_Sludge", 2000)
                 .fluidOut("Biomass", 500, "Dirty_Water", 1000)
                 .chances(10000, 10000, 2500)
                 .add(160, 24);
@@ -157,18 +152,18 @@ public final class WaterRecipes {
         row("gt.recipe.distillationtower", "brine/ocean")
                 .out(dust("Salt", 2), dust("Gypsum", 1))
                 .fluidIn("Ocean", 10000)
-                .fluidOut("DistW", 7500, "Brine", 2000)
+                .fluidOut("DistW", 7500, "GenLiquid_Brine", 2000)
                 .add(200, 48);
         row("gt.recipe.distillationtower", "brine/saltwater")
                 .out(dust("Salt", 1))
                 .fluidIn("Saltwater", 5000)
-                .fluidOut("DistW", 3500, "Brine", 1000)
+                .fluidOut("DistW", 3500, "GenLiquid_Brine", 1000)
                 .add(120, 32);
         row("gt.recipe.distillery", "brine/ocean-early")
                 .in(circuit(2))
                 .out(item("dustSmall", "Gypsum", 1))
                 .fluidIn("Ocean", 2000)
-                .fluidOut("DistW", 1400, "Brine", 400)
+                .fluidOut("DistW", 1400, "GenLiquid_Brine", 400)
                 .add(100, 16);
     }
 
@@ -181,7 +176,7 @@ public final class WaterRecipes {
         row("gt.recipe.bath", "brine/remove-mg-ca")
                 .in(dust("CalciumHydroxide", 1), dust("SodiumCarbonate", 1))
                 .out(dust("MagnesiumHydroxide", 1), dust("Calcite", 1))
-                .fluidIn("Brine", 4000)
+                .fluidIn("GenLiquid_Brine", 4000)
                 .fluidOut("GenLiquid_DecalcifiedBrine", 3600)
                 .add(120, 24);
         row("gt.recipe.bath", "brine/magnesium-chloride")
