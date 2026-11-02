@@ -1,14 +1,17 @@
 package com.lombinaxmasson.ssite.chemistry;
 
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.dust;
+import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.item;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.row;
+import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.vanillaItem;
 
-/** M6 nuclear hydrometallurgy: uranium leach, resin yellowcake, TBP purification of U and Th. */
+/** M6 nuclear hydrometallurgy and the N-01 thorium fuel fabrication route. */
 public final class NuclearRecipes {
     private NuclearRecipes() {}
 
     static void add() {
         uraniumThoriumTbp();
+        thoriumFuel();
     }
 
     private static void uraniumThoriumTbp() {
@@ -92,5 +95,31 @@ public final class NuclearRecipes {
                 .in(dust("ThoriumDioxide", 1), dust("Calcium", 2))
                 .out(dust("Thorium", 1), dust("Quicklime", 2))
                 .add(240, 96);
+    }
+
+    private static void thoriumFuel() {
+        // The host canner already turns a thorium stick plus an empty rod into the host fuel
+        // rod; the industrial route presses and sinters the oxide before encapsulation.
+        // The press map requires two item inputs; graphite is the die-wall lubricant, as in M9-03.
+        row("gt.recipe.press", "nuclear/fuel-thorium-compact")
+                .in(dust("ThoriumDioxide", 1), item("dustTiny", "Graphite", 1))
+                .out(dust("ThoriumFuelCompact", 1))
+                .add(120, 32);
+
+        // The port has no placeable Calciner block; the Roasting Oven uses the reachable
+        // gt.recipe.roaster map and is the host's heat-treatment machine for this step.
+        // Tier 1 accepts at most 64 HU/t, so the row uses 32 HU/t instead of M9-03's EU value.
+        row("gt.recipe.roaster", "nuclear/fuel-thorium-sinter")
+                .in(dust("ThoriumFuelCompact", 1))
+                .out(dust("ThoriumFuelPellet", 1))
+                .fluidIn("GenGas_Argon", 1000)
+                .add(240, 32);
+
+        // The output is the host item id, so reactor physics and depletion stay host-owned.
+        // Canner is an EU machine; the row keeps the host rod recipe's 16t / 16 EU/t pace.
+        row("gt.recipe.canner", "nuclear/fuel-thorium-encapsulate")
+                .in(dust("ThoriumFuelPellet", 1), vanillaItem("gt6ce:reactor_rod_9201", 1))
+                .out(vanillaItem("gt6ce:fuel_rod_th_232", 1))
+                .add(16, 16);
     }
 }

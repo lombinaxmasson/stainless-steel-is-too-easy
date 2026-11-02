@@ -4,7 +4,7 @@ import gregtech.api.addon.material.MaterialDeclaration;
 
 import java.util.List;
 
-/** M6 nuclear hydrometallurgy materials. Card 4 appends its own entries here. */
+/** M6 nuclear hydrometallurgy materials and the N-01 thorium fuel intermediates. */
 public final class NuclearMaterials {
     public static final List<MaterialDeclaration> MATERIALS = List.of(
             MaterialDeclaration.builder("ThoriumConcentrate")
@@ -48,6 +48,14 @@ public final class NuclearMaterials {
                     .meltingPointKelvin(210).boilingPointKelvin(400).density(1.00F).liquid().build(),
             MaterialDeclaration.builder("ThoriumDioxide")
                     .displayName("Thorium Dioxide").color(0x585850).chemicalFormula("ThO2")
+                    .meltingPointKelvin(3390).boilingPointKelvin(4400).density(10.00F).dust().build(),
+            // Pressed and sintered fuel bodies stay dust-only so they cannot be cast or
+            // rolled as ordinary metal; the host has no usable pellet prefix for addon forms.
+            MaterialDeclaration.builder("ThoriumFuelCompact")
+                    .displayName("Thorium Fuel Green Compact").color(0x5C5C50).chemicalFormula("ThO2")
+                    .meltingPointKelvin(3390).boilingPointKelvin(4400).density(10.00F).dust().build(),
+            MaterialDeclaration.builder("ThoriumFuelPellet")
+                    .displayName("Sintered Thorium Fuel Pellet").color(0x484840).chemicalFormula("ThO2")
                     .meltingPointKelvin(3390).boilingPointKelvin(4400).density(10.00F).dust().build()
     );
 

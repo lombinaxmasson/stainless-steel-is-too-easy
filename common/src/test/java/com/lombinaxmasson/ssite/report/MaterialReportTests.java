@@ -43,13 +43,14 @@ public final class MaterialReportTests {
         formingAndCatalystEvidence(rows);
         recyclingAndConditionalEvidence(rows);
         fuelAndDisplayEvidence(rows);
+        thoriumFuelChain(rows);
         craftingInputsAndRemovalRules();
         shapelessAlternativesAndUnsupportedTypes();
         optionalNotesAndUnknownTargets();
         malformedNotesFail();
         contributorCoverage(repo);
         renderingAndDeterministicOutput(repo);
-        System.out.println("MaterialReportTests: all 19 checks passed.");
+        System.out.println("MaterialReportTests: all 20 checks passed.");
     }
 
     private static void moduleOrderAndSourceLocations(Path repo, List<RecipeDeclaration> rows) throws IOException {
@@ -230,6 +231,30 @@ public final class MaterialReportTests {
         check(!sponge.uses().isEmpty() && sponge.uses().stream().allMatch(e -> e.category().equals("display")),
                 "a behavior display remains visible without becoming an executable process recipe");
         check(!MaterialReport.hasConsumption(sponge), "display-only evidence does not pretend to be a normal recipe registration");
+    }
+
+    private static void thoriumFuelChain(List<RecipeDeclaration> rows) {
+        RecipeDeclaration compact = row(rows, "nuclear/fuel-thorium-compact");
+        check(compact.map().equals("gt.recipe.press")
+                && compact.itemInputs().equals(List.of(material("dust", "ThoriumDioxide", 1),
+                        material("dustTiny", "Graphite", 1)))
+                && compact.itemOutputs().equals(List.of(material("dust", "ThoriumFuelCompact", 1))),
+                "thorium fuel pressing keeps the oxide and the green compact as distinct items");
+        RecipeDeclaration sinter = row(rows, "nuclear/fuel-thorium-sinter");
+        check(sinter.map().equals("gt.recipe.roaster")
+                && sinter.itemInputs().equals(List.of(material("dust", "ThoriumFuelCompact", 1)))
+                && sinter.itemOutputs().equals(List.of(material("dust", "ThoriumFuelPellet", 1)))
+                && sinter.fluidInputs().equals(List.of(new FluidRef("GenGas_Argon", 1000))),
+                "thorium fuel sintering consumes the compact under argon");
+        RecipeDeclaration encapsulate = row(rows, "nuclear/fuel-thorium-encapsulate");
+        check(encapsulate.map().equals("gt.recipe.canner")
+                && encapsulate.itemInputs().equals(List.of(
+                        material("dust", "ThoriumFuelPellet", 1),
+                        new ItemRef(ItemKind.VANILLA, "", "", "gt6ce:reactor_rod_9201", 1, -1)))
+                && encapsulate.itemOutputs().equals(List.of(
+                        new ItemRef(ItemKind.VANILLA, "", "", "gt6ce:fuel_rod_th_232", 1, -1)))
+                && encapsulate.duration() == 16 && encapsulate.perTick() == 16,
+                "the sintered pellet enters the host thorium rod through the canner");
     }
 
     private static void craftingInputsAndRemovalRules() throws Exception {
