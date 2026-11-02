@@ -32,7 +32,8 @@ public final class CircuitRecipes {
                             item("plate", substrate, 1))
                     .fluidIn(resin, resinAmount)
                     .out(vanillaItem("gt6ce:circuit_board_" + tier, 1))
-                    .add(64, 16);
+                    // Bath is a TU machine and only supplies its 1 TU/t baseline internally.
+                    .add(64, 1);
         }
     }
 }
