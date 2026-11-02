@@ -20,7 +20,7 @@
         2.43
       ]
     ],
-    "triangles": 8712,
+    "triangles": 8736,
     "groups": 31,
     "texture_size": [
       512,
@@ -107,9 +107,10 @@
     "warning_plates",
     "vessel_lid",
     "lid_bolts",
-    "top_drive"
+    "top_drive",
+    "lifting_eyes"
   ],
-  "cutaway_triangles": 5720,
+  "cutaway_triangles": 5552,
   "texture_filter": "nearest",
   "origin": "Ground plane at Y=0; vessel axis at X=-0.60, Z=0.35",
   "notes": [
