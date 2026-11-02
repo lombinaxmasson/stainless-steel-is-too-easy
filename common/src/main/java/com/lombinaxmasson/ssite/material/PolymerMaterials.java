@@ -105,6 +105,12 @@ public final class PolymerMaterials {
             MaterialDeclaration.builder("Divinylbenzene")
                     .displayName("Divinylbenzene").color(0xE8D8C0).chemicalFormula("C10H10")
                     .meltingPointKelvin(207).boilingPointKelvin(468).density(0.91F).liquid().build(),
+            MaterialDeclaration.builder("Polycarbonate")
+                    .displayName("Polycarbonate").color(0xD8E8F0).chemicalFormula("(C15H16O2·COCl2)n")
+                    .meltingPointKelvin(428).density(1.20F).dust().polymer().build(),
+            MaterialDeclaration.builder("Bakelite")
+                    .displayName("Bakelite").color(0x6B4A2A).chemicalFormula("(C7H6O·CH2O)n")
+                    .meltingPointKelvin(400).density(1.30F).dust().polymer().build(),
             MaterialDeclaration.builder("Polystyrene")
                     .displayName("Polystyrene").color(0xF0F0F0).chemicalFormula("(C8H8)n")
                     .meltingPointKelvin(513).density(1.05F).dust().polymer().build(),
@@ -470,7 +476,8 @@ public final class PolymerMaterials {
 
     private static List<MaterialFormRequest> buildForms() {
         String[] polymers = {
-                "Polypropylene", "UltraHighMolecularWeightPolyethylene", "PolyvinylAlcohol",
+                "Polypropylene", "Polycarbonate", "Bakelite",
+                "UltraHighMolecularWeightPolyethylene", "PolyvinylAlcohol",
                 "PolyvinylButyral", "EthyleneVinylAcetate", "Polystyrene", "PolymethylMethacrylate",
                 "PolyethyleneTerephthalate", "MetallizedPolyester", "Epoxy", "FiberReinforcedEpoxy",
                 "FlameRetardantLaminate", "Polyurethane", "Ebonite", "Polycaprolactam",
