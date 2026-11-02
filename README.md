@@ -20,6 +20,8 @@ GregTech 6 Community Edition 的化工向附属。模组 id 是 `ssite`，依赖
 
 美术资产：[大型燃气涡轮 LGT–01](art/large_gas_turbine/README.md) 提供适配宿主 3×3×4 结构的 OBJ、四档金属配色、独立转子染色，以及带启停旋转、温度辉光的离线剖视预览，目前尚未接入游戏渲染。
 
+[批次照射反应堆 IR–03](art/irradiation_reactor/README.md) 提供独立造型的 HBM 风格原创 OBJ、像素图集与离线剖视预览，包含八角屏蔽舱、前部装料锁、四联靶匣、顶部驱动和侧置换热柱。外观尺寸约 5×5×5 方块，不受现有五方块结构约束，尚未接入游戏渲染。生成和检查命令见该目录说明。
+
 ## 环境
 
 Gradle 8.8 要用 JDK 17 启动，NeoForge 编译再用 JDK 21。本机如果默认 `java` 是 25，直接跑 `gradlew.bat` 会起不来。Windows 用仓库里的脚本，它会自己找这两个 JDK：
