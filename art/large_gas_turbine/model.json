@@ -1,0 +1,400 @@
+{
+  "schema_version": 3,
+  "name": "SSITE large gas turbine / LGT-01",
+  "units": "blocks",
+  "up": "+Y",
+  "front": "-Z",
+  "nominal_envelope": [
+    3,
+    3,
+    4
+  ],
+  "envelope_bounds": [
+    [
+      -1.5,
+      0,
+      0
+    ],
+    [
+      1.5,
+      3,
+      4
+    ]
+  ],
+  "controller_center": [
+    0,
+    1.5,
+    0.5
+  ],
+  "game_translation": [
+    0.5,
+    -1,
+    0
+  ],
+  "transform_note": "Translation is relative to the NORTH-facing controller block minimum corner. Rotate around controller center for other facings.",
+  "host": "GT6CE 1.0.2 / SharedTurbineStructure",
+  "host_cell_axes": [
+    "right",
+    "up",
+    "back"
+  ],
+  "stats": {
+    "bounds": [
+      [
+        -1.42,
+        0,
+        0
+      ],
+      [
+        1.47,
+        2.74,
+        4.0
+      ]
+    ],
+    "triangles": 9748,
+    "groups": 32,
+    "texture_size": [
+      512,
+      256
+    ],
+    "finite_vertices": true,
+    "unit_normals": true,
+    "uv_in_atlas": true,
+    "nondegenerate_triangles": true,
+    "consistent_winding": true,
+    "within_host_envelope": true
+  },
+  "groups": [
+    "skid",
+    "mounts",
+    "intake",
+    "intake_guard",
+    "rotor",
+    "compressor_cover",
+    "compressor_shell",
+    "compressor_cover_bands",
+    "compressor_bands",
+    "combustion_core",
+    "combustor_cover",
+    "fuel_rail_cover",
+    "combustors",
+    "fuel_rail",
+    "turbine_cover",
+    "turbine_shell",
+    "turbine_cover_bands",
+    "turbine_bands",
+    "exhaust_collector",
+    "exhaust_port",
+    "rear_exhaust",
+    "rear_exhaust_grille",
+    "rear_bearing",
+    "output_coupling",
+    "fuel_port",
+    "fuel_pipe",
+    "service_cabinet",
+    "lubrication",
+    "controller_mount",
+    "controller",
+    "instruments",
+    "lifting_eyes"
+  ],
+  "group_labels": {
+    "skid": "钢制底架",
+    "mounts": "轴承座与支撑",
+    "intake": "进气喇叭口",
+    "intake_guard": "进气支撑与护网",
+    "rotor": "转子 / 压气机与涡轮叶片",
+    "compressor_shell": "压气机壳体",
+    "compressor_cover": "压气机右半检修壳",
+    "compressor_bands": "压气机法兰",
+    "compressor_cover_bands": "右半法兰与螺栓",
+    "combustion_core": "环形燃烧内衬",
+    "combustors": "分筒燃烧室",
+    "combustor_cover": "右侧燃烧筒壳",
+    "fuel_rail": "燃料分配环管",
+    "fuel_rail_cover": "右侧燃料支管",
+    "turbine_shell": "热端涡轮壳体",
+    "turbine_cover": "热端右半检修壳",
+    "turbine_bands": "热端法兰",
+    "turbine_cover_bands": "热端右半法兰",
+    "exhaust_collector": "向下排气集箱",
+    "exhaust_port": "底部排气法兰",
+    "rear_bearing": "后轴承罩",
+    "output_coupling": "后端 RU 联轴器",
+    "rear_exhaust": "背面排气孔与凹腔",
+    "rear_exhaust_grille": "背面排气护栅",
+    "fuel_port": "前侧燃料接口",
+    "fuel_pipe": "外露燃料总管",
+    "lubrication": "润滑管与油盒",
+    "service_cabinet": "侧面检修箱",
+    "controller": "前脸中央控制器",
+    "controller_mount": "控制器支臂",
+    "instruments": "压力表与铭牌",
+    "lifting_eyes": "起吊耳"
+  },
+  "cutaway_hide": [
+    "compressor_cover",
+    "compressor_cover_bands",
+    "combustor_cover",
+    "fuel_rail_cover",
+    "turbine_cover",
+    "turbine_cover_bands",
+    "service_cabinet"
+  ],
+  "cutaway_triangles": 7432,
+  "rotor": {
+    "group": "rotor",
+    "pivot": [
+      0,
+      1.5,
+      0
+    ],
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "tint_default": "#ffffff",
+    "materials": [
+      "rotor_body",
+      "rotor_edge",
+      "rotor_dark",
+      "rotor_hot"
+    ],
+    "tint_source": "Future rotor item material, independent of casing grade"
+  },
+  "ports": [
+    {
+      "id": "controller",
+      "label": "前脸中央控制面板",
+      "position": [
+        0,
+        1.5,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "group": "controller",
+      "host_cell": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "fuel",
+      "label": "前层装饰燃料口",
+      "position": [
+        1,
+        0.5,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "group": "fuel_port",
+      "host_cell": [
+        1,
+        -1,
+        0
+      ]
+    },
+    {
+      "id": "exhaust",
+      "label": "横向放置时底层装饰排气口",
+      "position": [
+        0,
+        0,
+        3.5
+      ],
+      "normal": [
+        0,
+        -1,
+        0
+      ],
+      "group": "exhaust_port",
+      "host_cell": [
+        0,
+        -1,
+        3
+      ]
+    },
+    {
+      "id": "rear_exhaust",
+      "label": "后侧排气孔",
+      "position": [
+        0,
+        0.72,
+        4
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "group": "rear_exhaust",
+      "host_cell": [
+        0,
+        -1,
+        3
+      ]
+    },
+    {
+      "id": "rotation",
+      "label": "后层中央 RU 输出联轴器",
+      "position": [
+        0,
+        1.5,
+        4
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "group": "output_coupling",
+      "host_cell": [
+        0,
+        0,
+        3
+      ]
+    }
+  ],
+  "appearance": {
+    "default_variant": "stainless_steel",
+    "variants": {
+      "stainless_steel": {
+        "label": "不锈钢",
+        "color": [
+          225,
+          228,
+          228
+        ],
+        "source_rgb": [
+          200,
+          200,
+          220
+        ],
+        "texture": "variants/stainless_steel.png"
+      },
+      "titanium": {
+        "label": "钛",
+        "color": [
+          209,
+          199,
+          217
+        ],
+        "source_rgb": [
+          220,
+          160,
+          240
+        ],
+        "texture": "variants/titanium.png"
+      },
+      "tungsten_steel": {
+        "label": "钨钢",
+        "color": [
+          120,
+          126,
+          129
+        ],
+        "source_rgb": [
+          100,
+          100,
+          160
+        ],
+        "texture": "variants/tungsten_steel.png"
+      },
+      "adamantium": {
+        "label": "艾德曼合金",
+        "color": [
+          234,
+          238,
+          218
+        ],
+        "source_rgb": [
+          255,
+          255,
+          255
+        ],
+        "texture": "variants/adamantium.png"
+      }
+    },
+    "neutral_atlas": "large_gas_turbine_neutral_atlas.png",
+    "tint_mask": "large_gas_turbine_tint_mask.png",
+    "mask_channels": {
+      "R": "casing",
+      "G": "rotor",
+      "B": "unused"
+    },
+    "tint_operation": "Multiply neutral pixels by material RGB/255; retain unmasked pixels. Baked variants already include casing color.",
+    "palette_note": "Original metallic art palettes; source_rgb records host material color for reference only."
+  },
+  "animation": {
+    "rotating_groups": [
+      "rotor",
+      "output_coupling"
+    ],
+    "pivot": [
+      0,
+      1.5,
+      0
+    ],
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "ambient_temperature": 20,
+    "max_temperature": 1200,
+    "max_rpm": 3600,
+    "default_rpm": 1800,
+    "default_temperature": 900,
+    "visual_rpm_scale": 0.02,
+    "spin_up_seconds": 1.8,
+    "spin_down_seconds": 3.5,
+    "heating_seconds": 6,
+    "cooling_seconds": 12,
+    "glow_start_temperature": 450,
+    "glow_full_temperature": 1100,
+    "hot_uv_bounds": [
+      0.875,
+      0.25,
+      1,
+      0.5
+    ],
+    "heat_axial_range": [
+      1.2,
+      1.65,
+      2.6,
+      3.85
+    ],
+    "heat_groups": {
+      "combustion_core": 1,
+      "combustors": 0.6,
+      "combustor_cover": 0.6,
+      "turbine_shell": 1,
+      "turbine_cover": 1,
+      "turbine_bands": 0.8,
+      "turbine_cover_bands": 0.8,
+      "exhaust_collector": 0.25,
+      "rear_exhaust": 0.2
+    },
+    "temperature_unit": "Celsius",
+    "preview_only": true,
+    "note": "Illustrative startup/coasting and heating/cooling; not host thermodynamics. Visual angular speed is scaled for inspection."
+  },
+  "texture_filter": "nearest",
+  "integrated_in_game": false,
+  "notes": [
+    "Art asset only; host renderer registration and formed-part hiding remain to be implemented.",
+    "The host accepts fuel across the front layer and exhaust across the world-bottom layer; decorative ports do not restrict behavior.",
+    "Six-direction host placement needs orientation-aware treatment of exhaust decoration.",
+    "Cutaway is illustrative game art, not an engineering section."
+  ]
+}

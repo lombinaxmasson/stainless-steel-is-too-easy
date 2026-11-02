@@ -18,6 +18,8 @@ GregTech 6 Community Edition 的化工向附属。模组 id 是 `ssite`，依赖
 
 配方、材料和进度以代码为准。本模组不包含 GT6 本体，单独安装不会生效。
 
+美术资产：[大型燃气涡轮 LGT–01](art/large_gas_turbine/README.md) 提供适配宿主 3×3×4 结构的 OBJ、四档金属配色、独立转子染色，以及带启停旋转、温度辉光的离线剖视预览，目前尚未接入游戏渲染。
+
 ## 环境
 
 Gradle 8.8 要用 JDK 17 启动，NeoForge 编译再用 JDK 21。本机如果默认 `java` 是 25，直接跑 `gradlew.bat` 会起不来。Windows 用仓库里的脚本，它会自己找这两个 JDK：
