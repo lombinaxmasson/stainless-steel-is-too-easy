@@ -362,11 +362,11 @@ public final class MaterialReportTests {
 
     private static void contributorCoverage(Path repo) throws Exception {
         MaterialReport.Catalog catalog = MaterialReport.collect(repo, "test");
-        check(catalog.crucibleRecipes().size() == 8, "four iron sources and two nickel sources expand to eight crucible declarations");
+        check(catalog.crucibleRecipes().size() == 4, "two iron sources and two nickel sources expand to four crucible declarations");
         check(catalog.crucibleRecipes().stream().allMatch(r -> r.output().equals("CarburizedStainlessSteel")),
                 "crucible declarations retain coarse steel rather than the removed stainless output");
         MaterialReport.MaterialRow ferrochromium = materialRow(catalog.materials(), "Ferrochromium");
-        check(ferrochromium.uses().stream().filter(e -> e.category().equals("crucible")).count() == 8,
+        check(ferrochromium.uses().stream().filter(e -> e.category().equals("crucible")).count() == 4,
                 "crucible alloying contributes downstream evidence outside the chemistry DSL");
         MaterialReport.MaterialRow pipe = materialRow(catalog.materials(), "StainlessSteel316L");
         check(!pipe.capabilities().isEmpty(), "316L pipe declaration is retained as a capability");

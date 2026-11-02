@@ -300,7 +300,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
     @Override
     public List<CrucibleReactionDeclaration> crucibleReactions() {
         var rows = new ArrayList<CrucibleReactionDeclaration>();
-        for (String iron : List.of("Iron", "WroughtIron", "PigIron", "MeteoricIron")) {
+        for (String iron : List.of("Iron", "WroughtIron")) {
             rows.add(coarse(iron, 6, "Nickel", 1));
             rows.add(coarse(iron, 4, "Invar", 3));
         }
