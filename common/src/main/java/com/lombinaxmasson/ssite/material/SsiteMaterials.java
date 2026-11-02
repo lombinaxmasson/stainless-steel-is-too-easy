@@ -20,7 +20,9 @@ public final class SsiteMaterials implements AddonMaterialContributor {
     private static final String[] CREATIVE_PREFIXES = {
             "dust", "dustSmall", "dustTiny", "plate", "foil", "wireFine", "ingot", "crystalBoule", "wafer",
             "die", "chip", "hose", "laserRodBlank", "laserRodPolished", "laserRod",
-            "opticalLensBlank", "opticalLensPolished", "opticalLens"};
+            "opticalLensBlank", "opticalLensPolished", "opticalLens", "laserModule",
+            "laserCuttingHead", "laserDrillingHead", "laserWeldingHead", "precisionNozzle",
+            "precisionFixture", "instrumentShell"};
 
     public static final List<MaterialDeclaration> MATERIALS = buildMaterials();
 
@@ -242,6 +244,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         materials.addAll(FunctionalTextileMaterials.MATERIALS);
         materials.addAll(InvestmentCastingMaterials.MATERIALS);
         materials.addAll(OpticsMaterials.MATERIALS);
+        materials.addAll(PrecisionMaterials.MATERIALS);
         return List.copyOf(materials);
     }
 
@@ -265,6 +268,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         prefixes.addAll(PackagingMaterials.PREFIXES);
         prefixes.addAll(FunctionalTextileMaterials.PREFIXES);
         prefixes.addAll(OpticsMaterials.PREFIXES);
+        prefixes.addAll(PrecisionMaterials.PREFIXES);
         return List.copyOf(prefixes);
     }
 

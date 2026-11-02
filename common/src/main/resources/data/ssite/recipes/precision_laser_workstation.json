@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LCP",
+    "PMP",
+    "GKG"
+  ],
+  "key": {
+    "L": {"item": "ssite:laser_module_lasermodule"},
+    "C": {"item": "ssite:chip_chipelite"},
+    "P": {"item": "ssite:plate_precisioncasting"},
+    "M": {"item": "gt6ce:casing_machine_stainlesssteel"},
+    "G": {"item": "gt6ce:cable_01_copper"},
+    "K": {"item": "ssite:pipe_small_stainless_steel_316l"}
+  },
+  "result": {
+    "item": "ssite:precision_laser_workstation"
+  }
+}

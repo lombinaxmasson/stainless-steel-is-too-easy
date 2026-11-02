@@ -82,7 +82,8 @@ public final class SsiteMachines implements AddonMachineContributor {
                         .outputItems(1)
                         .minimalInputItems(1)
                         .minimalInputs(1)
-                        .build());
+                        .build(),
+                PrecisionMachines.recipeTable());
     }
 
     @Override
@@ -95,6 +96,7 @@ public final class SsiteMachines implements AddonMachineContributor {
         machines.add(varFurnace());
         machines.addAll(new FluidizedBedMachines().addonMachines());
         machines.addAll(new IrradiationReactorMachines().addonMachines());
+        machines.addAll(new PrecisionMachines().addonMachines());
         machines.addAll(HeatTransportMachines.machines());
         return List.copyOf(machines);
     }
@@ -111,6 +113,7 @@ public final class SsiteMachines implements AddonMachineContributor {
         machines.add(VarFurnaceCore.MACHINE_TYPE);
         machines.add(FluidizedBedCore.MACHINE_TYPE);
         machines.add(IrradiationReactorCore.MACHINE_TYPE);
+        machines.add(PrecisionMachines.MACHINE_TYPE);
         machines.add(HeatTransportMachines.DUCT);
         machines.add(HeatTransportMachines.PLATE);
         for (String path : machines) {

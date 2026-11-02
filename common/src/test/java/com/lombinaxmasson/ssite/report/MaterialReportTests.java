@@ -46,13 +46,14 @@ public final class MaterialReportTests {
         thoriumFuelChain(rows);
         spentFuelChain(rows);
         blanketBreedingChain(rows);
+        precisionLaserChain(rows);
         craftingInputsAndRemovalRules();
         shapelessAlternativesAndUnsupportedTypes();
         optionalNotesAndUnknownTargets();
         malformedNotesFail();
         contributorCoverage(repo);
         renderingAndDeterministicOutput(repo);
-        System.out.println("MaterialReportTests: all 21 checks passed.");
+        System.out.println("MaterialReportTests: all 22 checks passed.");
     }
 
     private static void moduleOrderAndSourceLocations(Path repo, List<RecipeDeclaration> rows) throws IOException {
@@ -72,7 +73,7 @@ public final class MaterialReportTests {
                 "RareEarthRecipes.java", "NuclearRecipes.java", "BaseMetalRecipes.java",
                 "CircuitRecipes.java", "WaferRecipes.java", "LithographyRecipes.java",
                 "PackagingRecipes.java", "ElectrochemistryRecipes.java", "TextileRecipes.java",
-                "InvestmentCastingRecipes.java", "OpticsRecipes.java")),
+                "InvestmentCastingRecipes.java", "OpticsRecipes.java", "PrecisionRecipes.java")),
                 "all central recipe modules retain runtime registration order");
     }
 
@@ -152,6 +153,42 @@ public final class MaterialReportTests {
         check(rows.stream().noneMatch(r -> r.itemOutputs().stream().anyMatch(i ->
                         i.material().equals("Uranium233") && !i.prefix().equals("dustTiny"))),
                 "no addon row manufactures a higher U-233 form than the bred tiny charge");
+    }
+
+    private static void precisionLaserChain(List<RecipeDeclaration> rows) {
+        RecipeDeclaration module = row(rows, "gt.recipe.welder", "p01/laser-module");
+        check(module.itemInputs().stream().anyMatch(i -> i.prefix().equals("laserRod")
+                        && i.material().equals("NeodymiumYAG"))
+                        && module.itemInputs().stream().anyMatch(i -> i.prefix().equals("opticalLens")
+                        && i.material().equals("NeodymiumYAG"))
+                        && module.itemInputs().stream().noneMatch(i -> i.prefix().contains("Blank")
+                        || i.prefix().contains("Polished")),
+                "the laser module accepts only the final coated rod and lens");
+        check(module.itemOutputs().equals(List.of(material("laserModule", "LaserModule", 1))),
+                "the welded optical assembly yields the solid-state module");
+        List<RecipeDeclaration> modes = rows.stream()
+                .filter(r -> r.map().equals("ssite.recipe.precision_laser")).toList();
+        check(modes.size() == 3, "the workstation delivers cutting, drilling and welding rows");
+        Set<String> heads = modes.stream().map(r -> r.itemInputs().get(r.keptInputs().get(0)).prefix())
+                .collect(Collectors.toSet());
+        check(heads.equals(Set.of("laserCuttingHead", "laserDrillingHead", "laserWeldingHead")),
+                "each mode keeps its own head and cannot match another mode");
+        List<RecipeDeclaration> headRows = rows.stream().filter(r -> r.map().equals("gt.recipe.welder")
+                && r.label().startsWith("p01/head/")).toList();
+        check(headRows.size() == 3 && headRows.stream().allMatch(r -> r.itemOutputs().size() == 1
+                        && r.itemOutputs().get(0).prefix().endsWith("Head")
+                        && r.itemInputs().stream().anyMatch(i -> i.kind() == ItemKind.SELECTOR))
+                        && headRows.stream().map(r -> r.itemInputs().stream()
+                        .filter(i -> i.kind() == ItemKind.SELECTOR).findFirst().orElseThrow().selector())
+                        .distinct().count() == 3,
+                "every head has a welding source and a distinct selector keeps the rows apart");
+        check(modes.stream().allMatch(r -> r.keptInputs().size() == 1
+                        && r.fluidInputs().size() == 1 && r.fluidInputs().get(0).field().equals("GenGas_Argon")),
+                "every mode is guarded by one kept head slot and an argon medium");
+        check(modes.stream().allMatch(r -> r.itemInputs().stream()
+                        .filter(i -> !i.prefix().endsWith("Head"))
+                        .allMatch(i -> i.prefix().equals("plate") && i.material().equals("StainlessSteel316L"))),
+                "the first batch uses one alloy already supplied by AOD");
     }
 
     private static long weight(String prefix) {
@@ -415,6 +452,8 @@ public final class MaterialReportTests {
                 "addon crystal prefixes are reported next to host forms");
         check(catalog.craftingRecipes().stream().anyMatch(r -> r.output().equals("ssite:var_furnace")),
                 "repository crafting recipes contribute machine-building evidence");
+        check(catalog.craftingRecipes().stream().anyMatch(r -> r.output().equals("ssite:precision_laser_workstation")),
+                "the P-01 workstation recipe makes the machine reachable without its own workpieces");
     }
 
     private static void malformedNotesFail() throws Exception {

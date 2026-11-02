@@ -62,6 +62,7 @@ public final class ChemistryRecipes {
             TextileRecipes.add();
             InvestmentCastingRecipes.add();
             OpticsRecipes.add();
+            PrecisionRecipes.add();
             return List.copyOf(declarations);
         } finally {
             if (previous == null) COLLECTOR.remove();
