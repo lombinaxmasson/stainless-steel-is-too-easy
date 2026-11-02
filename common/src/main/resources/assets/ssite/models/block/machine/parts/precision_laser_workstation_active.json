@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "ssite:block/machine/precision_laser_workstation/bottom",
+    "up": "ssite:block/machine/precision_laser_workstation/top_active",
+    "north": "ssite:block/machine/precision_laser_workstation/front_active",
+    "south": "ssite:block/machine/precision_laser_workstation/back",
+    "east": "ssite:block/machine/precision_laser_workstation/side",
+    "west": "ssite:block/machine/precision_laser_workstation/side",
+    "particle": "ssite:block/machine/precision_laser_workstation/side"
+  }
+}
