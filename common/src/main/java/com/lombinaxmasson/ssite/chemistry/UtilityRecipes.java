@@ -8,9 +8,10 @@ import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.row;
 import com.lombinaxmasson.ssite.machine.CoalGasifierCore;
 
 /**
- * U-01 natural-gas treatment and U-03 gasification. Raw {@code Gas_Natural} from the host spring is
- * dehydrated with triethylene glycol, sweetened with MDEA and stabilized into pipeline gas; light
- * ends keep feeding the existing C4/C5 chains and the acid gas is recovered as sulfur.
+ * U-01 natural-gas treatment, U-03 gasification and U-04 methanation. Raw {@code Gas_Natural} from
+ * the host spring is dehydrated with triethylene glycol, sweetened with MDEA and stabilized into
+ * pipeline gas; light ends keep feeding the existing C4/C5 chains and the acid gas is recovered as
+ * sulfur.
  *
  * <p>Both solvents are regenerated at 95% per pass. The one-millibucket make-up per 1000 mB of raw
  * gas is covered by the synthesis rows below, so the treatment train has no consumable dead end.
@@ -18,6 +19,10 @@ import com.lombinaxmasson.ssite.machine.CoalGasifierCore;
  * <p>U-03 adds the gasifier display rows plus raw-gas cleaning, clean-gas separation and the two
  * by-product sinks. Neither raw nor clean gas receives a fuel row; their energy is carried only by
  * the methanol and aromatic products.
+ *
+ * <p>U-04 reverses the existing steam-reforming row into the host methane identity. The nickel
+ * catalyst is retained and the row still spends EU, so reforming plus methanation loses energy and
+ * cannot mint fuel.
  */
 public final class UtilityRecipes {
     private UtilityRecipes() {}
@@ -28,6 +33,7 @@ public final class UtilityRecipes {
         lightEnds();
         pipelineFuel();
         syngas();
+        methanation();
     }
 
     private static void solventMakeup() {
@@ -151,5 +157,21 @@ public final class UtilityRecipes {
                 .out(item("dustSmall", "SiliconDioxide", 1), item("dustTiny", "Alumina", 1),
                         item("dustTiny", "Iron", 1))
                 .add(200, 16);
+    }
+
+    /**
+     * U-04 Sabatier methanation, the reverse of {@code c1/methane-reforming}: one part carbon
+     * monoxide and three parts hydrogen return the host methane identity plus water. The nickel
+     * catalyst is retained, and the row still spends EU, so the reforming round trip is strictly
+     * lossy. Water leaves as distilled water after cooling; no second methane fluid and no fuel or
+     * HU row are created.
+     */
+    private static void methanation() {
+        row("gt.recipe.catalyticcracking", "u04/methanation")
+                .in(dust("Nickel", 1))
+                .fluidIn("GenGas_CarbonMonoxide", 1_000, "Hydrogen", 3_000)
+                .fluidOut("Methane", 1_000, "DistW", 1_000)
+                .keep(0)
+                .add(160, 48);
     }
 }

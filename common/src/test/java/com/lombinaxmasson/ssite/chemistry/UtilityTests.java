@@ -6,7 +6,7 @@ import com.lombinaxmasson.ssite.chemistry.RecipeDeclaration.ItemRef;
 
 import java.util.List;
 
-/** Pure JVM checks of the U-01 gas treatment loop, fuel row and energy ledger. */
+/** Pure JVM checks of the U-01 gas treatment loop, fuel row, energy ledger and U-04 methanation. */
 public final class UtilityTests {
     private static final double RAW_EU_PER_MB = 384.0;          // host gas natural row: 64 EU/t x 30 t / 5 mB
     private static final double PIPELINE_EU_PER_MB = 64.0 * 32.0 / 5.0;
@@ -26,7 +26,9 @@ public final class UtilityTests {
         mediaMakeupClosesLoop(rows);
         pipelineMethaneFeedsReforming(rows);
         energyLedger(rows);
-        System.out.println("UtilityTests: all 8 checks passed.");
+        methanationRow(rows);
+        reformingRoundTripLosesEnergy(rows);
+        System.out.println("UtilityTests: all 10 checks passed.");
     }
 
     private static void dehydrationLoop(List<RecipeDeclaration> rows) {
@@ -151,6 +153,41 @@ public final class UtilityTests {
         double net = rawEnergy - PROCESSING_EU - MEDIA_MAKEUP_EU;
         check(net / (pipelineExhaust + propaneExhaust) > rawEnergy / rawExhaust,
                 "net energy per exhaust mB stays above direct raw-gas burning");
+    }
+
+    private static void methanationRow(List<RecipeDeclaration> rows) {
+        RecipeDeclaration methanation = row(rows, "gt.recipe.catalyticcracking", "u04/methanation");
+        check(methanation.itemInputs().equals(List.of(material("dust", "Nickel", 1)))
+                        && methanation.keptInputs().equals(List.of(0)),
+                "methanation keeps the same nickel catalyst as reforming");
+        check(methanation.fluidInputs().equals(List.of(
+                        fluid("GenGas_CarbonMonoxide", 1000), fluid("Hydrogen", 3000)))
+                        && methanation.fluidOutputs().equals(List.of(
+                        fluid("Methane", 1000), fluid("DistW", 1000))),
+                "Sabatier returns host methane plus one water stream");
+        check(methanation.perTick() > 0 && methanation.duration() > 0,
+                "the base methanation row spends EU instead of claiming the reaction heat");
+    }
+
+    private static void reformingRoundTripLosesEnergy(List<RecipeDeclaration> rows) {
+        RecipeDeclaration reforming = row(rows, "gt.recipe.catalyticcracking", "c1/methane-reforming");
+        RecipeDeclaration methanation = row(rows, "gt.recipe.catalyticcracking", "u04/methanation");
+        double reformingEu = (double) reforming.duration() * reforming.perTick();
+        double methanationEu = (double) methanation.duration() * methanation.perTick();
+        int methaneIn = reforming.fluidInputs().stream().filter(f -> f.field().equals("Methane"))
+                .mapToInt(FluidRef::amount).sum();
+        int methaneOut = methanation.fluidOutputs().stream().filter(f -> f.field().equals("Methane"))
+                .mapToInt(FluidRef::amount).sum();
+        int steamIn = reforming.fluidInputs().stream().filter(f -> f.field().equals("Steam"))
+                .mapToInt(FluidRef::amount).sum();
+        int waterOut = methanation.fluidOutputs().stream().filter(f -> f.field().equals("DistW"))
+                .mapToInt(FluidRef::amount).sum();
+        check(methaneIn == methaneOut,
+                "the reforming/methanation round trip returns no extra methane");
+        check(steamIn == waterOut,
+                "reforming water leaves methanation as one distilled-water stream");
+        check(reformingEu == 12_800 && methanationEu == 7_680,
+                "the round trip costs 12,800 + 7,680 = 20,480 EU per 1,000 mB methane");
     }
 
     private static boolean recovery(int charged, int recovered) {
