@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LFP",
+    "CMC",
+    "KGR"
+  ],
+  "key": {
+    "L": {"item": "ssite:laser_module_lasermodule"},
+    "F": {"item": "ssite:precision_fixture_stainlesssteel316l"},
+    "P": {"item": "ssite:plate_precisioncasting"},
+    "C": {"item": "ssite:chip_chipelite"},
+    "M": {"item": "gt6ce:casing_machine_stainlesssteel"},
+    "K": {"item": "ssite:pipe_small_stainless_steel_316l"},
+    "G": {"item": "gt6ce:cable_01_copper"},
+    "R": {"item": "ssite:plate_firedceramicshell"}
+  },
+  "result": {
+    "item": "ssite:powder_bed_printer"
+  }
+}

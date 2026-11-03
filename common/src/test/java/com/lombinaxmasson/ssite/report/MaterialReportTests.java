@@ -47,6 +47,7 @@ public final class MaterialReportTests {
         spentFuelChain(rows);
         blanketBreedingChain(rows);
         precisionLaserChain(rows);
+        powderManufacturingChain(rows);
         fiberOpticChain(rows);
         advancedSemiconductorChain(rows);
         craftingInputsAndRemovalRules();
@@ -55,7 +56,7 @@ public final class MaterialReportTests {
         malformedNotesFail();
         contributorCoverage(repo);
         renderingAndDeterministicOutput(repo);
-        System.out.println("MaterialReportTests: all 24 checks passed.");
+        System.out.println("MaterialReportTests: all 25 checks passed.");
     }
 
     private static void moduleOrderAndSourceLocations(Path repo, List<RecipeDeclaration> rows) throws IOException {
@@ -77,7 +78,8 @@ public final class MaterialReportTests {
                 "PackagingRecipes.java", "AdvancedSemiconductorRecipes.java",
                 "ElectrochemistryRecipes.java", "TextileRecipes.java",
                 "InvestmentCastingRecipes.java", "OpticsRecipes.java", "PrecisionRecipes.java",
-                "FiberOpticRecipes.java", "ProcessEnvironmentRecipes.java")),
+                "PowderManufacturingRecipes.java", "FiberOpticRecipes.java",
+                "ProcessEnvironmentRecipes.java")),
                 "all central recipe modules retain runtime registration order");
     }
 
@@ -172,11 +174,13 @@ public final class MaterialReportTests {
                 "the welded optical assembly yields the solid-state module");
         List<RecipeDeclaration> modes = rows.stream()
                 .filter(r -> r.map().equals("ssite.recipe.precision_laser")).toList();
-        check(modes.size() == 3, "the workstation delivers cutting, drilling and welding rows");
-        Set<String> heads = modes.stream().map(r -> r.itemInputs().get(r.keptInputs().get(0)).prefix())
+        check(modes.size() == 4, "the workstation delivers cutting, drilling, welding and the cooled batch row");
+        Set<String> heads = modes.stream()
+                .map(r -> r.itemInputs().get(r.keptInputs().get(0)).prefix())
+                .filter(prefix -> prefix.endsWith("Head"))
                 .collect(Collectors.toSet());
         check(heads.equals(Set.of("laserCuttingHead", "laserDrillingHead", "laserWeldingHead")),
-                "each mode keeps its own head and cannot match another mode");
+                "each basic mode keeps its own head and cannot match another mode");
         List<RecipeDeclaration> headRows = rows.stream().filter(r -> r.map().equals("gt.recipe.welder")
                 && r.label().startsWith("p01/head/")).toList();
         check(headRows.size() == 3 && headRows.stream().allMatch(r -> r.itemOutputs().size() == 1
@@ -188,11 +192,75 @@ public final class MaterialReportTests {
                 "every head has a welding source and a distinct selector keeps the rows apart");
         check(modes.stream().allMatch(r -> r.keptInputs().size() == 1
                         && r.fluidInputs().size() == 1 && r.fluidInputs().get(0).field().equals("GenGas_Argon")),
-                "every mode is guarded by one kept head slot and an argon medium");
+                "every mode keeps one tool and uses an argon medium");
+        check(modes.stream().filter(r -> r.itemOutputs().get(0).count() == 3).allMatch(r ->
+                        r.itemInputs().get(r.keptInputs().get(0)).prefix().equals("coolingAssembly")),
+                "the cooled row batches three nozzles with a kept cooling assembly");
         check(modes.stream().allMatch(r -> r.itemInputs().stream()
-                        .filter(i -> !i.prefix().endsWith("Head"))
+                        .filter(i -> !i.prefix().endsWith("Head") && !i.prefix().equals("coolingAssembly"))
                         .allMatch(i -> i.prefix().equals("plate") && i.material().equals("StainlessSteel316L"))),
                 "the first batch uses one alloy already supplied by AOD");
+    }
+
+    private static void powderManufacturingChain(List<RecipeDeclaration> rows) {
+        RecipeDeclaration mill = row(rows, "p05/powder-mill");
+        check(mill.itemInputs().equals(List.of(material("dust", "StainlessSteel316L", 1)))
+                        && mill.itemOutputs().equals(List.of(material("rawPowder", "StainlessSteel316L", 1))),
+                "ordinary powder is only milled into raw powder");
+        RecipeDeclaration classify = row(rows, "p05/classify");
+        check(classify.itemInputs().equals(List.of(material("rawPowder", "StainlessSteel316L", 2)))
+                        && classify.itemOutputs().equals(List.of(
+                        material("classifiedPowder", "StainlessSteel316L", 1),
+                        material("screenTailings", "StainlessSteel316L", 1))),
+                "classification splits the milled charge into qualified powder and tailings");
+        RecipeDeclaration print = row(rows, "ssite.recipe.powder_bed", "p05/print");
+        check(print.displayOnly()
+                        && print.itemInputs().equals(List.of(
+                        material("classifiedPowder", "StainlessSteel316L", 4),
+                        material("controlModule", "PrecisionControlModule", 1),
+                        material("coolingAssembly", "StainlessSteel316L", 1)))
+                        && print.keptInputs().equals(List.of(1, 2))
+                        && print.fluidInputs().equals(List.of(new FluidRef("GenGas_Argon", 4000)))
+                        && print.itemOutputs().equals(List.of(
+                        material("printedBlank", "StainlessSteel316L", 1),
+                        material("reclaimPowder", "StainlessSteel316L", 2))),
+                "the powder-bed display fixes powder, module, cooling, gas and both outputs");
+        RecipeDeclaration desupport = row(rows, "p05/desupport");
+        check(desupport.itemInputs().equals(List.of(material("printedBlank", "StainlessSteel316L", 1)))
+                        && desupport.itemOutputs().equals(List.of(
+                        material("desupportedBlank", "StainlessSteel316L", 1),
+                        material("printedSupport", "StainlessSteel316L", 2))),
+                "support removal forces the independent blank id");
+        RecipeDeclaration heat = row(rows, "p05/heat-treat");
+        check(heat.itemInputs().equals(List.of(material("desupportedBlank", "StainlessSteel316L", 1)))
+                        && heat.itemOutputs().equals(List.of(
+                        material("coolingBlock", "StainlessSteel316L", 1))),
+                "heat treatment accepts only the desupported blank");
+        check(rows.stream().noneMatch(r -> r.itemInputs().stream()
+                        .anyMatch(i -> i.prefix().equals("printedBlank"))
+                        && r.itemOutputs().stream().anyMatch(i -> i.prefix().equals("coolingBlock"))),
+                "a printed blank cannot skip desupport and heat treatment");
+        for (String label : List.of("p05/reclaim-classify", "p05/tailings-recycle", "p05/support-recycle")) {
+            RecipeDeclaration recycle = row(rows, label);
+            long in = recycle.itemInputs().stream().mapToLong(ItemRef::count).sum();
+            long out = recycle.itemOutputs().stream().mapToLong(ItemRef::count).sum();
+            check(out <= in, "recycling row " + label + " cannot create material");
+        }
+        check(row(rows, "p05/reclaim-classify").itemOutputs().get(0).count()
+                        < row(rows, "p05/reclaim-classify").itemInputs().get(0).count(),
+                "reclaim reclassification returns less qualified powder than it consumes");
+        List<String> unexpectedPowderForms = rows.stream().filter(r -> r.label().startsWith("p05/")
+                        && !r.map().equals("ssite.recipe.precision_laser"))
+                .flatMap(r -> r.itemInputs().stream())
+                .filter(i -> i.material().equals("StainlessSteel316L"))
+                .filter(i -> !Set.of("dust", "rawPowder", "classifiedPowder", "reclaimPowder",
+                        "screenTailings", "printedBlank", "desupportedBlank", "printedSupport",
+                        "coolingBlock", "coolingAssembly", "precisionNozzle").contains(i.prefix()))
+                .map(i -> i.prefix() + ":" + i.material())
+                .toList();
+        check(unexpectedPowderForms.isEmpty(),
+                "the powder route only uses the whitelisted alloy and its own forms; unexpected "
+                        + unexpectedPowderForms);
     }
 
     private static void fiberOpticChain(List<RecipeDeclaration> rows) {
@@ -296,7 +364,7 @@ public final class MaterialReportTests {
                 .collect(Collectors.groupingBy(RecipeDeclaration::map, Collectors.counting()));
         check(counts.equals(Map.of("ssite.recipe.aod", 3L, "ssite.recipe.large_aod", 3L, "ssite.recipe.var", 5L,
                         "ssite.recipe.blanket", 1L, "ssite.recipe.ion_implanter", 1L,
-                        "ssite.recipe.electron_beam", 1L)),
+                        "ssite.recipe.electron_beam", 1L, "ssite.recipe.powder_bed", 1L)),
                 "the two AOD sizes, VAR, the blanket vessel and the P-03 machines remain display-only groups");
         RecipeDeclaration var = row(rows, "var/ta4hfc5");
         check(var.itemOutputs().equals(List.of(material("dust", "TantalumHafniumCarbide", 10)))

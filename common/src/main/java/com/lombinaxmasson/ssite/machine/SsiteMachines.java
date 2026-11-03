@@ -84,6 +84,7 @@ public final class SsiteMachines implements AddonMachineContributor {
                         .minimalInputs(1)
                         .build(),
                 PrecisionMachines.recipeTable(),
+                PowderManufacturingMachines.recipeTable(),
                 FiberOpticMachines.recipeTable(),
                 AdvancedSemiconductorMachines.implanterTable(),
                 AdvancedSemiconductorMachines.electronBeamTable());
@@ -100,6 +101,7 @@ public final class SsiteMachines implements AddonMachineContributor {
         machines.addAll(new FluidizedBedMachines().addonMachines());
         machines.addAll(new IrradiationReactorMachines().addonMachines());
         machines.addAll(new PrecisionMachines().addonMachines());
+        machines.addAll(new PowderManufacturingMachines().addonMachines());
         machines.addAll(new FiberOpticMachines().addonMachines());
         machines.addAll(new AdvancedSemiconductorMachines().addonMachines());
         machines.addAll(new ProcessEnvironmentMachines().addonMachines());
@@ -120,6 +122,7 @@ public final class SsiteMachines implements AddonMachineContributor {
         machines.add(FluidizedBedCore.MACHINE_TYPE);
         machines.add(IrradiationReactorCore.MACHINE_TYPE);
         machines.add(PrecisionMachines.MACHINE_TYPE);
+        machines.add(PowderManufacturingMachines.MACHINE_TYPE);
         machines.add(FiberOpticMachines.MACHINE_TYPE);
         machines.add(FiberOpticMachines.PROBE_TYPE);
         machines.add(IonImplanterCore.MACHINE_TYPE);

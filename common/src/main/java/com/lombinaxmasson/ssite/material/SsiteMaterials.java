@@ -22,7 +22,9 @@ public final class SsiteMaterials implements AddonMaterialContributor {
             "die", "chip", "hose", "laserRodBlank", "laserRodPolished", "laserRod",
             "opticalLensBlank", "opticalLensPolished", "opticalLens", "laserModule",
             "laserCuttingHead", "laserDrillingHead", "laserWeldingHead", "precisionNozzle",
-            "precisionFixture", "instrumentShell", "fiberPreform", "bareFiber", "coatedFiber",
+            "precisionFixture", "instrumentShell", "rawPowder", "classifiedPowder",
+            "reclaimPowder", "screenTailings", "printedBlank", "desupportedBlank", "coolingBlock",
+            "printedSupport", "coolingAssembly", "fiberPreform", "bareFiber", "coatedFiber",
             "fiberSpool", "advancedWafer", "advancedDie", "advancedChip", "controlModule",
             "programTemplate", "filterCartridge"};
 
@@ -248,6 +250,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         materials.addAll(InvestmentCastingMaterials.MATERIALS);
         materials.addAll(OpticsMaterials.MATERIALS);
         materials.addAll(PrecisionMaterials.MATERIALS);
+        materials.addAll(PowderManufacturingMaterials.MATERIALS);
         materials.addAll(FiberOpticMaterials.MATERIALS);
         materials.addAll(ProcessEnvironmentMaterials.MATERIALS);
         return List.copyOf(materials);
@@ -276,6 +279,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         prefixes.addAll(FunctionalTextileMaterials.PREFIXES);
         prefixes.addAll(OpticsMaterials.PREFIXES);
         prefixes.addAll(PrecisionMaterials.PREFIXES);
+        prefixes.addAll(PowderManufacturingMaterials.PREFIXES);
         prefixes.addAll(FiberOpticMaterials.PREFIXES);
         prefixes.addAll(ProcessEnvironmentMaterials.PREFIXES);
         return List.copyOf(prefixes);

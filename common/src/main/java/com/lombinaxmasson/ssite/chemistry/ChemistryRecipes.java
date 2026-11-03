@@ -64,6 +64,7 @@ public final class ChemistryRecipes {
             InvestmentCastingRecipes.add();
             OpticsRecipes.add();
             PrecisionRecipes.add();
+            PowderManufacturingRecipes.add();
             FiberOpticRecipes.add();
             ProcessEnvironmentRecipes.add();
             return List.copyOf(declarations);

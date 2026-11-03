@@ -22,6 +22,7 @@ public final class PrecisionRecipes {
         laserModule();
         cutting();
         drilling();
+        cooledDrilling();
         welding();
     }
 
@@ -72,6 +73,21 @@ public final class PrecisionRecipes {
                 .out(item("precisionNozzle", "StainlessSteel316L", 1))
                 .keep(1)
                 .add(240, 512);
+    }
+
+    /**
+     * P-05 cooling: a distinct mode that keeps the cooling assembly instead of the drilling head.
+     * The basic head row remains the single-piece mode; this row does not contain its inputs, so
+     * neither recipe shadows the other. Per-nozzle material and energy are unchanged.
+     */
+    private static void cooledDrilling() {
+        row("ssite.recipe.precision_laser", "p05/cooled-drill-nozzles")
+                .in(item("plate", "StainlessSteel316L", 3),
+                        item("coolingAssembly", "StainlessSteel316L", 1))
+                .fluidIn("GenGas_Argon", 2000)
+                .out(item("precisionNozzle", "StainlessSteel316L", 3))
+                .keep(1)
+                .add(720, 512);
     }
 
     private static void welding() {

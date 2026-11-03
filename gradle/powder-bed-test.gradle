@@ -1,0 +1,10 @@
+def powderBedTest = tasks.register('powderBedTest', JavaExec) {
+    description = 'Checks the powder-bed reservation, gas, dual output settlement and parallel upgrade.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.machine.PowderBedTests'
+    jvmArgs '-ea'
+}
+tasks.named('check').configure { dependsOn powderBedTest }
