@@ -1,0 +1,10 @@
+def processEnvironmentTest = tasks.register('processEnvironmentTest', JavaExec) {
+    description = 'Checks the P-04 cleanroom scan, band rules, room claims and consumable cores.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.machine.ProcessEnvironmentTests'
+    jvmArgs '-ea'
+}
+tasks.named('check').configure { dependsOn processEnvironmentTest }

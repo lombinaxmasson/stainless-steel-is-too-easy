@@ -65,6 +65,7 @@ public final class ChemistryRecipes {
             OpticsRecipes.add();
             PrecisionRecipes.add();
             FiberOpticRecipes.add();
+            ProcessEnvironmentRecipes.add();
             return List.copyOf(declarations);
         } finally {
             if (previous == null) COLLECTOR.remove();

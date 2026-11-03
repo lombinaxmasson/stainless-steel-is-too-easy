@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PCP",
+    "CSC",
+    "PCP"
+  ],
+  "key": {
+    "P": {"item": "gt6ce:plate_stainlesssteel"},
+    "C": {"item": "gt6ce:plate_pvc"},
+    "S": {"item": "ssite:plate_precisioncasting"}
+  },
+  "result": {
+    "item": "ssite:vibration_isolation_mount",
+    "count": 4
+  }
+}

@@ -24,6 +24,9 @@ public final class SsiteBehaviorMachines implements BehaviorMachineContributor {
         types.add(FiberOpticMachines.PROBE_TYPE);
         types.add(IonImplanterCore.MACHINE_TYPE);
         types.add(ElectronBeamCore.MACHINE_TYPE);
+        types.add(ProcessEnvironmentMachines.CONTROLLER);
+        types.add(ProcessEnvironmentMachines.VENT);
+        types.add(ProcessEnvironmentMachines.THERMOSTAT);
         types.add(HeatTransportMachines.DUCT);
         types.add(HeatTransportMachines.PLATE);
         return types;
@@ -36,6 +39,9 @@ public final class SsiteBehaviorMachines implements BehaviorMachineContributor {
         if (FiberOpticMachines.PROBE_TYPE.equals(machineType)) return new FiberProbeBehavior();
         if (IonImplanterCore.MACHINE_TYPE.equals(machineType)) return new IonImplanterBehavior();
         if (ElectronBeamCore.MACHINE_TYPE.equals(machineType)) return new ElectronBeamBehavior();
+        if (ProcessEnvironmentMachines.CONTROLLER.equals(machineType)) return new CleanroomControllerBehavior();
+        if (ProcessEnvironmentMachines.VENT.equals(machineType)) return new CleanroomVentBehavior();
+        if (ProcessEnvironmentMachines.THERMOSTAT.equals(machineType)) return new CleanroomThermostatBehavior();
         if (HeatTransportMachines.isMachine(machineType)) return new HeatTransportBehavior();
         AodTier large = LargeAodStructure.tier(machineType);
         if (large != null) return new ArgonCrucibleBehavior(new LargeAodCore(large));

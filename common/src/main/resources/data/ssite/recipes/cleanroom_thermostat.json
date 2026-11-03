@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PCP",
+    "KMK",
+    "PCP"
+  ],
+  "key": {
+    "P": {"item": "ssite:plate_precisioncasting"},
+    "C": {"item": "ssite:chip_chipelite"},
+    "K": {"item": "ssite:pipe_small_stainless_steel_316l"},
+    "M": {"item": "gt6ce:casing_machine_stainlesssteel"}
+  },
+  "result": {
+    "item": "ssite:cleanroom_thermostat"
+  }
+}

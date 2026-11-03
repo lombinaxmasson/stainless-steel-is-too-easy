@@ -60,7 +60,7 @@
 - 文档/忽略规则：检查相对链接、命令与配置一致性，用 `git check-ignore -v` 验证规则；无需启动游戏或全量构建。
 - 编译与共用检查：`.\scripts\build.ps1 compileBoth`。脚本自己定位 JDK 17/21；Gradle 8.8 不能由 JDK 25 启动。
 - 完整构建：`.\scripts\build.ps1 build`；单端用 `:forge:build`、`:neoforge:build`。
-- 纯 JVM 检查由 `unitTest`、`fluidizedBedTest`、`heatTransportTest`、`furnaceRenderTest`、`fluidizedBedRenderTest` 覆盖，均已接入各端 `check`。
+- 纯 JVM 检查由 `unitTest`、`fluidizedBedTest`、`heatTransportTest`、`furnaceRenderTest`、`fluidizedBedRenderTest`、`processEnvironmentTest` 覆盖，均已接入各端 `check`。
 - 世界、机器 tick、交互、渲染、Mixin、Jade 或可选集成还需对应游戏内验证，记录未覆盖的平台与场景。
 - 新增命令、参数或注册步骤同步 README 与相关文档；新增包职责同步 `docs/architecture.md`。
 - 结束时报告改动、验证命令与结果、未验证事项。受环境阻塞时报告具体原因，不宣称成功。

@@ -18,8 +18,14 @@ public record ProcessEnvironmentSnapshot(String id, boolean valid, int cleanLeve
 
     public static final String REASON_NONE = "none";
     public static final String REASON_NO_SERVICE = "no_service";
+    public static final String REASON_NO_ROOM = "no_room";
+    public static final String REASON_NO_CONTROLLER = "no_controller";
     public static final String REASON_UNLOADED = "unloaded";
     public static final String REASON_INVALID = "invalid";
+    public static final String REASON_LEAK = "leak";
+    public static final String REASON_TOO_LARGE = "too_large";
+    public static final String REASON_BUDGET = "budget";
+    public static final String REASON_OVERLAP = "overlap";
     public static final String REASON_CLEAN = "clean";
     public static final String REASON_TEMPERATURE = "temperature";
     public static final String REASON_VIBRATION = "vibration";
@@ -31,6 +37,14 @@ public record ProcessEnvironmentSnapshot(String id, boolean valid, int cleanLeve
 
     public static ProcessEnvironmentSnapshot unavailable(String reason) {
         return new ProcessEnvironmentSnapshot("", false, 0, 0, 0, 0, reason);
+    }
+
+    /** A measured room that failed enclosure, controller or overlap checks. */
+    public static ProcessEnvironmentSnapshot invalid(String id, int cleanLevel,
+                                                     int temperatureBand, int vibrationBand,
+                                                     long revision, String reason) {
+        return new ProcessEnvironmentSnapshot(id, false, cleanLevel, temperatureBand,
+                vibrationBand, revision, reason);
     }
 
     public boolean acceptsAdvancedProcess() {

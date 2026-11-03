@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PSP",
+    "CMC",
+    "PSP"
+  ],
+  "key": {
+    "P": {"item": "gt6ce:plate_stainlesssteel"},
+    "S": {"item": "gt6ce:plate_pvc"},
+    "C": {"item": "ssite:chip_chipelite"},
+    "M": {"item": "gt6ce:casing_machine_stainlesssteel"}
+  },
+  "result": {
+    "item": "ssite:cleanroom_filter_vent"
+  }
+}

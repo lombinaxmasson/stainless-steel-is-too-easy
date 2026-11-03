@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PSP",
+    "PPP"
+  ],
+  "key": {
+    "P": {"item": "gt6ce:plate_stainlesssteel"},
+    "S": {"item": "gt6ce:plate_pvc"}
+  },
+  "result": {
+    "item": "ssite:cleanroom_casing",
+    "count": 8
+  }
+}

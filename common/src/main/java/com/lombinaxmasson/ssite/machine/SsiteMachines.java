@@ -102,6 +102,7 @@ public final class SsiteMachines implements AddonMachineContributor {
         machines.addAll(new PrecisionMachines().addonMachines());
         machines.addAll(new FiberOpticMachines().addonMachines());
         machines.addAll(new AdvancedSemiconductorMachines().addonMachines());
+        machines.addAll(new ProcessEnvironmentMachines().addonMachines());
         machines.addAll(HeatTransportMachines.machines());
         return List.copyOf(machines);
     }
@@ -123,6 +124,9 @@ public final class SsiteMachines implements AddonMachineContributor {
         machines.add(FiberOpticMachines.PROBE_TYPE);
         machines.add(IonImplanterCore.MACHINE_TYPE);
         machines.add(ElectronBeamCore.MACHINE_TYPE);
+        machines.add(ProcessEnvironmentMachines.CONTROLLER);
+        machines.add(ProcessEnvironmentMachines.VENT);
+        machines.add(ProcessEnvironmentMachines.THERMOSTAT);
         machines.add(HeatTransportMachines.DUCT);
         machines.add(HeatTransportMachines.PLATE);
         for (String path : machines) {
@@ -167,6 +171,7 @@ public final class SsiteMachines implements AddonMachineContributor {
                     .build());
         parts.addAll(new FluidizedBedMachines().layoutParts());
         parts.addAll(new IrradiationReactorMachines().layoutParts());
+        parts.addAll(new ProcessEnvironmentMachines().layoutParts());
         return List.copyOf(parts);
     }
 

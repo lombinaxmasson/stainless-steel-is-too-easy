@@ -3,6 +3,7 @@ package com.lombinaxmasson.ssite;
 import gregtech.api.addon.GregTechAddon;
 import gregtech.api.addon.GregTechAddons;
 import com.lombinaxmasson.ssite.chemistry.ChemistryRecipes;
+import com.lombinaxmasson.ssite.machine.CleanroomEnvironment;
 
 /** Shared entry for both loaders. Call {@link #register()} from each mod constructor. */
 public final class SsiteAddon {
@@ -11,6 +12,7 @@ public final class SsiteAddon {
     private SsiteAddon() {}
 
     public static void register() {
+        CleanroomEnvironment.install();
         GregTechAddons.register(new GregTechAddon() {
             @Override
             public String id() {

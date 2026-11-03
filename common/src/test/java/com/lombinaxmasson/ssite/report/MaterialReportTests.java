@@ -77,7 +77,7 @@ public final class MaterialReportTests {
                 "PackagingRecipes.java", "AdvancedSemiconductorRecipes.java",
                 "ElectrochemistryRecipes.java", "TextileRecipes.java",
                 "InvestmentCastingRecipes.java", "OpticsRecipes.java", "PrecisionRecipes.java",
-                "FiberOpticRecipes.java")),
+                "FiberOpticRecipes.java", "ProcessEnvironmentRecipes.java")),
                 "all central recipe modules retain runtime registration order");
     }
 
