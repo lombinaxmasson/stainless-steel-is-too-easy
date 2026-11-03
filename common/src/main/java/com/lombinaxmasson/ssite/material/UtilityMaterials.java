@@ -4,7 +4,7 @@ import gregtech.api.addon.material.MaterialDeclaration;
 
 import java.util.List;
 
-/** U-01 gas treatment fluids and U-03 gasification fluids plus solid residue. */
+/** U-01 gas treatment fluids, U-03 gasification fluids plus solid residue, and the U-05a FT oil. */
 public final class UtilityMaterials {
     public static final List<MaterialDeclaration> MATERIALS = List.of(
             MaterialDeclaration.builder("DehydratedNaturalGas")
@@ -42,7 +42,10 @@ public final class UtilityMaterials {
                     .meltingPointKelvin(250).boilingPointKelvin(480).density(1.18F).liquid().build(),
             MaterialDeclaration.builder("CoalSlag")
                     .displayName("Coal Gasification Slag").color(0x5A5650).chemicalFormula("SiO2·Al2O3·FeO")
-                    .meltingPointKelvin(1500).boilingPointKelvin(2500).density(2.60F).dust().build());
+                    .meltingPointKelvin(1500).boilingPointKelvin(2500).density(2.60F).dust().build(),
+            MaterialDeclaration.builder("SyntheticOil")
+                    .displayName("Fischer-Tropsch Synthetic Oil").color(0xB8863C).chemicalFormula("CnH2n+2")
+                    .meltingPointKelvin(250).boilingPointKelvin(520).density(0.85F).liquid().build());
 
     private UtilityMaterials() {}
 }

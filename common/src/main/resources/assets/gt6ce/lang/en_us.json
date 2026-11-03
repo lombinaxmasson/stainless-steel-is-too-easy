@@ -409,5 +409,10 @@
   "material.gt6ce.triethyleneglycol": "Triethylene Glycol (TEG)",
   "material.gt6ce.richglycol": "Water-Rich Glycol",
   "material.gt6ce.methyldiethanolamine": "Methyldiethanolamine (MDEA)",
-  "material.gt6ce.richamine": "Hydrogen Sulfide-Loaded Amine"
+  "material.gt6ce.richamine": "Hydrogen Sulfide-Loaded Amine",
+  "material.gt6ce.crudesyngas": "Crude Syngas",
+  "material.gt6ce.cleansyngas": "Clean Syngas",
+  "material.gt6ce.coaltar": "Coal Tar",
+  "material.gt6ce.coalslag": "Coal Gasification Slag",
+  "material.gt6ce.syntheticoil": "Fischer-Tropsch Synthetic Oil"
 }

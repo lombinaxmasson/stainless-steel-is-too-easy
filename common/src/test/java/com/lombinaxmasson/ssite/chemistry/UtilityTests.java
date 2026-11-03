@@ -6,7 +6,7 @@ import com.lombinaxmasson.ssite.chemistry.RecipeDeclaration.ItemRef;
 
 import java.util.List;
 
-/** Pure JVM checks of the U-01 gas treatment loop, fuel row, energy ledger and U-04 methanation. */
+/** Pure JVM checks of the U-01 gas loop, U-04 methanation and U-05 Fischer-Tropsch/biomass branch. */
 public final class UtilityTests {
     private static final double RAW_EU_PER_MB = 384.0;          // host gas natural row: 64 EU/t x 30 t / 5 mB
     private static final double PIPELINE_EU_PER_MB = 64.0 * 32.0 / 5.0;
@@ -28,7 +28,11 @@ public final class UtilityTests {
         energyLedger(rows);
         methanationRow(rows);
         reformingRoundTripLosesEnergy(rows);
-        System.out.println("UtilityTests: all 10 checks passed.");
+        fischerTropschSynthesis(rows);
+        fischerTropschFractionation(rows);
+        fischerTropschProductsHaveSinks(rows);
+        biomassClosesOnHostRoute(rows);
+        System.out.println("UtilityTests: all 14 checks passed.");
     }
 
     private static void dehydrationLoop(List<RecipeDeclaration> rows) {
@@ -188,6 +192,59 @@ public final class UtilityTests {
                 "reforming water leaves methanation as one distilled-water stream");
         check(reformingEu == 12_800 && methanationEu == 7_680,
                 "the round trip costs 12,800 + 7,680 = 20,480 EU per 1,000 mB methane");
+    }
+
+    private static void fischerTropschSynthesis(List<RecipeDeclaration> rows) {
+        RecipeDeclaration synthesis = row(rows, "gt.recipe.catalyticcracking", "u05a/ft-synthesis");
+        check(synthesis.itemInputs().equals(List.of(material("dust", "Iron", 1)))
+                        && synthesis.keptInputs().equals(List.of(0)),
+                "the first-generation iron catalyst is retained");
+        check(synthesis.fluidInputs().equals(List.of(
+                        fluid("GenGas_CarbonMonoxide", 1000), fluid("Hydrogen", 2000)))
+                        && synthesis.fluidOutputs().equals(List.of(
+                        fluid("GenLiquid_SyntheticOil", 1000), fluid("DistW", 1000))),
+                "FT consumes one part CO and two parts hydrogen for one oil and one water stream");
+        RecipeDeclaration split = row(rows, "gt.recipe.distillery", "u03/clean-gas-separate");
+        check(split.fluidOutputs().equals(synthesis.fluidInputs()),
+                "the FT feed is exactly the U-03 clean-gas split, so the chain has no second split");
+        check(synthesis.perTick() > 0 && synthesis.duration() > 0,
+                "the synthesis spends EU instead of claiming reaction heat");
+    }
+
+    private static void fischerTropschFractionation(List<RecipeDeclaration> rows) {
+        RecipeDeclaration fractionate = row(rows, "gt.recipe.distillationtower", "u05a/ft-fractionate");
+        check(fractionate.fluidInputs().equals(List.of(fluid("GenLiquid_SyntheticOil", 1000)))
+                        && fractionate.fluidOutputs().equals(List.of(
+                        fluid("GenLiquid_Naphtha", 300), fluid("Diesel", 450)))
+                        && fractionate.itemOutputs().equals(List.of(material("dust", "Wax", 1))),
+                "one tower pass yields existing naphtha, host diesel and host wax");
+        check(rows.stream().noneMatch(r -> r.map().startsWith("gt.recipe.fuels.")
+                        && r.fluidInputs().stream()
+                        .anyMatch(f -> f.field().equals("GenLiquid_SyntheticOil"))),
+                "the oil intermediate has no fuel row; it must be fractionated");
+    }
+
+    private static void fischerTropschProductsHaveSinks(List<RecipeDeclaration> rows) {
+        check(rows.stream().anyMatch(r -> r.map().equals("gt.recipe.fuels.engine")
+                        && r.fluidInputs().stream()
+                        .anyMatch(f -> f.field().equals("GenLiquid_Naphtha"))),
+                "FT naphtha uses the existing engine fuel row");
+        check(rows.stream().anyMatch(r -> r.label().equals("m9-09/pattern-wax")
+                        && r.itemInputs().stream().anyMatch(i -> i.material().equals("Wax"))),
+                "FT wax feeds the M9-09 pattern-wax row");
+        check(rows.stream().noneMatch(r -> r.map().startsWith("gt.recipe.fuels.")
+                        && r.fluidInputs().stream().anyMatch(f -> f.field().equals("Diesel"))),
+                "host diesel keeps its own fuel identity instead of an addon copy");
+    }
+
+    private static void biomassClosesOnHostRoute(List<RecipeDeclaration> rows) {
+        check(rows.stream().anyMatch(r -> r.fluidOutputs().stream()
+                        .anyMatch(f -> f.field().equals("Biomass") && f.amount() > 0)),
+                "the water chain still produces biomass as a real by-product");
+        check(rows.stream().noneMatch(r -> r.fluidInputs().stream()
+                        .anyMatch(f -> f.field().equals("Biomass"))
+                        && r.fluidOutputs().stream().anyMatch(f -> f.field().equals("Methane"))),
+                "no second biomass-to-methane row duplicates the host fermenter");
     }
 
     private static boolean recovery(int charged, int recovered) {

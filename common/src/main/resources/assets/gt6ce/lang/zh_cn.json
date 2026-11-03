@@ -409,5 +409,10 @@
   "material.gt6ce.triethyleneglycol": "三甘醇（TEG）",
   "material.gt6ce.richglycol": "富液三甘醇",
   "material.gt6ce.methyldiethanolamine": "N-甲基二乙醇胺（MDEA）",
-  "material.gt6ce.richamine": "富胺液"
+  "material.gt6ce.richamine": "富胺液",
+  "material.gt6ce.crudesyngas": "粗合成气",
+  "material.gt6ce.cleansyngas": "净合成气",
+  "material.gt6ce.coaltar": "煤焦油",
+  "material.gt6ce.coalslag": "煤气化炉渣",
+  "material.gt6ce.syntheticoil": "费托合成油"
 }

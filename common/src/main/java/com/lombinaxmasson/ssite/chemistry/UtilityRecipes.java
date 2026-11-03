@@ -23,6 +23,11 @@ import com.lombinaxmasson.ssite.machine.CoalGasifierCore;
  * <p>U-04 reverses the existing steam-reforming row into the host methane identity. The nickel
  * catalyst is retained and the row still spends EU, so reforming plus methanation loses energy and
  * cannot mint fuel.
+ *
+ * <p>U-05a synthesizes one Fischer-Tropsch oil from the U-03 carbon monoxide/hydrogen split and
+ * fractionates it into existing naphtha, host diesel and host wax. U-05b adds no recipe: the host
+ * fermenter already turns the biomass from the water chain into methane, so a second biogas or
+ * methane identity would only duplicate that route.
  */
 public final class UtilityRecipes {
     private UtilityRecipes() {}
@@ -34,6 +39,7 @@ public final class UtilityRecipes {
         pipelineFuel();
         syngas();
         methanation();
+        fischerTropsch();
     }
 
     private static void solventMakeup() {
@@ -172,6 +178,29 @@ public final class UtilityRecipes {
                 .fluidIn("GenGas_CarbonMonoxide", 1_000, "Hydrogen", 3_000)
                 .fluidOut("Methane", 1_000, "DistW", 1_000)
                 .keep(0)
+                .add(160, 48);
+    }
+
+    /**
+     * U-05a Fischer-Tropsch. The synthesis consumes exactly the carbon monoxide and hydrogen that
+     * U-03 separates from clean syngas, so the two cards close into one chain without a second
+     * syngas split. Iron is the first-generation catalyst and is retained. The oil is not a fuel
+     * itself: it must pass the fractionation below, which keeps its energy in the finished streams.
+     */
+    private static void fischerTropsch() {
+        row("gt.recipe.catalyticcracking", "u05a/ft-synthesis")
+                .in(dust("Iron", 1))
+                .fluidIn("GenGas_CarbonMonoxide", 1_000, "Hydrogen", 2_000)
+                .fluidOut("GenLiquid_SyntheticOil", 1_000, "DistW", 1_000)
+                .keep(0)
+                .add(200, 64);
+
+        // One tower pass yields the existing naphtha and host diesel plus paraffin wax for M9-09.
+        // Naphtha and diesel are not re-registered: their fuel identity stays the host's.
+        row("gt.recipe.distillationtower", "u05a/ft-fractionate")
+                .fluidIn("GenLiquid_SyntheticOil", 1_000)
+                .fluidOut("GenLiquid_Naphtha", 300, "Diesel", 450)
+                .out(item("dust", "Wax", 1))
                 .add(160, 48);
     }
 }
