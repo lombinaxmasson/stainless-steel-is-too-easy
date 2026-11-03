@@ -14,6 +14,7 @@ tasks.register('compileBoth') {
     dependsOn ':forge:advancedProcessTest', ':neoforge:advancedProcessTest'
     dependsOn ':forge:powderBedTest', ':neoforge:powderBedTest'
     dependsOn ':forge:processEnvironmentTest', ':neoforge:processEnvironmentTest'
+    dependsOn ':forge:engineeringMaterialTest', ':neoforge:engineeringMaterialTest'
     dependsOn ':forge:materialReport', ':neoforge:materialReport'
     dependsOn ':forge:materialReportTest', ':neoforge:materialReportTest'
 }

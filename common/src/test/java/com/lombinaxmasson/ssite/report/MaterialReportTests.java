@@ -79,7 +79,7 @@ public final class MaterialReportTests {
                 "ElectrochemistryRecipes.java", "TextileRecipes.java",
                 "InvestmentCastingRecipes.java", "OpticsRecipes.java", "PrecisionRecipes.java",
                 "PowderManufacturingRecipes.java", "FiberOpticRecipes.java",
-                "ProcessEnvironmentRecipes.java")),
+                "ProcessEnvironmentRecipes.java", "EngineeringMaterialRecipes.java")),
                 "all central recipe modules retain runtime registration order");
     }
 
@@ -174,8 +174,9 @@ public final class MaterialReportTests {
                 "the welded optical assembly yields the solid-state module");
         List<RecipeDeclaration> modes = rows.stream()
                 .filter(r -> r.map().equals("ssite.recipe.precision_laser")).toList();
-        check(modes.size() == 4, "the workstation delivers cutting, drilling, welding and the cooled batch row");
+        check(modes.size() == 5, "the workstation delivers cutting, drilling, welding, the cooled batch row and the P-06 high-load row");
         Set<String> heads = modes.stream()
+                .filter(r -> !r.keptInputs().isEmpty())
                 .map(r -> r.itemInputs().get(r.keptInputs().get(0)).prefix())
                 .filter(prefix -> prefix.endsWith("Head"))
                 .collect(Collectors.toSet());
@@ -190,16 +191,33 @@ public final class MaterialReportTests {
                         .filter(i -> i.kind() == ItemKind.SELECTOR).findFirst().orElseThrow().selector())
                         .distinct().count() == 3,
                 "every head has a welding source and a distinct selector keeps the rows apart");
-        check(modes.stream().allMatch(r -> r.keptInputs().size() == 1
-                        && r.fluidInputs().size() == 1 && r.fluidInputs().get(0).field().equals("GenGas_Argon")),
-                "every mode keeps one tool and uses an argon medium");
+        check(modes.stream().allMatch(r -> r.fluidInputs().size() == 1
+                        && r.fluidInputs().get(0).field().equals("GenGas_Argon")),
+                "every mode uses an argon medium");
+        check(modes.stream().filter(r -> !r.label().equals("p06/high-load-drill"))
+                        .allMatch(r -> r.keptInputs().size() == 1),
+                "every basic mode keeps one tool");
         check(modes.stream().filter(r -> r.itemOutputs().get(0).count() == 3).allMatch(r ->
                         r.itemInputs().get(r.keptInputs().get(0)).prefix().equals("coolingAssembly")),
                 "the cooled row batches three nozzles with a kept cooling assembly");
         check(modes.stream().allMatch(r -> r.itemInputs().stream()
-                        .filter(i -> !i.prefix().endsWith("Head") && !i.prefix().equals("coolingAssembly"))
+                        .filter(i -> !i.prefix().endsWith("Head") && !i.prefix().equals("coolingAssembly")
+                                && !i.prefix().equals("ablativeBacking"))
                         .allMatch(i -> i.prefix().equals("plate") && i.material().equals("StainlessSteel316L"))),
                 "the first batch uses one alloy already supplied by AOD");
+        RecipeDeclaration highLoad = row(rows, "ssite.recipe.precision_laser", "p06/high-load-drill");
+        check(highLoad.itemInputs().equals(List.of(
+                        material("plate", "StainlessSteel316L", 6),
+                        material("ablativeBacking", "AblativeComposite", 1)))
+                        && highLoad.keptInputs().isEmpty()
+                        && highLoad.itemOutputs().equals(List.of(
+                        material("precisionNozzle", "StainlessSteel316L", 6),
+                        material("ablativeBackingSpent", "AblativeComposite", 1)))
+                        && highLoad.fluidInputs().equals(List.of(new FluidRef("GenGas_Argon", 6000))),
+                "the P-06 high-load row consumes one backing and returns one spent backing");
+        check(highLoad.duration() == 6 * row(rows, "p01/drill-nozzle").duration()
+                        && highLoad.perTick() == row(rows, "p01/drill-nozzle").perTick(),
+                "the high-load batch keeps the single-piece material and energy rate");
     }
 
     private static void powderManufacturingChain(List<RecipeDeclaration> rows) {
@@ -232,10 +250,13 @@ public final class MaterialReportTests {
                         material("printedSupport", "StainlessSteel316L", 2))),
                 "support removal forces the independent blank id");
         RecipeDeclaration heat = row(rows, "p05/heat-treat");
-        check(heat.itemInputs().equals(List.of(material("desupportedBlank", "StainlessSteel316L", 1)))
+        check(heat.itemInputs().equals(List.of(
+                        material("desupportedBlank", "StainlessSteel316L", 1),
+                        material("carbonCarbonSetter", "CarbonCarbon", 1)))
+                        && heat.keptInputs().equals(List.of(1))
                         && heat.itemOutputs().equals(List.of(
                         material("coolingBlock", "StainlessSteel316L", 1))),
-                "heat treatment accepts only the desupported blank");
+                "heat treatment accepts only the desupported blank and retains the P-06 kiln setter");
         check(rows.stream().noneMatch(r -> r.itemInputs().stream()
                         .anyMatch(i -> i.prefix().equals("printedBlank"))
                         && r.itemOutputs().stream().anyMatch(i -> i.prefix().equals("coolingBlock"))),
@@ -335,10 +356,12 @@ public final class MaterialReportTests {
         check(module.itemOutputs().equals(List.of(material("controlModule", "PrecisionControlModule", 1)))
                         && module.itemInputs().stream().anyMatch(i -> i.kind() == ItemKind.VANILLA
                         && i.itemId().equals("gt6ce:circuit_elite"))
-                        && module.itemInputs().stream().anyMatch(i -> i.prefix().equals("precisionFixture"))
+                        && module.itemInputs().stream().anyMatch(i -> i.prefix().equals("ceramicClamp")
+                        && i.material().equals("EngineeringCeramic"))
+                        && module.itemInputs().stream().noneMatch(i -> i.prefix().equals("precisionFixture"))
                         && module.itemInputs().stream().noneMatch(i -> i.prefix().equals("advancedWafer")
                         || i.prefix().equals("advancedDie")),
-                "the control module consumes an advanced chip plus existing Elite and P-01 parts");
+                "the control module consumes the P-06 ceramic clamp plus existing Elite and P-01 parts");
 
         RecipeDeclaration template = row(rows, "p03/program-template");
         check(template.itemOutputs().equals(List.of(material("programTemplate", "ProgramTemplate", 1))),
@@ -607,6 +630,15 @@ public final class MaterialReportTests {
         check(!pipe.capabilities().isEmpty(), "316L pipe declaration is retained as a capability");
         MaterialReport.MaterialRow fiber = materialRow(catalog.materials(), "CarbonFiber");
         check(fiber.forms().stream().anyMatch(f -> f.contains("wireFine")), "explicit material-form requests survive helper expansion");
+        MaterialReport.MaterialRow ceramic = materialRow(catalog.materials(), "EngineeringCeramic");
+        check(ceramic.forms().stream().anyMatch(f -> f.contains("ceramicClamp")),
+                "the P-06 ceramic prefixes are reported as declared forms");
+        MaterialReport.MaterialRow carbonCarbon = materialRow(catalog.materials(), "CarbonCarbon");
+        check(carbonCarbon.forms().stream().anyMatch(f -> f.contains("carbonCarbonSetter")),
+                "carbon-carbon is a material separate from the resin-based composite");
+        MaterialReport.MaterialRow ablative = materialRow(catalog.materials(), "AblativeComposite");
+        check(ablative.forms().stream().anyMatch(f -> f.contains("ablativeBacking")),
+                "the qualified and spent backing identities are reported");
         MaterialReport.MaterialRow silicon = materialRow(catalog.materials(), "Silicon");
         check(silicon.forms().stream().anyMatch(f -> f.contains("wafer")),
                 "addon crystal prefixes are reported next to host forms");
@@ -623,8 +655,9 @@ public final class MaterialReportTests {
                 .flatMap(input -> input.alternatives().stream()).collect(Collectors.toSet());
         check(implanterInputs.containsAll(List.of("ssite:chip_chipelite",
                         "ssite:plate_precisioncasting", "gt6ce:casing_machine_stainlesssteel",
-                        "ssite:pipe_small_stainless_steel_316l")),
-                "the ion implanter is craftable from M9 products");
+                        "ssite:pipe_small_stainless_steel_316l",
+                        "ssite:ceramic_clamp_engineeringceramic")),
+                "the ion implanter is craftable from M9 products and the P-06 ceramic clamp");
         check(implanterInputs.stream().noneMatch(id -> id.contains("advanced")
                         || id.contains("program_template") || id.contains("control_module")),
                 "the first machine tree has no advanced chip or module prerequisite");
@@ -634,8 +667,9 @@ public final class MaterialReportTests {
         Set<String> writerInputs = writer.inputs().stream()
                 .flatMap(input -> input.alternatives().stream()).collect(Collectors.toSet());
         check(writerInputs.containsAll(List.of("gt6ce:circuit_elite", "ssite:chip_chipelite",
-                        "gt6ce:casing_machine_stainlesssteel")),
-                "the electron-beam writer uses existing Elite circuits and M9 parts");
+                        "gt6ce:casing_machine_stainlesssteel",
+                        "ssite:ceramic_clamp_engineeringceramic")),
+                "the electron-beam writer uses existing Elite circuits, M9 parts and the ceramic clamp");
         check(writerInputs.stream().noneMatch(id -> id.contains("advanced")
                         || id.contains("program_template") || id.contains("control_module")),
                 "the electron-beam writer has no advanced product prerequisite");

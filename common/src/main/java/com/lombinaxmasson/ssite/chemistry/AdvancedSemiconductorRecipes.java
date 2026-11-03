@@ -3,6 +3,7 @@ package com.lombinaxmasson.ssite.chemistry;
 import com.lombinaxmasson.ssite.machine.ElectronBeamCore;
 import com.lombinaxmasson.ssite.machine.IonImplanterCore;
 import com.lombinaxmasson.ssite.material.AdvancedSemiconductorMaterials;
+import com.lombinaxmasson.ssite.material.EngineeringMaterials;
 
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.dust;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.item;
@@ -150,10 +151,11 @@ public final class AdvancedSemiconductorRecipes {
 
     private static void module() {
         // The first module is an add-on component; it does not replace the host circuit_master route.
+        // P-06 replaces the temporary P-01 fixture with the insulating ceramic wafer clamp.
         row("gt.recipe.welder", "p03/control-module")
                 .in(item("advancedChip", AdvancedSemiconductorMaterials.CHIP, 1),
                         vanillaItem("gt6ce:circuit_elite", 1),
-                        item("precisionFixture", "StainlessSteel316L", 1),
+                        item("ceramicClamp", EngineeringMaterials.CERAMIC, 1),
                         item("instrumentShell", "StainlessSteel316L", 1))
                 .fluidIn("GenMolten_SolderingAlloy", 288)
                 .out(item("controlModule", AdvancedSemiconductorMaterials.MODULE, 1))

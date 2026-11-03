@@ -26,7 +26,10 @@ public final class SsiteMaterials implements AddonMaterialContributor {
             "reclaimPowder", "screenTailings", "printedBlank", "desupportedBlank", "coolingBlock",
             "printedSupport", "coolingAssembly", "fiberPreform", "bareFiber", "coatedFiber",
             "fiberSpool", "advancedWafer", "advancedDie", "advancedChip", "controlModule",
-            "programTemplate", "filterCartridge"};
+            "programTemplate", "filterCartridge", "ceramicBatch", "ceramicGreenBody",
+            "ceramicSintered", "ceramicClamp", "carbonFiberPreform", "carbonCarbonImpregnated",
+            "carbonCarbonCarbonized", "carbonCarbonDensified", "carbonCarbonSetter",
+            "ablativeBillet", "ablativeBackingBlank", "ablativeBacking", "ablativeBackingSpent"};
 
     public static final List<MaterialDeclaration> MATERIALS = buildMaterials();
 
@@ -253,6 +256,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         materials.addAll(PowderManufacturingMaterials.MATERIALS);
         materials.addAll(FiberOpticMaterials.MATERIALS);
         materials.addAll(ProcessEnvironmentMaterials.MATERIALS);
+        materials.addAll(EngineeringMaterials.MATERIALS);
         return List.copyOf(materials);
     }
 
@@ -282,6 +286,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         prefixes.addAll(PowderManufacturingMaterials.PREFIXES);
         prefixes.addAll(FiberOpticMaterials.PREFIXES);
         prefixes.addAll(ProcessEnvironmentMaterials.PREFIXES);
+        prefixes.addAll(EngineeringMaterials.PREFIXES);
         return List.copyOf(prefixes);
     }
 

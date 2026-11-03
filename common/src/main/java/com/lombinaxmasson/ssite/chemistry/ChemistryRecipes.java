@@ -67,6 +67,7 @@ public final class ChemistryRecipes {
             PowderManufacturingRecipes.add();
             FiberOpticRecipes.add();
             ProcessEnvironmentRecipes.add();
+            EngineeringMaterialRecipes.add();
             return List.copyOf(declarations);
         } finally {
             if (previous == null) COLLECTOR.remove();

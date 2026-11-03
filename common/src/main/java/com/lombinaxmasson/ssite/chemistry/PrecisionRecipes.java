@@ -1,5 +1,7 @@
 package com.lombinaxmasson.ssite.chemistry;
 
+import com.lombinaxmasson.ssite.material.EngineeringMaterials;
+
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.circuit;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.item;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.row;
@@ -23,6 +25,7 @@ public final class PrecisionRecipes {
         cutting();
         drilling();
         cooledDrilling();
+        highLoadDrilling();
         welding();
     }
 
@@ -88,6 +91,23 @@ public final class PrecisionRecipes {
                 .out(item("precisionNozzle", "StainlessSteel316L", 3))
                 .keep(1)
                 .add(720, 512);
+    }
+
+    /**
+     * P-06C high-load drilling: one qualified ablative backing per six-nozzle batch. The backing is
+     * the replaceable batch consumable and the mode interlock; it is consumed and returned as a
+     * distinct spent item. Material and energy per nozzle are identical to the single-piece row,
+     * so the batch is not a free multiplier. The host recipe machine checks both output stacks
+     * before starting and keeps the batch progress across a reload.
+     */
+    private static void highLoadDrilling() {
+        row("ssite.recipe.precision_laser", "p06/high-load-drill")
+                .in(item("plate", "StainlessSteel316L", 6),
+                        item("ablativeBacking", EngineeringMaterials.ABLATIVE, 1))
+                .fluidIn("GenGas_Argon", 6000)
+                .out(item("precisionNozzle", "StainlessSteel316L", 6),
+                        item("ablativeBackingSpent", EngineeringMaterials.ABLATIVE, 1))
+                .add(1440, 512);
     }
 
     private static void welding() {

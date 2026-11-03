@@ -5,6 +5,7 @@ import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.item;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.row;
 
 import com.lombinaxmasson.ssite.machine.PowderBedCore;
+import com.lombinaxmasson.ssite.material.EngineeringMaterials;
 import com.lombinaxmasson.ssite.material.PowderManufacturingMaterials;
 
 /**
@@ -80,9 +81,12 @@ public final class PowderManufacturingRecipes {
                 .out(item("desupportedBlank", ALLOY, 1),
                         item("printedSupport", ALLOY, 2))
                 .add(200, 64);
-        // The independent desupported blank id is the only input the heat treatment accepts.
+        // The independent desupported blank id is the only part the heat treatment accepts; the
+        // P-06 carbon-carbon setter is the retained kiln furniture, not a consumed input.
         row("gt.recipe.calciner", "p05/heat-treat")
-                .in(item("desupportedBlank", ALLOY, 1))
+                .in(item("desupportedBlank", ALLOY, 1),
+                        item("carbonCarbonSetter", EngineeringMaterials.CARBON_CARBON, 1))
+                .keep(1)
                 .fluidIn("GenGas_Argon", 2000)
                 .out(item("coolingBlock", ALLOY, 1))
                 .add(600, 128);

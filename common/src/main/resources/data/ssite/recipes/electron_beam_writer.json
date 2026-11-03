@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "PCP",
+    "XCP",
     "GMG",
     "PKP"
   ],
   "key": {
     "P": {"item": "ssite:plate_precisioncasting"},
+    "X": {"item": "ssite:ceramic_clamp_engineeringceramic"},
     "C": {"item": "ssite:chip_chipelite"},
     "G": {"item": "gt6ce:circuit_elite"},
     "M": {"item": "gt6ce:casing_machine_stainlesssteel"},

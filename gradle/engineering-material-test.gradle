@@ -1,0 +1,10 @@
+def engineeringMaterialTest = tasks.register('engineeringMaterialTest', JavaExec) {
+    description = 'Checks the P-06 state chains, tooling retention and high-load batch contract.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.chemistry.EngineeringMaterialTests'
+    jvmArgs '-ea'
+}
+tasks.named('check').configure { dependsOn engineeringMaterialTest }

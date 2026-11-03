@@ -249,5 +249,18 @@
   "jade.ssite.powder_bed.progress": "Print progress: %s / %s t",
   "jade.ssite.powder_bed.argon": "Shielding gas: %s mB",
   "jade.ssite.powder_bed.reclaim": "Reclaim powder in output: %s",
-  "jade.ssite.powder_bed.parallel": "Parallel batches: %s (P-03 module + cooling assembly)"
+  "jade.ssite.powder_bed.parallel": "Parallel batches: %s (P-03 module + cooling assembly)",
+  "item.ssite.ceramic_batch": "%s Batch",
+  "item.ssite.ceramic_green_body": "%s Green Body",
+  "item.ssite.ceramic_sintered": "%s Sintered Body",
+  "item.ssite.ceramic_clamp": "%s Insulating Clamp",
+  "item.ssite.carbon_fiber_preform": "%s Preform",
+  "item.ssite.carbon_carbon_impregnated": "%s Impregnated Body",
+  "item.ssite.carbon_carbon_carbonized": "%s Carbonized Body",
+  "item.ssite.carbon_carbon_densified": "%s Densified Body",
+  "item.ssite.carbon_carbon_setter": "%s Kiln Setter",
+  "item.ssite.ablative_billet": "%s Billet",
+  "item.ssite.ablative_backing_blank": "%s Backing Blank",
+  "item.ssite.ablative_backing": "%s Backing",
+  "item.ssite.ablative_backing_spent": "%s Spent Backing"
 }

@@ -398,5 +398,8 @@
   "material.gt6ce.etchedwafer": "刻蚀",
   "material.gt6ce.strippedwafer": "去胶",
   "material.gt6ce.dopedwafer": "掺杂",
-  "material.gt6ce.irradiatedthoriumblanket": "辐照钍靶件批"
+  "material.gt6ce.irradiatedthoriumblanket": "辐照钍靶件批",
+  "material.gt6ce.engineeringceramic": "氧化铝陶瓷",
+  "material.gt6ce.carboncarbon": "碳碳复合材料",
+  "material.gt6ce.ablativecomposite": "烧蚀复合材料"
 }

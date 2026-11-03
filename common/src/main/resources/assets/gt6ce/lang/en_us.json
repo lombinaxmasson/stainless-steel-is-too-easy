@@ -398,5 +398,8 @@
   "material.gt6ce.etchedwafer": "Etched",
   "material.gt6ce.strippedwafer": "Stripped",
   "material.gt6ce.dopedwafer": "Doped",
-  "material.gt6ce.irradiatedthoriumblanket": "Irradiated Thorium Blanket Batch"
+  "material.gt6ce.irradiatedthoriumblanket": "Irradiated Thorium Blanket Batch",
+  "material.gt6ce.engineeringceramic": "Alumina Ceramic",
+  "material.gt6ce.carboncarbon": "Carbon-Carbon Composite",
+  "material.gt6ce.ablativecomposite": "Ablative Composite"
 }

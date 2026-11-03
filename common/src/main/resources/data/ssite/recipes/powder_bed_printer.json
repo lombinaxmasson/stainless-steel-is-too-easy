@@ -13,7 +13,7 @@
     "M": {"item": "gt6ce:casing_machine_stainlesssteel"},
     "K": {"item": "ssite:pipe_small_stainless_steel_316l"},
     "G": {"item": "gt6ce:cable_01_copper"},
-    "R": {"item": "ssite:plate_firedceramicshell"}
+    "R": {"item": "ssite:carbon_carbon_setter_carboncarbon"}
   },
   "result": {
     "item": "ssite:powder_bed_printer"

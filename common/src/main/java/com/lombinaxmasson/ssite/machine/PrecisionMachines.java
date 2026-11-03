@@ -22,6 +22,14 @@ public final class PrecisionMachines implements AddonMachineContributor {
     public static final String MAP = "ssite.recipe.precision_laser";
     public static final String MACHINE_TYPE = "precision_laser_workstation";
 
+    /**
+     * Frozen slot contract: the P-06 high-load row is the widest row, with six plates and one
+     * consumable backing in, and six nozzles plus the spent backing out.
+     */
+    public static final int INPUT_ITEM_SLOTS = 2;
+    public static final int OUTPUT_ITEM_SLOTS = 2;
+    public static final boolean NEEDS_OUTPUTS = true;
+
     @Override
     public String addonId() {
         return SsiteAddon.MOD_ID;
@@ -40,9 +48,9 @@ public final class PrecisionMachines implements AddonMachineContributor {
         return RecipeTable.machine(MAP)
                 .title("Precision Laser Machining")
                 .gui("ssite:textures/gui/recipes/aod.png")
-                .inputItems(2).outputItems(1).minimalInputItems(2)
+                .inputItems(INPUT_ITEM_SLOTS).outputItems(OUTPUT_ITEM_SLOTS).minimalInputItems(2)
                 .inputFluids(1).minimalInputFluids(1).minimalInputs(2)
-                .needsOutputs(true)
+                .needsOutputs(NEEDS_OUTPUTS)
                 .build();
     }
 }
