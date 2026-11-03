@@ -401,5 +401,13 @@
   "material.gt6ce.irradiatedthoriumblanket": "辐照钍靶件批",
   "material.gt6ce.engineeringceramic": "氧化铝陶瓷",
   "material.gt6ce.carboncarbon": "碳碳复合材料",
-  "material.gt6ce.ablativecomposite": "烧蚀复合材料"
+  "material.gt6ce.ablativecomposite": "烧蚀复合材料",
+  "material.gt6ce.dehydratednaturalgas": "脱水天然气",
+  "material.gt6ce.sweetnaturalgas": "脱硫天然气",
+  "material.gt6ce.pipelinegas": "管输天然气",
+  "material.gt6ce.hydrogensulfide": "硫化氢",
+  "material.gt6ce.triethyleneglycol": "三甘醇（TEG）",
+  "material.gt6ce.richglycol": "富液三甘醇",
+  "material.gt6ce.methyldiethanolamine": "N-甲基二乙醇胺（MDEA）",
+  "material.gt6ce.richamine": "富胺液"
 }

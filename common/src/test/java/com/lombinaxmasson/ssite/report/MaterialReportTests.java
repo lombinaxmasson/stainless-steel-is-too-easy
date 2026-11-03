@@ -79,7 +79,8 @@ public final class MaterialReportTests {
                 "ElectrochemistryRecipes.java", "TextileRecipes.java",
                 "InvestmentCastingRecipes.java", "OpticsRecipes.java", "PrecisionRecipes.java",
                 "PowderManufacturingRecipes.java", "FiberOpticRecipes.java",
-                "ProcessEnvironmentRecipes.java", "EngineeringMaterialRecipes.java")),
+                "ProcessEnvironmentRecipes.java", "EngineeringMaterialRecipes.java",
+                "UtilityRecipes.java")),
                 "all central recipe modules retain runtime registration order");
     }
 

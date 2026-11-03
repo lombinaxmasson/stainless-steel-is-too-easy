@@ -257,6 +257,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         materials.addAll(FiberOpticMaterials.MATERIALS);
         materials.addAll(ProcessEnvironmentMaterials.MATERIALS);
         materials.addAll(EngineeringMaterials.MATERIALS);
+        materials.addAll(UtilityMaterials.MATERIALS);
         return List.copyOf(materials);
     }
 

@@ -1,0 +1,10 @@
+def utilityTest = tasks.register('utilityTest', JavaExec) {
+    description = 'Checks the U-01 gas treatment loop, fuel row and energy ledger.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.chemistry.UtilityTests'
+    jvmArgs '-ea'
+}
+tasks.named('check').configure { dependsOn utilityTest }

@@ -401,5 +401,13 @@
   "material.gt6ce.irradiatedthoriumblanket": "Irradiated Thorium Blanket Batch",
   "material.gt6ce.engineeringceramic": "Alumina Ceramic",
   "material.gt6ce.carboncarbon": "Carbon-Carbon Composite",
-  "material.gt6ce.ablativecomposite": "Ablative Composite"
+  "material.gt6ce.ablativecomposite": "Ablative Composite",
+  "material.gt6ce.dehydratednaturalgas": "Dehydrated Natural Gas",
+  "material.gt6ce.sweetnaturalgas": "Sweet Natural Gas",
+  "material.gt6ce.pipelinegas": "Pipeline Natural Gas",
+  "material.gt6ce.hydrogensulfide": "Hydrogen Sulfide",
+  "material.gt6ce.triethyleneglycol": "Triethylene Glycol (TEG)",
+  "material.gt6ce.richglycol": "Water-Rich Glycol",
+  "material.gt6ce.methyldiethanolamine": "Methyldiethanolamine (MDEA)",
+  "material.gt6ce.richamine": "Hydrogen Sulfide-Loaded Amine"
 }
