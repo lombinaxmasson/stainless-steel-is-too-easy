@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PCP",
+    "GMG",
+    "PKP"
+  ],
+  "key": {
+    "P": {"item": "ssite:plate_precisioncasting"},
+    "C": {"item": "ssite:chip_chipelite"},
+    "G": {"item": "gt6ce:circuit_elite"},
+    "M": {"item": "gt6ce:casing_machine_stainlesssteel"},
+    "K": {"item": "ssite:pipe_small_stainless_steel_316l"}
+  },
+  "result": {
+    "item": "ssite:electron_beam_writer"
+  }
+}

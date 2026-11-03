@@ -1,0 +1,10 @@
+def advancedProcessTest = tasks.register('advancedProcessTest', JavaExec) {
+    description = 'Checks the ion-implanter and electron-beam batch ledgers, environment pauses and output blocking.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.machine.AdvancedProcessTests'
+    jvmArgs '-ea'
+}
+tasks.named('check').configure { dependsOn advancedProcessTest }

@@ -11,6 +11,7 @@ tasks.register('compileBoth') {
     dependsOn ':forge:heatTransportTest', ':neoforge:heatTransportTest'
     dependsOn ':forge:irradiationReactorTest', ':neoforge:irradiationReactorTest'
     dependsOn ':forge:fiberProbeTest', ':neoforge:fiberProbeTest'
+    dependsOn ':forge:advancedProcessTest', ':neoforge:advancedProcessTest'
     dependsOn ':forge:materialReport', ':neoforge:materialReport'
     dependsOn ':forge:materialReportTest', ':neoforge:materialReportTest'
 }

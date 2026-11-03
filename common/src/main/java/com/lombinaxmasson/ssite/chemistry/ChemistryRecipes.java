@@ -58,6 +58,7 @@ public final class ChemistryRecipes {
             WaferRecipes.add();
             LithographyRecipes.add();
             PackagingRecipes.add();
+            AdvancedSemiconductorRecipes.add();
             ElectrochemistryRecipes.add();
             TextileRecipes.add();
             InvestmentCastingRecipes.add();

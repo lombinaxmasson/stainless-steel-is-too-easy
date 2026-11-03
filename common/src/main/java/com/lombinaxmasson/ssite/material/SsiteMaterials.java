@@ -23,7 +23,8 @@ public final class SsiteMaterials implements AddonMaterialContributor {
             "opticalLensBlank", "opticalLensPolished", "opticalLens", "laserModule",
             "laserCuttingHead", "laserDrillingHead", "laserWeldingHead", "precisionNozzle",
             "precisionFixture", "instrumentShell", "fiberPreform", "bareFiber", "coatedFiber",
-            "fiberSpool"};
+            "fiberSpool", "advancedWafer", "advancedDie", "advancedChip", "controlModule",
+            "programTemplate"};
 
     public static final List<MaterialDeclaration> MATERIALS = buildMaterials();
 
@@ -241,6 +242,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         materials.addAll(BaseMetalMaterials.MATERIALS);
         materials.addAll(SemiconductorMaterials.MATERIALS);
         materials.addAll(PackagingMaterials.MATERIALS);
+        materials.addAll(AdvancedSemiconductorMaterials.MATERIALS);
         materials.addAll(ElectrochemistryMaterials.MATERIALS);
         materials.addAll(FunctionalTextileMaterials.MATERIALS);
         materials.addAll(InvestmentCastingMaterials.MATERIALS);
@@ -258,6 +260,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
                 new MaterialFormRequest("PhotomaskPlate", "plate")));
         forms.addAll(PolymerMaterials.FORMS);
         forms.addAll(PackagingMaterials.FORMS);
+        forms.addAll(AdvancedSemiconductorMaterials.FORMS);
         forms.addAll(ElectrochemistryMaterials.FORMS);
         forms.addAll(FunctionalTextileMaterials.FORMS);
         forms.addAll(InvestmentCastingMaterials.FORMS);
@@ -268,6 +271,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
     public List<PrefixDeclaration> prefixes() {
         var prefixes = new ArrayList<>(SemiconductorMaterials.PREFIXES);
         prefixes.addAll(PackagingMaterials.PREFIXES);
+        prefixes.addAll(AdvancedSemiconductorMaterials.PREFIXES);
         prefixes.addAll(FunctionalTextileMaterials.PREFIXES);
         prefixes.addAll(OpticsMaterials.PREFIXES);
         prefixes.addAll(PrecisionMaterials.PREFIXES);

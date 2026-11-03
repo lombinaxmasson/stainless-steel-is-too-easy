@@ -48,13 +48,14 @@ public final class MaterialReportTests {
         blanketBreedingChain(rows);
         precisionLaserChain(rows);
         fiberOpticChain(rows);
+        advancedSemiconductorChain(rows);
         craftingInputsAndRemovalRules();
         shapelessAlternativesAndUnsupportedTypes();
         optionalNotesAndUnknownTargets();
         malformedNotesFail();
         contributorCoverage(repo);
         renderingAndDeterministicOutput(repo);
-        System.out.println("MaterialReportTests: all 23 checks passed.");
+        System.out.println("MaterialReportTests: all 24 checks passed.");
     }
 
     private static void moduleOrderAndSourceLocations(Path repo, List<RecipeDeclaration> rows) throws IOException {
@@ -73,7 +74,8 @@ public final class MaterialReportTests {
                 "PetrochemRecipes.java", "PolymerRecipes.java", "MetallurgyRecipes.java",
                 "RareEarthRecipes.java", "NuclearRecipes.java", "BaseMetalRecipes.java",
                 "CircuitRecipes.java", "WaferRecipes.java", "LithographyRecipes.java",
-                "PackagingRecipes.java", "ElectrochemistryRecipes.java", "TextileRecipes.java",
+                "PackagingRecipes.java", "AdvancedSemiconductorRecipes.java",
+                "ElectrochemistryRecipes.java", "TextileRecipes.java",
                 "InvestmentCastingRecipes.java", "OpticsRecipes.java", "PrecisionRecipes.java",
                 "FiberOpticRecipes.java")),
                 "all central recipe modules retain runtime registration order");
@@ -233,6 +235,53 @@ public final class MaterialReportTests {
                 "the drawing table holds the three two-input fiber steps");
     }
 
+    private static void advancedSemiconductorChain(List<RecipeDeclaration> rows) {
+        RecipeDeclaration clean = row(rows, "p03/clean");
+        check(clean.itemInputs().equals(List.of(material("wafer", "Silicon", 1)))
+                        && clean.fluidInputs().equals(List.of(new FluidRef("GenGas_Ozone", 1000)))
+                        && clean.itemOutputs().equals(List.of(material("advancedWafer", "AdvancedCleanedWafer", 1))),
+                "advanced lithography starts from raw silicon and a distinct ozone clean");
+        check(rows.stream().noneMatch(r -> r.label().startsWith("p03/")
+                        && r.itemInputs().stream().anyMatch(i -> i.material().equals("ProcessedWafer"))),
+                "the old processed wafer has no route into the advanced chain");
+
+        RecipeDeclaration implant = row(rows, "ssite.recipe.ion_implanter", "p03/implant");
+        check(implant.displayOnly()
+                        && implant.itemInputs().equals(List.of(material("advancedWafer", "AdvancedStrippedWafer", 1),
+                        material("dust", "Phosphorus", 1)))
+                        && implant.fluidInputs().equals(List.of(new FluidRef("GenGas_Argon", 1000)))
+                        && implant.itemOutputs().equals(List.of(material("advancedWafer", "ImplantedWafer", 1))),
+                "the implanter display row documents the wafer, phosphorus and argon charge");
+
+        RecipeDeclaration anneal = row(rows, "p03/anneal");
+        check(anneal.itemInputs().equals(List.of(material("advancedWafer", "ImplantedWafer", 1)))
+                        && anneal.itemOutputs().equals(List.of(material("advancedWafer", "AnnealedWafer", 1))),
+                "only the implanted state can be annealed");
+
+        RecipeDeclaration dice = row(rows, "p03/dice");
+        check(dice.itemInputs().equals(List.of(material("advancedWafer", "AdvancedProcessedWafer", 1)))
+                        && dice.itemOutputs().equals(List.of(material("advancedDie", "AdvancedChipDie", 8))),
+                "advanced dice consumes only the processed advanced wafer");
+
+        RecipeDeclaration module = row(rows, "p03/control-module");
+        check(module.itemOutputs().equals(List.of(material("controlModule", "PrecisionControlModule", 1)))
+                        && module.itemInputs().stream().anyMatch(i -> i.kind() == ItemKind.VANILLA
+                        && i.itemId().equals("gt6ce:circuit_elite"))
+                        && module.itemInputs().stream().anyMatch(i -> i.prefix().equals("precisionFixture"))
+                        && module.itemInputs().stream().noneMatch(i -> i.prefix().equals("advancedWafer")
+                        || i.prefix().equals("advancedDie")),
+                "the control module consumes an advanced chip plus existing Elite and P-01 parts");
+
+        RecipeDeclaration template = row(rows, "p03/program-template");
+        check(template.itemOutputs().equals(List.of(material("programTemplate", "ProgramTemplate", 1))),
+                "the program template has an explicit manufacturing row");
+
+        RecipeDeclaration ebeam = row(rows, "ssite.recipe.electron_beam", "p03/ebeam");
+        check(ebeam.displayOnly() && ebeam.keptInputs().equals(List.of(1))
+                        && ebeam.itemOutputs().equals(List.of(material("advancedWafer", "EBeamExposedWafer", 1))),
+                "the electron-beam display row keeps the template and shares the later route");
+    }
+
     private static long weight(String prefix) {
         return switch (prefix) {
             case "dust" -> 72;
@@ -246,8 +295,9 @@ public final class MaterialReportTests {
         Map<String, Long> counts = rows.stream().filter(RecipeDeclaration::displayOnly)
                 .collect(Collectors.groupingBy(RecipeDeclaration::map, Collectors.counting()));
         check(counts.equals(Map.of("ssite.recipe.aod", 3L, "ssite.recipe.large_aod", 3L, "ssite.recipe.var", 5L,
-                        "ssite.recipe.blanket", 1L)),
-                "the two AOD sizes, VAR and the blanket vessel remain display-only groups");
+                        "ssite.recipe.blanket", 1L, "ssite.recipe.ion_implanter", 1L,
+                        "ssite.recipe.electron_beam", 1L)),
+                "the two AOD sizes, VAR, the blanket vessel and the P-03 machines remain display-only groups");
         RecipeDeclaration var = row(rows, "var/ta4hfc5");
         check(var.itemOutputs().equals(List.of(material("dust", "TantalumHafniumCarbide", 10)))
                 && var.fluidInputs().equals(List.of(new FluidRef("GenGas_Argon", 200))), "VAR display retains alloy and argon quantities");
@@ -498,6 +548,29 @@ public final class MaterialReportTests {
                 "the P-01 workstation recipe makes the machine reachable without its own workpieces");
         check(catalog.craftingRecipes().stream().anyMatch(r -> r.output().equals("ssite:fiber_drawing_machine")),
                 "the drawing machine is craftable without its own fiber output");
+        MaterialReport.CraftingRecipe implanter = catalog.craftingRecipes().stream()
+                .filter(r -> r.output().equals("ssite:ion_implanter")).findFirst()
+                .orElseThrow(() -> new AssertionError("missing ion implanter crafting recipe"));
+        Set<String> implanterInputs = implanter.inputs().stream()
+                .flatMap(input -> input.alternatives().stream()).collect(Collectors.toSet());
+        check(implanterInputs.containsAll(List.of("ssite:chip_chipelite",
+                        "ssite:plate_precisioncasting", "gt6ce:casing_machine_stainlesssteel",
+                        "ssite:pipe_small_stainless_steel_316l")),
+                "the ion implanter is craftable from M9 products");
+        check(implanterInputs.stream().noneMatch(id -> id.contains("advanced")
+                        || id.contains("program_template") || id.contains("control_module")),
+                "the first machine tree has no advanced chip or module prerequisite");
+        MaterialReport.CraftingRecipe writer = catalog.craftingRecipes().stream()
+                .filter(r -> r.output().equals("ssite:electron_beam_writer")).findFirst()
+                .orElseThrow(() -> new AssertionError("missing electron-beam writer crafting recipe"));
+        Set<String> writerInputs = writer.inputs().stream()
+                .flatMap(input -> input.alternatives().stream()).collect(Collectors.toSet());
+        check(writerInputs.containsAll(List.of("gt6ce:circuit_elite", "ssite:chip_chipelite",
+                        "gt6ce:casing_machine_stainlesssteel")),
+                "the electron-beam writer uses existing Elite circuits and M9 parts");
+        check(writerInputs.stream().noneMatch(id -> id.contains("advanced")
+                        || id.contains("program_template") || id.contains("control_module")),
+                "the electron-beam writer has no advanced product prerequisite");
         MaterialReport.CraftingRecipe probe = catalog.craftingRecipes().stream()
                 .filter(r -> r.output().equals("ssite:fiber_status_probe")).findFirst()
                 .orElseThrow(() -> new AssertionError("missing probe crafting recipe"));
