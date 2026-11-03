@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "ssite:block/machine/fluidized_bed/refractory"
+    "all": "ssite:block/machine/cleanroom_casing"
   }
 }

@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:block/cube",
   "textures": {
-    "down": "ssite:block/machine/aod_converter/stainless_steel_bottom",
-    "up": "ssite:block/machine/aod_converter/stainless_steel_top",
-    "north": "ssite:block/machine/precision_laser_workstation/front",
-    "south": "ssite:block/machine/aod_converter/stainless_steel_side",
-    "east": "ssite:block/machine/aod_converter/stainless_steel_side",
-    "west": "ssite:block/machine/aod_converter/stainless_steel_side",
-    "particle": "ssite:block/machine/aod_converter/stainless_steel_side"
+    "down": "ssite:block/machine/cleanroom_controller/bottom",
+    "up": "ssite:block/machine/cleanroom_controller/top",
+    "north": "ssite:block/machine/cleanroom_controller/front",
+    "south": "ssite:block/machine/cleanroom_controller/back",
+    "east": "ssite:block/machine/cleanroom_controller/side",
+    "west": "ssite:block/machine/cleanroom_controller/side",
+    "particle": "ssite:block/machine/cleanroom_controller/side"
   }
 }

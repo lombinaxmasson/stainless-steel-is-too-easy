@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:block/cube",
   "textures": {
-    "down": "ssite:block/machine/aod_converter/stainless_steel_bottom",
-    "up": "ssite:block/machine/precision_laser_workstation/top_active",
-    "north": "ssite:block/machine/precision_laser_workstation/front_active",
-    "south": "ssite:block/machine/aod_converter/stainless_steel_side",
-    "east": "ssite:block/machine/aod_converter/stainless_steel_side",
-    "west": "ssite:block/machine/aod_converter/stainless_steel_side",
-    "particle": "ssite:block/machine/aod_converter/stainless_steel_side"
+    "down": "ssite:block/machine/electron_beam_writer/bottom",
+    "up": "ssite:block/machine/electron_beam_writer/top_active",
+    "north": "ssite:block/machine/electron_beam_writer/front_active",
+    "south": "ssite:block/machine/electron_beam_writer/back",
+    "east": "ssite:block/machine/electron_beam_writer/side",
+    "west": "ssite:block/machine/electron_beam_writer/side",
+    "particle": "ssite:block/machine/electron_beam_writer/side"
   }
 }

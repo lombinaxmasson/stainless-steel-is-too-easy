@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "ssite:block/machine/fluidized_bed/ceramic"
+    "all": "ssite:block/machine/vibration_isolation_mount"
   }
 }

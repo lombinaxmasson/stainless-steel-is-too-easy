@@ -63,9 +63,9 @@ public final class ProcessEnvironmentMachines implements AddonMachineContributor
     public List<LayoutPart> layoutParts() {
         return List.of(
                 LayoutPart.builder(CASING, "StainlessSteel").hardness(8)
-                        .texture("block/machine/fluidized_bed/refractory").build(),
+                        .texture("block/machine/cleanroom_casing").build(),
                 LayoutPart.builder(ISOLATION, "StainlessSteel").hardness(6)
-                        .texture("block/machine/fluidized_bed/ceramic").build());
+                        .texture("block/machine/vibration_isolation_mount").build());
     }
 
     public static boolean isController(String blockId) {

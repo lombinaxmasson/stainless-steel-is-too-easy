@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:block/cube",
   "textures": {
-    "down": "ssite:block/machine/fluidized_bed/plate",
-    "up": "ssite:block/machine/fluidized_bed/plate",
-    "north": "ssite:block/machine/fluidized_bed/ceramic",
-    "south": "ssite:block/machine/fluidized_bed/plate",
-    "east": "ssite:block/machine/fluidized_bed/plate",
-    "west": "ssite:block/machine/fluidized_bed/plate",
-    "particle": "ssite:block/machine/fluidized_bed/plate"
+    "down": "ssite:block/machine/cleanroom_thermostat/bottom",
+    "up": "ssite:block/machine/cleanroom_thermostat/top",
+    "north": "ssite:block/machine/cleanroom_thermostat/front_active",
+    "south": "ssite:block/machine/cleanroom_thermostat/back",
+    "east": "ssite:block/machine/cleanroom_thermostat/side",
+    "west": "ssite:block/machine/cleanroom_thermostat/side",
+    "particle": "ssite:block/machine/cleanroom_thermostat/side"
   }
 }
