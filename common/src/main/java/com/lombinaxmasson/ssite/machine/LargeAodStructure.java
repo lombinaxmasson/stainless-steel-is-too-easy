@@ -51,7 +51,7 @@ public final class LargeAodStructure {
         layout.cell(x, y - 1, z + 2, CellMatch.part(part), role);
     }
 
-    /** Shared by the native recipe-viewer preview and builder's wand. */
+    /** Shared by the builder's wand and the formed OBJ part designs. */
     public static Map<BlockPos, Block> preview(AodTier tier) {
         Map<BlockPos, Block> cells = new LinkedHashMap<>();
         for (var cell : layout(tier).cells()) {

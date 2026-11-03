@@ -53,7 +53,10 @@ public final class FluidizedBedStructure {
 
     public static StructureLayout layout() {
         var builder = StructureLayout.builder(FluidizedBedCore.MACHINE_TYPE);
-        PARTS.forEach((p, name) -> builder.cell(p.getX(), p.getY(), p.getZ(), CellMatch.part(name), StructureRole.CASING));
+        // The host routes active HU output through the declared port cell, so the rear outlet
+        // must allow ENERGY_OUTPUT; every other casing stays a plain wall.
+        PARTS.forEach((p, name) -> builder.cell(p.getX(), p.getY(), p.getZ(), CellMatch.part(name),
+                p.equals(HEAT_OUTLET) ? StructureRole.ENERGY_OUTPUT : StructureRole.CASING));
         // Preserve the open combustion chamber. No external transport cells are claimed.
         for (int y = 1; y <= 6; y++) builder.cell(-1, y, 2, CellMatch.air(), StructureRole.AIR);
         return builder.build();

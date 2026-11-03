@@ -51,9 +51,9 @@ $env:JAVA_HOME = $env:JAVA17_HOME
 
 产物：
 
-- `api/common/build/libs/gt6ce-api-1.0.0.jar`
-- `minecraft/versions/1.20.1-forge/build/addon-sdk/gt6ce-addon-sdk-1.20.1-forge-1.0.0.jar`
-- `minecraft/versions/1.21.1-neoforge/build/addon-sdk/gt6ce-addon-sdk-1.21.1-neoforge-1.0.0.jar`
+- `api/common/build/libs/gt6ce-api-1.3.0.jar`
+- `minecraft/versions/1.20.1-forge/build/addon-sdk/gt6ce-addon-sdk-1.20.1-forge-1.3.0.jar`
+- `minecraft/versions/1.21.1-neoforge/build/addon-sdk/gt6ce-addon-sdk-1.21.1-neoforge-1.3.0.jar`
 
 也可以把它们复制进 `libs/`。`libs/` 优先于旁边的检出：
 
@@ -95,7 +95,7 @@ Forge 发行 jar 是 SRG，开发运行会用 `fg.deobf` 转回 Mojang 名。在
 .\gradlew.bat :minecraft:1.20.1-forge:distributionJar
 ```
 
-jar 在 `minecraft/versions/1.20.1-forge/build/libs/gt6ce-1.20.1-forge-1.0.2.jar`。
+jar 在 `minecraft/versions/1.20.1-forge/build/libs/gt6ce-1.20.1-forge-1.0.4.jar`。
 
 NeoForge jar 本身就是 Mojang 名：
 
@@ -103,7 +103,7 @@ NeoForge jar 本身就是 Mojang 名：
 .\gradlew.bat :minecraft:1.21.1-neoforge:build
 ```
 
-jar 在 `minecraft/versions/1.21.1-neoforge/build/libs/gt6ce-neoforge-1.21.1-1.0.2.jar`。
+jar 在 `minecraft/versions/1.21.1-neoforge/build/libs/gt6ce-neoforge-1.21.1-1.0.4.jar`。
 
 然后在本仓库：
 

@@ -23,7 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class LargeAodPartMixin extends BlockEntity {
     protected LargeAodPartMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) { super(type, pos, state); }
     @Shadow public abstract void applyStructureDesign(int design);
-    @Shadow public abstract void restoreStructureDesign();
     @Shadow public abstract boolean isBoundTo(BlockPos owner);
     @Shadow public abstract int structureDesign();
     @Unique private int ssite$previousDesign;
@@ -36,17 +35,12 @@ public abstract class LargeAodPartMixin extends BlockEntity {
     @Inject(method = "bind", at = @At("RETURN"))
     private void ssite$hideBoundPart(BlockPos owner, MultiblockLayout.Role role, CallbackInfo ci) {
         if (level == null || level.isClientSide || !ssite$largePart() || !isBoundTo(owner)) return;
-        // GT6CE 1.0.2 also binds incomplete shells for tool routing. Binding alone no longer
+        // The host also binds incomplete shells for tool routing. Binding alone no longer
         // means that the controller's OBJ is visible; the formation hook handles that edge.
         if (level.getBlockEntity(owner) instanceof BehaviorMachineBlockEntity machine
                 && machine.addonId().equals("ssite") && ObjMultiblocks.isMachine(machine.machineType())
                 && machine.structureFormed())
             applyStructureDesign(LargeAodStructure.FORMED_DESIGN);
-    }
-
-    @Inject(method = "onLoad", at = @At("RETURN"))
-    private void ssite$restoreLoadedPart(CallbackInfo ci) {
-        if (level != null && !level.isClientSide && ssite$largePart()) restoreStructureDesign();
     }
 
     @Inject(method = "loadDesign", at = @At("HEAD"))

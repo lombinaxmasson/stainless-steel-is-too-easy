@@ -34,7 +34,9 @@ public final class IrradiationReactorStructure {
 
     public static StructureLayout layout() {
         var builder = StructureLayout.builder(IrradiationReactorCore.MACHINE_TYPE);
-        PARTS.forEach((p, name) -> builder.cell(p.getX(), p.getY(), p.getZ(), CellMatch.part(name), StructureRole.CASING));
+        // The top heat port is the reactor's active HU outlet; the host checks the cell role.
+        PARTS.forEach((p, name) -> builder.cell(p.getX(), p.getY(), p.getZ(), CellMatch.part(name),
+                HEAT_PORT.equals(name) ? StructureRole.ENERGY_OUTPUT : StructureRole.CASING));
         return builder.build();
     }
 

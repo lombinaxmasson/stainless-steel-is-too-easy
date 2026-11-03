@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "com.lombinaxmasson.ssite.compat",
   "compatibilityLevel": "JAVA_17",
-  "mixins": ["AddonMaterialOwnerMixin", "CrucibleFaucetSignalMixin", "LargeAodPreviewMixin", "LargeAodToolMixin", "LargeAodPartMixin", "ObjMultiblockDesignMixin",
+  "mixins": ["AddonMaterialOwnerMixin", "CrucibleFaucetSignalMixin", "LargeAodToolMixin", "LargeAodPartMixin", "ObjMultiblockDesignMixin",
     "LidOpenShapeMixin", "FluidizedBedEnergyMixin", "FluidizedBedFoundationShapeMixin",
     "HeatTransportAccessMixin", "HeatTransportShapeMixin"],
   "client": ["LargeAodClientSyncMixin", "LargeAodRenderBoundsMixin", "LargeAodRendererBoundsMixin"],
