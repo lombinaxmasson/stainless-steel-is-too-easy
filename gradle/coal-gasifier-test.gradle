@@ -1,0 +1,10 @@
+def coalGasifierTest = tasks.register('coalGasifierTest', JavaExec) {
+    description = 'Checks the U-03 gasifier reservation, pause and completion transitions.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.machine.CoalGasifierTests'
+    jvmArgs '-ea'
+}
+tasks.named('check').configure { dependsOn coalGasifierTest }

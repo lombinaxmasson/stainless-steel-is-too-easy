@@ -17,6 +17,8 @@ logs/
 __pycache__/
 
 # Local-only notes and one-off development tooling.
+# Interactive previews are generated locally and opened from the working copy.
+/art/**/*.html
 /docs/
 /scripts/models/
 /scripts/testing/

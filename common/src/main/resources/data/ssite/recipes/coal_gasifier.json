@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["CRC", "WMW", "CRC"],
+  "key": {
+    "C": {"item": "gt6ce:plate_stainlesssteel"},
+    "R": {"item": "ssite:plate_precisioncasting"},
+    "W": {"item": "gt6ce:tank_wall"},
+    "M": {"item": "ssite:chip_chipelite"}
+  },
+  "result": {
+    "item": "ssite:coal_gasifier",
+    "count": 1
+  }
+}

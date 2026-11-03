@@ -2,15 +2,22 @@ package com.lombinaxmasson.ssite.chemistry;
 
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.circuit;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.dust;
+import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.item;
 import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.row;
 
+import com.lombinaxmasson.ssite.machine.CoalGasifierCore;
+
 /**
- * U-01 natural-gas treatment. Raw {@code Gas_Natural} from the host spring is dehydrated with
- * triethylene glycol, sweetened with MDEA and stabilized into pipeline gas; light ends keep
- * feeding the existing C4/C5 chains and the acid gas is recovered as sulfur.
+ * U-01 natural-gas treatment and U-03 gasification. Raw {@code Gas_Natural} from the host spring is
+ * dehydrated with triethylene glycol, sweetened with MDEA and stabilized into pipeline gas; light
+ * ends keep feeding the existing C4/C5 chains and the acid gas is recovered as sulfur.
  *
  * <p>Both solvents are regenerated at 95% per pass. The one-millibucket make-up per 1000 mB of raw
  * gas is covered by the synthesis rows below, so the treatment train has no consumable dead end.
+ *
+ * <p>U-03 adds the gasifier display rows plus raw-gas cleaning, clean-gas separation and the two
+ * by-product sinks. Neither raw nor clean gas receives a fuel row; their energy is carried only by
+ * the methanol and aromatic products.
  */
 public final class UtilityRecipes {
     private UtilityRecipes() {}
@@ -20,6 +27,7 @@ public final class UtilityRecipes {
         gasTreatment();
         lightEnds();
         pipelineFuel();
+        syngas();
     }
 
     private static void solventMakeup() {
@@ -90,5 +98,58 @@ public final class UtilityRecipes {
                 .fluidIn("GenGas_PipelineGas", 5)
                 .fluidOut("DistW", 6, "CarbonDioxide", 3)
                 .add(32, -64);
+    }
+
+    /**
+     * U-03 steam gasification. Both charges release the same raw-gas volume, so the cleaning and
+     * separation rows below are shared; coke only saves steam and time. Raw and clean gas stay
+     * separate fluids and no fuel row is registered for either, so their chemical energy never
+     * turns into a second, unaccounted heat source.
+     */
+    private static void syngas() {
+        // Display-only: CoalGasifierCore owns the real reservation and batch ledger.
+        row(CoalGasifierCore.MAP, "u03/gasify-coal")
+                .in(dust("Coal", 1))
+                .fluidIn("Steam", (int) CoalGasifierCore.COAL_STEAM)
+                .out(item("dustSmall", "CoalSlag", 1))
+                .fluidOut("GenGas_CrudeSyngas", (int) CoalGasifierCore.RAW_GAS)
+                .display(CoalGasifierCore.COAL_TICKS, CoalGasifierCore.EU_PER_TICK);
+        row(CoalGasifierCore.MAP, "u03/gasify-coke")
+                .in(dust("CoalCoke", 1))
+                .fluidIn("Steam", (int) CoalGasifierCore.COKE_STEAM)
+                .out(item("dustSmall", "CoalSlag", 1))
+                .fluidOut("GenGas_CrudeSyngas", (int) CoalGasifierCore.RAW_GAS)
+                .display(CoalGasifierCore.COKE_TICKS, CoalGasifierCore.EU_PER_TICK);
+
+        // Cooling and fines removal: 4000 raw gas becomes 3000 clean gas plus tar, condensate and
+        // fly ash. The tar and slag rows below are the by-products' only sink.
+        row("gt.recipe.centrifuge", "u03/crude-gas-purify")
+                .out(item("dustTiny", "DarkAshes", 1))
+                .fluidIn("GenGas_CrudeSyngas", 4_000)
+                .fluidOut("GenGas_CleanSyngas", 3_000, "GenLiquid_CoalTar", 100, "DistW", 900)
+                .add(80, 32);
+
+        // Exactly the CO/H2 ratio the existing methanol row consumes. The distillery map requires
+        // one item input, so the circuit is kept and distinguishes this row from the U-01 rows.
+        row("gt.recipe.distillery", "u03/clean-gas-separate")
+                .in(circuit(4))
+                .fluidIn("GenGas_CleanSyngas", 3_000)
+                .fluidOut("GenGas_CarbonMonoxide", 1_000, "Hydrogen", 2_000)
+                .keep(0)
+                .add(60, 32);
+
+        // Coal tar returns to the existing aromatic chain instead of becoming a second fuel.
+        row("gt.recipe.distillationtower", "u03/tar-distill")
+                .fluidIn("GenLiquid_CoalTar", 1_000)
+                .fluidOut("GenLiquid_Naphtha", 600, "GenLiquid_Phenol", 300, "GenLiquid_Benzene", 100)
+                .add(120, 48);
+
+        // Slag is a real solid residue, not a display item: four batches (four dustSmall) recover a
+        // fraction of their oxides and iron, with the remainder left as unrecovered residue.
+        row("gt.recipe.centrifuge", "u03/slag-recover")
+                .in(item("dustSmall", "CoalSlag", 4))
+                .out(item("dustSmall", "SiliconDioxide", 1), item("dustTiny", "Alumina", 1),
+                        item("dustTiny", "Iron", 1))
+                .add(200, 16);
     }
 }

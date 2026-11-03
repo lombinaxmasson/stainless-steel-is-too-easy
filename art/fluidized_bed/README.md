@@ -12,7 +12,7 @@
 | `fluidized_bed_combustor.mtl` | 单张 atlas 的标准 OBJ 材质定义 |
 | `fluidized_bed_combustor_atlas.png` | 512×256 RGB 像素贴图；8×4 个 64×64 材质块 |
 | `fluidized_bed_combustor_cutaway.obj` | 独立剖视版本，显露床层、布风结构和耐火内衬 |
-| `preview.html` | 自包含 WebGL 2 交互预览，模型与贴图均内嵌，无 CDN 依赖 |
+| `preview.html`（本地生成，不入库） | 自包含 WebGL 2 交互预览，模型与贴图均内嵌，无 CDN 依赖 |
 | `preview.png` | 完整模型预览截图 |
 | `preview_cutaway.png` | 炉体内部剖视截图 |
 | `preview_back.png` | 后侧回料、平台与风管截图 |

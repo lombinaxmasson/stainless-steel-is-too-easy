@@ -10,7 +10,7 @@
 
 | 文件 | 内容 |
 | --- | --- |
-| [preview.html](preview.html) | 内嵌网格、贴图和动画的离线 WebGL 2 预览，无 CDN 或网络依赖 |
+| `preview.html`（本地生成，不入库） | 内嵌网格、贴图和动画的离线 WebGL 2 预览，无 CDN 或网络依赖 |
 | [irradiation_reactor.obj](irradiation_reactor.obj) | 完整模型，41 个具名部件、9,144 个三角面，平面法线；停机、门关闭的初始姿态 |
 | [irradiation_reactor_cutaway.obj](irradiation_reactor_cutaway.obj) | 隐去前半屏蔽壳与顶盖的剖视版本 |
 | [irradiation_reactor.mtl](irradiation_reactor.mtl) | 两份 OBJ 共用的材质定义 |
@@ -70,6 +70,6 @@ python scripts/models/inspect_irradiation_reactor.py
 python scripts/models/inspect_irradiation_reactor.py --gif
 ```
 
-生成器的输入是 `scripts/models/build_irradiation_reactor.py`、`irradiation_reactor_ir03_materials.py`、`irradiation_reactor_ir03_viewer.html` 与 `irradiation_reactor_animation.js`，并复用同目录的几何原语、基础像素绘制函数和预览外壳样式。**修改这些输入再生成，不手改 OBJ、MTL、图集或预览。** `scripts/models/` 按仓库约定仅在本地维护，已被忽略；仓库中的产物可直接导入或预览，但只有包含这些脚本的工作副本可以重新生成。
+生成器的输入是 `scripts/models/build_irradiation_reactor.py`、`irradiation_reactor_ir03_materials.py`、`irradiation_reactor_ir03_viewer.html` 与 `irradiation_reactor_animation.js`，并复用同目录的几何原语、基础像素绘制函数和预览外壳样式。**修改这些输入再生成，不手改 OBJ、MTL、图集或预览。** `scripts/models/` 按仓库约定仅在本地维护，已被忽略；已入库的 OBJ、MTL、图集与截图可直接导入或查看，交互预览 `preview.html` 只在本地生成；只有包含这些脚本的工作副本可以重新生成。
 
 生成检查覆盖有限坐标、单位法线、UV 范围、退化三角面、面序、部件集合、精确包络与接口坐标；独立检查脚本解析导出的 OBJ/MTL，验证动画阶段与联锁、变换后的顶点边界、光效分组、不同时间步长的一致性，并检查预览、剖视、视角、网格、部件选择、旋转缩放和窄屏布局。报告写入 `build/irradiation-reactor-qa/report.json`。双端游戏内渲染、碰撞和机器行为尚未验证。

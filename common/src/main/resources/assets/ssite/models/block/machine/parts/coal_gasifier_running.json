@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "ssite:block/machine/coal_gasifier/side",
+    "up": "ssite:block/machine/coal_gasifier/side",
+    "north": "ssite:block/machine/coal_gasifier/front_running",
+    "south": "ssite:block/machine/coal_gasifier/side",
+    "east": "ssite:block/machine/coal_gasifier/side",
+    "west": "ssite:block/machine/coal_gasifier/side",
+    "particle": "ssite:block/machine/coal_gasifier/side"
+  }
+}

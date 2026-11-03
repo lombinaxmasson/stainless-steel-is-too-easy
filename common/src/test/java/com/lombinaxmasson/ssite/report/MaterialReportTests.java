@@ -388,8 +388,9 @@ public final class MaterialReportTests {
                 .collect(Collectors.groupingBy(RecipeDeclaration::map, Collectors.counting()));
         check(counts.equals(Map.of("ssite.recipe.aod", 3L, "ssite.recipe.large_aod", 3L, "ssite.recipe.var", 5L,
                         "ssite.recipe.blanket", 1L, "ssite.recipe.ion_implanter", 1L,
-                        "ssite.recipe.electron_beam", 1L, "ssite.recipe.powder_bed", 1L)),
-                "the two AOD sizes, VAR, the blanket vessel and the P-03 machines remain display-only groups");
+                        "ssite.recipe.electron_beam", 1L, "ssite.recipe.powder_bed", 1L,
+                        "ssite.recipe.gasifier", 2L)),
+                "the two AOD sizes, VAR, the blanket vessel, the P-03 machines and the gasifier remain display-only groups");
         RecipeDeclaration var = row(rows, "var/ta4hfc5");
         check(var.itemOutputs().equals(List.of(material("dust", "TantalumHafniumCarbide", 10)))
                 && var.fluidInputs().equals(List.of(new FluidRef("GenGas_Argon", 200))), "VAR display retains alloy and argon quantities");

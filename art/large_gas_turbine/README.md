@@ -24,7 +24,7 @@
 
 | 文件 | 用途 |
 | --- | --- |
-| [preview.html](preview.html) | 自包含离线 WebGL 2 预览，无 CDN；视角、剖视、独立换色、启停、转速、温度、暂停与复位 |
+| `preview.html`（本地生成，不入库） | 自包含离线 WebGL 2 预览，无 CDN；视角、剖视、独立换色、启停、转速、温度、暂停与复位 |
 | [large_gas_turbine.obj](large_gas_turbine.obj) | 完整模型，9,748 三角面、32 个命名部件，显式 UV 与法线 |
 | [large_gas_turbine_cutaway.obj](large_gas_turbine_cutaway.obj) | 剖视版本，7,432 三角面、25 个部件；用于查看内部轴、五排叶片与燃烧内衬 |
 | [large_gas_turbine.mtl](large_gas_turbine.mtl) | 共用单图集的 Wavefront 材质 |

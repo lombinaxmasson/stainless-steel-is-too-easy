@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["CEC", "PMP", "CSC"],
+  "key": {
+    "C": {"item": "gt6ce:tank_wall"},
+    "E": {"item": "ssite:chip_chipelite"},
+    "P": {"item": "ssite:plate_precisioncasting"},
+    "M": {"item": "gt6ce:plate_stainlesssteel"},
+    "S": {"item": "gt6ce:plate_stainlesssteel"}
+  },
+  "result": {
+    "item": "ssite:gas_field_extractor",
+    "count": 1
+  }
+}

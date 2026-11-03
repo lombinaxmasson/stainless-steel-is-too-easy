@@ -1,0 +1,10 @@
+def gasFieldTest = tasks.register('gasFieldTest', JavaExec) {
+    description = 'Checks deterministic gas-field layout, spring grid and shared extraction budget.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.worldgen.GasFieldTests'
+    jvmArgs '-ea'
+}
+tasks.named('check').configure { dependsOn gasFieldTest }

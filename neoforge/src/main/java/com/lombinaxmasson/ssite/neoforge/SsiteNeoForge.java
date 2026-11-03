@@ -8,6 +8,7 @@ import net.neoforged.fml.common.Mod;
 public final class SsiteNeoForge {
     public SsiteNeoForge(IEventBus modEventBus) {
         SsiteAddon.register();
+        SsiteWorldgen.register(modEventBus);
         SsiteCreativeTab.register(modEventBus);
     }
 }

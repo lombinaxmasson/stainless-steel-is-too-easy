@@ -4,7 +4,7 @@ import gregtech.api.addon.material.MaterialDeclaration;
 
 import java.util.List;
 
-/** U-01 natural-gas treatment fluids: dehydration, desulfurization, regeneration and pipeline quality. */
+/** U-01 gas treatment fluids and U-03 gasification fluids plus solid residue. */
 public final class UtilityMaterials {
     public static final List<MaterialDeclaration> MATERIALS = List.of(
             MaterialDeclaration.builder("DehydratedNaturalGas")
@@ -30,7 +30,19 @@ public final class UtilityMaterials {
                     .meltingPointKelvin(242).boilingPointKelvin(541).density(1.04F).liquid().build(),
             MaterialDeclaration.builder("RichAmine")
                     .displayName("Hydrogen Sulfide-Loaded Amine").color(0xD8D0A8).chemicalFormula("C5H13NO2·H2S")
-                    .meltingPointKelvin(240).boilingPointKelvin(540).density(1.08F).liquid().build());
+                    .meltingPointKelvin(240).boilingPointKelvin(540).density(1.08F).liquid().build(),
+            MaterialDeclaration.builder("CrudeSyngas")
+                    .displayName("Crude Syngas").color(0x6E6A5E).chemicalFormula("CO·H2·CO2·H2O")
+                    .meltingPointKelvin(90).boilingPointKelvin(130).density(0.0012F).gas().build(),
+            MaterialDeclaration.builder("CleanSyngas")
+                    .displayName("Clean Syngas").color(0xA8C8E0).chemicalFormula("CO·H2")
+                    .meltingPointKelvin(70).boilingPointKelvin(95).density(0.0009F).gas().build(),
+            MaterialDeclaration.builder("CoalTar")
+                    .displayName("Coal Tar").color(0x241C14).chemicalFormula("C6H6·C7H8·C6H5OH")
+                    .meltingPointKelvin(250).boilingPointKelvin(480).density(1.18F).liquid().build(),
+            MaterialDeclaration.builder("CoalSlag")
+                    .displayName("Coal Gasification Slag").color(0x5A5650).chemicalFormula("SiO2·Al2O3·FeO")
+                    .meltingPointKelvin(1500).boilingPointKelvin(2500).density(2.60F).dust().build());
 
     private UtilityMaterials() {}
 }

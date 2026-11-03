@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "ssite:block/machine/irradiation_reactor_casing",
+    "up": "ssite:block/machine/irradiation_reactor_casing",
+    "north": "ssite:block/machine/irradiation_reactor_controller/front",
+    "south": "ssite:block/machine/irradiation_reactor_casing",
+    "east": "ssite:block/machine/irradiation_reactor_casing",
+    "west": "ssite:block/machine/irradiation_reactor_casing",
+    "particle": "ssite:block/machine/irradiation_reactor_casing"
+  }
+}

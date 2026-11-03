@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "name": "SSITE optical lithography machine / LS-01",
+  "units": "blocks",
+  "up": "+Y",
+  "front": "-Z",
+  "nominal_envelope": [
+    5,
+    4,
+    4
+  ],
+  "envelope_bounds": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      5,
+      4,
+      4
+    ]
+  ],
+  "integrated_in_game": false,
+  "structure_bound": false,
+  "controller_cell": [
+    4,
+    1,
+    0
+  ],
+  "game_translation": [
+    -4,
+    -1,
+    0
+  ],
+  "ports": [
+    {
+      "id": "load_a",
+      "label": "晶圆装载 A",
+      "cell": [
+        0,
+        1,
+        0
+      ],
+      "position": [
+        0.5,
+        1.5,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "group": "load_ports"
+    },
+    {
+      "id": "load_b",
+      "label": "晶圆装载 B",
+      "cell": [
+        1,
+        1,
+        0
+      ],
+      "position": [
+        1.5,
+        1.5,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "group": "load_ports"
+    },
+    {
+      "id": "control",
+      "label": "控制台",
+      "cell": [
+        4,
+        1,
+        0
+      ],
+      "position": [
+        4.5,
+        1.5,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "group": "control_console"
+    },
+    {
+      "id": "eu",
+      "label": "EU 输入",
+      "cell": [
+        4,
+        0,
+        3
+      ],
+      "position": [
+        4.5,
+        0.5,
+        4
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "group": "eu_input"
+    },
+    {
+      "id": "nitrogen",
+      "label": "氮气输入",
+      "cell": [
+        0,
+        1,
+        3
+      ],
+      "position": [
+        0.5,
+        1.5,
+        4
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "group": "nitrogen_input"
+    },
+    {
+      "id": "coolant_in",
+      "label": "冷却液输入",
+      "cell": [
+        4,
+        1,
+        2
+      ],
+      "position": [
+        5,
+        1.5,
+        2.5
+      ],
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "group": "coolant_input"
+    },
+    {
+      "id": "coolant_out",
+      "label": "冷却液回流",
+      "cell": [
+        4,
+        2,
+        2
+      ],
+      "position": [
+        5,
+        2.5,
+        2.5
+      ],
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "group": "coolant_return"
+    }
+  ],
+  "groups": [
+    "foundation",
+    "isolation_mounts",
+    "lower_cabinets",
+    "chamber_rear",
+    "chamber_left",
+    "chamber_right",
+    "front_frame",
+    "window_bezel",
+    "amber_window",
+    "front_details",
+    "roof",
+    "fasteners",
+    "load_ports",
+    "cassette_a",
+    "cassette_b",
+    "wafer_stage",
+    "exposure_wafer",
+    "optical_bridge",
+    "projection_column",
+    "reticle_stage",
+    "transfer_robot",
+    "transfer_wafer",
+    "laser_cover",
+    "optical_feed",
+    "roof_filters",
+    "control_pedestal",
+    "control_console",
+    "control_screen",
+    "controls",
+    "cable_tray",
+    "utility_cabinet",
+    "utility_pipes",
+    "coolant_input",
+    "coolant_return",
+    "eu_input",
+    "nitrogen_input",
+    "rear_service",
+    "status_tower"
+  ],
+  "group_labels": {
+    "foundation": "隔振基础与底架",
+    "isolation_mounts": "隔振支座",
+    "lower_cabinets": "下部设备柜",
+    "chamber_rear": "曝光舱后壁",
+    "chamber_left": "左侧装载与掩模柜",
+    "chamber_right": "可拆右侧舱壁",
+    "front_frame": "前部检修框",
+    "window_bezel": "观察窗压框",
+    "amber_window": "琥珀色观察窗",
+    "roof": "曝光舱顶盖",
+    "roof_filters": "顶部过滤风机",
+    "front_details": "门锁、警示与铭牌",
+    "load_ports": "双晶圆装载台",
+    "cassette_a": "A 晶圆匣",
+    "cassette_b": "B 晶圆匣",
+    "transfer_robot": "晶圆搬运机械臂",
+    "transfer_wafer": "搬运中的晶圆",
+    "optical_bridge": "曝光镜筒承重桥",
+    "projection_column": "多级投影镜筒",
+    "reticle_stage": "掩模版定位台",
+    "wafer_stage": "XY 精密晶圆台",
+    "exposure_wafer": "曝光位晶圆",
+    "optical_feed": "封闭光路与光源柜",
+    "laser_cover": "后部光源外罩",
+    "control_pedestal": "独立控制台支柱",
+    "control_console": "斜面控制台",
+    "control_screen": "状态屏幕",
+    "controls": "键盘与急停按钮",
+    "status_tower": "三色状态灯塔",
+    "utility_cabinet": "右后公用工程柜",
+    "utility_pipes": "冷却与氮气管线",
+    "cable_tray": "电缆线槽",
+    "rear_service": "后侧检修板与散热格栅",
+    "eu_input": "EU 输入接口",
+    "nitrogen_input": "氮气输入接口",
+    "coolant_input": "冷却液输入接口",
+    "coolant_return": "冷却液回流接口",
+    "fasteners": "外露紧固件"
+  },
+  "stats": {
+    "bounds": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        5,
+        4.0,
+        4
+      ]
+    ],
+    "triangles": 4836,
+    "groups": 38,
+    "texture_size": [
+      512,
+      256
+    ],
+    "finite_vertices": true,
+    "unit_normals": true,
+    "uv_in_atlas": true,
+    "consistent_winding": true,
+    "nondegenerate_triangles": true,
+    "within_grid_envelope": true,
+    "ports_at_cell_face_centers": true
+  },
+  "cutaway_hide": [
+    "front_frame",
+    "window_bezel",
+    "amber_window",
+    "roof",
+    "roof_filters",
+    "front_details",
+    "chamber_left",
+    "chamber_right",
+    "laser_cover",
+    "fasteners",
+    "status_tower"
+  ],
+  "cutaway_triangles": 3404,
+  "texture_filter": "nearest",
+  "pose": "Static assembled display; no animation stored in OBJ.",
+  "notes": [
+    "Original HBM-inspired game art; no imported HBM mesh or texture.",
+    "DUV-style refractive optical column, not an EUV mirror train; illustrative interior only.",
+    "Amber observation glass is opaque, fully compatible with one atlas material.",
+    "Grid-aligned art interfaces are proposed locations only; no game structure or port routing is changed."
+  ]
+}

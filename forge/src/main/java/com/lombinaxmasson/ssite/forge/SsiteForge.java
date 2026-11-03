@@ -8,6 +8,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public final class SsiteForge {
     public SsiteForge() {
         SsiteAddon.register();
+        SsiteWorldgen.register(FMLJavaModLoadingContext.get().getModEventBus());
         SsiteCreativeTab.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 }

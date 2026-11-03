@@ -7,8 +7,8 @@
 | `heat_duct.obj` | 804 三角面、13 组：中心骨架、六个封头、六个连接臂；运行时只显示实际连接方向 |
 | `heating_plate.obj` | 180 三角面、6 组：满格耐火加热块，顶面齐平 |
 | `heat_transport_atlas.png` | 与塔体相同的最近邻图集；OBJ 的 MTL 已指向本文件 |
-| `preview.html` / `preview.png` | 侧面进热的 3×3 加热板与分支管道组合展示 |
-| `components.html` / `components/preview.png` | 直通、弯头、三通、六向接头及单块板的近景 |
+| `preview.html`（本地生成，不入库）/ `preview.png` | 侧面进热的 3×3 加热板与分支管道组合展示 |
+| `components.html`（本地生成，不入库）/ `components/preview.png` | 直通、弯头、三通、六向接头及单块板的近景 |
 | `model.json` | 包围盒、面数、接触面积与六向 mask 位定义 |
 
 每个模型采用方块局部坐标 `[0,1]³`，无需按机器水平朝向旋转。热管中心骨架范围为 `[0.20,0.80]³`；连接管身截面为 `[0.25,0.75]`，延伸至对应方块边界。端法兰截面为 `[0.20,0.80]`，全部几何保持在本格内。

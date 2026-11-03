@@ -115,6 +115,8 @@ apply from: rootProject.file('gradle/powder-bed-test.gradle')
 apply from: rootProject.file('gradle/process-environment-test.gradle')
 apply from: rootProject.file('gradle/engineering-material-test.gradle')
 apply from: rootProject.file('gradle/utility-test.gradle')
+apply from: rootProject.file('gradle/gas-field-test.gradle')
+apply from: rootProject.file('gradle/coal-gasifier-test.gradle')
 apply from: rootProject.file('gradle/material-report.gradle')
 
 tasks.register('requireRuntime') {

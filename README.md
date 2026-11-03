@@ -22,6 +22,8 @@ GregTech 6 Community Edition 的化工向附属。模组 id 是 `ssite`，依赖
 
 [批次照射反应堆 IR–03](art/irradiation_reactor/README.md) 提供 HBM 风格原创 OBJ、像素图集与离线动画预览，严格采用 4×4 占地、4 格高度，装料、控制、KU 和 HU 四个接口对齐方块面中心。包含滑升屏蔽门、启停联锁、转台加减速和舱内工作灯，尚未接入游戏结构或渲染。生成和检查命令见该目录说明。
 
+[光刻机 LS–01](art/lithography_machine/README.md) 提供 HBM 风格原创 OBJ、512×256 像素图集与离线剖视预览，宽 5、深 4、高 4 格。双晶圆匣、侧置控制台、公用工程柜和内部曝光镜筒分别分组，尚未接入游戏结构或渲染。生成和检查命令见该目录说明。
+
 ## 环境
 
 Gradle 8.8 要用 JDK 17 启动，NeoForge 编译再用 JDK 21。本机如果默认 `java` 是 25，直接跑 `gradlew.bat` 会起不来。Windows 用仓库里的脚本，它会自己找这两个 JDK：
@@ -71,7 +73,7 @@ $env:JAVA_HOME = $env:JAVA17_HOME
 .\scripts\build.ps1 :neoforge:build
 ```
 
-`compileBoth` 会编译两端并运行共用的 JVM 检查：熔池反应与坩埚行为（`unitTest`）、流化床燃料与热账（`fluidizedBedTest`）、HU 运输拓扑（`heatTransportTest`）、批次照射堆的批次与热量账（`irradiationReactorTest`）、光纤探头的目标/失联/完成脉冲状态机（`fiberProbeTest`）、离子注入与电子束批次账（`advancedProcessTest`）、粉末床的预留/气体/双输出/并行批次账（`powderBedTest`）、超净间房间与环境规则（`processEnvironmentTest`）、工程陶瓷/碳碳/烧蚀状态链与 P-01 高负荷批次契约（`engineeringMaterialTest`），以及不启动图形窗口的 OBJ 渲染顶点检查（`furnaceRenderTest`、`fluidizedBedRenderTest`）。
+`compileBoth` 会编译两端并运行共用的 JVM 检查：熔池反应与坩埚行为（`unitTest`）、流化床燃料与热账（`fluidizedBedTest`）、HU 运输拓扑（`heatTransportTest`）、批次照射堆的批次与热量账（`irradiationReactorTest`）、光纤探头的目标/失联/完成脉冲状态机（`fiberProbeTest`）、离子注入与电子束批次账（`advancedProcessTest`）、粉末床的预留/气体/双输出/并行批次账（`powderBedTest`）、超净间房间与环境规则（`processEnvironmentTest`）、工程陶瓷/碳碳/烧蚀状态链与 P-01 高负荷批次契约（`engineeringMaterialTest`）、天然气净化闭环与管输气燃料/排气账（`utilityTest`）、气田计划与共享抽取预算（`gasFieldTest`）、煤气化器的预留/暂停/完成转换（`coalGasifierTest`），以及不启动图形窗口的 OBJ 渲染顶点检查（`furnaceRenderTest`、`fluidizedBedRenderTest`）。
 
 `compileBoth` 和两端的 `build` 还会生成材料用途报告，并运行 `materialReportTest`。只更新报告可以执行：
 

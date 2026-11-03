@@ -83,6 +83,7 @@ public final class SsiteMachines implements AddonMachineContributor {
                         .minimalInputItems(1)
                         .minimalInputs(1)
                         .build(),
+                CoalGasifierMachines.recipeTable(),
                 PrecisionMachines.recipeTable(),
                 PowderManufacturingMachines.recipeTable(),
                 FiberOpticMachines.recipeTable(),
@@ -105,6 +106,8 @@ public final class SsiteMachines implements AddonMachineContributor {
         machines.addAll(new FiberOpticMachines().addonMachines());
         machines.addAll(new AdvancedSemiconductorMachines().addonMachines());
         machines.addAll(new ProcessEnvironmentMachines().addonMachines());
+        machines.addAll(new GasFieldExtractorMachines().addonMachines());
+        machines.addAll(new CoalGasifierMachines().addonMachines());
         machines.addAll(HeatTransportMachines.machines());
         return List.copyOf(machines);
     }
@@ -130,6 +133,8 @@ public final class SsiteMachines implements AddonMachineContributor {
         machines.add(ProcessEnvironmentMachines.CONTROLLER);
         machines.add(ProcessEnvironmentMachines.VENT);
         machines.add(ProcessEnvironmentMachines.THERMOSTAT);
+        machines.add(GasFieldExtractorCore.MACHINE_TYPE);
+        machines.add(CoalGasifierCore.MACHINE_TYPE);
         machines.add(HeatTransportMachines.DUCT);
         machines.add(HeatTransportMachines.PLATE);
         for (String path : machines) {
@@ -157,6 +162,7 @@ public final class SsiteMachines implements AddonMachineContributor {
                 .build());
         layouts.addAll(new FluidizedBedMachines().structureLayouts());
         layouts.addAll(new IrradiationReactorMachines().structureLayouts());
+        layouts.addAll(new GasFieldExtractorMachines().structureLayouts());
         return List.copyOf(layouts);
     }
 
@@ -173,6 +179,7 @@ public final class SsiteMachines implements AddonMachineContributor {
                     .tanks(PartTanks.builder(1).capacity(32000).insert(GAS_FACES).build())
                     .build());
         parts.addAll(new FluidizedBedMachines().layoutParts());
+        parts.addAll(new GasFieldExtractorMachines().layoutParts());
         parts.addAll(new IrradiationReactorMachines().layoutParts());
         parts.addAll(new ProcessEnvironmentMachines().layoutParts());
         return List.copyOf(parts);
