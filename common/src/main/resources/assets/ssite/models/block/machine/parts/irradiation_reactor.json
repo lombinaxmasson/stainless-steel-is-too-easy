@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:block/cube",
   "textures": {
-    "down": "ssite:block/machine/aod_converter/stainless_steel_bottom",
-    "up": "ssite:block/machine/aod_converter/stainless_steel_top",
-    "north": "ssite:block/machine/aod_converter/stainless_steel_side",
-    "south": "ssite:block/machine/aod_converter/stainless_steel_side",
-    "west": "ssite:block/machine/aod_converter/stainless_steel_side",
-    "east": "ssite:block/machine/aod_converter/stainless_steel_side",
-    "particle": "ssite:block/machine/aod_converter/stainless_steel_side"
+    "down": "ssite:block/machine/irradiation_reactor_controller/bottom",
+    "up": "ssite:block/machine/irradiation_reactor_controller/top",
+    "north": "ssite:block/machine/irradiation_reactor_controller/front",
+    "south": "ssite:block/machine/irradiation_reactor_controller/back",
+    "west": "ssite:block/machine/irradiation_reactor_controller/side",
+    "east": "ssite:block/machine/irradiation_reactor_controller/side",
+    "particle": "ssite:block/machine/irradiation_reactor_controller/side"
   }
 }

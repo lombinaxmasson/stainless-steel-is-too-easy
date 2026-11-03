@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:block/cube",
   "textures": {
-    "down": "ssite:block/machine/fluidized_bed/dark",
-    "up": "ssite:block/machine/fluidized_bed/insulation",
-    "north": "ssite:block/machine/fluidized_bed/ribbed",
-    "south": "ssite:block/machine/fluidized_bed/ribbed",
-    "west": "ssite:block/machine/fluidized_bed/ribbed",
-    "east": "ssite:block/machine/fluidized_bed/ribbed",
-    "particle": "ssite:block/machine/fluidized_bed/ribbed"
+    "down": "ssite:block/machine/irradiation_reactor_heat_port/bottom",
+    "up": "ssite:block/machine/irradiation_reactor_heat_port/top",
+    "north": "ssite:block/machine/irradiation_reactor_heat_port/side",
+    "south": "ssite:block/machine/irradiation_reactor_heat_port/side",
+    "east": "ssite:block/machine/irradiation_reactor_heat_port/side",
+    "west": "ssite:block/machine/irradiation_reactor_heat_port/side",
+    "particle": "ssite:block/machine/irradiation_reactor_heat_port/side"
   }
 }

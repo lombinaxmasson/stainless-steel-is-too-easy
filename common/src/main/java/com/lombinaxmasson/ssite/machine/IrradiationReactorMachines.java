@@ -53,8 +53,8 @@ public final class IrradiationReactorMachines implements AddonMachineContributor
     @Override public List<LayoutPart> layoutParts() {
         return List.of(
                 LayoutPart.builder(IrradiationReactorStructure.CASING, "StainlessSteel")
-                        .hardness(10).texture("block/machine/fluidized_bed/refractory").build(),
+                        .hardness(10).texture("block/machine/irradiation_reactor_casing").build(),
                 LayoutPart.builder(IrradiationReactorStructure.HEAT_PORT, "StainlessSteel")
-                        .hardness(10).texture("block/machine/fluidized_bed/insulation").build());
+                        .hardness(10).texture("block/machine/irradiation_reactor_heat_port/side").build());
     }
 }
