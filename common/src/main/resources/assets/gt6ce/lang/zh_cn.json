@@ -414,5 +414,10 @@
   "material.gt6ce.cleansyngas": "净合成气",
   "material.gt6ce.coaltar": "煤焦油",
   "material.gt6ce.coalslag": "煤气化炉渣",
-  "material.gt6ce.syntheticoil": "费托合成油"
+  "material.gt6ce.syntheticoil": "费托合成油",
+  "material.gt6ce.coppermatte": "铜锍",
+  "material.gt6ce.nickelmatte": "镍锍",
+  "material.gt6ce.fischertropschcatalyst": "熔铁费托催化剂",
+  "material.gt6ce.spentfischertropschcatalyst": "失活费托催化剂",
+  "material.gt6ce.catalystresidue": "催化剂回收残渣"
 }

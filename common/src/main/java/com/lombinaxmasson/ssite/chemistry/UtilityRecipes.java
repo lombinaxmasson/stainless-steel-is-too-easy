@@ -28,6 +28,11 @@ import com.lombinaxmasson.ssite.machine.CoalGasifierCore;
  * fractionates it into existing naphtha, host diesel and host wax. U-05b adds no recipe: the host
  * fermenter already turns the biomass from the water chain into methane, so a second biogas or
  * methane identity would only duplicate that route.
+ *
+ * <p>U-06 adds an optional supported catalyst to the Fischer-Tropsch chain. It is not a replacement
+ * for the base row: the base row keeps its iron catalyst, while the advanced row spends one
+ * catalyst and returns a spent batch that can be regenerated or recovered. Manufacturing,
+ * deactivation, regeneration and residue recovery are all explicit rows.
  */
 public final class UtilityRecipes {
     private UtilityRecipes() {}
@@ -40,6 +45,7 @@ public final class UtilityRecipes {
         syngas();
         methanation();
         fischerTropsch();
+        catalystMaintenance();
     }
 
     private static void solventMakeup() {
@@ -202,5 +208,35 @@ public final class UtilityRecipes {
                 .fluidOut("GenLiquid_Naphtha", 300, "Diesel", 450)
                 .out(item("dust", "Wax", 1))
                 .add(160, 48);
+    }
+
+    /**
+     * U-06 catalyst pilot on the U-05 carrier. Two iron dust and one alumina form two supported
+     * catalyst charges, each advanced synthesis spends one charge and returns one spent charge.
+     * Two spent charges regenerate into one active charge plus one residue, so regeneration is
+     * lossy; three residues recover one iron, one alumina and one carbon. The base U-05 row keeps
+     * its free iron catalyst, so this route is optional and never blocks the existing chain.
+     */
+    private static void catalystMaintenance() {
+        row("gt.recipe.calciner", "u06/ft-catalyst-prepare")
+                .in(dust("Iron", 2), dust("Alumina", 1))
+                .out(dust("FischerTropschCatalyst", 2))
+                .add(160, 48);
+        row("gt.recipe.catalyticcracking", "u06/ft-synthesis-catalysed")
+                .in(dust("FischerTropschCatalyst", 1))
+                .fluidIn("GenGas_CarbonMonoxide", 1_000, "Hydrogen", 2_000)
+                .fluidOut("GenLiquid_SyntheticOil", 1_000, "DistW", 1_000)
+                .out(dust("SpentFischerTropschCatalyst", 1))
+                .add(160, 48);
+        row("gt.recipe.calciner", "u06/ft-catalyst-regenerate")
+                .in(dust("SpentFischerTropschCatalyst", 2))
+                .out(dust("FischerTropschCatalyst", 1), dust("CatalystResidue", 1))
+                .fluidIn("Hydrogen", 1_000)
+                .fluidOut("DistW", 1_000)
+                .add(160, 48);
+        row("gt.recipe.centrifuge", "u06/catalyst-residue-recover")
+                .in(dust("CatalystResidue", 3))
+                .out(dust("Iron", 1), dust("Alumina", 1), dust("Carbon", 1))
+                .add(160, 32);
     }
 }

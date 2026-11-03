@@ -45,7 +45,19 @@ public final class UtilityMaterials {
                     .meltingPointKelvin(1500).boilingPointKelvin(2500).density(2.60F).dust().build(),
             MaterialDeclaration.builder("SyntheticOil")
                     .displayName("Fischer-Tropsch Synthetic Oil").color(0xB8863C).chemicalFormula("CnH2n+2")
-                    .meltingPointKelvin(250).boilingPointKelvin(520).density(0.85F).liquid().build());
+                    .meltingPointKelvin(250).boilingPointKelvin(520).density(0.85F).liquid().build(),
+            MaterialDeclaration.builder("FischerTropschCatalyst")
+                    .displayName("Fused Iron Fischer-Tropsch Catalyst").color(0x4A4A50)
+                    .chemicalFormula("Fe/Al2O3")
+                    .meltingPointKelvin(1800).boilingPointKelvin(2600).density(4.20F).dust().build(),
+            MaterialDeclaration.builder("SpentFischerTropschCatalyst")
+                    .displayName("Spent Fischer-Tropsch Catalyst").color(0x2E2E30)
+                    .chemicalFormula("Fe/Al2O3·C")
+                    .meltingPointKelvin(1600).boilingPointKelvin(2400).density(3.80F).dust().build(),
+            MaterialDeclaration.builder("CatalystResidue")
+                    .displayName("Catalyst Recovery Residue").color(0x3A3028)
+                    .chemicalFormula("Fe·Al2O3·C")
+                    .meltingPointKelvin(1500).boilingPointKelvin(2300).density(3.00F).dust().build());
 
     private UtilityMaterials() {}
 }

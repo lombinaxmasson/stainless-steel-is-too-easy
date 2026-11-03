@@ -414,5 +414,10 @@
   "material.gt6ce.cleansyngas": "Clean Syngas",
   "material.gt6ce.coaltar": "Coal Tar",
   "material.gt6ce.coalslag": "Coal Gasification Slag",
-  "material.gt6ce.syntheticoil": "Fischer-Tropsch Synthetic Oil"
+  "material.gt6ce.syntheticoil": "Fischer-Tropsch Synthetic Oil",
+  "material.gt6ce.coppermatte": "Copper Matte",
+  "material.gt6ce.nickelmatte": "Nickel Matte",
+  "material.gt6ce.fischertropschcatalyst": "Fused Iron Fischer-Tropsch Catalyst",
+  "material.gt6ce.spentfischertropschcatalyst": "Spent Fischer-Tropsch Catalyst",
+  "material.gt6ce.catalystresidue": "Catalyst Recovery Residue"
 }

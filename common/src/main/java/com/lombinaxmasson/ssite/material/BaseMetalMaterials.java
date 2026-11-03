@@ -13,6 +13,12 @@ public final class BaseMetalMaterials {
             MaterialDeclaration.builder("WhiteMatte")
                     .displayName("White Matte").color(0xC8C8D0).chemicalFormula("Cu2S·Ni3S2")
                     .meltingPointKelvin(1400).boilingPointKelvin(2100).density(5.60F).dust().build(),
+            MaterialDeclaration.builder("CopperMatte")
+                    .displayName("Copper Matte").color(0x6A5A48).chemicalFormula("Cu2S·FeS")
+                    .meltingPointKelvin(1400).boilingPointKelvin(1900).density(5.30F).dust().build(),
+            MaterialDeclaration.builder("NickelMatte")
+                    .displayName("Nickel Matte").color(0x8A8A78).chemicalFormula("Ni3S2·CoS")
+                    .meltingPointKelvin(1350).boilingPointKelvin(2000).density(5.80F).dust().build(),
             MaterialDeclaration.builder("CrudeCopper")
                     .displayName("Crude Copper").color(0xB4643C).chemicalFormula("Cu (impure)")
                     .meltingPointKelvin(1358).boilingPointKelvin(2835).density(8.50F).dust().build(),

@@ -10,6 +10,7 @@ public final class BaseMetalRecipes {
 
     static void add() {
         matteSmelting();
+        matteSplitMode();
         matteLeaching();
         nickelCobaltSplit();
         electrowinning();
@@ -25,6 +26,7 @@ public final class BaseMetalRecipes {
         molybdenumRoasting();
         rheniumRecovery();
         molybdenumReduction();
+        byproductSinks();
     }
 
     private static void matteSmelting() {
@@ -46,6 +48,30 @@ public final class BaseMetalRecipes {
                 .fluidIn("Oxygen", 1000)
                 .fluidOut("GenGas_SulfurDioxide", 1000)
                 .add(240, 80);
+    }
+
+    /**
+     * Alternative to blowing all green matte to white matte: centrifuge splits the copper and nickel
+     * sulphides, then each half takes its own finishing step. Totals match the white-matte route
+     * (3 GreenMatte + 1500 O2 + 1000 H2SO4 + 1000 DistW), so the player chooses a separation mode
+     * without duplicating a charge or changing the ore composition.
+     */
+    private static void matteSplitMode() {
+        row("gt.recipe.centrifuge", "m7/green-matte-split")
+                .in(dust("GreenMatte", 3))
+                .out(dust("CopperMatte", 2), dust("NickelMatte", 1))
+                .add(200, 32);
+        row("gt.recipe.calciner", "m7/copper-matte-blow")
+                .in(dust("CopperMatte", 2))
+                .out(dust("CrudeCopper", 2), dust("Hematite", 1))
+                .fluidIn("Oxygen", 1000)
+                .fluidOut("GenGas_SulfurDioxide", 1000)
+                .add(200, 64);
+        row("gt.recipe.mixer", "m7/nickel-matte-leach")
+                .in(dust("NickelMatte", 1))
+                .fluidIn("GenLiquid_SulfuricAcid", 1000, "Oxygen", 500, "DistW", 1000)
+                .fluidOut("GenLiquid_NickelCobaltSulfate", 1000)
+                .add(200, 64);
     }
 
     /** Oxidative sulfate leach leaves copper as the residue; nickel and cobalt report to the liquor. */
@@ -400,6 +426,31 @@ public final class BaseMetalRecipes {
                 .out(dust("Rhenium", 2))
                 .fluidIn("GenGas_Hydrogen", 4000)
                 .fluidOut("GenGas_Ammonia", 2000, "DistW", 4000)
+                .add(200, 64);
+    }
+
+    /**
+     * Sinks for the two by-products that had no route: the sulphur dioxide from every roast and
+     * matte blow, and the copper dross from lead softening. Vanadium pentoxide is the contact
+     * catalyst, so the acid returns to the existing leach rows; the dross returns to the copper
+     * electrorefinery at a loss instead of being voided.
+     */
+    private static void byproductSinks() {
+        row("gt.recipe.catalyticcracking", "m7/so2-oxidation")
+                .in(dust("VanadiumPentoxide", 1))
+                .fluidIn("GenGas_SulfurDioxide", 2000, "Oxygen", 1000)
+                .fluidOut("GenGas_SulfurTrioxide", 2000)
+                .keep(0)
+                .add(160, 48);
+        row("gt.recipe.mixer", "m7/so3-hydration")
+                .fluidIn("GenGas_SulfurTrioxide", 1000, "DistW", 1000)
+                .fluidOut("GenLiquid_SulfuricAcid", 1000)
+                .add(80, 24);
+        row("gt.recipe.calciner", "m7/copper-dross-recover")
+                .in(dust("CopperDross", 3))
+                .out(dust("CrudeCopper", 2), dust("Hematite", 1))
+                .fluidIn("Oxygen", 1500)
+                .fluidOut("GenGas_SulfurDioxide", 1500)
                 .add(200, 64);
     }
 

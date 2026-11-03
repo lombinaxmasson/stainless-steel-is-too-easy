@@ -12,6 +12,7 @@ public final class RareEarthRecipes {
     static void add() {
         oreLeaching();
         rareEarthExtraction();
+        residueRecovery();
         rareEarthMetals();
         rareEarthMagnets();
     }
@@ -140,6 +141,19 @@ public final class RareEarthRecipes {
                 .out(dust("TerbiumOxide", 1), dust("DysprosiumOxide", 1), dust("HeavyRareEarthResidue", 1))
                 .fluidOut("GenLiquid_DiethylhexylPhosphoricAcid", 950, "Dirty_Water", 500)
                 .add(160, 64);
+    }
+
+    /**
+     * The terbium/dysprosium centrifuge leaves one residue per batch. Two residues return to the
+     * heavy-group feed as one full 2000 mB chloride batch, so every pass halves the residue stock
+     * instead of recreating it. This is the residue's only outlet.
+     */
+    private static void residueRecovery() {
+        row("gt.recipe.mixer", "rare-earth/residue-recycle")
+                .in(dust("HeavyRareEarthResidue", 2))
+                .fluidIn("GenGas_HydrochloricAcid", 2000)
+                .fluidOut("GenLiquid_HeavyRareEarthChloride", 2000, "Dirty_Water", 1000)
+                .add(160, 48);
     }
 
     /** X2O3 + 6 HF -> 2 XF3 + 3 H2O, then 2 XF3 + 3 Ca -> 2 X + 3 CaF2. GT6CE spells lanthanum "Lanthanium". */

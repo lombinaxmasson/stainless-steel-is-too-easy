@@ -61,6 +61,13 @@ public final class PetrochemRecipes {
                 .fluidIn("GenLiquid_FurfuralExtract", 2200)
                 .fluidOut("GenLiquid_Furfural", 950, "GenLiquid_BTEX", 1200)
                 .add(120, 32);
+        // The reformate extract amounts to 2400 mB, so it needs its own strip row. Recovering 950 of
+        // 1000 mB keeps the same 95% return and leaves the 50 mB make-up loss of the pygas row.
+        row("gt.recipe.distillery", "furfural/strip-reformate")
+                .in(circuit(5))
+                .fluidIn("GenLiquid_FurfuralExtract", 2400)
+                .fluidOut("GenLiquid_Furfural", 950, "GenLiquid_BTEX", 1400)
+                .add(120, 32);
         row("gt.recipe.distillationtower", "btex/distill")
                 .fluidIn("GenLiquid_BTEX", 1000)
                 .fluidOut(fields("GenLiquid_Benzene", "GenLiquid_Toluene", "GenLiquid_Ethylbenzene", "GenLiquid_Xylene", "Fuel"),
@@ -117,6 +124,13 @@ public final class PetrochemRecipes {
                 .in(circuit(1))
                 .fluidIn("GenLiquid_SulfolaneExtract", 2300)
                 .fluidOut("GenLiquid_Sulfolane", 990, "GenLiquid_BTEX", 1300)
+                .add(120, 32);
+        // Reformate extraction yields 2500 mB of loaded solvent; without this row half the sulfolane
+        // route ends in an unprocessable extract. The 990/1000 return matches the pygas strip.
+        row("gt.recipe.distillery", "sulfolane/strip-reformate")
+                .in(circuit(6))
+                .fluidIn("GenLiquid_SulfolaneExtract", 2500)
+                .fluidOut("GenLiquid_Sulfolane", 990, "GenLiquid_BTEX", 1500)
                 .add(120, 32);
     }
 
