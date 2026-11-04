@@ -1,0 +1,261 @@
+{
+  "schema_version": 1,
+  "name": "液流堆 RFB–15",
+  "units": "blocks",
+  "up": "+Y",
+  "front": "-Z",
+  "nominal_envelope": [
+    5,
+    3,
+    3
+  ],
+  "integrated_in_game": false,
+  "structure_bound": false,
+  "stats": {
+    "bounds": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        5,
+        3.0,
+        3.0
+      ]
+    ],
+    "triangles": 5132,
+    "groups": 40,
+    "texture_size": [
+      512,
+      256
+    ]
+  },
+  "groups": [
+    "skid",
+    "deck",
+    "stack_support",
+    "stack_plates",
+    "stack_membranes",
+    "stack_endplates",
+    "stack_tie_rods",
+    "stack_guard",
+    "busbars",
+    "tank_feet",
+    "tank_a_shell",
+    "tank_a_front",
+    "tank_a_bands",
+    "tank_a_front_bands",
+    "tank_caps",
+    "tank_labels",
+    "electrolyte_a",
+    "tank_dip_tubes",
+    "tank_b_shell",
+    "tank_b_front",
+    "tank_b_bands",
+    "tank_b_front_bands",
+    "electrolyte_b",
+    "pump_a",
+    "supply_a",
+    "return_a",
+    "valves",
+    "pressure_gauges",
+    "pump_b",
+    "supply_b",
+    "return_b",
+    "converter",
+    "control_console",
+    "control_face",
+    "power_cable",
+    "port_a_in",
+    "port_a_out",
+    "port_b_in",
+    "port_b_out",
+    "power_port"
+  ],
+  "group_labels": {
+    "skid": "一体式钢底架",
+    "deck": "防滴漏接液盘",
+    "stack_support": "电堆承托",
+    "stack_plates": "石墨双极板叠片",
+    "stack_membranes": "浅色隔膜边缘",
+    "stack_endplates": "厚钢压紧端板",
+    "stack_tie_rods": "四根贯穿拉杆",
+    "stack_guard": "可拆上部保护罩",
+    "busbars": "绝缘座与铜母排",
+    "tank_a_shell": "A 侧负极液筒壳",
+    "tank_a_front": "A 侧前筒壳",
+    "tank_b_shell": "B 侧正极液筒壳",
+    "tank_b_front": "B 侧前筒壳",
+    "tank_a_bands": "A 侧后箍与封头",
+    "tank_a_front_bands": "A 侧前箍",
+    "tank_b_bands": "B 侧后箍与封头",
+    "tank_b_front_bands": "B 侧前箍",
+    "tank_feet": "储液筒支座",
+    "tank_labels": "双回路编号与液位计",
+    "electrolyte_a": "A 侧工作液示意",
+    "electrolyte_b": "B 侧工作液示意",
+    "tank_dip_tubes": "罐内回流管",
+    "tank_caps": "检修盖与呼吸帽",
+    "pump_a": "A 侧循环泵",
+    "pump_b": "B 侧循环泵",
+    "supply_a": "A 侧供液管",
+    "supply_b": "B 侧供液管",
+    "return_a": "A 侧回液管",
+    "return_b": "B 侧回液管",
+    "valves": "隔离阀与手柄",
+    "pressure_gauges": "双回路压力表",
+    "converter": "后部双向变流柜",
+    "control_console": "前置充放电控制柜",
+    "control_face": "充放电屏幕与旋钮",
+    "power_cable": "控制与电力线槽",
+    "port_a_in": "A 侧外接进液口",
+    "port_a_out": "A 侧外接回液口",
+    "port_b_in": "B 侧外接进液口",
+    "port_b_out": "B 侧外接回液口",
+    "power_port": "EU 双向电口"
+  },
+  "cutaway_hide": [
+    "tank_a_front",
+    "tank_b_front",
+    "tank_a_front_bands",
+    "tank_b_front_bands",
+    "tank_labels",
+    "stack_guard"
+  ],
+  "cutaway_triangles": 4704,
+  "ports": [
+    {
+      "id": "a_in",
+      "code": "01",
+      "label": "A 侧进液",
+      "role": "外部储罐连接候选",
+      "description": "独立工作液回路；仅为美术预留，实际路由和流体身份尚未接入。",
+      "cell": [
+        0,
+        0,
+        2
+      ],
+      "position": [
+        0.5,
+        0.5,
+        3
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "group": "port_a_in",
+      "color": "#7194b1"
+    },
+    {
+      "id": "a_out",
+      "code": "02",
+      "label": "A 侧回液",
+      "role": "外部储罐连接候选",
+      "description": "独立工作液回路；仅为美术预留，实际路由和流体身份尚未接入。",
+      "cell": [
+        0,
+        1,
+        2
+      ],
+      "position": [
+        0.5,
+        1.5,
+        3
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "group": "port_a_out",
+      "color": "#7194b1"
+    },
+    {
+      "id": "b_in",
+      "code": "03",
+      "label": "B 侧进液",
+      "role": "外部储罐连接候选",
+      "description": "独立工作液回路；仅为美术预留，实际路由和流体身份尚未接入。",
+      "cell": [
+        4,
+        0,
+        2
+      ],
+      "position": [
+        4.5,
+        0.5,
+        3
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "group": "port_b_in",
+      "color": "#9982ab"
+    },
+    {
+      "id": "b_out",
+      "code": "04",
+      "label": "B 侧回液",
+      "role": "外部储罐连接候选",
+      "description": "独立工作液回路；仅为美术预留，实际路由和流体身份尚未接入。",
+      "cell": [
+        4,
+        1,
+        2
+      ],
+      "position": [
+        4.5,
+        1.5,
+        3
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "group": "port_b_out",
+      "color": "#9982ab"
+    },
+    {
+      "id": "eu",
+      "code": "05",
+      "label": "EU 双向电口",
+      "role": "充电输入 / 放电输出候选",
+      "description": "同一电堆切换充放电，实际电网行为尚未实现。",
+      "cell": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        2.5,
+        0.5,
+        3
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "group": "power_port",
+      "color": "#bca16c"
+    }
+  ],
+  "texture_filter": "nearest",
+  "modes": [
+    "charge",
+    "discharge"
+  ],
+  "notes": [
+    "原创 HBM 风格美术；无 HBM 网格、UV 或贴图复制。",
+    "同一台整机切换充放电；静态 OBJ 不含能量机制或动画。",
+    "罐内颜色用于区分回路，不表示真实价态或初始荷电状态。",
+    "两只就地缓冲筒与外接储罐口为外观概念，非冻结的库存/多方块结构。",
+    "美术接口中心对齐方块，实际流体身份和进出路由待 U-15 实现。"
+  ]
+}

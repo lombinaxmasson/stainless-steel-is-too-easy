@@ -26,6 +26,8 @@ GregTech 6 Community Edition 的化工向附属。模组 id 是 `ssite`，依赖
 
 [U-10 燃料床 FR–10 与再生床 AR–10](art/chemical_looping_beds/README.md) 提供 HBM 风格 OBJ、像素图集与离线预览。两台各占 1×1 格，燃料床为 1.5 格高宽筒，再生床为 3 格高细提升管。两机流体口为小圆管，KU 接口按机壳配色，HU 为烟道口。燃料床投料与点火同口；已作为 `ssite:fuel_reactor` 与 `ssite:air_reactor` 接入批次行为、HU 热网与大 OBJ 渲染，两台机器均不打开 GUI。生成和检查命令见目录说明。
 
+[液流堆 RFB–15](art/flow_battery/README.md) 提供 HBM 风格的充放电整机 OBJ、512×256 像素图集与离线剖视预览，宽 5、深 3、高 3 格。双回路缓冲筒、循环泵、叠片电堆和双向电力柜独立分组，背面预留外接储罐与 EU 双向接口；尚未接入游戏结构或充放电行为。生成和检查命令见该目录说明。
+
 ## 环境
 
 Gradle 8.8 要用 JDK 17 启动，NeoForge 编译再用 JDK 21。本机如果默认 `java` 是 25，直接跑 `gradlew.bat` 会起不来。Windows 用仓库里的脚本，它会自己找这两个 JDK：
