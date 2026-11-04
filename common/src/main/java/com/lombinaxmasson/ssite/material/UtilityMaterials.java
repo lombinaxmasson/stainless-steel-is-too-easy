@@ -7,6 +7,9 @@ import java.util.List;
 /** U-01 gas treatment fluids, U-03 gasification fluids plus solid residue, and the U-05a FT oil. */
 public final class UtilityMaterials {
     public static final List<MaterialDeclaration> MATERIALS = List.of(
+            MaterialDeclaration.builder("RawNaturalGas")
+                    .displayName("Raw Natural Gas").color(0x9AA88A).chemicalFormula("CH4·C2H6·H2S·H2O")
+                    .meltingPointKelvin(85).boilingPointKelvin(125).density(0.00085F).gas().build(),
             MaterialDeclaration.builder("DehydratedNaturalGas")
                     .displayName("Dehydrated Natural Gas").color(0xC8D8E8).chemicalFormula("CH4·C2H6")
                     .meltingPointKelvin(90).boilingPointKelvin(130).density(0.0008F).gas().build(),

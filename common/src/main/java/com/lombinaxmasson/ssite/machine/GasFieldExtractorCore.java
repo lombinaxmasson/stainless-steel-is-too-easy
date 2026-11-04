@@ -10,6 +10,8 @@ import net.minecraft.world.level.Level;
 public final class GasFieldExtractorCore {
 
     public static final String MACHINE_TYPE = "gas_field_extractor";
+    /** The rig delivers untreated wellhead gas; only U-01 treatment makes it a burnable fuel. */
+    public static final String RAW_GAS = "GenGas_RawNaturalGas";
 
     public static final long KU_PER_TICK = 16, KU_CAPACITY = 6_400;
     public static final int TANK_CAPACITY = 8_000;

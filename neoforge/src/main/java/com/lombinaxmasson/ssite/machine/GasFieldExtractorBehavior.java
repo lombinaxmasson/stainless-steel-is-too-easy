@@ -51,7 +51,7 @@ public final class GasFieldExtractorBehavior implements MachineBehavior {
             return;
         }
 
-        FluidStack gas = AddonFluids.still("Gas_Natural", 1);
+        FluidStack gas = AddonFluids.still(GasFieldExtractorCore.RAW_GAS, 1);
         if (gas == null || gas.isEmpty()) {
             state.setInt(GasFieldExtractorCore.K_STATUS, GasFieldExtractorCore.ST_NO_FIELD);
             context.panel().working(false);
@@ -63,7 +63,7 @@ public final class GasFieldExtractorBehavior implements MachineBehavior {
             context.panel().working(false);
             return;
         }
-        int room = context.fluids().fill(OUT, AddonFluids.still("Gas_Natural", wanted), true);
+        int room = context.fluids().fill(OUT, AddonFluids.still(GasFieldExtractorCore.RAW_GAS, wanted), true);
         int amount = Math.min(wanted, room);
         if (amount <= 0) {
             state.setInt(GasFieldExtractorCore.K_STATUS, GasFieldExtractorCore.ST_OUTPUT_BLOCKED);
@@ -81,8 +81,8 @@ public final class GasFieldExtractorBehavior implements MachineBehavior {
             context.panel().working(false);
             return;
         }
-        context.fluids().fill(OUT, AddonFluids.still("Gas_Natural", amount), false);
-        int pushed = context.world().pushCompressedGas(Direction.UP, AddonFluids.still("Gas_Natural", amount));
+        context.fluids().fill(OUT, AddonFluids.still(GasFieldExtractorCore.RAW_GAS, amount), false);
+        int pushed = context.world().pushCompressedGas(Direction.UP, AddonFluids.still(GasFieldExtractorCore.RAW_GAS, amount));
         if (pushed > 0) context.fluids().drain(OUT, pushed, false);
         state.setInt(GasFieldExtractorCore.K_STATUS, GasFieldExtractorCore.ST_WORKING);
         state.setInt(GasFieldExtractorCore.K_BUDGET, GasFieldLedger.remaining(context.level(), context.pos()));

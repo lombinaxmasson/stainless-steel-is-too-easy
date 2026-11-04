@@ -8,10 +8,10 @@ import static com.lombinaxmasson.ssite.chemistry.ChemistryRecipes.row;
 import com.lombinaxmasson.ssite.machine.CoalGasifierCore;
 
 /**
- * U-01 natural-gas treatment, U-03 gasification and U-04 methanation. Raw {@code Gas_Natural} from
- * the host spring is dehydrated with triethylene glycol, sweetened with MDEA and stabilized into
- * pipeline gas; light ends keep feeding the existing C4/C5 chains and the acid gas is recovered as
- * sulfur.
+ * U-01 natural-gas treatment, U-03 gasification and U-04 methanation. {@code GenGas_RawNaturalGas}
+ * from the KU field rig and host {@code Gas_Natural} from pumps are dehydrated with triethylene
+ * glycol, sweetened with MDEA and stabilized into pipeline gas; light ends keep feeding the
+ * existing C4/C5 chains and the acid gas is recovered as sulfur.
  *
  * <p>Both solvents are regenerated at 95% per pass. The one-millibucket make-up per 1000 mB of raw
  * gas is covered by the synthesis rows below, so the treatment train has no consumable dead end.
@@ -62,7 +62,12 @@ public final class UtilityRecipes {
     }
 
     private static void gasTreatment() {
-        // TEG dehydrates the water-saturated raw gas; the rich glycol is boiled out and reused.
+        // The KU rig delivers untreated wellhead gas; host pumps still deliver Gas_Natural. Both
+        // enter the same TEG dehydration, so neither can bypass treatment and burn directly.
+        row("gt.recipe.mixer", "u01/dehydrate-raw")
+                .fluidIn("GenGas_RawNaturalGas", 1000, "GenLiquid_TriethyleneGlycol", 20)
+                .fluidOut("GenGas_DehydratedNaturalGas", 1000, "GenLiquid_RichGlycol", 20)
+                .add(80, 32);
         row("gt.recipe.mixer", "u01/dehydrate")
                 .fluidIn("Gas_Natural", 1000, "GenLiquid_TriethyleneGlycol", 20)
                 .fluidOut("GenGas_DehydratedNaturalGas", 1000, "GenLiquid_RichGlycol", 20)

@@ -56,6 +56,12 @@ public final class UtilityTests {
                         && dehydrate.fluidOutputs().equals(List.of(
                         fluid("GenGas_DehydratedNaturalGas", 1000), fluid("GenLiquid_RichGlycol", 20))),
                 "TEG dehydration keeps the raw gas volume and returns a separate rich glycol");
+        RecipeDeclaration rawDehydrate = row(rows, "u01/dehydrate-raw");
+        check(rawDehydrate.map().equals("gt.recipe.mixer")
+                        && rawDehydrate.fluidInputs().equals(List.of(
+                        fluid("GenGas_RawNaturalGas", 1000), fluid("GenLiquid_TriethyleneGlycol", 20)))
+                        && rawDehydrate.fluidOutputs().equals(dehydrate.fluidOutputs()),
+                "the gas-field raw gas enters the same TEG dehydration as host-pumped gas");
         RecipeDeclaration regenerate = row(rows, "u01/regenerate-glycol");
         check(regenerate.map().equals("gt.recipe.distillery")
                         && regenerate.fluidInputs().equals(List.of(fluid("GenLiquid_RichGlycol", 20)))
@@ -120,9 +126,9 @@ public final class UtilityTests {
         check(Math.abs(euPerMb - PIPELINE_EU_PER_MB) < 1e-9,
                 "pipeline fuel row carries 409.6 EU/mB");
         check(rows.stream().noneMatch(r -> r.map().startsWith("gt.recipe.fuels.")
-                        && r.fluidInputs().stream().anyMatch(f -> f.field().equals("Gas_Natural")
-                        || f.field().equals("Methane"))),
-                "the addon does not replace the host natural-gas or methane fuel rows");
+                        && r.fluidInputs().stream().anyMatch(f -> f.field().equals("GenGas_RawNaturalGas")
+                        || f.field().equals("Gas_Natural") || f.field().equals("Methane"))),
+                "no addon fuel row burns raw or untreated gas; the host natural-gas row is removed by data");
     }
 
     private static void mediaMakeupClosesLoop(List<RecipeDeclaration> rows) {

@@ -1,0 +1,6 @@
+{
+  "_comment": "Raw natural gas must pass U-01 treatment before it can burn; the KU field rig and host pumps both feed the treatment train.",
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.fuels.gas",
+  "fluid_inputs": [{ "fluid": "gt6ce:gas_natural_gas" }]
+}
