@@ -18,6 +18,7 @@ public final class SsiteJadePlugin implements IWailaPlugin {
         registration.registerBlockDataProvider(AdvancedProcessJadeProvider.INSTANCE, BlockEntity.class);
         registration.registerBlockDataProvider(PowderBedJadeProvider.INSTANCE, BlockEntity.class);
         registration.registerBlockDataProvider(ProcessEnvironmentJadeProvider.INSTANCE, BlockEntity.class);
+        registration.registerBlockDataProvider(ChemicalLoopingJadeProvider.INSTANCE, BlockEntity.class);
     }
 
     @Override public void registerClient(IWailaClientRegistration registration) {
@@ -28,5 +29,6 @@ public final class SsiteJadePlugin implements IWailaPlugin {
         registration.registerBlockComponent(AdvancedProcessJadeProvider.INSTANCE, Block.class);
         registration.registerBlockComponent(PowderBedJadeProvider.INSTANCE, Block.class);
         registration.registerBlockComponent(ProcessEnvironmentJadeProvider.INSTANCE, Block.class);
+        registration.registerBlockComponent(ChemicalLoopingJadeProvider.INSTANCE, Block.class);
     }
 }

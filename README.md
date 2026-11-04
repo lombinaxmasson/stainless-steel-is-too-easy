@@ -14,7 +14,7 @@ GregTech 6 Community Edition 的化工向附属。模组 id 是 `ssite`，依赖
 - **活泼与难熔金属**：VAR 电弧炉、钛钒氯化、锆铪分离、铌钽萃取。
 - **稀土与铀钍**：P204 / Aliquat 336 分级萃取、TBP 核纯与黄饼；钍燃料压坯/芯块，以及使用后棒拆解、钍铀回收与裂变产物固封。
 - **基础金属**：铜镍钴锍前段。
-- **供热与设备**：流化床工业供热及其独立 HU 热运输网络、小型炉与坩埚设备。
+- **供热与设备**：流化床工业供热及其独立 HU 热运输网络、化学链燃料床/再生床、小型炉与坩埚设备。
 
 配方、材料和进度以代码为准。本模组不包含 GT6 本体，单独安装不会生效。
 
@@ -23,6 +23,8 @@ GregTech 6 Community Edition 的化工向附属。模组 id 是 `ssite`，依赖
 [批次照射反应堆 IR–03](art/irradiation_reactor/README.md) 提供 HBM 风格原创 OBJ、像素图集与离线动画预览，严格采用 4×4 占地、4 格高度，装料、控制、KU 和 HU 四个接口对齐方块面中心。包含滑升屏蔽门、启停联锁、转台加减速和舱内工作灯，尚未接入游戏结构或渲染。生成和检查命令见该目录说明。
 
 [光刻机 LS–01](art/lithography_machine/README.md) 提供 HBM 风格原创 OBJ、512×256 像素图集与离线剖视预览，宽 5、深 4、高 4 格。双晶圆匣、侧置控制台、公用工程柜和内部曝光镜筒分别分组，尚未接入游戏结构或渲染。生成和检查命令见该目录说明。
+
+[U-10 燃料床 FR–10 与再生床 AR–10](art/chemical_looping_beds/README.md) 提供 HBM 风格 OBJ、像素图集与离线预览。两台各占 1×1 格，燃料床为 1.5 格高宽筒，再生床为 3 格高细提升管。两机流体口为小圆管，KU 接口按机壳配色，HU 为烟道口。燃料床投料与点火同口；已作为 `ssite:fuel_reactor` 与 `ssite:air_reactor` 接入批次行为、HU 热网与大 OBJ 渲染，两台机器均不打开 GUI。生成和检查命令见目录说明。
 
 ## 环境
 
@@ -73,7 +75,7 @@ $env:JAVA_HOME = $env:JAVA17_HOME
 .\scripts\build.ps1 :neoforge:build
 ```
 
-`compileBoth` 会编译两端并运行共用的 JVM 检查：熔池反应与坩埚行为（`unitTest`）、流化床燃料与热账（`fluidizedBedTest`）、HU 运输拓扑（`heatTransportTest`）、批次照射堆的批次与热量账（`irradiationReactorTest`）、光纤探头的目标/失联/完成脉冲状态机（`fiberProbeTest`）、离子注入与电子束批次账（`advancedProcessTest`）、粉末床的预留/气体/双输出/并行批次账（`powderBedTest`）、超净间房间与环境规则（`processEnvironmentTest`）、工程陶瓷/碳碳/烧蚀状态链与 P-01 高负荷批次契约（`engineeringMaterialTest`）、天然气净化闭环与管输气燃料/排气账（`utilityTest`）、气田计划与共享抽取预算（`gasFieldTest`）、煤气化器的预留/暂停/完成转换（`coalGasifierTest`），以及不启动图形窗口的 OBJ 渲染顶点检查（`furnaceRenderTest`、`fluidizedBedRenderTest`）。
+`compileBoth` 会编译两端并运行共用的 JVM 检查：熔池反应与坩埚行为（`unitTest`）、流化床燃料与热账（`fluidizedBedTest`）、HU 运输拓扑（`heatTransportTest`）、批次照射堆的批次与热量账（`irradiationReactorTest`）、光纤探头的目标/失联/完成脉冲状态机（`fiberProbeTest`）、离子注入与电子束批次账（`advancedProcessTest`）、粉末床的预留/气体/双输出/并行批次账（`powderBedTest`）、超净间房间与环境规则（`processEnvironmentTest`）、工程陶瓷/碳碳/烧蚀状态链与 P-01 高负荷批次契约（`engineeringMaterialTest`）、天然气净化闭环与管输气燃料/排气账（`utilityTest`）、气田计划与共享抽取预算（`gasFieldTest`）、煤气化器的预留/暂停/完成转换（`coalGasifierTest`）、化学链燃料床/再生床的载体、CO₂/水排空与磨损账（`chemicalLoopingTest`），以及不启动图形窗口的 OBJ 渲染顶点检查（`furnaceRenderTest`、`fluidizedBedRenderTest`、`chemicalLoopingRenderTest`）。
 
 `compileBoth` 和两端的 `build` 还会生成材料用途报告，并运行 `materialReportTest`。只更新报告可以执行：
 

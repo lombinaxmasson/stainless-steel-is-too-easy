@@ -1,0 +1,350 @@
+{
+  "schema_version": 1,
+  "name": "燃料床 · FR–10",
+  "units": "blocks",
+  "up": "+Y",
+  "front": "-Z",
+  "integrated_in_game": false,
+  "structure_bound": false,
+  "logical_block_count": 1,
+  "controller_cell": [
+    0,
+    0,
+    0
+  ],
+  "logical_block_bounds": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      1,
+      1
+    ]
+  ],
+  "game_translation": [
+    0,
+    0,
+    0
+  ],
+  "ports": [
+    {
+      "id": "ku",
+      "group": "ku_input",
+      "cell": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        0,
+        0.5,
+        0.5
+      ],
+      "normal": [
+        -1,
+        0,
+        0
+      ],
+      "face_bounds": [
+        [
+          0,
+          0.375,
+          0.375
+        ],
+        [
+          0,
+          0.625,
+          0.625
+        ]
+      ],
+      "projection_depth": 0.16,
+      "actions": [
+        "receive_ku"
+      ]
+    },
+    {
+      "id": "hu",
+      "group": "heat_out",
+      "cell": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        0.5,
+        0.5,
+        1
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "face_bounds": [
+        [
+          0.2,
+          0.2,
+          1
+        ],
+        [
+          0.8,
+          0.8,
+          1
+        ]
+      ],
+      "opening_bounds": [
+        [
+          0.25,
+          0.25,
+          1
+        ],
+        [
+          0.75,
+          0.75,
+          1
+        ]
+      ],
+      "actions": [
+        "emit_hu"
+      ]
+    },
+    {
+      "id": "solids",
+      "group": "carrier_out",
+      "cell": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        0.5,
+        0,
+        0.5
+      ],
+      "normal": [
+        0,
+        -1,
+        0
+      ],
+      "actions": [
+        "extract_carrier"
+      ]
+    },
+    {
+      "id": "feed",
+      "group": "feed_ignition",
+      "cell": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        0.5,
+        0.5,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "actions": [
+        "insert_fuel",
+        "insert_carrier",
+        "ignite"
+      ]
+    },
+    {
+      "id": "fluid",
+      "group": "fluid_out",
+      "cell": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        1,
+        0.5,
+        0.5
+      ],
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "face_bounds": [
+        [
+          1,
+          0.32,
+          0.32
+        ],
+        [
+          1,
+          0.68,
+          0.68
+        ]
+      ],
+      "shape": "round_pipe",
+      "outer_radius": 0.18,
+      "opening_radius": 0.12,
+      "recess_depth": 0.12,
+      "pipe_start": 0.73,
+      "actions": [
+        "emit_co2",
+        "emit_water"
+      ]
+    }
+  ],
+  "interface_policy": "Block-aligned art layout; runtime routing is not implemented.",
+  "nominal_envelope": [
+    1,
+    1.5,
+    1
+  ],
+  "texture_references": {
+    "port_ku": {
+      "source_path": "D:/Baobao/projects/dev/java/GregTech6CommunityEdition/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/generators/motor_liquid/overlay/sides.png",
+      "copied_input": "scripts/models/references/gt6_motor_liquid_sides.png",
+      "sha256": "763844cd3e9003c46357a10cbb0bd30644efabfb224d07de689a147481720a4d",
+      "original_size": [
+        16,
+        16
+      ],
+      "original_mode": "RGBA",
+      "crop": [
+        4,
+        4,
+        12,
+        12
+      ],
+      "transform": "Crop the native 8 x 8 connector; preserve its per-pixel Rec.709 luminance deviations from the crop mean at 0.9 contrast, add those deviations to the machine shell RGB, then enlarge to 64 x 64 with nearest sampling for a 0.25 x 0.25 block connector face.",
+      "display_fraction_of_face": 1,
+      "intended_face_size_blocks": [
+        0.25,
+        0.25
+      ],
+      "intended_symbol_size_blocks": [
+        0.25,
+        0.25
+      ],
+      "license": "CC0-1.0",
+      "license_source": "D:/Baobao/projects/dev/java/GregTech6CommunityEdition/GregTech6/core/src/main/resources/META-INF/licenses/original-gt6/LICENSE.assets",
+      "license_text": "Any assets, unless otherwise stated, are dedicated to the public domain according to the CC0 1.0 Universal Public Domain Dedication.",
+      "license_copy": "scripts/models/references/gt6-LICENSE.assets",
+      "full_license_source": "D:/Baobao/projects/dev/java/GregTech6CommunityEdition/GregTech6/core/src/main/resources/META-INF/licenses/original-gt6/COPYING.assets",
+      "full_license_copy": "scripts/models/references/gt6-COPYING.assets",
+      "usage_source": "User-supplied reference PNG; file SHA-256 matches the source PNG exactly.",
+      "tint_rgb": {
+        "fuel": [
+          106,
+          122,
+          112
+        ],
+        "air": [
+          119,
+          111,
+          77
+        ]
+      },
+      "luminance_contrast": 0.9,
+      "upstream_usage": "Liquid-motor side casing overlay, not a dedicated upstream KU input icon.",
+      "project_usage": "User-selected gray connector artwork on the physical KU interface."
+    }
+  },
+  "geometry_profile": {
+    "height": 1.5,
+    "shell_radius": 0.48,
+    "riser_radius": 0.48,
+    "bed_type": "bubbling"
+  },
+  "gauge_diameter": 0.2,
+  "groups": [
+    "windbox",
+    "carrier_out",
+    "shell",
+    "front_shell",
+    "lining",
+    "front_lining",
+    "bands",
+    "front_bands",
+    "crown",
+    "distributor",
+    "bed",
+    "particles",
+    "gauges",
+    "ku_input",
+    "heat_out",
+    "feed_ignition",
+    "fluid_out",
+    "ash_drawer"
+  ],
+  "group_labels": {
+    "windbox": "一体式底部风箱",
+    "carrier_out": "底部固体输出",
+    "shell": "后部筒壳",
+    "front_shell": "前部筒壳",
+    "lining": "耐火内衬",
+    "front_lining": "前部内衬",
+    "bands": "后部箍圈",
+    "front_bands": "前部箍圈",
+    "crown": "封头",
+    "distributor": "布风板",
+    "bed": "铁系载体床层",
+    "particles": "流化颗粒",
+    "gauges": "单表盘",
+    "ku_input": "GT6 灰方形 KU 接口",
+    "heat_out": "HU 烟道接口",
+    "feed_ignition": "共用投料与点火口",
+    "fluid_out": "CO2 / 水圆管出口",
+    "ash_drawer": "灰门"
+  },
+  "stats": {
+    "bounds": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1.5,
+        1
+      ]
+    ],
+    "triangles": 1680,
+    "groups": 18,
+    "texture_size": [
+      512,
+      256
+    ],
+    "finite_vertices": true,
+    "unit_normals": true,
+    "uv_in_atlas": true,
+    "consistent_winding": true,
+    "nondegenerate_triangles": true
+  },
+  "cutaway_hide": [
+    "front_shell",
+    "front_lining",
+    "front_bands",
+    "gauges",
+    "feed_ignition",
+    "crown"
+  ],
+  "cutaway_triangles": 1128,
+  "texture_filter": "nearest",
+  "pose": "Static assembled display; no animation stored in OBJ.",
+  "notes": [
+    "Original HBM-inspired art; no HBM mesh, UV or texture copied.",
+    "One logical block in a 1 x 1 footprint; fuel bed is wide/low, air riser is narrow/tall.",
+    "The lower windbox rests on the floor; no skid, pedestal, feet or service platform.",
+    "Single opaque atlas; fuel loading and ignition share one front opening.",
+    "Separate inventories and KU/HU interfaces must be implemented by each machine.",
+    "Both fluid connections are round pipe openings.",
+    "The KU motif matches the user-supplied GT6 motor side image, tinted to the vessel finish.",
+    "The HU opening matches the existing 0.5-block duct and 0.6-block flange."
+  ]
+}

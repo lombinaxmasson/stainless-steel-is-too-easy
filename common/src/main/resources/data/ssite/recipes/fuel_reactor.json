@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["SBS", "BCB", "SBS"],
+  "key": {
+    "S": {"item": "gt6ce:plate_steel"},
+    "B": {"item": "minecraft:iron_bars"},
+    "C": {"item": "minecraft:blast_furnace"}
+  },
+  "result": {
+    "item": "ssite:fuel_reactor",
+    "count": 1
+  }
+}

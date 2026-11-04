@@ -18,6 +18,8 @@ tasks.register('compileBoth') {
     dependsOn ':forge:utilityTest', ':neoforge:utilityTest'
     dependsOn ':forge:gasFieldTest', ':neoforge:gasFieldTest'
     dependsOn ':forge:coalGasifierTest', ':neoforge:coalGasifierTest'
+    dependsOn ':forge:chemicalLoopingTest', ':neoforge:chemicalLoopingTest',
+            ':forge:chemicalLoopingRenderTest', ':neoforge:chemicalLoopingRenderTest'
     dependsOn ':forge:materialReport', ':neoforge:materialReport'
     dependsOn ':forge:materialReportTest', ':neoforge:materialReportTest'
 }

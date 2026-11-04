@@ -32,6 +32,8 @@ public final class SsiteBehaviorMachines implements BehaviorMachineContributor {
         types.add(HeatTransportMachines.PLATE);
         types.add(GasFieldExtractorCore.MACHINE_TYPE);
         types.add(CoalGasifierCore.MACHINE_TYPE);
+        types.add(FuelReactorCore.MACHINE_TYPE);
+        types.add(AirReactorCore.MACHINE_TYPE);
         return types;
     }
 
@@ -48,6 +50,8 @@ public final class SsiteBehaviorMachines implements BehaviorMachineContributor {
         if (ProcessEnvironmentMachines.THERMOSTAT.equals(machineType)) return new CleanroomThermostatBehavior();
         if (GasFieldExtractorCore.MACHINE_TYPE.equals(machineType)) return new GasFieldExtractorBehavior();
         if (CoalGasifierCore.MACHINE_TYPE.equals(machineType)) return new CoalGasifierBehavior();
+        if (FuelReactorCore.MACHINE_TYPE.equals(machineType)) return new FuelReactorBehavior();
+        if (AirReactorCore.MACHINE_TYPE.equals(machineType)) return new AirReactorBehavior();
         if (HeatTransportMachines.isMachine(machineType)) return new HeatTransportBehavior();
         AodTier large = LargeAodStructure.tier(machineType);
         if (large != null) return new ArgonCrucibleBehavior(new LargeAodCore(large));

@@ -4,6 +4,8 @@ import com.lombinaxmasson.ssite.SsiteAddon;
 import com.lombinaxmasson.ssite.machine.AodTier;
 import com.lombinaxmasson.ssite.machine.VarFurnaceCore;
 import com.lombinaxmasson.ssite.machine.FluidizedBedCore;
+import com.lombinaxmasson.ssite.machine.FuelReactorCore;
+import com.lombinaxmasson.ssite.machine.AirReactorCore;
 import com.lombinaxmasson.ssite.machine.HeatTransportMachines;
 import com.lombinaxmasson.ssite.machine.IrradiationReactorCore;
 import com.mojang.logging.LogUtils;
@@ -27,6 +29,8 @@ public final class SsiteMachineClient implements BehaviorMachineClient {
         types.add(HeatTransportMachines.DUCT);
         types.add(HeatTransportMachines.PLATE);
         types.add(IrradiationReactorCore.MACHINE_TYPE);
+        types.add(FuelReactorCore.MACHINE_TYPE);
+        types.add(AirReactorCore.MACHINE_TYPE);
         TYPES = Set.copyOf(types);
     }
 
@@ -34,6 +38,7 @@ public final class SsiteMachineClient implements BehaviorMachineClient {
     private final FluidizedBedRenderer fluidizedBedRenderer;
     private final HeatTransportRenderer heatTransportRenderer;
     private final IrradiationReactorRenderer irradiationReactorRenderer;
+    private final ChemicalLoopingRenderer chemicalLoopingRenderer;
 
     public SsiteMachineClient() {
         MeshSink sink = null;
@@ -47,6 +52,7 @@ public final class SsiteMachineClient implements BehaviorMachineClient {
         fluidizedBedRenderer = new FluidizedBedRenderer(sink);
         heatTransportRenderer = new HeatTransportRenderer(sink);
         irradiationReactorRenderer = new IrradiationReactorRenderer(sink);
+        chemicalLoopingRenderer = new ChemicalLoopingRenderer(sink);
     }
 
     @Override
@@ -64,6 +70,8 @@ public final class SsiteMachineClient implements BehaviorMachineClient {
         if (FluidizedBedCore.MACHINE_TYPE.equals(machineType)) return fluidizedBedRenderer;
         if (HeatTransportMachines.isMachine(machineType)) return heatTransportRenderer;
         if (IrradiationReactorCore.MACHINE_TYPE.equals(machineType)) return irradiationReactorRenderer;
+        if (FuelReactorCore.MACHINE_TYPE.equals(machineType) || AirReactorCore.MACHINE_TYPE.equals(machineType))
+            return chemicalLoopingRenderer;
         return TYPES.contains(machineType) ? renderer : null;
     }
 }

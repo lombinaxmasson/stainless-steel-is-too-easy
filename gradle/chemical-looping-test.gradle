@@ -1,0 +1,21 @@
+def chemicalLoopingTest = tasks.register('chemicalLoopingTest', JavaExec) {
+    description = 'Checks the U-10 fuel/air batch ledgers, venting and carrier wear.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.machine.ChemicalLoopingTests'
+    jvmArgs '-ea'
+}
+
+def chemicalLoopingRenderTest = tasks.register('chemicalLoopingRenderTest', JavaExec) {
+    description = 'Checks both chemical-looping OBJ vessels and their runtime atlas resources.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.client.ChemicalLoopingRenderTests'
+    jvmArgs '-ea'
+}
+
+tasks.named('check').configure { dependsOn chemicalLoopingTest, chemicalLoopingRenderTest }

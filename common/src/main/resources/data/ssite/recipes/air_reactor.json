@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["BRB", "RCR", "BRB"],
+  "key": {
+    "B": {"item": "gt6ce:plate_bronze"},
+    "R": {"item": "minecraft:iron_bars"},
+    "C": {"item": "minecraft:cauldron"}
+  },
+  "result": {
+    "item": "ssite:air_reactor",
+    "count": 1
+  }
+}
