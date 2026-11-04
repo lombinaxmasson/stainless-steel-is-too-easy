@@ -7,3 +7,12 @@ Ns 1
 d 1
 illum 1
 map_Kd lithography_machine_atlas.png
+
+newmtl lithography_glass
+Ka 0.25 0.25 0.25
+Kd 1 1 1
+Ks 0.25 0.25 0.25
+Ns 64
+d 0.22
+illum 2
+map_Kd lithography_machine_atlas.png

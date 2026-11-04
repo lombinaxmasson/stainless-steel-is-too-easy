@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 4,
   "name": "SSITE optical lithography machine / LS-01",
   "units": "blocks",
   "up": "+Y",
@@ -36,7 +36,35 @@
   "ports": [
     {
       "id": "load_a",
-      "label": "晶圆装载 A",
+      "code": "01",
+      "label": "晶圆输入",
+      "role": "item_input",
+      "description": "前面矩形装载槽；晶圆送入设备。",
+      "color": "#b9c7b2",
+      "cell": [
+        1,
+        1,
+        0
+      ],
+      "position": [
+        1.5,
+        1.5,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "group": "load_input"
+    },
+    {
+      "id": "load_b",
+      "code": "02",
+      "label": "晶圆输出",
+      "role": "item_output",
+      "description": "前面矩形取料槽；加工后的晶圆从这里取出。",
+      "color": "#c3a264",
       "cell": [
         0,
         1,
@@ -52,31 +80,15 @@
         0,
         -1
       ],
-      "group": "load_ports"
-    },
-    {
-      "id": "load_b",
-      "label": "晶圆装载 B",
-      "cell": [
-        1,
-        1,
-        0
-      ],
-      "position": [
-        1.5,
-        1.5,
-        0
-      ],
-      "normal": [
-        0,
-        0,
-        -1
-      ],
-      "group": "load_ports"
+      "group": "load_output"
     },
     {
       "id": "control",
-      "label": "控制台",
+      "code": "03",
+      "label": "主控面板",
+      "role": "control",
+      "description": "前面内嵌屏幕和按钮；机器启停与状态查看。",
+      "color": "#91bfa4",
       "cell": [
         4,
         1,
@@ -96,47 +108,59 @@
     },
     {
       "id": "eu",
-      "label": "EU 输入",
+      "code": "04",
+      "label": "EU 电力输入",
+      "role": "energy_input",
+      "description": "正面主控下方的方形双触点插座；连接供电线路。",
+      "color": "#c8aa62",
       "cell": [
         4,
         0,
-        3
+        0
       ],
       "position": [
         4.5,
         0.5,
-        4
+        0
       ],
       "normal": [
         0,
         0,
-        1
+        -1
       ],
       "group": "eu_input"
     },
     {
       "id": "nitrogen",
-      "label": "氮气输入",
+      "code": "05",
+      "label": "N₂ 氮气输入",
+      "role": "fluid_input",
+      "description": "右侧小孔圆形快接；氮气流入设备。",
+      "color": "#a9b5aa",
       "cell": [
-        0,
-        1,
-        3
+        4,
+        2,
+        1
       ],
       "position": [
-        0.5,
-        1.5,
-        4
+        5,
+        2.5,
+        1.5
       ],
       "normal": [
+        1,
         0,
-        0,
-        1
+        0
       ],
       "group": "nitrogen_input"
     },
     {
       "id": "coolant_in",
+      "code": "06",
       "label": "冷却液输入",
+      "role": "fluid_input",
+      "description": "右侧蓝色大孔快接；冷却液流入设备。",
+      "color": "#75a6b5",
       "cell": [
         4,
         1,
@@ -156,7 +180,11 @@
     },
     {
       "id": "coolant_out",
+      "code": "07",
       "label": "冷却液回流",
+      "role": "fluid_output",
+      "description": "右侧赭色大孔快接；冷却液流出设备。",
+      "color": "#bc946b",
       "cell": [
         4,
         2,
@@ -177,8 +205,6 @@
   ],
   "groups": [
     "foundation",
-    "isolation_mounts",
-    "lower_cabinets",
     "chamber_rear",
     "chamber_left",
     "chamber_right",
@@ -187,73 +213,69 @@
     "amber_window",
     "front_details",
     "roof",
-    "fasteners",
-    "load_ports",
+    "load_input",
     "cassette_a",
+    "load_output",
     "cassette_b",
+    "work_wafer",
     "wafer_stage",
-    "exposure_wafer",
+    "stage_carriage",
+    "exposure_light",
     "optical_bridge",
     "projection_column",
     "reticle_stage",
-    "transfer_robot",
-    "transfer_wafer",
-    "laser_cover",
+    "arm_base",
+    "arm_lift",
+    "arm_upper",
+    "arm_forearm",
+    "arm_fork",
     "optical_feed",
-    "roof_filters",
-    "control_pedestal",
+    "utility_cabinet",
+    "utility_recess",
     "control_console",
     "control_screen",
     "controls",
-    "cable_tray",
-    "utility_cabinet",
-    "utility_pipes",
-    "coolant_input",
-    "coolant_return",
     "eu_input",
     "nitrogen_input",
-    "rear_service",
-    "status_tower"
+    "coolant_input",
+    "coolant_return"
   ],
   "group_labels": {
-    "foundation": "隔振基础与底架",
-    "isolation_mounts": "隔振支座",
-    "lower_cabinets": "下部设备柜",
+    "foundation": "整体隔振基座",
     "chamber_rear": "曝光舱后壁",
-    "chamber_left": "左侧装载与掩模柜",
-    "chamber_right": "可拆右侧舱壁",
-    "front_frame": "前部检修框",
+    "chamber_left": "装载舱厚壁",
+    "chamber_right": "曝光舱侧壁",
+    "front_frame": "厚板曝光舱正面",
     "window_bezel": "观察窗压框",
     "amber_window": "琥珀色观察窗",
-    "roof": "曝光舱顶盖",
-    "roof_filters": "顶部过滤风机",
-    "front_details": "门锁、警示与铭牌",
-    "load_ports": "双晶圆装载台",
-    "cassette_a": "A 晶圆匣",
-    "cassette_b": "B 晶圆匣",
-    "transfer_robot": "晶圆搬运机械臂",
-    "transfer_wafer": "搬运中的晶圆",
+    "roof": "整块顶盖",
+    "front_details": "设备铭牌",
+    "load_input": "01 晶圆输入槽",
+    "load_output": "02 晶圆输出槽",
+    "cassette_a": "输入伸缩托架",
+    "cassette_b": "输出伸缩托架",
+    "work_wafer": "单片加工晶圆",
+    "arm_base": "搬运臂固定座",
+    "arm_lift": "搬运臂升降套筒",
+    "arm_upper": "搬运臂上臂",
+    "arm_forearm": "搬运臂前臂",
+    "arm_fork": "晶圆承托叉",
     "optical_bridge": "曝光镜筒承重桥",
     "projection_column": "多级投影镜筒",
     "reticle_stage": "掩模版定位台",
     "wafer_stage": "XY 精密晶圆台",
-    "exposure_wafer": "曝光位晶圆",
+    "stage_carriage": "XY 扫描滑台与吸盘",
+    "exposure_light": "曝光工作指示光",
     "optical_feed": "封闭光路与光源柜",
-    "laser_cover": "后部光源外罩",
-    "control_pedestal": "独立控制台支柱",
-    "control_console": "斜面控制台",
-    "control_screen": "状态屏幕",
-    "controls": "键盘与急停按钮",
-    "status_tower": "三色状态灯塔",
-    "utility_cabinet": "右后公用工程柜",
-    "utility_pipes": "冷却与氮气管线",
-    "cable_tray": "电缆线槽",
-    "rear_service": "后侧检修板与散热格栅",
+    "control_console": "03 主控面板",
+    "control_screen": "主控显示屏",
+    "controls": "操作按钮",
+    "utility_cabinet": "一体式服务侧柱",
+    "utility_recess": "集中接口凹区",
     "eu_input": "EU 输入接口",
     "nitrogen_input": "氮气输入接口",
     "coolant_input": "冷却液输入接口",
-    "coolant_return": "冷却液回流接口",
-    "fasteners": "外露紧固件"
+    "coolant_return": "冷却液回流接口"
   },
   "stats": {
     "bounds": [
@@ -264,12 +286,12 @@
       ],
       [
         5,
-        4.0,
+        4,
         4
       ]
     ],
-    "triangles": 4836,
-    "groups": 38,
+    "triangles": 3192,
+    "groups": 35,
     "texture_size": [
       512,
       256
@@ -287,21 +309,100 @@
     "window_bezel",
     "amber_window",
     "roof",
-    "roof_filters",
     "front_details",
     "chamber_left",
-    "chamber_right",
-    "laser_cover",
-    "fasteners",
-    "status_tower"
+    "chamber_right"
   ],
-  "cutaway_triangles": 3404,
+  "cutaway_triangles": 2964,
+  "animation": {
+    "phase_seconds": {
+      "input_dock": 0.6,
+      "load": 1.1,
+      "lift_in": 0.6,
+      "transfer_in": 1.4,
+      "align": 0.65,
+      "release": 0.8,
+      "expose": 4.8,
+      "acquire": 0.8,
+      "lift_out": 0.6,
+      "transfer_out": 1.6,
+      "lower_out": 0.6,
+      "release_out": 0.8,
+      "unload": 1.1,
+      "complete": 0.8
+    },
+    "input_position": [
+      1.5,
+      1.45,
+      0.49
+    ],
+    "output_position": [
+      0.5,
+      1.45,
+      0.49
+    ],
+    "stage_position": [
+      2.77,
+      1.835,
+      2.47
+    ],
+    "park_position": [
+      1.5,
+      1.835,
+      1.5
+    ],
+    "arm_pivot": [
+      1.5,
+      1.77,
+      2.6
+    ],
+    "arm_bind_joint": [
+      0.7024580958702075,
+      1.77,
+      2.182954545454545
+    ],
+    "arm_bind_upper_angle": -2.6597826994891816,
+    "arm_bind_forearm_angle": -0.7081542307524615,
+    "upper_length": 0.9,
+    "forearm_length": 1.05,
+    "tray_travel": 0.69,
+    "transport_y": 1.94,
+    "transfer_z": 1.85,
+    "scan_x": 0.1,
+    "scan_z": 0.08,
+    "release_drop": 0.055,
+    "delivery_hidden_seconds": 0.25,
+    "preview_only": true,
+    "moving_groups": [
+      "cassette_a",
+      "cassette_b",
+      "work_wafer",
+      "arm_lift",
+      "arm_upper",
+      "arm_forearm",
+      "arm_fork",
+      "stage_carriage"
+    ],
+    "exposure_group": "exposure_light",
+    "screen_group": "control_screen",
+    "stop_policy": "Finish the current wafer and stop at the cycle boundary.",
+    "delivery_policy": "Hide the delivered wafer at the output, then introduce the next input wafer."
+  },
   "texture_filter": "nearest",
-  "pose": "Static assembled display; no animation stored in OBJ.",
+  "transparent_groups": {
+    "amber_window": {
+      "material": "lithography_glass",
+      "opacity": 0.22,
+      "casts_shadow": false
+    }
+  },
+  "pose": "Bind pose: trays extended, arm parked, wafer at input. Animation and idle visibility are stored separately.",
+  "design": "Monolithic industrial housing with recessed front operation and a consolidated side utility bay",
   "notes": [
     "Original HBM-inspired game art; no imported HBM mesh or texture.",
     "DUV-style refractive optical column, not an EUV mirror train; illustrative interior only.",
-    "Amber observation glass is opaque, fully compatible with one atlas material.",
+    "Amber observation glass uses its own translucent material; draw after opaque geometry with depth writes disabled.",
+    "The offline preview omits glass from the opaque shadow map; this is not physically based transmission.",
     "Grid-aligned art interfaces are proposed locations only; no game structure or port routing is changed."
   ]
 }
