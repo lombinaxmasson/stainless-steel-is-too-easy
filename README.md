@@ -90,4 +90,4 @@ Forge 发行 jar 是 SRG，开发运行会用 `fg.deobf` 转回 Mojang 名。在
 
 ## 许可
 
-本模组使用 GNU Lesser General Public License 第 3 版。
+本模组使用 GNU Lesser General Public License 第 3 版或（由你选择）任何更新版本，SPDX 标识为 `LGPL-3.0-or-later`。`LICENSE` 与 `COPYING` 分别是 LGPL-3.0 与 GPL-3.0 原文，也放在 jar 的 `META-INF/licenses/` 下。
