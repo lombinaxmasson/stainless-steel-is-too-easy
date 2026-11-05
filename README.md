@@ -1,6 +1,6 @@
 # Stainless Steel is Too Easy
 
-GregTech 6 Community Edition 的化工向附属。模组 id `ssite`，依赖 GT6CE（模组 id `gt6ce`），支持 Forge 1.20.1（Java 17）与 NeoForge 1.21.1（Java 21）。仍在开发中，尚未发布。
+GregTech 6 Community Edition 的化工向附属。模组 id `ssite`，依赖 GT6CE（模组 id `gt6ce`），支持 Forge 1.20.1（Java 17）与 NeoForge 1.21.1（Java 21）。当前为 alpha 预览版 `0.1.0-alpha.1`，配方、注册 ID 与接口仍可能变动，不保证存档兼容。
 
 ## 内容
 
