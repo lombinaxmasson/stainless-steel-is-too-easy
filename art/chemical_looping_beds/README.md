@@ -1,4 +1,4 @@
-# U-10 化学链燃料床与再生床
+# 化学链燃料床与再生床
 
 参考 HBM 的厚板圆筒和像素材质制作，保持简洁外观。两台均保留 **1×1 格占地**，燃料床为 **1.5 格高的矮宽鼓泡床**，再生床为 **3 格高的细长快速床／提升管**；没有基座、支脚、护栏或复杂外露管路。
 
@@ -6,14 +6,14 @@
 
 | 模型 | 可视包络（宽 × 高 × 深） | 主筒直径 | 三角面 | 部件 |
 | --- | --- | --- | --- | --- |
-| 燃料床 FR–10 | 1 × 1.5 × 1 | 0.96 格 | 1,680 | 18 |
-| 再生床 AR–10 | 1 × 3 × 1 | 下床 0.70 格，提升管 0.52 格 | 1,976 | 18 |
+| 燃料床 | 1 × 1.5 × 1 | 0.96 格 | 1,680 | 18 |
+| 再生床 | 1 × 3 × 1 | 下床 0.70 格，提升管 0.52 格 | 1,976 | 18 |
 
 [同尺度旋转对照](comparison.html)（本地生成）将两台放在同一场景，使用同一方块单位；[格线对照](comparison_grid.png) 显示高度差。预览中模型并列摆放，不表示两机之间有固定连接。
 
 ![两台机器同尺度对照](comparison.png)
 
-## 燃料床 FR–10
+## 燃料床
 
 ![燃料床](fuel_reactor/preview.png)
 
@@ -24,7 +24,7 @@
 
 正面投料与点火共用一个口，焦炭、木炭及赤铁矿粉从同处加入；下部保留灰门。宽筒内有布风板、较密的床料及低位流化颗粒。右侧为排出 CO₂ 和水的小圆管，底面预留固体输出。
 
-## 再生床 AR–10
+## 再生床
 
 ![再生床](air_reactor/preview.png)
 
@@ -80,4 +80,4 @@ python scripts/models/inspect_chemical_looping_beds.py --geometry-only
 
 本次不涉及 Java 实现；Forge / NeoForge 游戏内光照、渲染、碰撞、点火、通风板安装和机器行为尚未验证。
 
-2026-11-04 后续在 U-10 卡中把两套 OBJ 与图集接入 `common/src/main/resources/assets/ssite/`，并实现 `ssite:fuel_reactor`/`ssite:air_reactor` 的批次行为、HU 口与不打开 GUI 的交互；实机与客户端验收仍按 U 阶段末批次执行。`model.json` 里的 `integrated_in_game` 仍是生成时的美术状态，未手改生成产物。
+2026-11-04 后续把两套 OBJ 与图集接入 `common/src/main/resources/assets/ssite/`，并实现 `ssite:fuel_reactor`/`ssite:air_reactor` 的批次行为、HU 口与不打开 GUI 的交互；实机与客户端验收仍待统一批次执行。`model.json` 里的 `integrated_in_game` 仍是生成时的美术状态，未手改生成产物。
