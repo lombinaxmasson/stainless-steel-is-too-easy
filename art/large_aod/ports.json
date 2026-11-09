@@ -389,6 +389,11 @@
     "lid"
   ],
   "texture_filter": "nearest",
+  "texture_size": [
+    2048,
+    1024
+  ],
+  "texels_per_block": 64,
   "lid": {
     "group": "lid",
     "pivot": [

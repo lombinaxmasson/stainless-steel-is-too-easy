@@ -2,7 +2,7 @@
 
 参考 HBM 核工业设备的造型语言制作的原创低多边形模型。厚重的八角屏蔽舱、前部滑升装料门、侧置换热柱和独立仪表柜共同组成完整设备，顶部带索引驱动、螺栓顶盖与吊耳。灰绿机壳、暖灰屏蔽层、炭黑接缝配少量黄黑警示纹；仪表、铭牌和局部磨损使用像素贴图。
 
-**占地严格为 4×4 方块，高度 4 格。** 底座、静态模型和开门、旋转全过程都限制在 `(0,0,0)` 至 `(4,4,4)` 的包络内。接口中心位于整数方块格的外表面中心。它是美术资产及离线动画，尚未接入游戏；游戏中的结构判定、碰撞、接口位置和机器行为仍以现有 Java 实现为准。后续接入时需将这里的结构坐标映射到新的多方块判定。
+**占地严格为 4×4 方块，高度 4 格。** 底座、静态模型和开门、旋转全过程都限制在 `(0,0,0)` 至 `(4,4,4)` 的包络内。接口中心位于整数方块格的外表面中心。结构成型时，游戏渲染器使用这套 OBJ 和图集。结构判定、碰撞、接口位置和机器行为以 Java 实现为准。
 
 ![批次照射反应堆全貌](preview.png)
 
@@ -14,14 +14,14 @@
 | [irradiation_reactor.obj](irradiation_reactor.obj) | 完整模型，41 个具名部件、9,144 个三角面，平面法线；停机、门关闭的初始姿态 |
 | [irradiation_reactor_cutaway.obj](irradiation_reactor_cutaway.obj) | 隐去前半屏蔽壳与顶盖的剖视版本 |
 | [irradiation_reactor.mtl](irradiation_reactor.mtl) | 两份 OBJ 共用的材质定义 |
-| [irradiation_reactor_atlas.png](irradiation_reactor_atlas.png) | 512×256 RGB 像素图集，使用最近邻过滤 |
+| [irradiation_reactor_atlas.png](irradiation_reactor_atlas.png) | 2048×2048 RGB 像素图集，使用最近邻过滤 |
 | [model.json](model.json) | 方块包围盒、接口格与朝向、部件中英文对照、剖视隐藏列表、动画参数和网格检查结果 |
 | [irradiation_reactor_animation.js](irradiation_reactor_animation.js) | 可复用的启停、门锁、滑升门、转速和照明状态机；由生成器导出 |
 | [preview_cutaway.png](preview_cutaway.png) | 剖视截图 |
 | [preview_front.png](preview_front.png)、[preview_back.png](preview_back.png)、[preview_side.png](preview_side.png)、[preview_top.png](preview_top.png) | 正面、背面、右侧与俯视截图 |
 | [preview_running.png](preview_running.png)、[preview_running_cutaway.png](preview_running_cutaway.png) | 运行外观与内部照明 |
 | [preview_door_open.png](preview_door_open.png)、[preview_door_open_front.png](preview_door_open_front.png)、[preview_ports.png](preview_ports.png) | 开门姿态、正面通道与接口方块格 |
-| [preview_animation.gif](preview_animation.gif) | 从真实预览帧录制的开门、启停与剖视动画，压缩时间的过程演示；实际时序以交互预览为准 |
+| [preview_animation.gif](preview_animation.gif) | 上一版配色的开门、启停与剖视动画示意，实际时序以交互预览为准 |
 
 预览支持拖动旋转、滚轮缩放、五个预设视角、方块网格、接口格、部件高亮与剖视，以及启动/停机、装料门开关、暂停/继续和动画复位。键盘方向键旋转，`+` / `-` 缩放，`Home` 回到全貌。
 
@@ -61,7 +61,7 @@ D:\Baobao\projects\dev\java\Hbm-s-Nuclear-Tech-GIT\src\main\resources\assets\hbm
 
 参考点是厚板和粗管轮廓、低饱和工业配色、功能件分组及像素明暗边。模型和贴图均由本地脚本重新生成，生成过程不读取或复制 HBM 网格、UV 或贴图。
 
-在仓库根目录执行，使用 Python 3、Pillow；截图与交互检查另需 Playwright 及其 Chromium：
+生成使用 Python 3、NumPy 与 Pillow。交互截图另需 Playwright 及其 Chromium。开门、运行和接口格的演示截图沿用上一版配色，当前配色可在静态预览及本地生成的交互预览中查看。
 
 ```powershell
 python scripts/models/build_irradiation_reactor.py
@@ -70,6 +70,6 @@ python scripts/models/inspect_irradiation_reactor.py
 python scripts/models/inspect_irradiation_reactor.py --gif
 ```
 
-生成器的输入是 `scripts/models/build_irradiation_reactor.py`、`irradiation_reactor_ir03_materials.py`、`irradiation_reactor_ir03_viewer.html` 与 `irradiation_reactor_animation.js`，并复用同目录的几何原语、基础像素绘制函数和预览外壳样式。**修改这些输入再生成，不手改 OBJ、MTL、图集或预览。** `scripts/models/` 按仓库约定仅在本地维护，已被忽略；已入库的 OBJ、MTL、图集与截图可直接导入或查看，交互预览 `preview.html` 只在本地生成；只有包含这些脚本的工作副本可以重新生成。
+生成器的输入是 `scripts/models/build_irradiation_reactor.py`、`irradiation_reactor_style_c.py`、`model_surface_uv.py`、`irradiation_reactor_ir03_materials.py`、`irradiation_reactor_ir03_viewer.html` 与 `irradiation_reactor_animation.js`，并复用同目录的几何原语、基础像素绘制函数和预览外壳样式。C 风格按每格 64 像素重新展开，搭接缝、压筋与 5×5 像素钉头按面分配，控制屏、接口标记及放射警示保留原功能图案。详见[美术参考](../texture_style_reference/README.md)。**修改输入后重新生成 OBJ、MTL、图集或预览。** `scripts/models/` 按仓库约定仅在本地维护，已被忽略；已入库的 OBJ、MTL、图集与截图可直接导入或查看，交互预览 `preview.html` 只在本地生成；只有包含这些脚本的工作副本可以重新生成。
 
 生成检查覆盖有限坐标、单位法线、UV 范围、退化三角面、面序、部件集合、精确包络与接口坐标；独立检查脚本解析导出的 OBJ/MTL，验证动画阶段与联锁、变换后的顶点边界、光效分组、不同时间步长的一致性，并检查预览、剖视、视角、网格、部件选择、旋转缩放和窄屏布局。报告写入 `build/irradiation-reactor-qa/report.json`。双端游戏内渲染、碰撞和机器行为尚未验证。

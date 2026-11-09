@@ -1,15 +1,15 @@
 # 化学链燃料床与再生床
 
-参考 HBM 的厚板圆筒和像素材质制作，保持简洁外观。两台均保留 **1×1 格占地**，燃料床为 **1.5 格高的矮宽鼓泡床**，再生床为 **3 格高的细长快速床／提升管**；没有基座、支脚、护栏或复杂外露管路。
+参考 HBM 的厚板圆筒和像素材质制作。两台均保留 **1×1 格占地**，燃料床为 **1.5 格高的矮宽鼓泡床**，再生床为 **3 格高的细长快速床／提升管**。
 
-逻辑仍各占底部一个方块，上部只是外观。所有功能口的中心对齐底部逻辑方块面；机器、接口路由和游戏渲染尚未接入。
+逻辑仍各占底部一个方块，上部用于展示设备外观。所有功能口的中心对齐底部逻辑方块面，两台已接入游戏。
 
 | 模型 | 可视包络（宽 × 高 × 深） | 主筒直径 | 三角面 | 部件 |
 | --- | --- | --- | --- | --- |
 | 燃料床 | 1 × 1.5 × 1 | 0.96 格 | 1,680 | 18 |
 | 再生床 | 1 × 3 × 1 | 下床 0.70 格，提升管 0.52 格 | 1,976 | 18 |
 
-[同尺度旋转对照](comparison.html)（本地生成）将两台放在同一场景，使用同一方块单位；[格线对照](comparison_grid.png) 显示高度差。预览中模型并列摆放，不表示两机之间有固定连接。
+[同尺度旋转对照](comparison.html)（本地生成）将两台放在同一场景，使用同一方块单位。下方两张单机总览使用当前图集，同尺度静态图、格线图和分视角截图保留早期配色。
 
 ![两台机器同尺度对照](comparison.png)
 
@@ -18,7 +18,7 @@
 ![燃料床](fuel_reactor/preview.png)
 
 - [完整 OBJ](fuel_reactor/fuel_reactor.obj)、[剖视 OBJ](fuel_reactor/fuel_reactor_cutaway.obj)。
-- [MTL](fuel_reactor/fuel_reactor.mtl)、[512×256 像素图集](fuel_reactor/fuel_reactor_atlas.png)、[部件与坐标清单](fuel_reactor/model.json)。
+- [MTL](fuel_reactor/fuel_reactor.mtl)、[512×512 像素图集](fuel_reactor/fuel_reactor_atlas.png)、[部件与坐标清单](fuel_reactor/model.json)。
 - [离线交互预览](fuel_reactor/preview.html)（本地生成，不入库）。
 - [剖视](fuel_reactor/preview_cutaway.png)、[正面](fuel_reactor/preview_front.png)、[背面](fuel_reactor/preview_back.png)、[右侧](fuel_reactor/preview_side.png)、[俯视](fuel_reactor/preview_top.png)。
 
@@ -29,7 +29,7 @@
 ![再生床](air_reactor/preview.png)
 
 - [完整 OBJ](air_reactor/air_reactor.obj)、[剖视 OBJ](air_reactor/air_reactor_cutaway.obj)。
-- [MTL](air_reactor/air_reactor.mtl)、[512×256 像素图集](air_reactor/air_reactor_atlas.png)、[部件与坐标清单](air_reactor/model.json)。
+- [MTL](air_reactor/air_reactor.mtl)、[512×512 像素图集](air_reactor/air_reactor_atlas.png)、[部件与坐标清单](air_reactor/model.json)。
 - [离线交互预览](air_reactor/preview.html)（本地生成，不入库）。
 - [剖视](air_reactor/preview_cutaway.png)、[正面](air_reactor/preview_front.png)、[背面](air_reactor/preview_back.png)、[右侧](air_reactor/preview_side.png)、[俯视](air_reactor/preview_top.png)。
 
@@ -51,9 +51,11 @@ HU 口按现有热网烟道的 0.5 格管身与 0.6 格法兰尺寸制作，开�
 
 OBJ、MTL 和对应 PNG 保持在同一目录；使用不透明图集、平面法线、最近邻过滤和背面剔除。床料图案为静态像素纹理，不含运行状态或自发光行为。
 
+筒壳和金属箍采用 [C · 耐热压筋](../texture_style_reference/README.md)，以每格 64 像素按面展开。窄筒壁保留薄接缝，圆形表盘合为一张正投影图，KU 接口按实际 0.25×0.25 格适配方形图案。
+
 离线预览支持拖动旋转、缩放、五个视角、剖视、方块边界和部件高亮；方向键旋转、`+` / `-` 缩放、`Home` 复位。各自格线图：[燃料床](fuel_reactor/preview_grid.png)、[再生床](air_reactor/preview_grid.png)。预览内嵌网格和贴图，不访问 CDN。
 
-游戏接入仍需配置对应高度的渲染包围盒、遮挡剔除、碰撞和选中形状。两台之间的载体运输由玩家物流完成。
+两台之间的载体运输由玩家物流完成。
 
 ## 参考、生成与检查
 
@@ -63,10 +65,12 @@ KU 接口采用与用户附件一致的 `machines/generators/motor_liquid/overla
 
 这些原图来自本机 GT6CE 的 `core/src/main/resources/assets/gt6ce/textures/block/`；CC0-1.0 依据见该项目 `META-INF/licenses/original-gt6/LICENSE.assets` 与 `COPYING.assets`。实际使用的来源、许可、SHA-256 和裁剪范围均记录在 `model.json` 的 `texture_references`；其余网格和像素绘制由本模型输入生成。
 
-在仓库根目录执行，需要 Python 3 和 Pillow；完整检查还需要 Playwright 及 Chromium：
+在仓库根目录执行，需要 Python 3、Pillow 和 NumPy。完整离线预览检查还需要 Playwright 及 Chromium。
 
 ```powershell
 python scripts/models/build_chemical_looping_beds.py
+# 同步到游戏资源目录
+python scripts/models/build_chemical_looping_beds.py --install-runtime
 python scripts/models/inspect_chemical_looping_beds.py
 # 仅检查导出的文件：
 python scripts/models/inspect_chemical_looping_beds.py --geometry-only
@@ -80,4 +84,4 @@ python scripts/models/inspect_chemical_looping_beds.py --geometry-only
 
 本次不涉及 Java 实现；Forge / NeoForge 游戏内光照、渲染、碰撞、点火、通风板安装和机器行为尚未验证。
 
-2026-11-04 后续把两套 OBJ 与图集接入 `common/src/main/resources/assets/ssite/`，并实现 `ssite:fuel_reactor`/`ssite:air_reactor` 的批次行为、HU 口与不打开 GUI 的交互；实机与客户端验收仍待统一批次执行。`model.json` 里的 `integrated_in_game` 仍是生成时的美术状态，未手改生成产物。
+游戏从 `common/src/main/resources/assets/ssite/` 读取两套 OBJ 与图集。`ssite:fuel_reactor` 和 `ssite:air_reactor` 各自处理批次、HU 口和直接交互。

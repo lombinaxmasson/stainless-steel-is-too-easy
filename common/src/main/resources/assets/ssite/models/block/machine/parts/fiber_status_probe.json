@@ -3,7 +3,7 @@
   "textures": {
     "down": "ssite:block/machine/aod_converter/stainless_steel_bottom",
     "up": "ssite:block/machine/aod_converter/stainless_steel_top",
-    "north": "ssite:block/machine/precision_laser_workstation/front",
+    "north": "ssite:block/machine/fiber_controls/front",
     "south": "ssite:block/machine/aod_converter/stainless_steel_side",
     "east": "ssite:block/machine/aod_converter/stainless_steel_side",
     "west": "ssite:block/machine/aod_converter/stainless_steel_side",

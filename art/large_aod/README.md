@@ -2,16 +2,16 @@
 
 这版按世界方块的**接触面**对齐接口。圆管颈和法兰直接长在炉身上，不再使用独立方块端口箱。模型去掉了整机底座，炉底本身以 3×3 平面贴合下方燃烧室；炉身保留连续两格高的等截面柱段，前侧可连接浇铸口，顶部可翻盖投料。
 
-此模型已接入游戏，具有六个材料等级、HU、双气口、投料炉盖及浇铸能力。本目录保留原始模型与离线预览。
+此模型已接入游戏，具有六个材料等级、HU、双气口、投料炉盖及浇铸能力。本目录保存模型与离线预览。
 
 ## 文件
 
 - `large_aod.obj`：关盖状态，16 个命名对象，3,366 个三角面。
 - `large_aod_open.obj`：同一模型的开盖状态，便于静态导入和检查。
-- `large_aod.mtl`、`large_aod_atlas.png`：共用单材质和 256×128 像素图集；使用最近邻采样。
+- `large_aod.mtl`、`large_aod_atlas.png` 保存钢档的 2048×1024 像素图集，使用最近邻采样。
 - `ports.json`：接口平面范围、法向、整格连接位置、模具位置、柱段和炉盖转轴。
 - `preview.html`（本地生成，不入库）：离线 WebGL 2 预览，可旋转、缩放、开关炉盖、查看炉底和点选接触面。
-- `preview.png`：新版静态预览。
+- `preview.png` 为耐热压筋表面的离线预览。
 
 OBJ、MTL、PNG 保持在同一目录即可导入 Blender。开盖 OBJ 是可选状态快照，不要把两份完整炉体叠放。制作动画时使用关盖模型中的独立 `lid` 对象和清单里的轴心；OBJ 文件本身不存动画。
 
@@ -46,13 +46,15 @@ OBJ、MTL、PNG 保持在同一目录即可导入 Blender。开盖 OBJ 是可选
 
 ## 生成和检查
 
-在仓库根目录运行，依赖 Python 3 和 Pillow：
+在仓库根目录执行，依赖 Python 3、NumPy 和 Pillow。
 
 ```powershell
-python scripts/models/build_large_aod.py
+python scripts/models/build_large_aod.py --install
 ```
 
-`scripts/models/aod_vessel.py` 定义炉体几何，`build_large_aod.py` 负责图集、OBJ、清单及预览导出。固定随机种子确保贴图可复现。生成器检查：
+`scripts/models/aod_vessel.py` 定义炉体几何，`build_large_aod.py` 负责图集、OBJ、清单及预览导出。每格 64 像素，垂直炉壁绘制短压筋和固定 5×5 像素铆钉，斜肩、窄带箍和管口外周使用对应形状的金属纹理。固定随机种子确保图集可复现。
+
+生成器检查以下内容。
 
 - 坐标与法向有效、UV 位于图集内。
 - HU 面面积恰好为 9，两个气体及浇铸面各为 1，且接触面共面、边界为整数。
@@ -68,4 +70,4 @@ python scripts/models/inspect_large_aod.py --output .\build\large-aod-qa
 
 已覆盖旋转、缩放、炉底视图、接触面点选、浇铸面定位、开关盖动画、关盖后关闭投料标注、减少动态效果设置、736/360 像素宽度与明暗主题。
 
-本模型沿用第一版总结的 HBM 工业风格：暗灰钢板、铆钉、法兰、耐火内衬和少量黄色扶手。网格和贴图均为本项目原创，未复制 HBM 资产，按仓库 LGPL-3.0-or-later 许可提供。`scripts/models/install_large_aod.py` 将此模型安装到游戏资源并生成六套材料贴图。
+网格和贴图按仓库 LGPL-3.0-or-later 许可提供。用 `--install` 生成游戏 OBJ 和六档材料图集。`scripts/models/render_model_preview.py` 可从 OBJ 和钢档图集生成静态预览。

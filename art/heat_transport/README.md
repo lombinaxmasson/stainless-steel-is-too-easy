@@ -1,6 +1,6 @@
 # HU 输热管与独立加热板
 
-两种可单独放置的输热组件，与 [独立流化床塔体](../fluidized_bed/README.md) 共用原创 512×256 像素图集。几何由脚本生成，不使用 AI 图像或第三方模型。
+两种可单独放置的输热组件，与 [独立流化床塔体](../fluidized_bed/README.md) 共用原创 2048×2048 像素图集。三个 OBJ 一起分配 UV，纹理按每格 64 像素铺到管身、法兰和加热板上。几何由脚本生成，不使用 AI 图像或第三方模型。
 
 | 资源 | 几何与用途 |
 | --- | --- |
@@ -30,4 +30,4 @@ python scripts/models/inspect_fluidized_bed.py --smoke --input art/heat_transpor
 python scripts/models/inspect_fluidized_bed.py --smoke --input art/heat_transport/components.html --output art/heat_transport/components
 ```
 
-生成依赖 Python 3 与 Pillow；截图检查另需 Playwright 和 Chromium。生成器校验坐标、法线、UV、绕序、64 种连接开闭及单格加热面积。Java 渲染测试还检查真实 OBJ 的 QUADS 输出、光照传递、六向臂和九板接触面。
+生成依赖 Python 3、NumPy 与 Pillow；截图检查另需 Playwright 和 Chromium。生成器校验坐标、法线、UV、绕序、64 种连接开闭及单格加热面积。Java 渲染测试还检查真实 OBJ 的 QUADS 输出、光照传递、六向臂和九板接触面。

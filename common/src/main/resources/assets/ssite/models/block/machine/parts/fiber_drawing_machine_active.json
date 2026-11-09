@@ -2,8 +2,8 @@
   "parent": "minecraft:block/cube",
   "textures": {
     "down": "ssite:block/machine/aod_converter/stainless_steel_bottom",
-    "up": "ssite:block/machine/precision_laser_workstation/top_active",
-    "north": "ssite:block/machine/precision_laser_workstation/front_active",
+    "up": "ssite:block/machine/fiber_controls/top_active",
+    "north": "ssite:block/machine/fiber_controls/front_active",
     "south": "ssite:block/machine/aod_converter/stainless_steel_side",
     "east": "ssite:block/machine/aod_converter/stainless_steel_side",
     "west": "ssite:block/machine/aod_converter/stainless_steel_side",

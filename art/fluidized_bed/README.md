@@ -10,7 +10,7 @@
 | --- | --- |
 | `fluidized_bed_combustor.obj` | 完整模型；三角面，包含 UV、显式法线和命名部件 |
 | `fluidized_bed_combustor.mtl` | 单张 atlas 的标准 OBJ 材质定义 |
-| `fluidized_bed_combustor_atlas.png` | 512×256 RGB 像素贴图；8×4 个 64×64 材质块 |
+| `fluidized_bed_combustor_atlas.png` | 2048×2048 RGB 像素图集，与 HU 输热管和加热板共用 |
 | `fluidized_bed_combustor_cutaway.obj` | 独立剖视版本，显露床层、布风结构和耐火内衬 |
 | `preview.html`（本地生成，不入库） | 自包含 WebGL 2 交互预览，模型与贴图均内嵌，无 CDN 依赖 |
 | `preview.png` | 完整模型预览截图 |
@@ -37,7 +37,7 @@
 
 当前成型结构共 **71 块**：控制器 1、外壳 35、基础 33、内部/出口烟道 2，另留炉内 6 格空气。独立热管和 `ssite:heating_plate` 不属于塔体成型条件。加热板侧面进热、顶面出热，可并排形成 3×3 平坦供热面；详见独立组件目录。
 
-材质采用平面明暗与像素细节。贴图采样应设为 **Nearest / 最近邻**；Blender 的 Image Texture 节点可选择 **Closest**。生成时以 32px 逻辑网格绘制每块材质，再最近邻放大为 64px，因此细节以 2px 为单位。UV 已留出图块内缘，不宜重新自动展开或对整张 atlas 做模糊滤波。
+材质采用平面明暗与像素细节。贴图采样应设为 **Nearest / 最近邻**；Blender 的 Image Texture 节点可选择 **Closest**。C 风格的搭接缝与压筋按面绘制，统一每格 64 像素。筒壁宽立面用 5×5 像素钉头，窄箍和细筋采用连续金属色。每块 UV 岛四周留 3 像素边缘扩展。画法见[美术参考](../texture_style_reference/README.md)。
 
 ## 构成与部件命名
 
@@ -73,13 +73,13 @@
 
 ## 重新生成
 
-需要 Python 3 与 Pillow。在项目根目录执行：
+需要 Python 3、NumPy 与 Pillow。
 
 ```powershell
 python scripts/models/build_fluidized_bed.py
 ```
 
-几何与导出源为 `scripts/models/build_fluidized_bed.py`，贴图源为 `scripts/models/fluidized_bed_materials.py`，交互预览模板为 `scripts/models/fluidized_bed_viewer.html`。脚本会重新生成本目录的两份 OBJ、MTL、atlas、`model.json` 和 `preview.html`，并校验有限坐标、单位法线、UV 范围、退化面、三角形朝向、塔体范围与后侧接口位置。预览 PNG 是另行截取的展示图片，几何修改后应重新截图。
+几何与导出源为 `scripts/models/build_fluidized_bed.py`，C 风格贴图源为 `scripts/models/fluidized_bed_style_c.py`，共用展开逻辑为 `scripts/models/model_surface_uv.py`，功能贴纸源为 `scripts/models/fluidized_bed_materials.py`，交互预览模板为 `scripts/models/fluidized_bed_viewer.html`。脚本会重新生成本目录的两份 OBJ、MTL、atlas、`model.json` 和 `preview.html`，并校验有限坐标、单位法线、UV 范围、退化面、三角形朝向、塔体范围与后侧接口位置。展示 PNG 可从生成的 OBJ 与图集离线渲染，交互检查可另用下方脚本。
 
 同步游戏资源时运行：
 
@@ -87,7 +87,7 @@ python scripts/models/build_fluidized_bed.py
 python scripts/models/install_fluidized_bed.py
 ```
 
-安装脚本先重新生成塔体与独立组件，再写入 `assets/ssite/obj/` 和 `assets/ssite/textures/machine/fluidized_bed_combustor.png`，并生成五种原结构资源及 `heat_duct`、`heating_plate` 的 blockstate、方块/物品模型和从图集提取的像素贴图。旧 `fluidized_bed_heat_plate` 资源保留供兼容，当前塔体不再需要它。配方、语言文本与 Java 注册不由美术安装脚本维护。
+安装脚本先重新生成塔体与独立组件，再写入 `assets/ssite/obj/` 和 `assets/ssite/textures/machine/fluidized_bed_combustor.png`，并生成五种原结构资源及 `heat_duct`、`heating_plate` 的 blockstate、方块/物品模型。B 风格方块面由 `build_block_style_b.py` 独立生成。旧 `fluidized_bed_heat_plate` 资源保留供兼容，当前塔体不再需要它。配方、语言文本与 Java 注册不由美术安装脚本维护。
 
 交互检查另需 Python Playwright 与其 Chromium。完整检查覆盖旋转、缩放、四视角、剖视、部件高亮、网格及 736/360 像素下的明暗主题；结果保存到 `build/fluidized-bed-qa`：
 

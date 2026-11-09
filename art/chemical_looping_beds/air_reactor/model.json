@@ -4,7 +4,7 @@
   "units": "blocks",
   "up": "+Y",
   "front": "-Z",
-  "integrated_in_game": false,
+  "integrated_in_game": true,
   "structure_bound": false,
   "logical_block_count": 1,
   "controller_cell": [
@@ -195,7 +195,7 @@
       ]
     }
   ],
-  "interface_policy": "Block-aligned art layout; runtime routing is not implemented.",
+  "interface_policy": "Block-aligned layout used by the runtime mesh.",
   "nominal_envelope": [
     1,
     3,
@@ -217,7 +217,7 @@
         12,
         12
       ],
-      "transform": "Crop the native 8 x 8 connector; preserve its per-pixel Rec.709 luminance deviations from the crop mean at 0.9 contrast, add those deviations to the machine shell RGB, then enlarge to 64 x 64 with nearest sampling for a 0.25 x 0.25 block connector face.",
+      "transform": "Crop the 8 x 8 connector, preserve its luminance contrast and tint to the shell. Fit the square artwork to the physical 0.25 x 0.25 block face at 64 px per block.",
       "display_fraction_of_face": 1,
       "intended_face_size_blocks": [
         0.25,
@@ -236,14 +236,14 @@
       "usage_source": "User-supplied reference PNG; file SHA-256 matches the source PNG exactly.",
       "tint_rgb": {
         "fuel": [
-          106,
-          122,
-          112
+          86,
+          93,
+          87
         ],
         "air": [
-          119,
-          111,
-          77
+          104,
+          96,
+          76
         ]
       },
       "luminance_contrast": 0.9,
@@ -298,6 +298,73 @@
     "air_input": "无图标圆管空气入口",
     "exhaust": "短排气帽"
   },
+  "group_materials": {
+    "windbox": [
+      "dark"
+    ],
+    "carrier_out": [
+      "dark"
+    ],
+    "shell": [
+      "shell"
+    ],
+    "front_shell": [
+      "shell"
+    ],
+    "lining": [
+      "refractory"
+    ],
+    "front_lining": [
+      "refractory"
+    ],
+    "bands": [
+      "edge"
+    ],
+    "front_bands": [
+      "edge"
+    ],
+    "crown": [
+      "edge",
+      "shell"
+    ],
+    "distributor": [
+      "grate"
+    ],
+    "bed": [
+      "bed"
+    ],
+    "particles": [
+      "carrier"
+    ],
+    "gauges": [
+      "edge",
+      "gauge"
+    ],
+    "ku_input": [
+      "port_ku",
+      "shell"
+    ],
+    "heat_out": [
+      "edge",
+      "port_hu"
+    ],
+    "feed_input": [
+      "carrier",
+      "dark",
+      "edge",
+      "steel"
+    ],
+    "air_input": [
+      "black",
+      "dark",
+      "edge",
+      "shell"
+    ],
+    "exhaust": [
+      "dark",
+      "shell"
+    ]
+  },
   "stats": {
     "bounds": [
       [
@@ -315,7 +382,7 @@
     "groups": 18,
     "texture_size": [
       512,
-      256
+      512
     ],
     "finite_vertices": true,
     "unit_normals": true,
@@ -340,7 +407,7 @@
     "One logical block in a 1 x 1 footprint; fuel bed is wide/low, air riser is narrow/tall.",
     "The lower windbox rests on the floor; no skid, pedestal, feet or service platform.",
     "Single opaque atlas; fuel loading and ignition share one front opening.",
-    "Separate inventories and KU/HU interfaces must be implemented by each machine.",
+    "Each machine has its own inventory and KU/HU interfaces.",
     "Both fluid connections are round pipe openings.",
     "The KU motif matches the user-supplied GT6 motor side image, tinted to the vessel finish.",
     "The HU opening matches the existing 0.5-block duct and 0.6-block flange."

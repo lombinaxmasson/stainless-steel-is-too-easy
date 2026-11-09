@@ -48,15 +48,15 @@
     "groups": 42,
     "triangles": 5348,
     "faces": 3305,
-    "texture_size": [
-      512,
-      256
-    ],
     "finite_vertices": true,
     "unit_normals": true,
     "uv_in_atlas": true,
     "nondegenerate_triangles": true,
-    "consistent_winding": true
+    "consistent_winding": true,
+    "texture_size": [
+      2048,
+      2048
+    ]
   },
   "groups": [
     "skid",

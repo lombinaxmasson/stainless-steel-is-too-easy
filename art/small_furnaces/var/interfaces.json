@@ -1,7 +1,7 @@
 {
   "id": "var",
   "title": "VAR 电弧炉",
-  "revision": 3,
+  "revision": 4,
   "units": "blocks",
   "up": "+Y",
   "front": "-Z",
@@ -22,9 +22,9 @@
   "textures": {
     "size": [
       512,
-      256
+      512
     ],
-    "tile_size": 64,
+    "texels_per_block": 64,
     "side_texels": [
       48,
       64
@@ -322,7 +322,7 @@
     ],
     "open_angle_degrees": 90
   },
-  "runtime_integrated": false,
+  "runtime_integrated": true,
   "motion": {
     "type": "retract_park_hinge",
     "electrode_group": "electrode",

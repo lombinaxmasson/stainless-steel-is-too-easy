@@ -212,17 +212,17 @@
     ],
     "triangles": 9144,
     "groups": 41,
-    "texture_size": [
-      512,
-      256
-    ],
     "finite_vertices": true,
     "unit_normals": true,
     "uv_in_atlas": true,
     "nondegenerate_triangles": true,
     "consistent_winding": true,
     "within_grid_envelope": true,
-    "ports_at_cell_face_centers": true
+    "ports_at_cell_face_centers": true,
+    "texture_size": [
+      2048,
+      2048
+    ]
   },
   "groups": [
     "vessel_floor",

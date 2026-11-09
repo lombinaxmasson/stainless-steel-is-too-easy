@@ -1,15 +1,15 @@
-# 小型 AOD 与 VAR · 模型原型 03
+# 小型 AOD 与 VAR
 
 这两套模型延续大型 AOD 的低面数工业风格，炉身改为四个宽平面加四个切角面的八面柱。**底面完整 1×1，四个主侧面各保留 0.75 格宽、完整 1 格高的连续平面**。连接面贴合世界方块边界，铆钉、标志、接口圈和仪表画在贴图里，不占用平整面积。
 
-当前交付为 OBJ、贴图、接口清单和交互预览。AOD 已包含项目现有的六档材料自动换色。没有替换现有游戏模型或修改机器行为。
+本目录保存已接入游戏的 OBJ、贴图、接口清单和离线预览。小型 AOD 的六档材料共用几何和 UV。VAR 使用铜色炉套。
 
 ## 外观
 
 - **小型 AOD**：钢色八面柱下壳，深色切角装甲、耐火炉口、黄色把手、短气路和可翻开的炉盖。主模型 806 个三角面、14 个对象。
 - **VAR 电弧炉**：铜色八面柱炉套，深铜色切角装甲、陶瓷密封/绝缘环，石墨色电极、铜夹头、侧立柱及横梁滑架。开盖时先抬起电极，再移至前右角，最后翻开炉盖。主模型 1,086 个三角面、18 个对象。
 - **正面标志**：依据用户提供的 GT6CE 参考图重绘像素轮廓，保留青绿色主体和右下深色投影；AOD 中央加入琥珀色炉火，VAR 加入浅色电弧。标志直接在平面贴图内，另附可编辑 SVG。
-- **文字与光泽**：纹理从原生 32 像素小块重新绘制为 64 像素小块；AOD/VAR 使用手绘 5×7 字形、2 像素笔画。金属度与粗糙度贴图区分钢壳、铜、陶瓷、耐火砖及油漆标志。预览提供随视角变化的高光和简化摄影棚反射。
+- **耐热压筋表面**：各面按实长展开，密度为每格 64 像素。主侧面分别绘制接缝和 5×5 像素铆钉，窄切角、炉盖和包边使用对应形状的金属纹理。AOD/VAR 字样采用手绘 5×7 字形和 2 像素笔画，离线交互预览使用独立表面参数表现材质光泽。
 
 模型几何及机器表面纹理由本项目生成，没有复制 HBM 顶点或贴图。GT6CE 标志变体源自用户参考图，未将原标志归为本项目原创；来源也记录在 `interfaces.json` 的 `front_mark` 字段。
 
@@ -19,7 +19,7 @@
 
 - `small_aod.obj` / `small_var.obj`：关盖状态。
 - 对应的 `_open.obj`：开盖状态快照，供静态软件查看。
-- 对应的 `.mtl` 与 `_atlas.png`：按表面类型分配材质，共用 512×256 像素颜色图集，使用最近邻采样。
+- 对应的 `.mtl` 与 `_atlas.png` 保存 512×512 像素颜色图集，使用最近邻采样。
 - `_surface.png`：R=金属度，G=粗糙度，B=自发光；三个通道都是线性数据。
 - `_metallic.png` / `_roughness.png`：单独的灰度参数图，供材质编辑器使用。
 - `_specular.png`：OBJ/MTL 的镜面反射近似图；MTL 同时提供各表面的 `Ns`。
@@ -77,14 +77,14 @@ OBJ/MTL 的光泽是兼容性近似，各软件对 `map_Ks`、`Ns` 的支持不�
 
 AOD 直接翻盖。VAR 分三段：前 30% 将 `electrode` 组上提 0.3；30%～60% 将其平移 `(0.32,0,-0.32)`，停到上方方块的前右角；最后 40% 翻盖。关闭时逆序执行。悬杆 `suspension` 随上提缩短，横向滑架 `carriage` 随移位伸缩。具体变换以 `build_small_furnaces.py::posed` 为准，预览使用相同参数。
 
-这些是美术预览动作。现有 `SsiteLidPart` 只记录开关状态，正式接入时仍需新增对应客户端渲染及动作同步。
+离线预览和运行时 OBJ 共用上述几何分组。游戏中的炉盖状态来自 `SsiteLidPart`。
 
 ## 修改与验证
 
-仓库根目录执行，依赖 Python 3 和 Pillow：
+在仓库根目录执行，依赖 Python 3、NumPy 和 Pillow。
 
 ```powershell
-python scripts/models/build_small_furnaces.py
+python scripts/models/build_small_furnaces.py --install
 ```
 
 生成器复用同目录的基础几何方法；输出位于 `art/small_furnaces/`，不会覆盖大型 AOD。固定种子的像素纹理可复现。
@@ -95,7 +95,7 @@ python scripts/models/build_small_furnaces.py
 python scripts/models/build_small_furnaces.py --gt6-root ..\GregTech6CommunityEdition\GregTech6
 ```
 
-贴图、遮罩、表面参数和像素字的源代码位于 `scripts/models/small_furnace_materials.py`；调整配色无需手工编辑六份 PNG。未来游戏内也可复用中性底图与遮罩，由材料配置驱动同一套着色。
+用 `--install` 将关盖 OBJ 和颜色图集同步至游戏资源目录。表面绘制见 `scripts/models/furnace_surface_style.py`，材料遮罩和像素字见 `scripts/models/small_furnace_materials.py`。静态预览可用 `scripts/models/render_model_preview.py` 从对应 OBJ 和图集生成。
 
 生成时检查底面/四侧面积、侧面完整高度和居中宽度、切角边界、共面性、法向、UV、有限坐标、中央投料通道，以及 41 个动画位置的 1×1×2 边界。
 
