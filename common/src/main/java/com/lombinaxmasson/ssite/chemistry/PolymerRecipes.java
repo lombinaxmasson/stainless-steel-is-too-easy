@@ -220,7 +220,7 @@ public final class PolymerRecipes {
                 .add(120, 32);
         row("gt.recipe.mixer", "c3/methyl-methacrylate")
                 .fluidIn("GenLiquid_AcetoneCyanohydrin", 1000, "GenLiquid_Methanol", 1000, "GenLiquid_SulfuricAcid", 1000)
-                .fluidOut("GenLiquid_MethylMethacrylate", 1000, "Dirty_Water", 1000)
+                .fluidOut("GenLiquid_MethylMethacrylate", 1000, "GenLiquid_DirtyWater", 1000)
                 .add(200, 48);
     }
 
@@ -942,13 +942,13 @@ public final class PolymerRecipes {
                 .in(dust("HydroxylammoniumSulfate", 1))
                 .out(dust("CyclohexanoneOxime", 2))
                 .fluidIn("GenLiquid_Cyclohexanone", 2000, "GenGas_Ammonia", 2000)
-                .fluidOut("Dirty_Water", 2000)
+                .fluidOut("GenLiquid_DirtyWater", 2000)
                 .add(200, 48);
         row("gt.recipe.mixer", "c9/caprolactam")
                 .in(dust("CyclohexanoneOxime", 1))
                 .out(dust("Caprolactam", 1))
                 .fluidIn("GenLiquid_DisulfuricAcid", 500, "GenGas_Ammonia", 1000)
-                .fluidOut("Dirty_Water", 1000)
+                .fluidOut("GenLiquid_DirtyWater", 1000)
                 .add(160, 48);
         row("gt.recipe.mixer", "c9/nylon6")
                 .in(dust("Caprolactam", 1))

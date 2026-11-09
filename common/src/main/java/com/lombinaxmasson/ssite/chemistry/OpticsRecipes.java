@@ -79,7 +79,7 @@ public final class OpticsRecipes {
         row("gt.recipe.bath", label)
                 .in(item(input, "NeodymiumYAG", 1), dust(abrasive, 1))
                 .fluidIn("GenLiquid_UltrapureWater", 1000)
-                .fluidOut("Dirty_Water", 800)
+                .fluidOut("GenLiquid_DirtyWater", 800)
                 .out(item(output, "NeodymiumYAG", 1))
                 .add(120, 32);
     }

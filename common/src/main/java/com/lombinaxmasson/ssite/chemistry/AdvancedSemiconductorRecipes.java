@@ -44,7 +44,7 @@ public final class AdvancedSemiconductorRecipes {
                 .in(item("wafer", "Silicon", 1))
                 .fluidIn("GenGas_Ozone", 1000)
                 .out(item(WAFER, AdvancedSemiconductorMaterials.CLEANED, 1))
-                .fluidOut("Dirty_Water", 1000)
+                .fluidOut("GenLiquid_DirtyWater", 1000)
                 .add(200, 32);
         row("gt.recipe.calciner", "p03/oxidize")
                 .in(item(WAFER, AdvancedSemiconductorMaterials.CLEANED, 1))
@@ -67,25 +67,25 @@ public final class AdvancedSemiconductorRecipes {
                 .in(item(WAFER, AdvancedSemiconductorMaterials.EXPOSED, 1))
                 .fluidIn("GenLiquid_PhotoresistDeveloper", 1000)
                 .out(item(WAFER, AdvancedSemiconductorMaterials.DEVELOPED, 1))
-                .fluidOut("Dirty_Water", 1000)
+                .fluidOut("GenLiquid_DirtyWater", 1000)
                 .add(200, 32);
         row("gt.recipe.bath", "p03/develop-ebeam")
                 .in(item(WAFER, AdvancedSemiconductorMaterials.EBEAM_EXPOSED, 1))
                 .fluidIn("GenLiquid_PhotoresistDeveloper", 1000)
                 .out(item(WAFER, AdvancedSemiconductorMaterials.DEVELOPED, 1))
-                .fluidOut("Dirty_Water", 1000)
+                .fluidOut("GenLiquid_DirtyWater", 1000)
                 .add(200, 32);
         row("gt.recipe.bath", "p03/etch")
                 .in(item(WAFER, AdvancedSemiconductorMaterials.DEVELOPED, 1))
                 .fluidIn("GenLiquid_BufferedHydrofluoricAcid", 1000)
                 .out(item(WAFER, AdvancedSemiconductorMaterials.ETCHED, 1))
-                .fluidOut("Dirty_Water", 1000)
+                .fluidOut("GenLiquid_DirtyWater", 1000)
                 .add(300, 48);
         row("gt.recipe.bath", "p03/strip")
                 .in(item(WAFER, AdvancedSemiconductorMaterials.ETCHED, 1))
                 .fluidIn("GenLiquid_SulfuricAcid", 1000)
                 .out(item(WAFER, AdvancedSemiconductorMaterials.STRIPPED, 1))
-                .fluidOut("Dirty_Water", 1000)
+                .fluidOut("GenLiquid_DirtyWater", 1000)
                 .add(300, 48);
     }
 

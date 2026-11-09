@@ -1,6 +1,8 @@
 package com.lombinaxmasson.ssite.forge;
 
 import com.lombinaxmasson.ssite.SsiteAddon;
+import com.lombinaxmasson.ssite.forge.media.ForgeRecordItems;
+import com.lombinaxmasson.ssite.media.RecordNetwork;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -10,5 +12,7 @@ public final class SsiteForge {
         SsiteAddon.register();
         SsiteWorldgen.register(FMLJavaModLoadingContext.get().getModEventBus());
         SsiteCreativeTab.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ForgeRecordItems.register(FMLJavaModLoadingContext.get().getModEventBus());
+        RecordNetwork.register();
     }
 }

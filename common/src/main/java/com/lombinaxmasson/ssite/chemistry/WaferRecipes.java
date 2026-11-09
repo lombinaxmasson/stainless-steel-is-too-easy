@@ -95,7 +95,7 @@ public final class WaferRecipes {
                     + material.toLowerCase(Locale.ROOT))
                     .in(item("wafer", material, 1), dust(abrasive, 1))
                     .fluidIn("GenLiquid_UltrapureWater", 1000)
-                    .fluidOut("Dirty_Water", 800)
+                    .fluidOut("GenLiquid_DirtyWater", 800)
                     .out(item("wafer", material, 1))
                     .add(120, 32);
         }

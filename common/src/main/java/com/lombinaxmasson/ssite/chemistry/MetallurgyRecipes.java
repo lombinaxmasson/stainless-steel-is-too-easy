@@ -119,13 +119,13 @@ public final class MetallurgyRecipes {
                 .out(dust("Zirconia", 4))
                 .fluidIn("GenLiquid_ZirconylChlorideSolution", 5000,
                         "GenLiquid_MethylIsobutylKetone", 1000, "GenGas_Ammonia", 1000)
-                .fluidOut("GenLiquid_HafniumExtract", 1000, "Dirty_Water", 4000)
+                .fluidOut("GenLiquid_HafniumExtract", 1000, "GenLiquid_DirtyWater", 4000)
                 .add(200, 64);
         // The centrifuge has one fluid input; the mixer fits the acid strip and MIBK return.
         row("gt.recipe.mixer", "zircon/hafnium-strip")
                 .out(dust("Hafnia", 1))
                 .fluidIn("GenLiquid_HafniumExtract", 1000, "GenLiquid_SulfuricAcid", 500)
-                .fluidOut("GenLiquid_MethylIsobutylKetone", 950, "Dirty_Water", 500)
+                .fluidOut("GenLiquid_MethylIsobutylKetone", 950, "GenLiquid_DirtyWater", 500)
                 .add(160, 64);
     }
 
@@ -169,7 +169,7 @@ public final class MetallurgyRecipes {
                 .in(dust("Coltan", 2))
                 .out(dust("Pyrolusite", 1))
                 .fluidIn("GenGas_HydrogenFluoride", 6000, "GenLiquid_SulfuricAcid", 1000)
-                .fluidOut("GenLiquid_NbTaLeachLiquor", 2000, "Dirty_Water", 1000)
+                .fluidOut("GenLiquid_NbTaLeachLiquor", 2000, "GenLiquid_DirtyWater", 1000)
                 .add(200, 64);
         row("gt.recipe.calciner", "columbite/leach")
                 .in(dust("Columbite", 2))
@@ -194,7 +194,7 @@ public final class MetallurgyRecipes {
     private static void niobiumTantalumSeparation() {
         row("gt.recipe.mixer", "niobium-tantalum/extract")
                 .fluidIn("GenLiquid_NbTaLeachLiquor", 2000, "GenLiquid_MethylIsobutylKetone", 2000)
-                .fluidOut("GenLiquid_NbTaMibkExtract", 2000, "Dirty_Water", 2000)
+                .fluidOut("GenLiquid_NbTaMibkExtract", 2000, "GenLiquid_DirtyWater", 2000)
                 .add(160, 64);
         row("gt.recipe.mixer", "niobium/strip")
                 .out(dust("NiobiumPentoxide", 1))
@@ -274,7 +274,7 @@ public final class MetallurgyRecipes {
                 .in(dust("RedMud", 3))
                 .out(dust("Hematite", 1), dust("Rutile", 1), dust("SiliconDioxide", 1))
                 .fluidIn("GenLiquid_SulfuricAcid", 2000)
-                .fluidOut("Dirty_Water", 1000)
+                .fluidOut("GenLiquid_DirtyWater", 1000)
                 .add(160, 32);
     }
 

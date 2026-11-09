@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PCP",
+    "SMS",
+    "PBP"
+  ],
+  "key": {
+    "P": {"item": "gt6ce:plate_stainlesssteel"},
+    "C": {"item": "gt6ce:circuit_basic"},
+    "S": {"item": "ssite:record_stylus_bluesapphire"},
+    "M": {"item": "gt6ce:casing_machine_stainlesssteel"},
+    "B": {"item": "gt6ce:cable_01_copper"}
+  },
+  "result": {
+    "item": "ssite:record_lathe"
+  }
+}

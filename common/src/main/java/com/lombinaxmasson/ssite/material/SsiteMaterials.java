@@ -29,7 +29,9 @@ public final class SsiteMaterials implements AddonMaterialContributor {
             "programTemplate", "filterCartridge", "ceramicBatch", "ceramicGreenBody",
             "ceramicSintered", "ceramicClamp", "carbonFiberPreform", "carbonCarbonImpregnated",
             "carbonCarbonCarbonized", "carbonCarbonDensified", "carbonCarbonSetter",
-            "ablativeBillet", "ablativeBackingBlank", "ablativeBacking", "ablativeBackingSpent"};
+            "ablativeBillet", "ablativeBackingBlank", "ablativeBacking", "ablativeBackingSpent",
+            "recordBlank", "recordLacquer", "recordCutMaster", "recordStamper", "recordStylus",
+            "recordTemplate", "discBase", "discCoated", "discReflective", "discBlank"};
 
     public static final List<MaterialDeclaration> MATERIALS = buildMaterials();
 
@@ -81,6 +83,10 @@ public final class SsiteMaterials implements AddonMaterialContributor {
                 MaterialDeclaration.builder("ClarifiedWater")
                         .displayName("Clarified Water").color(0x5B9BD5).chemicalFormula("H2O")
                         .meltingPointKelvin(273).boilingPointKelvin(373).density(1.0F).liquid().build(),
+                // 1.0.6 retires the host Dirty_Water field; the addon keeps its own wastewater identity.
+                MaterialDeclaration.builder("DirtyWater")
+                        .displayName("Dirty Water").color(0x6B5A3A).chemicalFormula("H2O·Waste")
+                        .meltingPointKelvin(273).boilingPointKelvin(373).density(1.05F).liquid().build(),
                 MaterialDeclaration.builder("DemineralizedWater")
                         .displayName("Demineralized Water").color(0x6FB1E8).chemicalFormula("H2O")
                         .meltingPointKelvin(273).boilingPointKelvin(373).density(1.0F).liquid().build(),
@@ -258,6 +264,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         materials.addAll(ProcessEnvironmentMaterials.MATERIALS);
         materials.addAll(EngineeringMaterials.MATERIALS);
         materials.addAll(UtilityMaterials.MATERIALS);
+        materials.addAll(RecordMaterials.MATERIALS);
         return List.copyOf(materials);
     }
 
@@ -288,6 +295,7 @@ public final class SsiteMaterials implements AddonMaterialContributor {
         prefixes.addAll(FiberOpticMaterials.PREFIXES);
         prefixes.addAll(ProcessEnvironmentMaterials.PREFIXES);
         prefixes.addAll(EngineeringMaterials.PREFIXES);
+        prefixes.addAll(RecordMaterials.PREFIXES);
         return List.copyOf(prefixes);
     }
 

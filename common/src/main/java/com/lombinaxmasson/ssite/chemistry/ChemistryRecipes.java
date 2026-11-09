@@ -69,6 +69,7 @@ public final class ChemistryRecipes {
             ProcessEnvironmentRecipes.add();
             EngineeringMaterialRecipes.add();
             UtilityRecipes.add();
+            RecordRecipes.add();
             return List.copyOf(declarations);
         } finally {
             if (previous == null) COLLECTOR.remove();

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "ssite:block/machine/record_lathe/bottom",
+    "up": "ssite:block/machine/record_lathe/top",
+    "north": "ssite:block/machine/record_lathe/front",
+    "south": "ssite:block/machine/record_lathe/back",
+    "east": "ssite:block/machine/record_lathe/side",
+    "west": "ssite:block/machine/record_lathe/side",
+    "particle": "ssite:block/machine/record_lathe/side"
+  }
+}

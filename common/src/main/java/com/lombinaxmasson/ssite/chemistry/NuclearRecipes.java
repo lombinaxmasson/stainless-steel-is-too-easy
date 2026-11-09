@@ -41,18 +41,18 @@ public final class NuclearRecipes {
                 .keep(0)
                 .fluidIn("GenLiquid_UranylSulfateSolution", 4000, "GenGas_Ammonia", 2000)
                 .out(dust("Yellowcake", 1))
-                .fluidOut("Dirty_Water", 3000)
+                .fluidOut("GenLiquid_DirtyWater", 3000)
                 .add(240, 48);
 
         row("gt.recipe.mixer", "nuclear/yellowcake-dissolve")
                 .in(dust("Yellowcake", 1))
                 .fluidIn("GenLiquid_NitricAcid", 3000)
-                .fluidOut("GenLiquid_UranylNitrateSolution", 2000, "Dirty_Water", 1000)
+                .fluidOut("GenLiquid_UranylNitrateSolution", 2000, "GenLiquid_DirtyWater", 1000)
                 .add(160, 48);
 
         row("gt.recipe.mixer", "nuclear/tbp-uranium")
                 .fluidIn("GenLiquid_UranylNitrateSolution", 2000, "GenLiquid_TributylPhosphate", 1000)
-                .fluidOut("GenLiquid_TbpUraniumExtract", 1000, "Dirty_Water", 2000)
+                .fluidOut("GenLiquid_TbpUraniumExtract", 1000, "GenLiquid_DirtyWater", 2000)
                 .add(160, 64);
 
         row("gt.recipe.mixer", "nuclear/uranium-strip")
@@ -76,12 +76,12 @@ public final class NuclearRecipes {
         row("gt.recipe.mixer", "nuclear/thorium-dissolve")
                 .in(dust("ThoriumConcentrate", 1))
                 .fluidIn("GenLiquid_NitricAcid", 3000)
-                .fluidOut("GenLiquid_ThoriumNitrateSolution", 2000, "Dirty_Water", 1000)
+                .fluidOut("GenLiquid_ThoriumNitrateSolution", 2000, "GenLiquid_DirtyWater", 1000)
                 .add(160, 48);
 
         row("gt.recipe.mixer", "nuclear/tbp-thorium")
                 .fluidIn("GenLiquid_ThoriumNitrateSolution", 2000, "GenLiquid_TributylPhosphate", 1000)
-                .fluidOut("GenLiquid_TbpThoriumExtract", 1000, "Dirty_Water", 2000)
+                .fluidOut("GenLiquid_TbpThoriumExtract", 1000, "GenLiquid_DirtyWater", 2000)
                 .add(160, 64);
 
         row("gt.recipe.mixer", "nuclear/thorium-strip")

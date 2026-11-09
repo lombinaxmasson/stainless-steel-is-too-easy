@@ -38,7 +38,7 @@ public final class WaterRecipes {
                     .in(dust(pulp, 2))
                     .out(dust("CelluloseAcetate", 2))
                     .fluidIn("Vinegar_Grape", 2000, "GenLiquid_SulfuricAcid", 250)
-                    .fluidOut("Dirty_Water", 1000)
+                    .fluidOut("GenLiquid_DirtyWater", 1000)
                     .add(160, 30);
         }
         row("gt.recipe.press", "cellulose-acetate/plate")
@@ -70,9 +70,10 @@ public final class WaterRecipes {
     }
 
     private static void clarifiedWater() {
-        for (String source : new String[]{"Water", "River_Water", "Dirty_Water"}) {
+        for (String source : new String[]{"Water", "GenLiquid_DirtyWater"}) {
+            String label = source.equals("GenLiquid_DirtyWater") ? "DirtyWater" : source;
             for (String flocculant : new String[]{"Alum", "VitriolOfClay"}) {
-                row("gt.recipe.bath", "clarified/" + source + "/" + flocculant)
+                row("gt.recipe.bath", "clarified/" + label + "/" + flocculant)
                         .in(dust(flocculant, 1))
                         .fluidIn(source, 4000)
                         .fluidOut("GenLiquid_ClarifiedWater", 3600, "GenLiquid_Sludge", 400)
@@ -85,12 +86,12 @@ public final class WaterRecipes {
         row("gt.recipe.drying", "sludge/dry")
                 .out(dust("Clay", 1))
                 .fluidIn("GenLiquid_Sludge", 1000)
-                .fluidOut("Biomass", 250, "Dirty_Water", 500)
+                .fluidOut("Biomass", 250, "GenLiquid_DirtyWater", 500)
                 .add(120, 16);
         row("gt.recipe.centrifuge", "sludge/centrifuge")
                 .out(dust("Clay", 2), dust("Sand", 1), item("dustTiny", "RareEarth", 1))
                 .fluidIn("GenLiquid_Sludge", 2000)
-                .fluidOut("Biomass", 500, "Dirty_Water", 1000)
+                .fluidOut("Biomass", 500, "GenLiquid_DirtyWater", 1000)
                 .chances(10000, 10000, 2500)
                 .add(160, 24);
     }
@@ -149,20 +150,16 @@ public final class WaterRecipes {
     }
 
     private static void concentrateBrine() {
-        row("gt.recipe.distillationtower", "brine/ocean")
+        // 1.0.6 retires the host Ocean fluid; its Saltwater field carries the same route.
+        row("gt.recipe.distillationtower", "brine/saltwater")
                 .out(dust("Salt", 2), dust("Gypsum", 1))
-                .fluidIn("Ocean", 10000)
+                .fluidIn("Saltwater", 10000)
                 .fluidOut("DistW", 7500, "GenLiquid_Brine", 2000)
                 .add(200, 48);
-        row("gt.recipe.distillationtower", "brine/saltwater")
-                .out(dust("Salt", 1))
-                .fluidIn("Saltwater", 5000)
-                .fluidOut("DistW", 3500, "GenLiquid_Brine", 1000)
-                .add(120, 32);
-        row("gt.recipe.distillery", "brine/ocean-early")
+        row("gt.recipe.distillery", "brine/saltwater-early")
                 .in(circuit(2))
                 .out(item("dustSmall", "Gypsum", 1))
-                .fluidIn("Ocean", 2000)
+                .fluidIn("Saltwater", 2000)
                 .fluidOut("DistW", 1400, "GenLiquid_Brine", 400)
                 .add(100, 16);
     }

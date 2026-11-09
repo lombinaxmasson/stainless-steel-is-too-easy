@@ -20,6 +20,10 @@ tasks.register('compileBoth') {
     dependsOn ':forge:coalGasifierTest', ':neoforge:coalGasifierTest'
     dependsOn ':forge:chemicalLoopingTest', ':neoforge:chemicalLoopingTest',
             ':forge:chemicalLoopingRenderTest', ':neoforge:chemicalLoopingRenderTest'
+    dependsOn ':forge:recordIndustryTest', ':neoforge:recordIndustryTest'
+    dependsOn ':forge:recordDynamicRecipeTest', ':neoforge:recordDynamicRecipeTest'
+    dependsOn ':forge:recordMediaTest', ':neoforge:recordMediaTest'
+    dependsOn ':forge:recordPlaybackTest', ':neoforge:recordPlaybackTest'
     dependsOn ':forge:materialReport', ':neoforge:materialReport'
     dependsOn ':forge:materialReportTest', ':neoforge:materialReportTest'
 }

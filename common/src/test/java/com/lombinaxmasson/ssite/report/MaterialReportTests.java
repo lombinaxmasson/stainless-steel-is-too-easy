@@ -80,7 +80,7 @@ public final class MaterialReportTests {
                 "InvestmentCastingRecipes.java", "OpticsRecipes.java", "PrecisionRecipes.java",
                 "PowderManufacturingRecipes.java", "FiberOpticRecipes.java",
                 "ProcessEnvironmentRecipes.java", "EngineeringMaterialRecipes.java",
-                "UtilityRecipes.java")),
+                "UtilityRecipes.java", "RecordRecipes.java")),
                 "all central recipe modules retain runtime registration order");
     }
 
@@ -386,11 +386,33 @@ public final class MaterialReportTests {
     private static void displayRowsRemainSeparate(List<RecipeDeclaration> rows) {
         Map<String, Long> counts = rows.stream().filter(RecipeDeclaration::displayOnly)
                 .collect(Collectors.groupingBy(RecipeDeclaration::map, Collectors.counting()));
-        check(counts.equals(Map.of("ssite.recipe.aod", 3L, "ssite.recipe.large_aod", 3L, "ssite.recipe.var", 5L,
-                        "ssite.recipe.blanket", 1L, "ssite.recipe.ion_implanter", 1L,
-                        "ssite.recipe.electron_beam", 1L, "ssite.recipe.powder_bed", 1L,
-                        "ssite.recipe.gasifier", 2L)),
-                "the two AOD sizes, VAR, the blanket vessel, the P-03 machines and the gasifier remain display-only groups");
+        check(counts.equals(Map.ofEntries(
+                        Map.entry("ssite.recipe.aod", 3L), Map.entry("ssite.recipe.large_aod", 3L),
+                        Map.entry("ssite.recipe.var", 5L), Map.entry("ssite.recipe.blanket", 1L),
+                        Map.entry("ssite.recipe.ion_implanter", 1L), Map.entry("ssite.recipe.electron_beam", 1L),
+                        Map.entry("ssite.recipe.powder_bed", 1L), Map.entry("ssite.recipe.gasifier", 2L),
+                        Map.entry("ssite.recipe.record_lathe", 1L), Map.entry("gt.recipe.electrolyzer", 1L),
+                        Map.entry("gt.recipe.press", 1L), Map.entry("gt.recipe.laserengraver", 1L))),
+                "behavior groups and all four track-bearing manufacturing maps retain their exact display-row counts");
+        List<RecipeDeclaration> records = rows.stream()
+                .filter(r -> r.displayOnly() && r.label().startsWith("m8-")).toList();
+        check(records.size() == 4 && records.stream().collect(Collectors.toMap(
+                        RecipeDeclaration::label, RecipeDeclaration::map)).equals(Map.of(
+                        "m8-01/cut-master", "ssite.recipe.record_lathe",
+                        "m8-01/nickel-stamper", "gt.recipe.electrolyzer",
+                        "m8-01/press-vinyl", "gt.recipe.press",
+                        "m8-02/record-cdr", "gt.recipe.laserengraver")),
+                "record mastering, electroforming, pressing and CD recording remain the four exact display stages");
+        List<MaterialReport.MaterialRow> recordEvidence = MaterialReport.analyze(List.of(), records);
+        for (String id : List.of("ssite:vinyl_record", "ssite:cd_record")) {
+            MaterialReport.MaterialRow record = materialRow(recordEvidence, id);
+            check(record.producers().size() == 1 && record.producers().get(0).category().equals("display"),
+                    "a dynamic record output retains display evidence instead of claiming a static recipe: " + id);
+        }
+        MaterialReport.MaterialRow template = materialRow(recordEvidence, "TrackOne");
+        check(template.uses().size() == 2 && template.uses().stream().allMatch(e -> e.category().equals("display"))
+                        && !MaterialReport.hasConsumption(template),
+                "the reusable template is shown in both dynamic routes without claiming ordinary consumption");
         RecipeDeclaration var = row(rows, "var/ta4hfc5");
         check(var.itemOutputs().equals(List.of(material("dust", "TantalumHafniumCarbide", 10)))
                 && var.fluidInputs().equals(List.of(new FluidRef("GenGas_Argon", 200))), "VAR display retains alloy and argon quantities");

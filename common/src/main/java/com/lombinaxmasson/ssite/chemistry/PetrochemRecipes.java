@@ -52,7 +52,7 @@ public final class PetrochemRecipes {
         row("gt.recipe.bath", "furfural")
                 .in(dust("Wood", 4))
                 .fluidIn("GenLiquid_SulfuricAcid", 250)
-                .fluidOut("GenLiquid_Furfural", 500, "Dirty_Water", 500)
+                .fluidOut("GenLiquid_Furfural", 500, "GenLiquid_DirtyWater", 500)
                 .add(160, 24);
         furfuralExtract("pygas", "GenLiquid_PyrolysisGasoline", 2200, 800);
         furfuralExtract("reformate", "GenLiquid_Reformate", 2400, 600);

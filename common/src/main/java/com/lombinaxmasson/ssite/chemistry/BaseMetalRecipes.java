@@ -148,7 +148,7 @@ public final class BaseMetalRecipes {
                 .in(dust("Copper", 1))
                 .out(dust("Silver", 2))
                 .fluidIn("GenLiquid_SilverNitrateSolution", 2000)
-                .fluidOut("Dirty_Water", 1000)
+                .fluidOut("GenLiquid_DirtyWater", 1000)
                 .add(160, 48);
         row("gt.recipe.mixer", "m7/gold-dissolve")
                 .in(dust("CrudeGold", 2))
@@ -224,7 +224,7 @@ public final class BaseMetalRecipes {
         row("gt.recipe.mixer", "m7/palladium-precipitate")
                 .out(dust("DiamminePalladiumChloride", 1))
                 .fluidIn("GenLiquid_PalladiumLiquor", 500, "GenGas_Ammonia", 500)
-                .fluidOut("GenLiquid_RhodiumIridiumLiquor", 500, "Dirty_Water", 500)
+                .fluidOut("GenLiquid_RhodiumIridiumLiquor", 500, "GenLiquid_DirtyWater", 500)
                 .add(160, 48);
         row("gt.recipe.calciner", "m7/palladium-reduction")
                 .in(dust("DiamminePalladiumChloride", 1))
@@ -273,7 +273,7 @@ public final class BaseMetalRecipes {
         row("gt.recipe.mixer", "m7/flue-dust-leach")
                 .in(dust("CadmiumThalliumFlueDust", 2))
                 .fluidIn("GenLiquid_SulfuricAcid", 2000, "DistW", 1000)
-                .fluidOut("GenLiquid_CadmiumThalliumSolution", 2000, "Dirty_Water", 1000)
+                .fluidOut("GenLiquid_CadmiumThalliumSolution", 2000, "GenLiquid_DirtyWater", 1000)
                 .add(160, 48);
         row("gt.recipe.mixer", "m7/cadmium-cement")
                 .in(dust("Zinc", 1))
@@ -302,7 +302,7 @@ public final class BaseMetalRecipes {
                 .in(circuit(1))
                 .keep(0)
                 .fluidIn("GenLiquid_CrudeGermaniumTetrachloride", 4000)
-                .fluidOut("GenLiquid_GermaniumTetrachloride", 3000, "Dirty_Water", 1000)
+                .fluidOut("GenLiquid_GermaniumTetrachloride", 3000, "GenLiquid_DirtyWater", 1000)
                 .add(240, 64);
         row("gt.recipe.mixer", "m7/germanium-hydrolysis")
                 .fluidIn("GenLiquid_GermaniumTetrachloride", 2000, "GenLiquid_UltrapureWater", 4000)
@@ -318,7 +318,7 @@ public final class BaseMetalRecipes {
         row("gt.recipe.mixer", "m7/tbp-indium")
                 .fluidIn("GenLiquid_IndiumChlorideSolution", 2000,
                         "GenLiquid_TributylPhosphate", 1000)
-                .fluidOut("GenLiquid_TbpIndiumExtract", 1000, "Dirty_Water", 2000)
+                .fluidOut("GenLiquid_TbpIndiumExtract", 1000, "GenLiquid_DirtyWater", 2000)
                 .add(160, 64);
         row("gt.recipe.mixer", "m7/indium-strip")
                 .fluidIn("GenLiquid_TbpIndiumExtract", 1000, "GenLiquid_SulfuricAcid", 1000)
@@ -413,13 +413,13 @@ public final class BaseMetalRecipes {
                 .in(dust("AnionExchangeResin", 1))
                 .out(dust("RheniumLoadedResin", 1))
                 .fluidIn("GenLiquid_RheniumScrubSolution", 2000)
-                .fluidOut("Dirty_Water", 2000)
+                .fluidOut("GenLiquid_DirtyWater", 2000)
                 .add(160, 32);
         row("gt.recipe.bath", "m7/rhenium-elute")
                 .in(dust("RheniumLoadedResin", 1))
                 .out(dust("AmmoniumPerrhenate", 1), dust("AnionExchangeResin", 1))
                 .fluidIn("GenGas_Ammonia", 2000)
-                .fluidOut("Dirty_Water", 1000)
+                .fluidOut("GenLiquid_DirtyWater", 1000)
                 .add(160, 32);
         row("gt.recipe.calciner", "m7/rhenium-reduce")
                 .in(dust("AmmoniumPerrhenate", 2))

@@ -330,7 +330,7 @@ public final class UtilityTests {
         check(recycle.itemInputs().equals(List.of(material("dust", "HeavyRareEarthResidue", 2)))
                         && recycle.fluidInputs().equals(List.of(fluid("GenGas_HydrochloricAcid", 2000)))
                         && recycle.fluidOutputs().equals(List.of(
-                        fluid("GenLiquid_HeavyRareEarthChloride", 2000), fluid("Dirty_Water", 1000))),
+                        fluid("GenLiquid_HeavyRareEarthChloride", 2000), fluid("GenLiquid_DirtyWater", 1000))),
                 "two residues return to the heavy-group chloride feed");
         check(rows.stream().noneMatch(r -> r.label().equals("rare-earth/residue-recycle")
                         && r.itemOutputs().stream().anyMatch(i -> i.material().equals("HeavyRareEarthResidue"))),

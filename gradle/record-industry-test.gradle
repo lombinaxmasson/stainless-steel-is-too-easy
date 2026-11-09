@@ -1,0 +1,41 @@
+def recordIndustryTest = tasks.register('recordIndustryTest', JavaExec) {
+    description = 'Checks the record media chain, kept tools and imported-track recipe boundaries.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.chemistry.RecordIndustryTests'
+    jvmArgs '-ea'
+}
+def recordDynamicRecipeTest = tasks.register('recordDynamicRecipeTest', JavaExec) {
+    description = 'Checks imported-track selection, library validation and declared manufacturing flow without game bootstrap.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.chemistry.RecordDynamicRecipeTests'
+    jvmArgs '-ea'
+}
+
+def recordMediaTest = tasks.register('recordMediaTest', JavaExec) {
+    description = 'Checks music metadata, OGG structure, bounded transfers and world-library persistence.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.media.RecordMediaTests'
+    systemProperty 'java.io.tmpdir', temporaryDir.absolutePath
+    jvmArgs '-ea'
+}
+
+def recordPlaybackTest = tasks.register('recordPlaybackTest', JavaExec) {
+    description = 'Checks streaming PCM seek boundaries, mono mixing and decoder cancellation.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.media.RecordPcmTests'
+    jvmArgs '-ea'
+}
+
+tasks.named('check').configure { dependsOn recordIndustryTest, recordDynamicRecipeTest, recordMediaTest, recordPlaybackTest }

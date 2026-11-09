@@ -31,6 +31,7 @@ final class RecipeRegistration {
         var table = AddonRecipes.map(declaration.map());
         AddonRecipes.Line added = declaration.displayOnly() ? table.addDisplay(built) : table.add(built);
         if (added == null) ChemistryRecipes.REJECTED.add(declaration.label());
+        else RecordDynamicRecipes.register(declaration, built);
     }
 
     private static ItemStack[] items(List<ItemRef> references) {

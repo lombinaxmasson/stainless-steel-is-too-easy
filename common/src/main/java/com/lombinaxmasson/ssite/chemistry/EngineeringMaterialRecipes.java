@@ -67,7 +67,7 @@ public final class EngineeringMaterialRecipes {
                 .in(item("carbonFiberPreform", CARBON_CARBON, 1), dust("Carbon", 2))
                 .fluidIn("DistW", 1000)
                 .out(item("carbonCarbonImpregnated", CARBON_CARBON, 1))
-                .fluidOut("Dirty_Water", 1000)
+                .fluidOut("GenLiquid_DirtyWater", 1000)
                 .add(200, 48);
         row("gt.recipe.calciner", "p06b/carbonize")
                 .in(item("carbonCarbonImpregnated", CARBON_CARBON, 1))

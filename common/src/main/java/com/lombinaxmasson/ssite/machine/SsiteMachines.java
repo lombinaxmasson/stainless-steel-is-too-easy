@@ -88,7 +88,8 @@ public final class SsiteMachines implements AddonMachineContributor {
                 PowderManufacturingMachines.recipeTable(),
                 FiberOpticMachines.recipeTable(),
                 AdvancedSemiconductorMachines.implanterTable(),
-                AdvancedSemiconductorMachines.electronBeamTable());
+                AdvancedSemiconductorMachines.electronBeamTable(),
+                RecordMachines.recipeTable());
     }
 
     @Override
@@ -109,6 +110,7 @@ public final class SsiteMachines implements AddonMachineContributor {
         machines.addAll(new GasFieldExtractorMachines().addonMachines());
         machines.addAll(new CoalGasifierMachines().addonMachines());
         machines.addAll(new ChemicalLoopingMachines().addonMachines());
+        machines.addAll(new RecordMachines().addonMachines());
         machines.addAll(HeatTransportMachines.machines());
         return List.copyOf(machines);
     }
@@ -138,6 +140,7 @@ public final class SsiteMachines implements AddonMachineContributor {
         machines.add(CoalGasifierCore.MACHINE_TYPE);
         machines.add(FuelReactorCore.MACHINE_TYPE);
         machines.add(AirReactorCore.MACHINE_TYPE);
+        machines.add(RecordMachines.MACHINE_TYPE);
         machines.add(HeatTransportMachines.DUCT);
         machines.add(HeatTransportMachines.PLATE);
         for (String path : machines) {

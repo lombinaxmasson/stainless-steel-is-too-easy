@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"item": "gt6ce:gem_bluesapphire"},
+    {"item": "gt6ce:plate_stainlesssteel"}
+  ],
+  "result": {
+    "item": "ssite:record_stylus_bluesapphire"
+  }
+}

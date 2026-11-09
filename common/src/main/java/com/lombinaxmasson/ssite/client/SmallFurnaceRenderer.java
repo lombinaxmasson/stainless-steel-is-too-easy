@@ -59,10 +59,9 @@ public final class SmallFurnaceRenderer implements BlockEntityRenderer<BlockEnti
         if (mesh.groups().isEmpty()) return;
 
         Direction facing = blockEntity.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
-        // The opaque controller cell has no skylight. Sample its exposed front, where the
-        // casting port is visible, instead of shading the entire vessel from inside a cube.
-        if (model.kind() == Kind.LARGE_AOD)
-            packedLight = LevelRenderer.getLightColor(level, blockEntity.getBlockPos().relative(facing));
+        // All furnace controllers are opaque, including the small AOD and VAR. Sample
+        // the exposed front so the vessel receives the surrounding sky and block light.
+        packedLight = LevelRenderer.getLightColor(level, blockEntity.getBlockPos().relative(facing));
         BlockPos lidPos = model.kind() == Kind.LARGE_AOD
                 ? LargeAodStructure.world(blockEntity.getBlockPos(), facing, 0, 3, 2)
                 : blockEntity.getBlockPos().above();
