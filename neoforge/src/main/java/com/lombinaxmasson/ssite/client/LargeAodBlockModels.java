@@ -33,27 +33,35 @@ public final class LargeAodBlockModels {
     public static void bake(ModelEvent.ModifyBakingResult event) {
         for (var block : BuiltInRegistries.BLOCK) {
             var id = BuiltInRegistries.BLOCK.getKey(block);
-            if (!id.getNamespace().equals("ssite") || !(ObjMultiblocks.isPart(id.getPath())
-                    || HeatTransportMachines.isMachine(id.getPath()))) continue;
+            boolean gasTurbine = id.getNamespace().equals("gt6ce") && LargeGasTurbineRenderer.isModelBlock(block);
+            if (!gasTurbine && (!id.getNamespace().equals("ssite") || !(ObjMultiblocks.isPart(id.getPath())
+                    || HeatTransportMachines.isMachine(id.getPath())))) continue;
             for (var state : block.getStateDefinition().getPossibleStates()) {
                 var key = BlockModelShaper.stateToModelLocation(id, state);
                 var original = event.getModels().get(key);
-                if (original != null) event.getModels().put(key, new FormedModel(original));
+                if (original != null) event.getModels().put(key, new FormedModel(original, gasTurbine));
             }
         }
     }
 
     private static final class FormedModel extends BakedModelWrapper<BakedModel> {
         private static final ModelProperty<Boolean> FORMED = new ModelProperty<>();
+        private final boolean gasTurbine;
 
-        private FormedModel(BakedModel original) { super(original); }
+        private FormedModel(BakedModel original, boolean gasTurbine) {
+            super(original);
+            this.gasTurbine = gasTurbine;
+        }
 
         @Override public ModelData getModelData(BlockAndTintGetter level, BlockPos pos,
                                                 BlockState state, ModelData data) {
             var result = super.getModelData(level, pos, state, data);
+            var entity = level.getBlockEntity(pos);
+            if (gasTurbine)
+                return result.derive().with(FORMED, LargeGasTurbineRenderer.hidesBlock(entity)).build();
             boolean formed = Integer.valueOf(LargeAodStructure.FORMED_DESIGN)
                     .equals(result.get(MultiblockPortBlockEntity.DESIGN));
-            if (level.getBlockEntity(pos) instanceof BehaviorMachineClientView view)
+            if (entity instanceof BehaviorMachineClientView view)
                 formed = HeatTransportMachines.isMachine(view.machineType()) || view.getBoolean("structure.formed");
             return result.derive().with(FORMED, formed).build();
         }

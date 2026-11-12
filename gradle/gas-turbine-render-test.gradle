@@ -1,0 +1,10 @@
+def gasTurbineRenderTest = tasks.register('gasTurbineRenderTest', JavaExec) {
+    description = 'Checks the formed large gas turbine mesh, orientation and animation.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.client.LargeGasTurbineRenderTests'
+    jvmArgs '-ea'
+}
+tasks.named('check').configure { dependsOn gasTurbineRenderTest }

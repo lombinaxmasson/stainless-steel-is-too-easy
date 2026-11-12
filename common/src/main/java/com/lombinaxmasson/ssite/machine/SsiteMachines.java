@@ -6,6 +6,7 @@ import gregtech.api.addon.machine.AddonMachineContributor;
 import gregtech.api.addon.machine.BehaviorMachine;
 import gregtech.api.multiblock.CellMatch;
 import gregtech.api.energy.EnergyInput;
+import gregtech.api.energy.EnergyOutput;
 import gregtech.api.addon.pipe.FluidPipeDeclaration;
 import gregtech.api.addon.machine.LayoutPart;
 import gregtech.api.machine.MachineCasing;
@@ -111,6 +112,7 @@ public final class SsiteMachines implements AddonMachineContributor {
         machines.addAll(new CoalGasifierMachines().addonMachines());
         machines.addAll(new ChemicalLoopingMachines().addonMachines());
         machines.addAll(new RecordMachines().addonMachines());
+        machines.add(windTurbine());
         machines.addAll(HeatTransportMachines.machines());
         return List.copyOf(machines);
     }
@@ -141,6 +143,7 @@ public final class SsiteMachines implements AddonMachineContributor {
         machines.add(FuelReactorCore.MACHINE_TYPE);
         machines.add(AirReactorCore.MACHINE_TYPE);
         machines.add(RecordMachines.MACHINE_TYPE);
+        machines.add(WindTurbineCore.MACHINE_TYPE);
         machines.add(HeatTransportMachines.DUCT);
         machines.add(HeatTransportMachines.PLATE);
         for (String path : machines) {
@@ -152,6 +155,18 @@ public final class SsiteMachines implements AddonMachineContributor {
                 stacks.add(new ItemStack(item));
         }
         return stacks;
+    }
+
+    private static BehaviorMachine windTurbine() {
+        return BehaviorMachine.builder(MachineCasing.builder(WindTurbineCore.MACHINE_TYPE, "StainlessSteel")
+                        .machineType(WindTurbineCore.MACHINE_TYPE).tier(5).build())
+                .energyOutput(EnergyOutput.builder(EnergyType.RU, WindTurbinePower.RATED_RU, 1)
+                        .minSize(WindTurbinePower.RATED_RU).faces(MachineFace.BACK).build())
+                .gui("ssite:textures/gui/aod_converter.png")
+                .item(80, 26, BehaviorMachine.SlotRole.INPUT)
+                .progress(8, 62)
+                .clientState(WindTurbineCore.K_ROTOR, WindTurbineCore.K_SPEED)
+                .build();
     }
 
     @Override

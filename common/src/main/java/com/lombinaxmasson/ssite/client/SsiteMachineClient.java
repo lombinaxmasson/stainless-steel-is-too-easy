@@ -8,6 +8,7 @@ import com.lombinaxmasson.ssite.machine.FuelReactorCore;
 import com.lombinaxmasson.ssite.machine.AirReactorCore;
 import com.lombinaxmasson.ssite.machine.HeatTransportMachines;
 import com.lombinaxmasson.ssite.machine.IrradiationReactorCore;
+import com.lombinaxmasson.ssite.machine.WindTurbineCore;
 import com.mojang.logging.LogUtils;
 import gregtech.api.addon.platform.BehaviorMachineClient;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -31,6 +32,7 @@ public final class SsiteMachineClient implements BehaviorMachineClient {
         types.add(IrradiationReactorCore.MACHINE_TYPE);
         types.add(FuelReactorCore.MACHINE_TYPE);
         types.add(AirReactorCore.MACHINE_TYPE);
+        types.add(WindTurbineCore.MACHINE_TYPE);
         TYPES = Set.copyOf(types);
     }
 
@@ -39,6 +41,7 @@ public final class SsiteMachineClient implements BehaviorMachineClient {
     private final HeatTransportRenderer heatTransportRenderer;
     private final IrradiationReactorRenderer irradiationReactorRenderer;
     private final ChemicalLoopingRenderer chemicalLoopingRenderer;
+    private final WindTurbineRenderer windTurbineRenderer;
 
     public SsiteMachineClient() {
         MeshSink sink = null;
@@ -53,6 +56,7 @@ public final class SsiteMachineClient implements BehaviorMachineClient {
         heatTransportRenderer = new HeatTransportRenderer(sink);
         irradiationReactorRenderer = new IrradiationReactorRenderer(sink);
         chemicalLoopingRenderer = new ChemicalLoopingRenderer(sink);
+        windTurbineRenderer = new WindTurbineRenderer(sink);
     }
 
     @Override
@@ -67,6 +71,7 @@ public final class SsiteMachineClient implements BehaviorMachineClient {
 
     @Override
     public BlockEntityRenderer<BlockEntity> renderer(String machineType) {
+        if (WindTurbineCore.MACHINE_TYPE.equals(machineType)) return windTurbineRenderer;
         if (FluidizedBedCore.MACHINE_TYPE.equals(machineType)) return fluidizedBedRenderer;
         if (HeatTransportMachines.isMachine(machineType)) return heatTransportRenderer;
         if (IrradiationReactorCore.MACHINE_TYPE.equals(machineType)) return irradiationReactorRenderer;

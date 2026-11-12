@@ -34,12 +34,16 @@ public final class WaterRecipes {
 
     private static void celluloseAcetate() {
         for (String pulp : new String[]{"Wood", "Paper"}) {
-            row("gt.recipe.mixer", "cellulose-acetate/" + pulp)
-                    .in(dust(pulp, 2))
-                    .out(dust("CelluloseAcetate", 2))
-                    .fluidIn("Vinegar_Grape", 2000, "GenLiquid_SulfuricAcid", 250)
-                    .fluidOut("GenLiquid_DirtyWater", 1000)
-                    .add(160, 30);
+            for (String vinegar : new String[]{"Vinegar_Grape", "Vinegar_Apple"}) {
+                boolean grape = vinegar.equals("Vinegar_Grape");
+                var recipe = row("gt.recipe.mixer", "cellulose-acetate/" + (grape ? "" : "apple/") + pulp)
+                        .in(dust(pulp, 2))
+                        .out(dust("CelluloseAcetate", 2))
+                        .fluidIn(vinegar, 2000, "GenLiquid_SulfuricAcid", 250)
+                        .fluidOut("GenLiquid_DirtyWater", 1000);
+                if (grape) recipe.requiresDistinctFluids(vinegar, "Vinegar_Apple");
+                recipe.add(160, 30);
+            }
         }
         row("gt.recipe.press", "cellulose-acetate/plate")
                 .in(dust("CelluloseAcetate", 1), circuit(1))

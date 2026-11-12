@@ -35,7 +35,7 @@ public final class MaterialReportTests {
         rubberAndFormingExpansion(rows);
         keptInputsAndArrayOrdering(rows);
         displayRowsRemainSeparate(rows);
-        ethanolConditions(rows);
+        registryConditions(rows);
         vanillaItems(rows);
         chancesAndFuelQuantities(rows);
         immutableDeclarations(rows);
@@ -55,8 +55,10 @@ public final class MaterialReportTests {
         optionalNotesAndUnknownTargets();
         malformedNotesFail();
         contributorCoverage(repo);
+        recipeAuditRules();
+        recipeAuditCatalog(repo);
         renderingAndDeterministicOutput(repo);
-        System.out.println("MaterialReportTests: all 25 checks passed.");
+        System.out.println("MaterialReportTests: all 27 checks passed.");
     }
 
     private static void moduleOrderAndSourceLocations(Path repo, List<RecipeDeclaration> rows) throws IOException {
@@ -80,7 +82,7 @@ public final class MaterialReportTests {
                 "InvestmentCastingRecipes.java", "OpticsRecipes.java", "PrecisionRecipes.java",
                 "PowderManufacturingRecipes.java", "FiberOpticRecipes.java",
                 "ProcessEnvironmentRecipes.java", "EngineeringMaterialRecipes.java",
-                "UtilityRecipes.java", "RecordRecipes.java")),
+                "UtilityRecipes.java", "RecordRecipes.java", "WindTurbineRecipes.java")),
                 "all central recipe modules retain runtime registration order");
     }
 
@@ -423,16 +425,24 @@ public final class MaterialReportTests {
                 "small and large AOD do not share the wrong gas inputs");
     }
 
-    private static void ethanolConditions(List<RecipeDeclaration> rows) {
-        List<RecipeDeclaration> conditional = rows.stream().filter(r -> !r.distinctFluids().isEmpty()).toList();
-        check(conditional.stream().map(RecipeDeclaration::label).collect(Collectors.toSet()).equals(
-                Set.of("c4/ethanol-dehydro-pure", "c4/ethanol-condense-pure", "c3/pva-pure")),
-                "all three registry-dependent alternatives remain explicit");
-        for (RecipeDeclaration row : conditional)
-            check(row.distinctFluids().equals(List.of(new DistinctFluids("GenLiquid_Ethanol", "BioEthanol"))),
-                    "pure ethanol alternatives retain the exact runtime identity guard");
+    private static void registryConditions(List<RecipeDeclaration> rows) {
+        var ethanol = List.of(new DistinctFluids("GenLiquid_Ethanol", "BioEthanol"));
+        var grape = List.of(new DistinctFluids("Vinegar_Grape", "Vinegar_Apple"));
+        var conditional = rows.stream().filter(r -> !r.distinctFluids().isEmpty())
+                .collect(Collectors.toMap(RecipeDeclaration::label, RecipeDeclaration::distinctFluids));
+        check(conditional.equals(Map.of("c4/ethanol-dehydro-pure", ethanol,
+                        "c4/ethanol-condense-pure", ethanol, "c3/pva-pure", ethanol,
+                        "cellulose-acetate/Wood", grape, "cellulose-acetate/Paper", grape,
+                        "c1/acetic-acid-vinegar_grape", grape)),
+                "optional ethanol and grape-vinegar routes retain their runtime identity guards");
         for (String label : List.of("c4/ethanol-dehydro", "c4/ethanol-condense", "c3/pva"))
             check(row(rows, label).distinctFluids().isEmpty(), "ordinary ethanol routes remain unconditional");
+        for (String pulp : List.of("Wood", "Paper")) {
+            RecipeDeclaration apple = row(rows, "cellulose-acetate/apple/" + pulp);
+            check(apple.distinctFluids().isEmpty()
+                            && apple.itemOutputs().equals(row(rows, "cellulose-acetate/" + pulp).itemOutputs()),
+                    "apple vinegar keeps cellulose acetate available when grape vinegar is missing");
+        }
     }
 
     private static void vanillaItems(List<RecipeDeclaration> rows) {
@@ -705,6 +715,138 @@ public final class MaterialReportTests {
         check(probeInputs.containsAll(List.of("ssite:fiber_spool_opticalfiber",
                         "ssite:instrument_shell_stainlesssteel316l", "ssite:chip_chipelite")),
                 "the probe consumes the spool, the P-01 shell and the Elite circuit");
+    }
+
+    private static void recipeAuditRules() {
+        RecipeDeclaration producer = fixture("audit/produce", List.of(),
+                List.of(material("dust", "Auditium", 1)), List.of(), List.of(), List.of(), false, List.of());
+        RecipeDeclaration consumer = fixture("audit/consume",
+                List.of(material("dust", "Auditium", 1)), List.of(), List.of(), List.of(), List.of(), false, List.of());
+        RecipeDeclaration tooliumProducer = fixture("audit/toolium-produce", List.of(),
+                List.of(material("dust", "Toolium", 1)), List.of(), List.of(), List.of(), false, List.of());
+        RecipeDeclaration kept = fixture("audit/keep",
+                List.of(material("dust", "Toolium", 1)), List.of(), List.of(), List.of(), List.of(0), false, List.of());
+        RecipeDeclaration orphan = fixture("audit/orphan",
+                List.of(material("dust", "Orphanium", 1)), List.of(material("dust", "Productium", 1)),
+                List.of(), List.of(), List.of(), false, List.of());
+        RecipeDeclaration displayProducer = fixture("audit/display-produce", List.of(),
+                List.of(material("dust", "Displayium", 1)), List.of(), List.of(), List.of(), true, List.of());
+        RecipeDeclaration displayConsumer = fixture("audit/display-consume",
+                List.of(material("dust", "Displayium", 1)), List.of(), List.of(), List.of(), List.of(), true, List.of());
+        RecipeDeclaration displayOnlyOutput = fixture("audit/display-only-output", List.of(),
+                List.of(material("dust", "DisplayOnlyium", 1)), List.of(), List.of(), List.of(), true, List.of());
+        RecipeDeclaration plateProducer = fixture("audit/plate-produce", List.of(),
+                List.of(new ItemRef(ItemKind.VANILLA, "", "", "ssite:audit_plate", 1, -1)),
+                List.of(), List.of(), List.of(), false, List.of());
+        RecipeDeclaration namedPlate = fixture("audit/named-plate", List.of(),
+                List.of(material("plate", "StainlessSteel316L", 1)), List.of(), List.of(), List.of(),
+                false, List.of());
+        MaterialReport.CraftingRecipe crafting = new MaterialReport.CraftingRecipe("audit:craft",
+                "minecraft:crafting_shaped",
+                List.of(new MaterialReport.CraftingInput(List.of("ssite:audit_plate"), 1)),
+                "ssite:audit_part", 1, "common/src/main/resources/data/ssite/recipes/audit.json");
+        MaterialReport.CraftingRecipe namedCrafting = new MaterialReport.CraftingRecipe("audit:named-craft",
+                "minecraft:crafting_shaped",
+                List.of(new MaterialReport.CraftingInput(List.of("ssite:plate_stainlesssteel316l"), 1)),
+                "ssite:audit_named_part", 1, "common/src/main/resources/data/ssite/recipes/audit.json");
+        RecipeAudit.Audit audit = RecipeAudit.analyze(new MaterialReport.Catalog("test", List.of(),
+                List.of(producer, consumer, tooliumProducer, kept, orphan, displayProducer, displayConsumer,
+                        displayOnlyOutput, plateProducer, namedPlate),
+                List.of(), List.of(crafting, namedCrafting), List.of()));
+        check(labels(audit.terminals()).contains("dust Toolium"), "kept inputs do not count as consumption");
+        check(!labels(audit.terminals()).contains("dust Auditium"), "an executable consumer closes the flow");
+        check(!labels(audit.terminals()).contains("dust Displayium"),
+                "display consumers remain declared flow evidence and are marked in the report");
+        check(!labels(audit.terminals()).contains("ssite:audit_plate"), "crafting inputs close the raw item flow");
+        check(!labels(audit.terminals()).contains("plate StainlessSteel316L"),
+                "addon item IDs map to their declared material forms");
+        check(labels(audit.externalInputs()).contains("dust Orphanium"),
+                "a consumed input without an addon producer is external");
+        check(!labels(audit.externalInputs()).contains("dust Productium"), "a produced output is not external");
+        check(flow(audit.terminals(), "dust DisplayOnlyium").producers().get(0).category().equals("display"),
+                "the terminal entry retains its display-only producer evidence");
+
+        var crucible = new gregtech.api.addon.recipe.CrucibleReactionDeclaration("CrucibleMetal", 9,
+                List.of(new gregtech.api.addon.recipe.CrucibleReactionDeclaration.Part("SlagMetal", 1)));
+        RecipeDeclaration crucibleConsumer = fixture("audit/crucible-consume",
+                List.of(material("dust", "CrucibleMetal", 1)), List.of(), List.of(), List.of(), List.of(),
+                false, List.of());
+        RecipeDeclaration slagProducer = fixture("audit/slag-produce", List.of(),
+                List.of(material("dust", "SlagMetal", 1)), List.of(), List.of(), List.of(), false, List.of());
+        RecipeAudit.Audit materialLevel = RecipeAudit.analyze(new MaterialReport.Catalog("test", List.of(),
+                List.of(crucibleConsumer, slagProducer), List.of(crucible), List.of(), List.of()));
+        check(!labels(materialLevel.externalInputs()).contains("dust CrucibleMetal"),
+                "a crucible output is a material-level source for its forms");
+        check(!labels(materialLevel.terminals()).contains("dust SlagMetal"),
+                "a crucible part is a material-level consumer for its forms");
+
+        RecipeDeclaration duplicateA = fixture("audit/duplicate-a",
+                List.of(material("dust", "Dupium", 1)), List.of(material("dust", "DupiumOxide", 1)),
+                List.of(), List.of(), List.of(), false, List.of());
+        RecipeDeclaration duplicateB = fixture("audit/duplicate-b",
+                List.of(material("dust", "Dupium", 1)), List.of(material("dust", "DupiumOxide", 1)),
+                List.of(), List.of(), List.of(), false, List.of());
+        RecipeAudit.Audit duplicates = RecipeAudit.analyze(new MaterialReport.Catalog("test", List.of(),
+                List.of(duplicateA, duplicateB), List.of(), List.of(), List.of()));
+        check(duplicates.duplicates().size() == 1
+                        && Set.copyOf(duplicates.duplicates().get(0).recipes())
+                        .equals(Set.of("audit/duplicate-a", "audit/duplicate-b")),
+                "identical executable declarations become one duplicate group");
+
+        RecipeDeclaration bad = new RecipeDeclaration("gt.recipe.mixer", "audit/bad",
+                List.of(new ItemRef(ItemKind.MATERIAL, "dust", "BadInput", "", 0, -1)),
+                List.of(new ItemRef(ItemKind.MATERIAL, "dust", "BadOutput", "", -1, -1)),
+                List.of(new FluidRef("GenLiquid_Bad", 0)), List.of(), 0, 0,
+                List.of(20000), List.of(4), false, List.of(), new Source("fixture.java", 1));
+        RecipeDeclaration selectorOutput = fixture("audit/selector-output", List.of(),
+                List.of(new ItemRef(ItemKind.SELECTOR, "", "", "", 1, 2)), List.of(), List.of(), List.of(),
+                false, List.of());
+        RecipeDeclaration noOutput = fixture("audit/no-output", List.of(), List.of(),
+                List.of(), List.of(), List.of(), false, List.of());
+        Set<String> categories = RecipeAudit.analyze(new MaterialReport.Catalog("test", List.of(),
+                        List.of(bad, selectorOutput, noOutput), List.of(), List.of(), List.of()))
+                .issues().stream().map(RecipeAudit.Issue::category).collect(Collectors.toSet());
+        check(categories.containsAll(Set.of("非正时长", "零能耗", "非正物品数量", "非正流体数量",
+                        "保留槽越界", "概率越界", "选择器产物", "无产物")),
+                "structural checks report every nonpositive or unresolvable declaration");
+    }
+
+    private static void recipeAuditCatalog(Path repo) throws Exception {
+        MaterialReport.Catalog catalog = MaterialReport.collect(repo, "test");
+        RecipeAudit.Audit audit = RecipeAudit.analyze(catalog);
+        check(audit.declarations() == catalog.recipes().size(), "recipe audit covers every declaration");
+        check(audit.executable() + audit.display() == audit.declarations(),
+                "executable and display counts account for every declaration");
+        check(audit.displayRows().size() == audit.display(), "every display row is listed");
+        check(audit.maps().stream().mapToInt(RecipeAudit.MapCount::total).sum() == audit.declarations(),
+                "map counts account for every declaration");
+        for (RecipeAudit.Flow flow : audit.terminals())
+            check(!flow.producers().isEmpty() && flow.consumers().isEmpty(),
+                    "terminal flow retains only producer evidence: " + flow.key());
+        for (RecipeAudit.Flow flow : audit.externalInputs())
+            check(flow.producers().isEmpty() && !flow.consumers().isEmpty(),
+                    "external flow retains only consumer evidence: " + flow.key());
+        withTemporaryDirectory(temp -> {
+            RecipeAudit.write(audit, repo, temp);
+            byte[] markdown = Files.readAllBytes(temp.resolve("recipe-audit.md"));
+            byte[] json = Files.readAllBytes(temp.resolve("recipe-audit.json"));
+            check(new String(markdown, StandardCharsets.UTF_8).contains("## 终端产物"),
+                    "recipe audit renders every section");
+            RecipeAudit.write(audit, repo, temp);
+            check(Arrays.equals(markdown, Files.readAllBytes(temp.resolve("recipe-audit.md"))),
+                    "recipe audit markdown is deterministic");
+            check(Arrays.equals(json, Files.readAllBytes(temp.resolve("recipe-audit.json"))),
+                    "recipe audit JSON is deterministic");
+        });
+    }
+
+    private static List<String> labels(List<RecipeAudit.Flow> flows) {
+        return flows.stream().map(RecipeAudit.Flow::label).toList();
+    }
+
+    private static RecipeAudit.Flow flow(List<RecipeAudit.Flow> flows, String label) {
+        return flows.stream().filter(flow -> flow.label().equals(label)).findFirst()
+                .orElseThrow(() -> new AssertionError("missing audited flow: " + label));
     }
 
     private static void malformedNotesFail() throws Exception {

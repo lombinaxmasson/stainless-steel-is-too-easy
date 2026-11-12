@@ -641,13 +641,19 @@ public final class MaterialReport {
         };
     }
 
-    private static String link(Path repository, Path output, String source) {
+    public static String link(Path repository, Path output, String source) {
         String[] parts = source.split("#", 2);
         String file = parts[0];
         if (!file.contains("/") && file.endsWith(".java"))
             file = "common/src/main/java/com/lombinaxmasson/ssite/chemistry/" + file;
-        String relative = output.toAbsolutePath().normalize().relativize(repository.toAbsolutePath().normalize().resolve(file))
-                .toString().replace('\\', '/').replace(" ", "%20").replace("(", "%28").replace(")", "%29");
+        Path target = repository.toAbsolutePath().normalize().resolve(file);
+        String relative;
+        try {
+            relative = output.toAbsolutePath().normalize().relativize(target)
+                    .toString().replace('\\', '/').replace(" ", "%20").replace("(", "%28").replace(")", "%29");
+        } catch (IllegalArgumentException differentRoot) {
+            relative = target.toUri().toString();
+        }
         return relative + (parts.length == 2 ? "#" + parts[1] : "");
     }
 

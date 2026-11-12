@@ -1,0 +1,5 @@
+newmtl wind_turbine_atlas
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+map_Kd wind_turbine_low_poly_atlas.png

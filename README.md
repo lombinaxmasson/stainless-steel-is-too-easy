@@ -12,6 +12,8 @@ GregTech 6 Community Edition 的化工向附属。模组 id `ssite`，依赖 GT6
 - **半导体与电子制造**：三氯氢硅提纯、单晶生长、切片抛光、光刻刻蚀、封装与金属化，以及按树脂分代的电路基板。
 - **冶金与萃取**：VAR 电弧炉、钛钒氯化、锆铪分离、铌钽萃取、铜镍钴锍，以及稀土与铀钍的萃取、核纯和燃料处理。
 - **供热与公用工程**：流化床工业供热与独立 HU 热网、化学链燃料床与再生床、天然气净化、气田、煤气化，以及小型炉与坩埚设备。
+- **大型燃气涡轮外观**：GT6CE 四档大型燃气涡轮成型后显示低模机组，运行时转子和后联轴器同轴旋转。见[模型与游戏外观说明](art/large_gas_turbine/README.md)。
+- **风力发电**：不锈钢机头与可装拆的玻纤风轮，受选址和天气影响，最高 8,192 RU/t，背面可接 GT6CE 发电机。
 - **唱片与音乐介质**：黑胶压盘与 CD-R 分层刻录，支持导入自己的 OGG 曲目；音频保存在服务器曲库，附近玩家自动下载缓存并同步播放。
 
 ## 环境
@@ -57,9 +59,13 @@ IDE 里可以把 `core/src/api/java` 和 `multiversion/src/api/java` 挂到 SDK 
 
 `compileBoth` 会编译两端并运行共用的 JVM 检查，覆盖熔池反应、流化床、HU 运输、批次照射、光纤探头、高级晶圆工艺、粉末床、超净间、工程材料、天然气、气田、煤气化与化学链双床，以及不启动图形窗口的 OBJ 渲染顶点检查。
 
+`gasTurbineRenderTest` 检查大型燃气涡轮的六向定位、包围盒、顶点流、转动分组、机壳材质和启停插值，也检查燃气涡轮与照射反应堆的 VBO 合批，已接入两端 `check` 与 `compileBoth`。
+
+两端的 `windTurbineTest` 检查出力曲线、风暴刹车、风场连续性、风轮重叠和四个朝向的渲染，已接入 `check` 与 `compileBoth`。
+
 唱片的 `recordIndustryTest`、`recordDynamicRecipeTest`、`recordMediaTest`、`recordPlaybackTest` 也接入两端 `check` 与 `compileBoth`，分别检查制造链、曲目选择、音频协议/持久化和 PCM 播放游标。它们不替代真实音频与双客户端联机验收。
 
-`compileBoth` 和两端的 `build` 还会生成材料用途报告并运行 `materialReportTest`。只更新报告可以执行：
+`compileBoth` 和两端的 `build` 还会生成材料用途报告和配方覆盖审计，并运行 `materialReportTest`。只更新材料报告可以执行：
 
 ```powershell
 .\scripts\build.ps1 materialReport
@@ -68,6 +74,16 @@ IDE 里可以把 `core/src/api/java` 和 `multiversion/src/api/java` 挂到 SDK 
 ```
 
 报告分别在 `forge/build/reports/material-uses/` 与 `neoforge/build/reports/material-uses/`，包含可搜索的 `index.html`、表格 `materials.md` 和结构化数据 `catalog.json`。材料、形态与配方关系来自当前代码，可选的本地 `docs/material-uses.json` 只补充规划用途。报告不替代游戏内验证。
+
+配方覆盖审计复用同一批声明和合成 JSON，列出终端产物、外部供给输入、展示行、重复声明与结构异常。只更新审计可以执行：
+
+```powershell
+.\scripts\build.ps1 recipeAudit
+# 只生成一端：
+.\scripts\build.ps1 :neoforge:recipeAudit
+```
+
+审计分别在 `forge/build/reports/recipe-audit/` 与 `neoforge/build/reports/recipe-audit/`，包含 `recipe-audit.md` 和 `recipe-audit.json`。它不扫描宿主自动生成的配方，因此不能判断本附属配方是否与宿主配方重复；自定义机器的运行逻辑也可能超出展示行。审计不启动 Minecraft，不替代游戏内验收。
 
 Forge 的可安装 jar 在 `forge/build/libs/`，NeoForge 的在 `neoforge/build/libs/`，安装时选和加载器对应的那一个。
 
@@ -83,6 +99,14 @@ Forge 发行 jar 是 SRG，开发运行会用 `fg.deobf` 转回 Mojang 名。在
 .\scripts\build.ps1 :forge:runClient
 .\scripts\build.ps1 :neoforge:runClient
 ```
+
+## 风力发电
+
+用 GT6CE 压机制作风力机头和玻纤风轮，两条配方均消耗 128 KU/t。机头需要不锈钢机器外壳和两根长不锈钢杆。风轮需要 16 块玻纤增强环氧板和一个不锈钢转子。
+
+在主世界露天放置机头，给正面约 10.4 格直径的风轮留出空间。手持玻纤风轮右键装入，用扳手取回。空手右键查看当前风速、预计机械出力和运行状态。背面每次送出一个 8,192 RU 包，风况决定送包频率。接普通 IV 发电机时，额定出力为 5,632 EU/t。
+
+风况随地区与天气变化，高度加成在海平面以上 64 格达到上限。前方障碍会削弱进风，扫掠区被挡、风轮互相重叠或风暴刹车时暂停出力。支架可用普通方块搭建。
 
 ## 自定义唱片
 

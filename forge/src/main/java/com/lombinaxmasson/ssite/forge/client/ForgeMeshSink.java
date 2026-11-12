@@ -9,8 +9,14 @@ public final class ForgeMeshSink implements MeshSink {
     @Override
     public void vertex(VertexConsumer buffer, float x, float y, float z, float u, float v,
                        float nx, float ny, float nz, int packedLight) {
+        vertex(buffer, x, y, z, u, v, nx, ny, nz, packedLight, 0xFFFFFF);
+    }
+
+    @Override
+    public void vertex(VertexConsumer buffer, float x, float y, float z, float u, float v,
+                       float nx, float ny, float nz, int packedLight, int rgb) {
         buffer.vertex(x, y, z)
-                .color(255, 255, 255, 255)
+                .color(rgb >> 16 & 255, rgb >> 8 & 255, rgb & 255, 255)
                 .uv(u, v)
                 .overlayCoords(OverlayTexture.NO_OVERLAY)
                 .uv2(packedLight)

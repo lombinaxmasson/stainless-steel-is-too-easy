@@ -19,7 +19,6 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.WeakHashMap;
 
 /**
@@ -56,10 +55,11 @@ public final class IrradiationReactorRenderer implements BlockEntityRenderer<Blo
     private static final float WHEEL_TURNS = 180.0F;
     /** 5 rpm at 20 ticks per second. */
     private static final double SPIN_DEGREES_PER_TICK = 1.5D;
-    private static final Set<String> SPINNING =
-            Set.of("sample_carousel", "target_capsules", "drive_shaft");
-    private static final Set<String> DOOR_GROUPS =
-            Set.of("door_panel", "locking_dogs", "handwheel");
+
+    private static final class Assets {
+        private static final ObjMesh MESH = ObjMesh.load(MODEL);
+        private static final ObjVboMesh<Batch> VBO = new ObjVboMesh<>(Batch.class, MESH, IrradiationReactorRenderer::batch);
+    }
 
     private final MeshSink sink;
     private final FluidizedBedRenderer meshRenderer;
@@ -77,7 +77,7 @@ public final class IrradiationReactorRenderer implements BlockEntityRenderer<Blo
                 || !IrradiationReactorCore.MACHINE_TYPE.equals(view.machineType())) return;
         Level level = entity.getLevel();
         if (level == null) return;
-        ObjMesh mesh = ObjMesh.load(MODEL);
+        ObjMesh mesh = Assets.MESH;
         if (mesh.groups().isEmpty()) return;
 
         Direction facing = entity.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
@@ -102,22 +102,46 @@ public final class IrradiationReactorRenderer implements BlockEntityRenderer<Blo
         float door = doors.computeIfAbsent(entity, ignored -> new Door())
                 .advance(now, view.getBoolean(IrradiationReactorCore.K_DOOR_OPEN));
 
-        VertexConsumer vertices = buffers.getBuffer(RenderType.entityCutout(TEXTURE));
+        int packedLight = light;
         pose.pushPose();
-        pose.translate(0.5D, 0.0D, 0.5D);
-        pose.mulPose(Axis.YP.rotationDegrees(-yaw(facing)));
-        pose.translate(-0.5D, 0.0D, -0.5D);
-        pose.translate(OFFSET_X, OFFSET_Y, OFFSET_Z);
-        for (ObjMesh.Group group : mesh.groups()) {
-            if (!visible(group.name(), running, done)) continue;
-            pose.pushPose();
-            poseGroup(pose, group.name(), now, running, door);
-            meshRenderer.draw(pose, vertices, group, light);
+        try {
+            pose.translate(0.5D, 0.0D, 0.5D);
+            pose.mulPose(Axis.YP.rotationDegrees(-yaw(facing)));
+            pose.translate(-0.5D, 0.0D, -0.5D);
+            pose.translate(OFFSET_X, OFFSET_Y, OFFSET_Z);
+            if (Assets.VBO.draw(buffers, TEXTURE, sink -> drawVbo(sink, pose, now, running, done, door, packedLight)))
+                return;
+
+            VertexConsumer vertices = buffers.getBuffer(RenderType.entityCutout(TEXTURE));
+            for (ObjMesh.Group group : mesh.groups()) {
+                Batch batch = batch(group.name());
+                if (!batch.visible(running, done)) continue;
+                pose.pushPose();
+                try {
+                    poseBatch(pose, batch, now, running, door);
+                    meshRenderer.draw(pose, vertices, group, packedLight);
+                } finally {
+                    pose.popPose();
+                }
+            }
+        } finally {
             pose.popPose();
         }
-        pose.popPose();
     }
 
+    static void drawVbo(ObjVboMesh.Draw<Batch> sink, PoseStack pose, double now,
+                                boolean running, boolean done, float door, int light) {
+        for (Batch batch : Batch.values()) {
+            if (!batch.visible(running, done)) continue;
+            pose.pushPose();
+            try {
+                poseBatch(pose, batch, now, running, door);
+                sink.batch(batch, pose, light, 0xFFFFFF);
+            } finally {
+                pose.popPose();
+            }
+        }
+    }
     private void drawControllerCube(PoseStack pose, MultiBufferSource buffers, int light, Direction facing) {
         pose.pushPose();
         pose.translate(0.5D, 0.0D, 0.5D);
@@ -148,27 +172,42 @@ public final class IrradiationReactorRenderer implements BlockEntityRenderer<Blo
         }
     }
 
-    private static boolean visible(String group, boolean running, boolean done) {
+    static Batch batch(String group) {
         return switch (group) {
-            case "status_green" -> running;
-            case "status_amber" -> done;
-            case "status_red" -> !running && !done;
-            case "chamber_lights" -> running;
-            default -> true;
+            case "sample_carousel", "target_capsules", "drive_shaft" -> Batch.SPIN;
+            case "door_panel", "locking_dogs" -> Batch.DOOR;
+            case "handwheel" -> Batch.WHEEL;
+            case "status_green", "chamber_lights" -> Batch.ACTIVE;
+            case "status_amber" -> Batch.DONE;
+            case "status_red" -> Batch.IDLE;
+            default -> Batch.STATIC;
         };
     }
 
-    private static void poseGroup(PoseStack pose, String group, double now, boolean running, float door) {
-        if (DOOR_GROUPS.contains(group)) {
+    enum Batch {
+        STATIC, SPIN, DOOR, WHEEL, ACTIVE, DONE, IDLE;
+
+        boolean visible(boolean running, boolean done) {
+            return switch (this) {
+                case ACTIVE -> running;
+                case DONE -> done;
+                case IDLE -> !running && !done;
+                default -> true;
+            };
+        }
+    }
+
+    private static void poseBatch(PoseStack pose, Batch batch, double now, boolean running, float door) {
+        if (batch == Batch.DOOR || batch == Batch.WHEEL) {
             pose.translate(0.0F, DOOR_LIFT * door, 0.0F);
-            if ("handwheel".equals(group)) {
+            if (batch == Batch.WHEEL) {
                 pose.translate(1.5F, 1.5F, 0.06F);
                 pose.mulPose(Axis.ZP.rotationDegrees(WHEEL_TURNS * door));
                 pose.translate(-1.5F, -1.5F, -0.06F);
             }
             return;
         }
-        if (running && SPINNING.contains(group)) {
+        if (running && batch == Batch.SPIN) {
             pose.translate(1.5F, 0.0F, 2.5F);
             pose.mulPose(Axis.YP.rotationDegrees((float) ((now * SPIN_DEGREES_PER_TICK) % 360.0D)));
             pose.translate(-1.5F, 0.0F, -2.5F);

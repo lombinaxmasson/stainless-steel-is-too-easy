@@ -1,0 +1,109 @@
+{
+  "name": "不锈钢风力机 / WT-02 低面版",
+  "units": "blocks",
+  "up": "+Y",
+  "front": "-Z",
+  "integrated_in_game": true,
+  "stats": {
+    "triangles": 428,
+    "groups": 7,
+    "bounds": [
+      [
+        -3.372717,
+        -2.988768,
+        -0.85
+      ],
+      [
+        5.449357,
+        5.588966,
+        1
+      ]
+    ],
+    "group_triangles": {
+      "head_housing": 32,
+      "bearing_flange": 40,
+      "ru_output": 40,
+      "rotor_hub": 76,
+      "rotor_blade_1": 80,
+      "rotor_blade_2": 80,
+      "rotor_blade_3": 80
+    },
+    "finite_vertices": true,
+    "unit_normals": true,
+    "nondegenerate_triangles": true,
+    "winding_matches_normals": true,
+    "uv_in_atlas": true
+  },
+  "group_labels": {
+    "head_housing": "不锈钢机器外壳",
+    "bearing_flange": "前端风轮轴口",
+    "ru_output": "后端 RU 联轴口",
+    "rotor_hub": "轮毂与主轴",
+    "rotor_blade_1": "叶片 1",
+    "rotor_blade_2": "叶片 2",
+    "rotor_blade_3": "叶片 3"
+  },
+  "head": {
+    "triangles": 112,
+    "groups": [
+      "head_housing",
+      "bearing_flange",
+      "ru_output"
+    ],
+    "rotor_mount": [
+      0.5,
+      0.5,
+      0
+    ],
+    "ru_output": [
+      0.5,
+      0.5,
+      1
+    ],
+    "casing_texture": "gt6ce:block/material_icons/metallic/casingmachine",
+    "casing_tint": [
+      200,
+      200,
+      220
+    ]
+  },
+  "rotor": {
+    "triangles": 316,
+    "groups": [
+      "rotor_hub",
+      "rotor_blade_1",
+      "rotor_blade_2",
+      "rotor_blade_3"
+    ],
+    "pivot": [
+      0.5,
+      0.5,
+      -0.55
+    ],
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "swept_bounds": [
+      [
+        -4.701,
+        -4.701,
+        -0.8500000000000001
+      ],
+      [
+        5.701,
+        5.701,
+        0.019999999999999907
+      ]
+    ]
+  },
+  "texture": {
+    "file": "wind_turbine_low_poly_atlas.png",
+    "size": [
+      512,
+      1024
+    ],
+    "filter": "nearest"
+  }
+}

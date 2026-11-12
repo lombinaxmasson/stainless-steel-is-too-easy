@@ -43,6 +43,15 @@ public final class ObjMesh {
 
     private static ObjMesh parse(String resourcePath) {
         InputStream stream = ObjMesh.class.getResourceAsStream(resourcePath);
+        return parse(resourcePath, stream);
+    }
+
+    /** Replace a cached mesh from the current resource pack; parsing closes the supplied stream. */
+    public static void reload(String resourcePath, InputStream stream) {
+        CACHE.put(resourcePath, parse(resourcePath, stream));
+    }
+
+    private static ObjMesh parse(String resourcePath, InputStream stream) {
         if (stream == null) {
             LOGGER.warn("[ssite] Missing machine model {}", resourcePath);
             return new ObjMesh(List.of());

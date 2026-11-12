@@ -2,7 +2,7 @@
 
 参考 HBM 核工业设备的造型语言制作的原创低多边形模型。厚重的八角屏蔽舱、前部滑升装料门、侧置换热柱和独立仪表柜共同组成完整设备，顶部带索引驱动、螺栓顶盖与吊耳。灰绿机壳、暖灰屏蔽层、炭黑接缝配少量黄黑警示纹；仪表、铭牌和局部磨损使用像素贴图。
 
-**占地严格为 4×4 方块，高度 4 格。** 底座、静态模型和开门、旋转全过程都限制在 `(0,0,0)` 至 `(4,4,4)` 的包络内。接口中心位于整数方块格的外表面中心。结构成型时，游戏渲染器使用这套 OBJ 和图集。结构判定、碰撞、接口位置和机器行为以 Java 实现为准。
+**占地严格为 4×4 方块，高度 4 格。** 底座、静态模型和开门、旋转全过程都限制在 `(0,0,0)` 至 `(4,4,4)` 的包络内。接口中心位于整数方块格的外表面中心。结构成型时，游戏渲染器使用重绘的 6,532 面 OBJ 和配套图集。结构判定、碰撞、接口位置和机器行为以 Java 实现为准。
 
 ![批次照射反应堆全貌](preview.png)
 
@@ -13,8 +13,12 @@
 | `preview.html`（本地生成，不入库） | 内嵌网格、贴图和动画的离线 WebGL 2 预览，无 CDN 或网络依赖 |
 | [irradiation_reactor.obj](irradiation_reactor.obj) | 完整模型，41 个具名部件、9,144 个三角面，平面法线；停机、门关闭的初始姿态 |
 | [irradiation_reactor_cutaway.obj](irradiation_reactor_cutaway.obj) | 隐去前半屏蔽壳与顶盖的剖视版本 |
-| [irradiation_reactor.mtl](irradiation_reactor.mtl) | 两份 OBJ 共用的材质定义 |
+| [irradiation_reactor_low_poly.obj](irradiation_reactor_low_poly.obj) | 减面试版，41 个具名部件、8,164 个三角面，沿用原图集 |
+| [irradiation_reactor.mtl](irradiation_reactor.mtl) | 三份 OBJ 共用的材质定义 |
 | [irradiation_reactor_atlas.png](irradiation_reactor_atlas.png) | 2048×2048 RGB 像素图集，使用最近邻过滤 |
+| [irradiation_reactor_redrawn.obj](irradiation_reactor_redrawn.obj) | 重绘低模，41 个具名部件、6,532 个三角面 |
+| [重绘材质](irradiation_reactor_redrawn.mtl)、[重绘图集](irradiation_reactor_redrawn_atlas.png) | 重绘 OBJ 的材质定义与 2048×2048 RGB 像素图集 |
+| `preview_redrawn.html`（本地生成，不入库） | 重绘版的离线交互预览，包含完整外观、开门和运行剖视 |
 | [model.json](model.json) | 方块包围盒、接口格与朝向、部件中英文对照、剖视隐藏列表、动画参数和网格检查结果 |
 | [irradiation_reactor_animation.js](irradiation_reactor_animation.js) | 可复用的启停、门锁、滑升门、转速和照明状态机；由生成器导出 |
 | [preview_cutaway.png](preview_cutaway.png) | 剖视截图 |
@@ -24,6 +28,19 @@
 | [preview_animation.gif](preview_animation.gif) | 上一版配色的开门、启停与剖视动画示意，实际时序以交互预览为准 |
 
 预览支持拖动旋转、滚轮缩放、五个预设视角、方块网格、接口格、部件高亮与剖视，以及启动/停机、装料门开关、暂停/继续和动画复位。键盘方向键旋转，`+` / `-` 缩放，`Home` 回到全貌。
+
+减面试版沿轮廓重新划分平面端盖，保留原 UV，并去掉冷却柱内侧被柱身盖住的 312 个散热片内壁三角面。合计减少 980 个三角面（10.7%）。包围盒、动画组和接口坐标与完整模型一致，试版可用同目录的 MTL 和图集导入查看。
+
+## 低模重绘
+
+| 绘制范围 | 原版 | 重绘版 |
+| --- | ---: | ---: |
+| 整机 | 9,144 | 6,532 |
+| 剖视 | 5,992 | 4,192 |
+| 转台、四支靶匣和传动轴 | 1,312 | 944 |
+| 门板、压爪和手轮 | 704 | 488 |
+
+重绘版保留八角屏蔽舱、前部装料门、13 圈散热片和四支靶匣。散热片外沿从十二边改为八边，小螺栓、梯级和护栏减少分段，顶盖螺栓埋入接合处的端面、底座拼块的接触面及部分环件内壁省去。图集按新几何重新展开，沿用灰绿配色、仪表和警示标识。包围盒、四个接口和动画分组沿用原设计。
 
 ## 坐标与部件
 
@@ -69,6 +86,8 @@ python scripts/models/inspect_irradiation_reactor.py
 # 同时录制动画 GIF：
 python scripts/models/inspect_irradiation_reactor.py --gif
 ```
+
+游戏资源在重绘版生成后用 `python scripts/models/install_irradiation_reactor.py` 安装。安装器读取 `model.json.redrawn`，将重绘 OBJ 与同一版图集复制到现有渲染器使用的资源路径。
 
 生成器的输入是 `scripts/models/build_irradiation_reactor.py`、`irradiation_reactor_style_c.py`、`model_surface_uv.py`、`irradiation_reactor_ir03_materials.py`、`irradiation_reactor_ir03_viewer.html` 与 `irradiation_reactor_animation.js`，并复用同目录的几何原语、基础像素绘制函数和预览外壳样式。C 风格按每格 64 像素重新展开，搭接缝、压筋与 5×5 像素钉头按面分配，控制屏、接口标记及放射警示保留原功能图案。详见[美术参考](../texture_style_reference/README.md)。**修改输入后重新生成 OBJ、MTL、图集或预览。** `scripts/models/` 按仓库约定仅在本地维护，已被忽略；已入库的 OBJ、MTL、图集与截图可直接导入或查看，交互预览 `preview.html` 只在本地生成；只有包含这些脚本的工作副本可以重新生成。
 

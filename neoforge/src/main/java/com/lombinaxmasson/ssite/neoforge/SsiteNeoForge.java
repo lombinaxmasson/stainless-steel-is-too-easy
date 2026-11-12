@@ -12,6 +12,7 @@ public final class SsiteNeoForge {
         SsiteAddon.register();
         SsiteWorldgen.register(modEventBus);
         SsiteCreativeTab.register(modEventBus);
+        SsiteItems.register(modEventBus);
         NeoForgeRecordItems.register(modEventBus);
         RecordNetwork.register(modEventBus);
     }

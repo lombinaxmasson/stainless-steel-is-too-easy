@@ -1,0 +1,10 @@
+def windTurbineTest = tasks.register('windTurbineTest', JavaExec) {
+    description = 'Checks the wind turbine power curve, storm brake and rotor renderer.'
+    group = 'verification'
+    dependsOn 'testClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = files(sourceSets.test.output, sourceSets.main.output, sourceSets.main.compileClasspath)
+    mainClass = 'com.lombinaxmasson.ssite.machine.WindTurbineTests'
+    jvmArgs '-ea'
+}
+tasks.named('check').configure { dependsOn windTurbineTest }

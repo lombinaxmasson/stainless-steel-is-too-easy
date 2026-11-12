@@ -12,6 +12,7 @@ public final class SsiteForge {
         SsiteAddon.register();
         SsiteWorldgen.register(FMLJavaModLoadingContext.get().getModEventBus());
         SsiteCreativeTab.register(FMLJavaModLoadingContext.get().getModEventBus());
+        SsiteItems.register(FMLJavaModLoadingContext.get().getModEventBus());
         ForgeRecordItems.register(FMLJavaModLoadingContext.get().getModEventBus());
         RecordNetwork.register();
     }

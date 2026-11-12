@@ -6,6 +6,8 @@
   "mixins": ["AddonMaterialOwnerMixin", "CrucibleFaucetSignalMixin", "LargeAodToolMixin", "LargeAodPartMixin", "ObjMultiblockDesignMixin",
     "LidOpenShapeMixin", "FluidizedBedEnergyMixin", "FluidizedBedFoundationShapeMixin",
     "HeatTransportAccessMixin", "HeatTransportShapeMixin", "RecordJukeboxSignalMixin", "RecordJukeboxInventoryMixin"],
-  "client": ["LargeAodClientSyncMixin", "LargeAodRenderBoundsMixin", "LargeAodRendererBoundsMixin"],
+  "client": ["LargeAodClientSyncMixin", "LargeAodRenderBoundsMixin", "LargeAodRendererBoundsMixin",
+    "LargeGasTurbineRotorRendererMixin", "LargeGasTurbineClientBoundsMixin", "LargeGasTurbineClientSyncMixin",
+    "LargeGasTurbineNeighborFacesMixin"],
   "injectors": {"defaultRequire": 1}
 }

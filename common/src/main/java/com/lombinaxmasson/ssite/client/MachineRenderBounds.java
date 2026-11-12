@@ -5,9 +5,11 @@ import com.lombinaxmasson.ssite.machine.LargeAodStructure;
 import com.lombinaxmasson.ssite.machine.VarFurnaceCore;
 import com.lombinaxmasson.ssite.machine.FluidizedBedCore;
 import com.lombinaxmasson.ssite.machine.ChemicalLoopingCore;
+import com.lombinaxmasson.ssite.machine.WindTurbineCore;
 import gregtech.api.addon.platform.BehaviorMachineClientView;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.phys.AABB;
 
 import javax.annotation.Nullable;
@@ -22,6 +24,10 @@ public final class MachineRenderBounds {
         if (!(entity instanceof BehaviorMachineClientView view) || !"ssite".equals(view.addonId())) return null;
         BlockPos pos = at == null ? entity.getBlockPos() : at;
         String type = view.machineType();
+        if (WindTurbineCore.MACHINE_TYPE.equals(type)) {
+            if (!view.getBoolean(WindTurbineCore.K_ROTOR)) return new AABB(pos);
+            return WindTurbineRenderer.bounds(pos, entity.getBlockState().getValue(HorizontalDirectionalBlock.FACING));
+        }
         if (FluidizedBedCore.MACHINE_TYPE.equals(type)) return new AABB(pos).inflate(10.0D);
         if (ChemicalLoopingCore.isMachine(type)) return new AABB(pos).inflate(4.0D);
         if (LargeAodStructure.tier(type) != null) return new AABB(pos).inflate(5.0D);

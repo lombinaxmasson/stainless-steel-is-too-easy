@@ -26,6 +26,25 @@ def materialReport = tasks.register('materialReport', JavaExec) {
     })
 }
 
+def auditDirectory = layout.buildDirectory.dir('reports/recipe-audit')
+def recipeAudit = tasks.register('recipeAudit', JavaExec) {
+    description = 'Generates recipe coverage, duplicate and structural audit without starting Minecraft.'
+    group = 'documentation'
+    dependsOn 'materialReportClasses'
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = sourceSets.materialReport.runtimeClasspath
+    mainClass = 'com.lombinaxmasson.ssite.report.RecipeAudit'
+    args rootProject.projectDir.absolutePath, auditDirectory.get().asFile.absolutePath, project.name
+    inputs.files(sourceSets.main.allSource)
+    inputs.files(rootProject.fileTree('common/src/main/resources/data/ssite/recipes'))
+    inputs.files(rootProject.fileTree('common/src/main/resources/META-INF/services'))
+    inputs.files(rootProject.fileTree('docs') { include 'material-uses.json' })
+    inputs.property('platform', project.name)
+    outputs.files(['recipe-audit.md', 'recipe-audit.json'].collect {
+        auditDirectory.get().file(it)
+    })
+}
+
 def materialReportTest = tasks.register('materialReportTest', JavaExec) {
     description = 'Checks declaration capture and material-use report coverage and classification.'
     group = 'verification'
@@ -37,4 +56,4 @@ def materialReportTest = tasks.register('materialReportTest', JavaExec) {
     jvmArgs '-ea'
 }
 
-tasks.named('check').configure { dependsOn materialReport, materialReportTest }
+tasks.named('check').configure { dependsOn materialReport, recipeAudit, materialReportTest }

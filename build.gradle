@@ -20,11 +20,14 @@ tasks.register('compileBoth') {
     dependsOn ':forge:coalGasifierTest', ':neoforge:coalGasifierTest'
     dependsOn ':forge:chemicalLoopingTest', ':neoforge:chemicalLoopingTest',
             ':forge:chemicalLoopingRenderTest', ':neoforge:chemicalLoopingRenderTest'
+    dependsOn ':forge:windTurbineTest', ':neoforge:windTurbineTest'
+    dependsOn ':forge:gasTurbineRenderTest', ':neoforge:gasTurbineRenderTest'
     dependsOn ':forge:recordIndustryTest', ':neoforge:recordIndustryTest'
     dependsOn ':forge:recordDynamicRecipeTest', ':neoforge:recordDynamicRecipeTest'
     dependsOn ':forge:recordMediaTest', ':neoforge:recordMediaTest'
     dependsOn ':forge:recordPlaybackTest', ':neoforge:recordPlaybackTest'
     dependsOn ':forge:materialReport', ':neoforge:materialReport'
+    dependsOn ':forge:recipeAudit', ':neoforge:recipeAudit'
     dependsOn ':forge:materialReportTest', ':neoforge:materialReportTest'
 }
 
@@ -32,6 +35,12 @@ tasks.register('materialReport') {
     group = 'documentation'
     description = 'Generate material-use reports for both loaders without starting Minecraft.'
     dependsOn ':forge:materialReport', ':neoforge:materialReport'
+}
+
+tasks.register('recipeAudit') {
+    group = 'documentation'
+    description = 'Generate recipe coverage, duplicate and structural audits for both loaders.'
+    dependsOn ':forge:recipeAudit', ':neoforge:recipeAudit'
 }
 
 tasks.named('assemble').configure {

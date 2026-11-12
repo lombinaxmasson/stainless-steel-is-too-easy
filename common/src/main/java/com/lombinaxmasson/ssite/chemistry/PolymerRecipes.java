@@ -91,12 +91,13 @@ public final class PolymerRecipes {
                 .keep(0)
                 .add(160, 32);
         for (String vinegar : new String[]{"Vinegar_Grape", "Vinegar_Apple", "Vinegar_Cane"}) {
-            row("gt.recipe.distillery", "c1/acetic-acid-" + vinegar.toLowerCase())
+            var recipe = row("gt.recipe.distillery", "c1/acetic-acid-" + vinegar.toLowerCase())
                     .in(circuit(3))
                     .fluidIn(vinegar, 1000)
                     .fluidOut("GenLiquid_AceticAcid", 50, "DistW", 950)
-                    .keep(0)
-                    .add(100, 16);
+                    .keep(0);
+            if (vinegar.equals("Vinegar_Grape")) recipe.requiresDistinctFluids(vinegar, "Vinegar_Apple");
+            recipe.add(100, 16);
         }
     }
 

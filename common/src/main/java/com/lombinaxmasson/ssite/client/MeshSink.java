@@ -9,4 +9,9 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 public interface MeshSink {
     void vertex(VertexConsumer buffer, float x, float y, float z, float u, float v,
                 float nx, float ny, float nz, int packedLight);
+
+    default void vertex(VertexConsumer buffer, float x, float y, float z, float u, float v,
+                        float nx, float ny, float nz, int packedLight, int rgb) {
+        vertex(buffer, x, y, z, u, v, nx, ny, nz, packedLight);
+    }
 }

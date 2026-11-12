@@ -47,15 +47,20 @@ public final class FluidizedBedRenderer implements BlockEntityRenderer<BlockEnti
     }
 
     void draw(PoseStack pose, VertexConsumer vertices, ObjMesh.Group group, int light) {
+        draw(pose, vertices, group, light, 0xFFFFFF);
+    }
+
+    void draw(PoseStack pose, VertexConsumer vertices, ObjMesh.Group group, int light, int rgb) {
         Vector3f p = new Vector3f(), n = new Vector3f();
+        var transform = pose.last();
         float[] data = group.triangles();
         for (int start = 0; start + 23 < data.length; start += 24) {
             // Minecraft's entityCutout consumes QUADS: one OBJ triangle becomes A,B,C,C.
             for (int corner = 0; corner < 4; corner++) {
                 int i = start + Math.min(corner, 2) * 8;
-                pose.last().pose().transformPosition(p.set(data[i], data[i+1], data[i+2]));
-                pose.last().normal().transform(n.set(data[i+5], data[i+6], data[i+7])).normalize();
-                sink.vertex(vertices, p.x, p.y, p.z, data[i+3], data[i+4], n.x, n.y, n.z, light);
+                transform.pose().transformPosition(p.set(data[i], data[i+1], data[i+2]));
+                transform.normal().transform(n.set(data[i+5], data[i+6], data[i+7])).normalize();
+                sink.vertex(vertices, p.x, p.y, p.z, data[i+3], data[i+4], n.x, n.y, n.z, light, rgb);
             }
         }
     }

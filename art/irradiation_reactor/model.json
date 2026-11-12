@@ -5,8 +5,8 @@
   "up": "+Y",
   "front": "-Z",
   "design": "Independent octagonal shielded drum with transfer lock and side cooling column",
-  "integrated_in_game": false,
-  "structure_bound": false,
+  "integrated_in_game": true,
+  "structure_bound": true,
   "nominal_envelope": [
     4,
     4,
@@ -267,6 +267,41 @@
     "valves",
     "chamber_lights"
   ],
+  "redrawn": {
+    "obj": "irradiation_reactor_redrawn.obj",
+    "atlas": "irradiation_reactor_redrawn_atlas.png",
+    "preview": "preview_redrawn.html",
+    "runtime_obj": "ssite:obj/irradiation_reactor.obj",
+    "runtime_texture": "ssite:textures/machine/irradiation_reactor.png",
+    "stats": {
+      "bounds": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          4,
+          4
+        ]
+      ],
+      "triangles": 6532,
+      "groups": 41,
+      "finite_vertices": true,
+      "unit_normals": true,
+      "uv_in_atlas": true,
+      "nondegenerate_triangles": true,
+      "consistent_winding": true,
+      "within_grid_envelope": true,
+      "ports_at_cell_face_centers": true,
+      "texture_size": [
+        2048,
+        2048
+      ]
+    },
+    "cutaway_triangles": 4192
+  },
   "group_labels": {
     "foundation": "分层混凝土与钢底座",
     "base_frame": "承重底框",
@@ -332,7 +367,7 @@
   "transform_note": "For NORTH-facing placement, subtract [3,1,0] from mesh coordinates relative to controller block minimum; rotate around controller center for other facings.",
   "notes": [
     "Original geometry and textures; no imported HBM assets.",
-    "Four-block footprint and cell-aligned art ports; game structure and interaction routing are not implemented.",
+    "The game uses the redrawn mesh and atlas. Java defines structure and interaction routing.",
     "Blue interior work lamps indicate operation; no water volume or Cherenkov emission is assumed.",
     "OBJ stores the closed, stopped bind pose. Runtime transforms and emissive groups are recorded in animation.",
     "Internal components are illustrative game art, not engineering specifications."

@@ -142,6 +142,47 @@
     "service_cabinet"
   ],
   "cutaway_triangles": 7432,
+  "low_poly": {
+    "obj": "large_gas_turbine_low_poly.obj",
+    "preview": "preview_low_poly.html",
+    "stats": {
+      "bounds": [
+        [
+          -1.42,
+          0,
+          0
+        ],
+        [
+          1.47,
+          2.74,
+          4.0
+        ]
+      ],
+      "triangles": 6400,
+      "groups": 32,
+      "texture_size": [
+        512,
+        256
+      ],
+      "finite_vertices": true,
+      "unit_normals": true,
+      "uv_in_atlas": true,
+      "nondegenerate_triangles": true,
+      "consistent_winding": true,
+      "within_host_envelope": true
+    },
+    "runtime_obj": "ssite:obj/large_gas_turbine.obj",
+    "cutaway_triangles": 4932,
+    "moving_triangles": 892,
+    "rotor_triangles": 636,
+    "blade_counts": [
+      16,
+      12,
+      10,
+      10,
+      8
+    ]
+  },
   "rotor": {
     "group": "rotor",
     "pivot": [
@@ -161,7 +202,7 @@
       "rotor_dark",
       "rotor_hot"
     ],
-    "tint_source": "Future rotor item material, independent of casing grade"
+    "tint_source": "GT6CE gas turbine rotor material"
   },
   "ports": [
     {
@@ -390,11 +431,11 @@
     "note": "Illustrative startup/coasting and heating/cooling; not host thermodynamics. Visual angular speed is scaled for inspection."
   },
   "texture_filter": "nearest",
-  "integrated_in_game": false,
+  "integrated_in_game": true,
   "notes": [
-    "Art asset only; host renderer registration and formed-part hiding remain to be implemented.",
+    "The formed GT6CE gas turbine renders the low-poly mesh and its grade atlas.",
     "The host accepts fuel across the front layer and exhaust across the world-bottom layer; decorative ports do not restrict behavior.",
-    "Six-direction host placement needs orientation-aware treatment of exhaust decoration.",
+    "The decorative exhaust rotates with the model; use the host bottom-layer ports for vertical placements.",
     "Cutaway is illustrative game art, not an engineering section."
   ]
 }

@@ -70,6 +70,7 @@ public final class ChemistryRecipes {
             EngineeringMaterialRecipes.add();
             UtilityRecipes.add();
             RecordRecipes.add();
+            WindTurbineRecipes.add();
             return List.copyOf(declarations);
         } finally {
             if (previous == null) COLLECTOR.remove();
